@@ -1,4 +1,4 @@
-package it.polimi.ingsw.card;
+package it.polimi.ingsw.model.card;
 
 public class ResourceGoalCard extends GoalCard{
 }
