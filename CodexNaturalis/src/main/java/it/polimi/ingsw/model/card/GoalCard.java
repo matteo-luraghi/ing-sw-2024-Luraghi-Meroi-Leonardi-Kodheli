@@ -5,9 +5,9 @@ package it.polimi.ingsw.model.card;
  * @author Lorenzo Meroi
  */
 abstract public class GoalCard {
-    private int Points;
+    private final int Points;
 
-    private boolean IsResourceGoal;
+    private final boolean IsResourceGoal;
 
     /**
      * Constructor

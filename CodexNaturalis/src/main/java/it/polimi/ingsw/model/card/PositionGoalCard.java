@@ -7,10 +7,6 @@ import java.util.ArrayList;
  * @author Lorenzo Meroi
  */
 public class PositionGoalCard extends GoalCard{
-    private int Points;
-
-    private boolean isResourceCard;
-
     private ArrayList<Direction> PositionsFromBase;
 
     private ArrayList<Kingdom> ResourceFromBase;
@@ -26,24 +22,6 @@ public class PositionGoalCard extends GoalCard{
         super(Points, false);
         this.PositionsFromBase.addAll(PositionsFromBase);
         this.ResourceFromBase.addAll(ResourceFromBase);
-    }
-
-    /**
-     * Points getter
-     * @return Points
-     */
-    @Override
-    public int getPoints() {
-        return Points;
-    }
-
-    /**
-     * isResourceGoal getter
-     * @return false
-     */
-    @Override
-    public boolean isResourceGoal() {
-        return super.isResourceGoal();
     }
 
     /**

@@ -7,10 +7,6 @@ import java.util.ArrayList;
  * @author Lorenzo Meroi
  */
 public class ResourceGoalCard extends GoalCard{
-    private int Points;
-
-    private boolean IsResourceGoal;
-
     private ArrayList<Resource> Requirements;
 
     /**
@@ -22,24 +18,6 @@ public class ResourceGoalCard extends GoalCard{
     public ResourceGoalCard (int Points, ArrayList<Resource> requirements) {
         super(Points, true);
         this.Requirements.addAll(requirements);
-    }
-
-    /**
-     * Points getter
-     * @return Points
-     */
-    @Override
-    public int getPoints() {
-        return Points;
-    }
-
-    /**
-     * isResourceGoal getter
-     * @return true
-     */
-    @Override
-    public boolean isResourceGoal() {
-        return IsResourceGoal;
     }
 
     /**
