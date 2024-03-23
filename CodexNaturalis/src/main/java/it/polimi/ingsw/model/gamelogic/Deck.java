@@ -6,6 +6,10 @@ import it.polimi.ingsw.model.card.ResourceCard;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
+/**
+ * Deck class
+ * @author Lorenzo Meroi
+ */
 public class Deck {
     private Queue<ResourceCard> Cards;
 
