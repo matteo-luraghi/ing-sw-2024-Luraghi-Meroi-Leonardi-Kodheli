@@ -82,7 +82,44 @@ public class PlayerField {
                     }
                 }
             }
-            //devo togliere le risorse dagli angoli delle carte che ho coperto, ma non so come gestire le coordinate
+
+            int cardX = where.getX();
+            int cardY = where.getY();
+
+            for (Coordinates coordinate : GameZone.keySet()) {
+                int x = coordinate.getX();
+                int y = coordinate.getY();
+                if (x == cardX+1 && y == cardY+1) {
+
+                    if (!GameZone.get(coordinate).getCorner(2).equals(Resource.BLANK))
+                        ResourceMap.put(GameZone.get(coordinate).getCorner(2), ResourceMap.get(GameZone.get(coordinate).getCorner(2))-1);
+
+                    GameZone.get(coordinate).coverCorner(2);
+
+                } else if (x == cardX+1 && y == cardY-1) {
+
+                    if (!GameZone.get(coordinate).getCorner(0).equals(Resource.BLANK))
+                        ResourceMap.put(GameZone.get(coordinate).getCorner(0), ResourceMap.get(GameZone.get(coordinate).getCorner(0))-1);
+
+                    GameZone.get(coordinate).coverCorner(0);
+
+                } else if (x == cardX-1 && y == cardY-1) {
+
+                    if (!GameZone.get(coordinate).getCorner(1).equals(Resource.BLANK))
+                        ResourceMap.put(GameZone.get(coordinate).getCorner(1), ResourceMap.get(GameZone.get(coordinate).getCorner(1))-1);
+
+                    GameZone.get(coordinate).coverCorner(1);
+
+                } else if (x == cardX-1 && y == cardY+1) {
+
+                    if (!GameZone.get(coordinate).getCorner(3).equals(Resource.BLANK))
+                        ResourceMap.put(GameZone.get(coordinate).getCorner(3), ResourceMap.get(GameZone.get(coordinate).getCorner(3))-1);
+
+                    GameZone.get(coordinate).coverCorner(3);
+
+                }
+            }
+
             return calculateCardPoints(where, card);
         }
         else{
