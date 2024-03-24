@@ -56,7 +56,7 @@ public class GameTable {
 
     /**
      * CommonGoal by index getter
-     * @param index
+     * @param index d
      * @return GoldCard
      */
     public GoldCard GetCommonGoal(int index) {
