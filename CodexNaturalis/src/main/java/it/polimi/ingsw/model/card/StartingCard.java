@@ -5,7 +5,6 @@ package it.polimi.ingsw.model.card;
  * @author Matteo Leonardo Luraghi
  */
 public class StartingCard extends GameCard{
-    private final Resource[] frontCorners;
     private final Resource[] backCorners;
     private final Resource[] permanentResources;
 
@@ -19,8 +18,7 @@ public class StartingCard extends GameCard{
      */
     public StartingCard(Kingdom kingdom, boolean isFront,
                         Resource[] frontCorners, Resource[] backCorners, Resource[] permanentResources) {
-        super(kingdom, isFront);
-        this.frontCorners = frontCorners.clone();
+        super(kingdom, isFront, frontCorners);
         this.backCorners = backCorners.clone();
         this.permanentResources = permanentResources.clone();
     }
@@ -32,9 +30,9 @@ public class StartingCard extends GameCard{
      */
     public Resource getCorner(int corner) {
         if(this.getIsFront()) {
-            return frontCorners[corner];
+            this.getCorner(corner);
         }
-        return backCorners[corner];
+        return this.backCorners[corner];
     }
 
     /**

@@ -5,7 +5,6 @@ package it.polimi.ingsw.model.card;
  * @author Matteo Leonardo Luraghi
  */
 public class ResourceCard extends GameCard{
-    private Resource[] corners;
     private final int points;
     private final boolean isGold;
     /**
@@ -17,27 +16,9 @@ public class ResourceCard extends GameCard{
      * @param isGold true if the card is gold
      */
     public ResourceCard(Kingdom kingdom, boolean isFront, Resource[] corners, int points, boolean isGold) {
-        super(kingdom, isFront);
-        this.corners = corners.clone();
+        super(kingdom, isFront, corners);
         this.points = points;
         this.isGold = isGold;
-    }
-
-    /**
-     * Corner getter
-     * @param corner index of the selected corner
-     * @return Resource present on the selected corner
-     */
-    public Resource getCorner(int corner) {
-        return this.corners[corner];
-    }
-
-    /**
-     * CoverCorner
-     * @param corner index of the corner to be covered
-     */
-    public void coverCorner(int corner) {
-        this.corners[corner] = Resource.COVERED;
     }
 
     /**
