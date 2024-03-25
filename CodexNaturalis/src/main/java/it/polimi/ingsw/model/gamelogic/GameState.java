@@ -1,63 +1,61 @@
 package it.polimi.ingsw.model.gamelogic;
 
+import java.util.ArrayList;
+
 /**
  * class GameState
  * @author Françesk Kodheli
  */
 public class GameState {
-    private State State;
-    private ArrayList<Player> Players;
-    private Player Turn;
-    private TurnState TurnState;
-    private GameTable GameTable;
-    private Player Winner;
+    private State state;
+    private ArrayList<Player> players;
+    private Player turn;
+    private TurnState turnState;
+    private GameTable gameTable;
+    private Player winner;
 
     /**
      * GameState Constructor, firstly configured as in SETUP state
-     * @param Players ArrayList of the players for the session
+     *
+     * @param Players        ArrayList of the players for the session
      * @param StartingPlayer The choosen player to start
-     * @param GameTable Main GameTable Object
+     * @param GameTable      Main GameTable Object
      */
     public GameState(ArrayList<Player> Players, Player StartingPlayer, GameTable GameTable)
     {
-      this.Players=new ArrayList<Player>();
-      for(Player Player: Players)
-      {
-          this.Players.add(Player);
-      }
-      Turn=StartingPlayer;
-      this.GameTable=GameTable;
-      Winner=null;
-      State=State.SETUP;
-
+        this.players = new ArrayList<Player>();
+        this.players.addAll(Players);
+        this.turn = StartingPlayer;
+        this.gameTable = GameTable;
+        this.winner = null;
+        this.state = State.SETUP;
     }
 
     /**
      * getState returns the current state
+     *
      * @return State
      */
     public State getState() {
-        return State;
+        return this.state;
     }
 
     /**
      * Sets the next state SETUP->GAMEFLOW->COUNTGOALS->FINAL (if final won't be changed)
+     *
      * @return true if the state changed
      */
     public boolean NextState()
     {
-        if(State != State.FINAL)
-        {
+        if (!state.equals(State.FINAL)) {
             State++;
             if(state==State.COUNTGOALS)
             {
-                for(PlayerField PlayerField: GameTable.PlayerZones.keySet()) {
+                for(PlayerField playerField: gameTable.getPlayerZones().keySet()) {
+                    GameTable.countGoalPoints(playerField);
                 }
-                 GameTable.CountGoalPoints(PlayerField);
-                }
-            Winner=ComputeWinner();
+            this.winner=ComputeWinner();
             }
-
             return true;
         }
         return false;
@@ -68,7 +66,7 @@ public class GameState {
      * @return ArrayList<Player>
      */
     public ArrayList<Player> getPlayers() {
-        return Players;
+        return (ArrayList<Player>) this.players.clone();
     }
 
     /**
@@ -77,23 +75,21 @@ public class GameState {
      */
     public Player getTurn()
     {
-        return Turn;
+        return this.turn;
     }
 
     /**
      * Sets the next player in the arraylist as the next turn
      */
-    public nextTurn()
+    public void nextTurn()
     {
-        int i= Players.indexOf(Turn);
+        int i= this.players.indexOf(this.turn);
         i++;
-        if(i==Players.size())
+        if(i==this.players.size())
         {
             i=0;
         }
-        Turn=Players.get(i);
-
-
+        this.turn=this.players.get(i);
     }
 
     /**
@@ -102,42 +98,43 @@ public class GameState {
      */
     public TurnState getTurnState()
     {
-
-        return TurnState;
+        return this.turnState;
     }
 
     /**
      * swithces the turnstate between play and draw
      */
-    public ChangeTurnState()
+    public void ChangeTurnState()
     {
-        if(TurnState==TurnState.PLAY)
-            TurnState=TurnState.DRAW;
+        if(this.turnState.equals(TurnState.PLAY))
+            this.turnState=TurnState.DRAW;
         else
-            TurnState=TurnState.PLAY;
+            this.turnState=TurnState.PLAY;
     }
 
     /**
      * GameTable Getter
      * @return GameTable
      */
-    public GameTable getGameTable() {
-        return GameTable;
+    public GameTable getGameTable()
+    {
+        return this.gameTable;
     }
 
     /**
      * Compute the winner by getting the scoreboard
      * @return
      */
-    private Player ComputeWinner() {
+    private Player ComputeWinner()
+    {
         int points=0;
-        Player CurrWinner;
-        for(Palyer Player: Players)
+        Player CurrWinner = null;
+        for(Player player: this.players)
         {
-            if(GameTable.GetScoreBoard().GetPoints(Player)>points)
+            if(gameTable.getScoreBoard().getPoints(player)>points)
             {
-                points=GameTable.GetScoreBoard().GetPoints(Player);
-                CurrWinner=Player;
+                points=gameTable.getScoreBoard().getPoints(player);
+                CurrWinner=player;
             }
 
         }
@@ -151,9 +148,8 @@ public class GameState {
  */
 public Player getWinner()
     {
-        if(State==State.FINAL)
-        {
-            return Winner;
+        if(state.equals(State.FINAL)) {
+            return this.winner;
         }
         return null;
     }

@@ -1,5 +1,11 @@
 package it.polimi.ingsw.model.gamelogic;
 
+import it.polimi.ingsw.model.card.GoldCard;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * class GameTable
  * @author Francesk Kodheli
@@ -29,7 +35,7 @@ public class GameTable {
         int i=0;
         for(PlayerField Playerfield: PlayerFields)
         {
-            PlayerZone.put(Players.get(i), Playerfield);
+            PlayerZones.put(Players.get(i), Playerfield);
             i++;
         }
 
@@ -42,7 +48,7 @@ public class GameTable {
      * ResouceDeck getter
      * @return Deck
      */
-    public Deck GetResourceDeck() {
+    public Deck getResourceDeck() {
         return ResourceDeck;
     }
 
@@ -50,8 +56,17 @@ public class GameTable {
      * GoldDeck getter
      * @return Deck
      */
-    public Deck GetGoldDeck() {
+    public Deck getGoldDeck() {
         return GoldDeck;
+    }
+
+    /**
+     * PlayerZones getter
+     * @return PlayerZones
+     */
+    public Map<Player, PlayerField> getPlayerZones()
+    {
+        return this.PlayerZones;
     }
 
     /**
@@ -59,7 +74,7 @@ public class GameTable {
      * @param index d
      * @return GoldCard
      */
-    public GoldCard GetCommonGoal(int index) {
+    public GoldCard getCommonGoal(int index) {
         return CommonGoals[index];
     }
 
@@ -67,7 +82,7 @@ public class GameTable {
      * ScoreBoard getter
      * @return ScoreBoard
      */
-    public ScoreBoard GetScoreBoard() {
+    public ScoreBoard getScoreBoard() {
         return Scoreboard;
     }
 
@@ -75,8 +90,9 @@ public class GameTable {
      * CountGoalPoints counts the goal points of a player given the PlayerField
      * @param Player
      */
-    public CountGoalPoints (PlayerField Player)
+    public int countGoalPoints (PlayerField Player)
     {
+        return 0;
         /**
          * ...
          */

@@ -155,6 +155,7 @@ public class PlayerField {
      * @return true if it's playable, false if it is not
      */
     public boolean IsPlayable (Coordinates where, ResourceCard card) {
+        // add check required to play gold cards
         boolean canTR = true;
         boolean canTL = true;
         boolean canBR = true;
