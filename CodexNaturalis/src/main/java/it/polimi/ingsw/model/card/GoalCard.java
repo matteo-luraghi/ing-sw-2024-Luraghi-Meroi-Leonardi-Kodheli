@@ -5,9 +5,9 @@ package it.polimi.ingsw.model.card;
  * @author Lorenzo Meroi
  */
 abstract public class GoalCard {
-    private final int Points;
+    private final int points;
 
-    private final boolean IsResourceGoal;
+    private final boolean isResourceGoal;
 
     /**
      * Constructor
@@ -15,8 +15,8 @@ abstract public class GoalCard {
      * @param IsResourceGoal type of GoalCard
      */
     public GoalCard(int Points, boolean IsResourceGoal) {
-        this.Points = Points;
-        this.IsResourceGoal = IsResourceGoal;
+        this.points = Points;
+        this.isResourceGoal = IsResourceGoal;
     }
 
     /**
@@ -24,7 +24,7 @@ abstract public class GoalCard {
      * @return Points
      */
     public int getPoints() {
-        return Points;
+        return points;
     }
 
     /**
@@ -32,6 +32,6 @@ abstract public class GoalCard {
      * @return boolean describing the card type
      */
     public boolean isResourceGoal() {
-        return IsResourceGoal;
+        return isResourceGoal;
     }
 }

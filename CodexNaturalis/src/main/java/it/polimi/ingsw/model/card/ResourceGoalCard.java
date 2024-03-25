@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author Lorenzo Meroi
  */
 public class ResourceGoalCard extends GoalCard{
-    private ArrayList<Resource> Requirements;
+    private ArrayList<Resource> requirements;
 
     /**
      * ResourceGoalCard constructor
@@ -17,7 +17,8 @@ public class ResourceGoalCard extends GoalCard{
      */
     public ResourceGoalCard (int Points, ArrayList<Resource> requirements) {
         super(Points, true);
-        this.Requirements.addAll(requirements);
+        requirements = new ArrayList<>();
+        this.requirements.addAll(requirements);
     }
 
     /**
@@ -25,6 +26,6 @@ public class ResourceGoalCard extends GoalCard{
      * @return Requirements
      */
     public ArrayList<Resource> getRequirements() {
-        return Requirements;
+        return requirements;
     }
 }

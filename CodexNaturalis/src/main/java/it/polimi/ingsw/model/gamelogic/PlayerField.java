@@ -11,33 +11,33 @@ import java.util.Map;
  * @author Lorenzo Meroi
  */
 public class PlayerField {
-    private ArrayList<ResourceCard> Hand;
+    private ArrayList<ResourceCard> hand;
 
-    private GoalCard PrivateGoal;
+    private GoalCard privateGoal;
 
-    private Map<Coordinates, GameCard> GameZone;
+    private Map<Coordinates, GameCard> gameZone;
 
-    private Map<Resource, Integer> ResourceMap;
+    private Map<Resource, Integer> resourceMap;
 
     /**
      * PlayerField constructor
      * @param startingCard the first card to be ever placed in the game zone
      */
     public PlayerField (StartingCard startingCard) {
-        Hand = new ArrayList<ResourceCard>();
-        GameZone = new HashMap<Coordinates, GameCard>();
-        GameZone.put(new Coordinates(0,0), startingCard);
-        ResourceMap = new HashMap<Resource, Integer>();
+        hand = new ArrayList<ResourceCard>();
+        gameZone = new HashMap<Coordinates, GameCard>();
+        gameZone.put(new Coordinates(0,0), startingCard);
+        resourceMap = new HashMap<Resource, Integer>();
 
         for (Resource resource : startingCard.getPermanentResources()) {
             if (resource != null) {
-                ResourceMap.put(resource, ResourceMap.get(resource) + 1);
+                resourceMap.put(resource, resourceMap.get(resource) + 1);
             }
         }
         for (int i = 0; i<=3; i++) {
             Resource resource = startingCard.getCorner(i);
             if (resource!=null && !resource.equals(Resource.BLANK) && !resource.equals(Resource.HIDDEN)) {
-                ResourceMap.put(resource, ResourceMap.get(resource)+1);
+                resourceMap.put(resource, resourceMap.get(resource)+1);
             }
         }
 
@@ -48,7 +48,7 @@ public class PlayerField {
      * @return ArrayList<ResourceCard>
      */
     public ArrayList<ResourceCard> getHand() {
-        return Hand;
+        return hand;
     }
 
     /**
@@ -58,7 +58,7 @@ public class PlayerField {
      */
     public void Draw (Deck from, int which) {
         ResourceCard drawn = from.Draw(which);
-        Hand.add(drawn);
+        hand.add(drawn);
     }
 
     /**
@@ -68,17 +68,17 @@ public class PlayerField {
      */
     public int Play (Coordinates where, ResourceCard card) {
         if (IsPlayable(where, card)) {
-            GameZone.put(where, card);
+            gameZone.put(where, card);
             if (!card.getIsFront()) {
                 Resource permanentResource = getResource(card);
 
-                ResourceMap.put(permanentResource, ResourceMap.get(permanentResource)+1);
+                resourceMap.put(permanentResource, resourceMap.get(permanentResource)+1);
             }
             else {
                 for (int i=0; i<4; i++) {
                     Resource resource = card.getCorner(i);
                     if (resource!=null && !resource.equals(Resource.HIDDEN) && !resource.equals(Resource.BLANK) && !resource.equals(Resource.COVERED)) {
-                        ResourceMap.put(resource, ResourceMap.get(resource)+1);
+                        resourceMap.put(resource, resourceMap.get(resource)+1);
                     }
                 }
             }
@@ -86,36 +86,36 @@ public class PlayerField {
             int cardX = where.getX();
             int cardY = where.getY();
 
-            for (Coordinates coordinate : GameZone.keySet()) {
+            for (Coordinates coordinate : gameZone.keySet()) {
                 int x = coordinate.getX();
                 int y = coordinate.getY();
                 if (x == cardX+1 && y == cardY+1) {
 
-                    if (!GameZone.get(coordinate).getCorner(2).equals(Resource.BLANK))
-                        ResourceMap.put(GameZone.get(coordinate).getCorner(2), ResourceMap.get(GameZone.get(coordinate).getCorner(2))-1);
+                    if (!gameZone.get(coordinate).getCorner(2).equals(Resource.BLANK))
+                        resourceMap.put(gameZone.get(coordinate).getCorner(2), resourceMap.get(gameZone.get(coordinate).getCorner(2))-1);
 
-                    GameZone.get(coordinate).coverCorner(2);
+                    gameZone.get(coordinate).coverCorner(2);
 
                 } else if (x == cardX+1 && y == cardY-1) {
 
-                    if (!GameZone.get(coordinate).getCorner(0).equals(Resource.BLANK))
-                        ResourceMap.put(GameZone.get(coordinate).getCorner(0), ResourceMap.get(GameZone.get(coordinate).getCorner(0))-1);
+                    if (!gameZone.get(coordinate).getCorner(0).equals(Resource.BLANK))
+                        resourceMap.put(gameZone.get(coordinate).getCorner(0), resourceMap.get(gameZone.get(coordinate).getCorner(0))-1);
 
-                    GameZone.get(coordinate).coverCorner(0);
+                    gameZone.get(coordinate).coverCorner(0);
 
                 } else if (x == cardX-1 && y == cardY-1) {
 
-                    if (!GameZone.get(coordinate).getCorner(1).equals(Resource.BLANK))
-                        ResourceMap.put(GameZone.get(coordinate).getCorner(1), ResourceMap.get(GameZone.get(coordinate).getCorner(1))-1);
+                    if (!gameZone.get(coordinate).getCorner(1).equals(Resource.BLANK))
+                        resourceMap.put(gameZone.get(coordinate).getCorner(1), resourceMap.get(gameZone.get(coordinate).getCorner(1))-1);
 
-                    GameZone.get(coordinate).coverCorner(1);
+                    gameZone.get(coordinate).coverCorner(1);
 
                 } else if (x == cardX-1 && y == cardY+1) {
 
-                    if (!GameZone.get(coordinate).getCorner(3).equals(Resource.BLANK))
-                        ResourceMap.put(GameZone.get(coordinate).getCorner(3), ResourceMap.get(GameZone.get(coordinate).getCorner(3))-1);
+                    if (!gameZone.get(coordinate).getCorner(3).equals(Resource.BLANK))
+                        resourceMap.put(gameZone.get(coordinate).getCorner(3), resourceMap.get(gameZone.get(coordinate).getCorner(3))-1);
 
-                    GameZone.get(coordinate).coverCorner(3);
+                    gameZone.get(coordinate).coverCorner(3);
 
                 }
             }
@@ -160,7 +160,7 @@ public class PlayerField {
      * @return true if it's playable, false if it is not
      */
     public boolean IsPlayable (Coordinates where, ResourceCard card) {
-        if (GameZone.containsKey(where))
+        if (gameZone.containsKey(where))
             return false;
         if (card.getIsGold()) {
             if (!checkConditions((GoldCard) card))
@@ -177,7 +177,7 @@ public class PlayerField {
         int cardX = where.getX();
         int cardY = where.getY();
 
-        for (Coordinates coordinate : GameZone.keySet()) {
+        for (Coordinates coordinate : gameZone.keySet()) {
             int x = coordinate.getX();
             int y = coordinate.getY();
 
@@ -213,7 +213,7 @@ public class PlayerField {
                 int cardX = where.getX();
                 int cardY = where.getY();
 
-                for (Coordinates coordinates : GameZone.keySet()) {
+                for (Coordinates coordinates : gameZone.keySet()) {
                     int x = coordinates.getX();
                     int y = coordinates.getY();
 
@@ -230,17 +230,22 @@ public class PlayerField {
                 return points;
             }
 
-            case POTION -> {return ResourceMap.get(Resource.POTION);}
+            case POTION -> {return resourceMap.get(Resource.POTION);}
 
-            case SCROLL -> {return ResourceMap.get(Resource.SCROLL);}
+            case SCROLL -> {return resourceMap.get(Resource.SCROLL);}
 
-            case FEATHER -> {return ResourceMap.get(Resource.FEATHER);}
+            case FEATHER -> {return resourceMap.get(Resource.FEATHER);}
 
             default -> {return 0;}
         }
 
     }
 
+    /**
+     * method to check if the playable condition of a gold card is respected
+     * @param card to check the conditions of
+     * @return boolean
+     */
     private boolean checkConditions(GoldCard card) {
         int fungi = 0;
         int animal = 0;
@@ -258,7 +263,7 @@ public class PlayerField {
                 insect++;
         }
 
-        return (fungi<=ResourceMap.get(Resource.FUNGI) && animal<=ResourceMap.get(Resource.ANIMAL) && plant<=ResourceMap.get(Resource.PLANT) && insect<=ResourceMap.get(Resource.INSECT));
+        return (fungi<= resourceMap.get(Resource.FUNGI) && animal<= resourceMap.get(Resource.ANIMAL) && plant<= resourceMap.get(Resource.PLANT) && insect<= resourceMap.get(Resource.INSECT));
     }
 
     /**
@@ -266,7 +271,7 @@ public class PlayerField {
      * @return GoalCard
      */
     public GoalCard getPrivateGoal() {
-        return PrivateGoal;
+        return privateGoal;
     }
 
     /**
@@ -274,7 +279,7 @@ public class PlayerField {
      * @param privateGoal
      */
     public void setPrivateGoal(GoalCard privateGoal) {
-        PrivateGoal = privateGoal;
+        this.privateGoal = privateGoal;
     }
 
     /**
@@ -282,7 +287,7 @@ public class PlayerField {
      * @return Map<Coordinates, GameCard>
      */
     public Map<Coordinates, GameCard> getGameZone() {
-        return GameZone;
+        return gameZone;
     }
 
     /**
@@ -291,7 +296,7 @@ public class PlayerField {
      * @return int
      */
     public int getResource (Resource which) {
-        return ResourceMap.get(which);
+        return resourceMap.get(which);
     }
 
     /**
@@ -300,6 +305,6 @@ public class PlayerField {
      * @param how to set it
      */
     public void setResource(Resource which, int how) {
-        ResourceMap.put(which, how);
+        resourceMap.put(which, how);
     }
 }

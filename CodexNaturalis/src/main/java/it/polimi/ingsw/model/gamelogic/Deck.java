@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.gamelogic;
 
-import it.polimi.ingsw.model.card.Resource;
 import it.polimi.ingsw.model.card.ResourceCard;
 
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
@@ -11,9 +11,9 @@ import java.util.Queue;
  * @author Lorenzo Meroi
  */
 public class Deck {
-    private Queue<ResourceCard> Cards;
+    private Queue<ResourceCard> cards;
 
-    private ResourceCard[] UncoveredCards;
+    private ResourceCard[] uncoveredCards;
 
     /**
      * Deck constructor
@@ -21,8 +21,9 @@ public class Deck {
      * @param uncoveredCards array of the uncovered card on the table
      */
     public Deck (Queue<ResourceCard> cards, ResourceCard[] uncoveredCards) {
-        this.Cards.addAll(cards);
-        this.UncoveredCards = uncoveredCards.clone();
+        this.cards = new LinkedList<>();
+        this.cards.addAll(cards);
+        this.uncoveredCards = uncoveredCards.clone();
     }
 
     /**
@@ -33,13 +34,13 @@ public class Deck {
     public ResourceCard Draw (int which) {
         if (which == 0) {//drawing from deck
             try {
-                return Cards.remove();
+                return cards.remove();
             } catch (NoSuchElementException e) {
                 System.out.println("Deck empty, cannot Draw");
             }
         } else { //drawing from uncovered cards
             try {
-                ResourceCard drawn = UncoveredCards[which-1];
+                ResourceCard drawn = uncoveredCards[which-1];
                 setUncoveredCard(which);
                 return drawn;
             } catch (NullPointerException e) {
@@ -54,7 +55,7 @@ public class Deck {
      * @return ResourceCard[]
      */
     public ResourceCard[] getUncoveredCards (){
-        return this.UncoveredCards.clone();
+        return this.uncoveredCards.clone();
     }
 
     /**
@@ -62,6 +63,6 @@ public class Deck {
      * @param Which can be 1(first uncovered card) or 2(second uncovered card)
      */
     public void setUncoveredCard (int Which) {
-        this.UncoveredCards[Which-1] = this.Draw(0);
+        this.uncoveredCards[Which-1] = this.Draw(0);
     }
 }

@@ -7,9 +7,9 @@ import java.util.ArrayList;
  * @author Lorenzo Meroi
  */
 public class PositionGoalCard extends GoalCard{
-    private ArrayList<Direction> PositionsFromBase;
+    private ArrayList<Direction> positionsFromBase;
 
-    private ArrayList<Kingdom> ResourceFromBase;
+    private ArrayList<Kingdom> resourceFromBase;
 
     /**
      * PositionGoalCard constructor
@@ -20,8 +20,10 @@ public class PositionGoalCard extends GoalCard{
      */
     public PositionGoalCard (int Points, ArrayList<Direction> PositionsFromBase, ArrayList<Kingdom> ResourceFromBase) {
         super(Points, false);
-        this.PositionsFromBase.addAll(PositionsFromBase);
-        this.ResourceFromBase.addAll(ResourceFromBase);
+        positionsFromBase = new ArrayList<>();
+        this.positionsFromBase.addAll(PositionsFromBase);
+        resourceFromBase = new ArrayList<>();
+        this.resourceFromBase.addAll(ResourceFromBase);
     }
 
     /**
@@ -29,7 +31,7 @@ public class PositionGoalCard extends GoalCard{
      * @return getPositionsFromBase
      */
     public ArrayList<Direction> getPositionsFromBase() {
-        return PositionsFromBase;
+        return positionsFromBase;
     }
 
     /**
@@ -37,6 +39,6 @@ public class PositionGoalCard extends GoalCard{
      * @return getResourceFromBase
      */
     public ArrayList<Kingdom> getResourceFromBase() {
-        return ResourceFromBase;
+        return resourceFromBase;
     }
 }

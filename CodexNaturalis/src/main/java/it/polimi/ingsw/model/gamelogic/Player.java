@@ -5,8 +5,8 @@ package it.polimi.ingsw.model.gamelogic;
  * @author Lorenzo Meroi
  */
 public class Player {
-    private String Nickname;
-    private Color Color;
+    private String nickname;
+    private Color color;
 
     /**
      * Player constructor
@@ -14,8 +14,8 @@ public class Player {
      * @param color to identify a Player
      */
     public Player (String nickname, Color color) {
-        this.Nickname = nickname;
-        this.Color = color;
+        this.nickname = nickname;
+        this.color = color;
     }
 
     /**
@@ -23,7 +23,7 @@ public class Player {
      * @return String
      */
     public String getNickname() {
-        return Nickname;
+        return nickname;
     }
 
     /**
@@ -31,7 +31,7 @@ public class Player {
      * @param nickname to give the player
      */
     public void setNickname(String nickname) {
-        Nickname = nickname;
+        this.nickname = nickname;
     }
 
     /**
@@ -39,7 +39,7 @@ public class Player {
      * @return Color
      */
     public Color getColor() {
-        return Color;
+        return color;
     }
 
     /**
@@ -47,6 +47,6 @@ public class Player {
      * @param color to give the player
      */
     public void setColor(Color color) {
-        Color = color;
+        this.color = color;
     }
 }
