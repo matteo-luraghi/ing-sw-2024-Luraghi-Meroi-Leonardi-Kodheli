@@ -120,7 +120,12 @@ public class PlayerField {
                 }
             }
 
-            return calculateCardPoints(where, card);
+            if (!card.getIsGold()) {
+                return card.getPoints();
+            }
+            else {
+                return calculateCardPoints(where, (GoldCard) card);
+            }
         }
         else{
             System.out.println("This card cannot be played here");
@@ -155,11 +160,20 @@ public class PlayerField {
      * @return true if it's playable, false if it is not
      */
     public boolean IsPlayable (Coordinates where, ResourceCard card) {
-        //TODO add check required to play gold cards
+        if (GameZone.containsKey(where))
+            return false;
+        if (card.getIsGold()) {
+            if (!checkConditions((GoldCard) card))
+                return false;
+        }
         boolean canTR = true;
+        boolean existsTR = false;
         boolean canTL = true;
+        boolean existsTL = false;
         boolean canBR = true;
+        boolean existsBR = false;
         boolean canBL = true;
+        boolean existsBL = false;
         int cardX = where.getX();
         int cardY = where.getY();
 
@@ -168,16 +182,20 @@ public class PlayerField {
             int y = coordinate.getY();
 
             if (x == cardX+1 && y == cardY+1) {
+                existsTR = true;
                 canTR = !card.getCorner(2).equals(Resource.HIDDEN);
             } else if (x == cardX+1 && y == cardY-1) {
+                existsBR = true;
                 canBR  =!card.getCorner(1).equals(Resource.HIDDEN);
             } else if (x == cardX-1 && y == cardY+1) {
+                existsTL = true;
                 canTL  =!card.getCorner(1).equals(Resource.HIDDEN);
             } else if (x == cardX-1 && y == cardY-1) {
+                existsBL = true;
                 canBL  =!card.getCorner(1).equals(Resource.HIDDEN);
             }
         }
-        return (canTR && canBR && canTL && canBL);
+        return (canTR && canBR && canTL && canBL && (existsTR || existsBR || existsTL || existsBL));
     }
 
     /**
@@ -186,7 +204,62 @@ public class PlayerField {
      * @param card the card you want to play
      * @return the points you get from playing it
      */
-    private int calculateCardPoints (Coordinates where, ResourceCard card) {}
+    private int calculateCardPoints (Coordinates where, GoldCard card) {
+        switch (card.getPointCondition()) {
+            case NORMAL -> {return card.getPoints();}
+
+            case CORNER -> {
+                int points = 0;
+                int cardX = where.getX();
+                int cardY = where.getY();
+
+                for (Coordinates coordinates : GameZone.keySet()) {
+                    int x = coordinates.getX();
+                    int y = coordinates.getY();
+
+                    if (x == cardX+1 && y == cardY+1)
+                        points = points+2;
+                    else if (x == cardX+1 && y == cardY-1)
+                        points = points+2;
+                    else if (x == cardX-1 && y == cardY+1)
+                        points = points+2;
+                    else if (x == cardX-1 && y == cardY-1)
+                        points = points+2;
+                }
+
+                return points;
+            }
+
+            case POTION -> {return ResourceMap.get(Resource.POTION);}
+
+            case SCROLL -> {return ResourceMap.get(Resource.SCROLL);}
+
+            case FEATHER -> {return ResourceMap.get(Resource.FEATHER);}
+
+            default -> {return 0;}
+        }
+
+    }
+
+    private boolean checkConditions(GoldCard card) {
+        int fungi = 0;
+        int animal = 0;
+        int plant = 0;
+        int insect = 0;
+
+        for (Resource resource : card.getPlayableCondition()) {
+            if (resource.equals(Resource.FUNGI))
+                fungi++;
+            else if (resource.equals(Resource.ANIMAL))
+                animal++;
+            else if (resource.equals(Resource.PLANT))
+                plant++;
+            else if (resource.equals(Resource.INSECT))
+                insect++;
+        }
+
+        return (fungi<=ResourceMap.get(Resource.FUNGI) && animal<=ResourceMap.get(Resource.ANIMAL) && plant<=ResourceMap.get(Resource.PLANT) && insect<=ResourceMap.get(Resource.INSECT));
+    }
 
     /**
      * private goal getter
