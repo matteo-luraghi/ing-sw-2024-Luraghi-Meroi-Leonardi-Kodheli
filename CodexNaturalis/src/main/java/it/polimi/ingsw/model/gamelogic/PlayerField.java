@@ -154,7 +154,30 @@ public class PlayerField {
      * @param card the card you want to play
      * @return true if it's playable, false if it is not
      */
-    public boolean IsPlayable (Coordinates where, ResourceCard card) {}
+    public boolean IsPlayable (Coordinates where, ResourceCard card) {
+        boolean canTR = true;
+        boolean canTL = true;
+        boolean canBR = true;
+        boolean canBL = true;
+        int cardX = where.getX();
+        int cardY = where.getY();
+
+        for (Coordinates coordinate : GameZone.keySet()) {
+            int x = coordinate.getX();
+            int y = coordinate.getY();
+
+            if (x == cardX+1 && y == cardY+1) {
+                canTR = !card.getCorner(2).equals(Resource.HIDDEN);
+            } else if (x == cardX+1 && y == cardY-1) {
+                canBR  =!card.getCorner(1).equals(Resource.HIDDEN);
+            } else if (x == cardX-1 && y == cardY+1) {
+                canTL  =!card.getCorner(1).equals(Resource.HIDDEN);
+            } else if (x == cardX-1 && y == cardY-1) {
+                canBL  =!card.getCorner(1).equals(Resource.HIDDEN);
+            }
+        }
+        return (canTR && canBR && canTL && canBL);
+    }
 
     /**
      * method to calculate the points given when playing a card
