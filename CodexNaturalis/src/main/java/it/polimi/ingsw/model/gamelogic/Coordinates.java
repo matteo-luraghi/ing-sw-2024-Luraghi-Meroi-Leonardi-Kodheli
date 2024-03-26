@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.card;
+package it.polimi.ingsw.model.gamelogic;
 
 /**
  * Coordinates Class

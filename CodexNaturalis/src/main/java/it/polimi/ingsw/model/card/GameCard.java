@@ -5,7 +5,7 @@ package it.polimi.ingsw.model.card;
  * @author Matteo Leonardo Luraghi
  */
 abstract public class GameCard {
-    private Resource[] corners;
+    private Resource[] corners; //0 is Top LEFT, 1 is TOP RIGHT, 2 is BOTTOM LEFT, 3 is BOTTOM RIGHT
     private final Kingdom kingdom;
     private boolean isFront;
 
