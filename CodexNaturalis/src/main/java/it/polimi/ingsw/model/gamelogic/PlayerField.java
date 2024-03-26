@@ -290,7 +290,7 @@ public class PlayerField {
 
     /**
      * game zone getter
-     * @return Map<Coordinates, GameCard>
+     * @return Map of Coordinates and Game cards
      */
     public Map<Coordinates, GameCard> getGameZone() {
         return gameZone;
