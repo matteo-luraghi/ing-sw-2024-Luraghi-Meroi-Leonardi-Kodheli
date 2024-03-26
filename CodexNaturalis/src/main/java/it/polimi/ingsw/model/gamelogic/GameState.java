@@ -48,13 +48,13 @@ public class GameState {
     public void NextState()
     {
         switch (state){
-            case State.SETUP:
+            case SETUP:
                 state = State.GAMEFLOW;
                 break;
-            case State.GAMEFLOW:
+            case GAMEFLOW:
                 state = State.COUNTGOALS;
                 break;
-            case State.COUNTGOALS:
+            case COUNTGOALS:
                 state = State.FINAL;
                 break;
             default:
