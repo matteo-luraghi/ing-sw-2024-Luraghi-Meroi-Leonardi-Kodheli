@@ -28,6 +28,7 @@ public class StartingCard extends GameCard{
      * @param corner index of the selected corner
      * @return Resource present on the selected corner
      */
+    @Override
     public Resource getCorner(int corner) {
         if(this.getIsFront()) {
             this.getCorner(corner);

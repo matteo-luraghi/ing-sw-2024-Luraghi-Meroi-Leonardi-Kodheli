@@ -16,16 +16,14 @@ public class GoldCard extends ResourceCard{
      * @param isFront which side of the card is currently visible
      * @param corners content of the front corners of the card
      * @param points points assigned when the card is played
-     * @param isGold true if the card is gold
      * @param pointCondition condition to get the points when the card is played
      * @param playableCondition necessary condition to play the card
      */
-    public GoldCard(Kingdom kingdom, boolean isFront, Resource[] corners, int points, boolean isGold,
+    public GoldCard(Kingdom kingdom, boolean isFront, Resource[] corners, int points,
                     PointCondition pointCondition, ArrayList<Resource> playableCondition) {
-        super(kingdom, isFront, corners, points, isGold);
+        super(kingdom, isFront, corners, points, true);
         this.pointCondition = pointCondition;
-        this.playableCondition = (ArrayList<Resource>) playableCondition.clone();
-
+        this.playableCondition = new ArrayList<>(playableCondition);
     }
 
     /**
