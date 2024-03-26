@@ -166,6 +166,9 @@ public class PlayerField {
             if (!checkConditions((GoldCard) card))
                 return false;
         }
+        if (Math.abs(where.getY() + where.getX()) % 2 == 1) {
+            return false;
+        }
         //booleans that describe whether a nearby card exists and whether the corresponding corner is hidden or not
         boolean canTR = true;
         boolean existsTR = false;
@@ -176,11 +179,6 @@ public class PlayerField {
         boolean canBL = true;
         boolean existsBL = false;
 
-        //booleans that describe whether a card is placed immediately Left, Right, Top or Down
-        boolean existsL = false;
-        boolean existsR = false;
-        boolean existsT = false;
-        boolean existsB = false;
 
         int cardX = where.getX();
         int cardY = where.getY();
@@ -201,17 +199,9 @@ public class PlayerField {
             } else if (x == cardX-1 && y == cardY-1) {
                 existsBL = true;
                 canBL  =!card.getCorner(1).equals(Resource.HIDDEN);
-            } else if (x == cardX-1 && y == cardY) {
-                existsL = true;
-            } else if (x == cardX+1 && y == cardY) {
-                existsR = true;
-            } else if (x == cardX && y == cardY+1) {
-                existsT = true;
-            } else if (x == cardX && y == cardY-1) {
-                existsB = true;
             }
         }
-        return (canTR && canBR && canTL && canBL && (existsTR || existsBR || existsTL || existsBL) && !existsL && !existsB && !existsR && !existsT);
+        return (canTR && canBR && canTL && canBL && (existsTR || existsBR || existsTL || existsBL));
     }
 
     /**
