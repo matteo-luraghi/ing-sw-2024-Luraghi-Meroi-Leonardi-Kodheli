@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.gamelogic;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * class GameState
@@ -42,23 +43,33 @@ public class GameState {
 
     /**
      * Sets the next state SETUP->GAMEFLOW->COUNTGOALS->FINAL (if final won't be changed)
-     *
-     * @return true if the state changed
+     * @throws IllegalStateException If State = FINAL or wrong
      */
-    public boolean NextState()
+    public void NextState()
     {
-        if (!state.equals(State.FINAL)) {
-            State++;
-            if(state==State.COUNTGOALS)
-            {
-                for(PlayerField playerField: gameTable.getPlayerZones().keySet()) {
-                    GameTable.countGoalPoints(playerField);
-                }
-            this.winner=ComputeWinner();
-            }
-            return true;
+        switch (state){
+            case State.SETUP:
+                state = State.GAMEFLOW;
+                break;
+            case State.GAMEFLOW:
+                state = State.COUNTGOALS;
+                break;
+            case State.COUNTGOALS:
+                state = State.FINAL;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + state);
         }
-        return false;
+        /* TODO: See it's better to implement it here or in Controller class
+        if(state==State.COUNTGOALS)
+        {
+            for(PlayerField playerField: gameTable.getPlayerZones().values()) {
+                gameTable.countGoalPoints(playerField);
+            }
+            this.winner=ComputeWinner();
+        }
+        return true;
+        */
     }
 
     /**
