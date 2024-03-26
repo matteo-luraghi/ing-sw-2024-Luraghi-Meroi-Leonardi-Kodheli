@@ -311,7 +311,7 @@ public class PlayerField {
      * @param which resource to get
      * @return int
      */
-    public int getResource (Resource which) {
+    public int getResourceFromMap (Resource which) {
         return resourceMap.get(which);
     }
 
