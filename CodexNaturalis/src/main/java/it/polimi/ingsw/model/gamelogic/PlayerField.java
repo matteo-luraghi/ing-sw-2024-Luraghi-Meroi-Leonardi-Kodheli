@@ -74,10 +74,13 @@ public class PlayerField {
      * method to play a card in a position
      * @param where the coordinates in which you want to play
      * @param card the card you want to play
+     * @return the number of points that the card has gotten (0 could also indicate the card could not be played there)
      */
     public int Play (Coordinates where, ResourceCard card) {
         if (IsPlayable(where, card)) {
             gameZone.put(where, card);
+
+            //Add the visible resources to the resourceMap
             if (!card.getIsFront()) {
                 Resource permanentResource = getResource(card);
 
@@ -94,32 +97,34 @@ public class PlayerField {
 
             int cardX = where.getX();
             int cardY = where.getY();
+            //Loop over every card in the GameZone, if we find one adjacent to the card we are about to play
+            //and the corner is not BLANK (we know it's not HIDDEN or COVERED thanks to the IsPlayable method
 
             for (Coordinates coordinate : gameZone.keySet()) {
                 int x = coordinate.getX();
                 int y = coordinate.getY();
-                if (x == cardX+1 && y == cardY+1) {
+                if (x == cardX+1 && y == cardY+1) { //TopRight
 
                     if (!gameZone.get(coordinate).getCorner(2).equals(Resource.BLANK))
                         resourceMap.put(gameZone.get(coordinate).getCorner(2), resourceMap.get(gameZone.get(coordinate).getCorner(2))-1);
 
                     gameZone.get(coordinate).coverCorner(2);
 
-                } else if (x == cardX+1 && y == cardY-1) {
+                } else if (x == cardX+1 && y == cardY-1) { //BottomRight
 
                     if (!gameZone.get(coordinate).getCorner(0).equals(Resource.BLANK))
                         resourceMap.put(gameZone.get(coordinate).getCorner(0), resourceMap.get(gameZone.get(coordinate).getCorner(0))-1);
 
                     gameZone.get(coordinate).coverCorner(0);
 
-                } else if (x == cardX-1 && y == cardY-1) {
+                } else if (x == cardX-1 && y == cardY-1) { //BottomLeft
 
                     if (!gameZone.get(coordinate).getCorner(1).equals(Resource.BLANK))
                         resourceMap.put(gameZone.get(coordinate).getCorner(1), resourceMap.get(gameZone.get(coordinate).getCorner(1))-1);
 
                     gameZone.get(coordinate).coverCorner(1);
 
-                } else if (x == cardX-1 && y == cardY+1) {
+                } else if (x == cardX-1 && y == cardY+1) { //TopLeft
 
                     if (!gameZone.get(coordinate).getCorner(3).equals(Resource.BLANK))
                         resourceMap.put(gameZone.get(coordinate).getCorner(3), resourceMap.get(gameZone.get(coordinate).getCorner(3))-1);
@@ -129,6 +134,7 @@ public class PlayerField {
                 }
             }
 
+            //Return the amount of points the card has scored
             if (!card.getIsGold()) {
                 return card.getPoints();
             }
@@ -137,7 +143,7 @@ public class PlayerField {
             }
         }
         else{
-            System.out.println("This card cannot be played here");
+            System.err.println("This card cannot be played here");
         }
         return 0;
     }
@@ -214,7 +220,7 @@ public class PlayerField {
     }
 
     /**
-     * method to calculate the points given when playing a card
+     * method to calculate the points given when playing a gold card
      * @param where the coordinates in which you want to play the card
      * @param card the card you want to play
      * @return the points you get from playing it
@@ -303,7 +309,7 @@ public class PlayerField {
      */
     public Map<Coordinates, GameCard> getGameZone() {
         return gameZone;
-    }
+    } //TODO: should we return a copy?
 
     /**
      * resource from resource map getter
@@ -312,7 +318,7 @@ public class PlayerField {
      */
     public int getResourceFromMap (Resource which) {
         return resourceMap.get(which);
-    }
+    } //TODO: should we return a copy?
 
     /**
      * resource from resource map setter

@@ -14,7 +14,7 @@ public class GameTable {
     private Deck ResourceDeck;
     private Deck GoldDeck;
     private Map<Player, PlayerField> PlayerZones;
-    private GoldCard[] CommonGoals;
+    private GoldCard[] CommonGoals; //TODO: THIS NEEDS TO BE GOALCARD BUT GOALCARD IS ABSTACT!!
     private ScoreBoard Scoreboard;
 
     /**
@@ -93,6 +93,7 @@ public class GameTable {
     public int countGoalPoints (PlayerField Player)
     {
         return 0;
+        //TODO: Complete this function once we have established how we handle coordinates
         /**
          * ...
          */
