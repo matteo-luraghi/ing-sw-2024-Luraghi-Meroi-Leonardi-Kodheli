@@ -27,27 +27,49 @@ public class Deck {
     }
 
     /**
-     * Draw function
+     * Draw function (only called internally from the Deck class)
      * @param which can be 0 (from deck), 1(first uncovered card), 2(second uncovered card)
+     * @throws NullPointerException when trying to draw from an uncovered card that does not exist
      * @return ResourceCard chosen
      */
-    public ResourceCard Draw (int which) {
+    private ResourceCard Draw (int which) {
         if (which == 0) {//drawing from deck
-            try {
-                return cards.remove();
-            } catch (NoSuchElementException e) {
-                System.out.println("Deck empty, cannot Draw");
-            }
+            return cards.remove();
         } else { //drawing from uncovered cards
             try {
                 ResourceCard drawn = uncoveredCards[which-1];
                 setUncoveredCard(which);
                 return drawn;
-            } catch (NullPointerException e) {
-                System.out.println("No such card in here");
+            } catch (NullPointerException e) {  //TODO: Custom exception?
+                System.err.println("No such card in here");
             }
         }
         return null;
+    }
+
+    /**
+     * Draw from the deck function accessible from the outside
+     * @return ResourceCard chosen
+     */
+    public ResourceCard DrawFromDeck(){
+        if(cards.isEmpty()){
+            System.err.println("Deck empty, cannot Draw");
+            return null;
+        }
+        return Draw(0);
+    }
+
+    /**
+     * Draw from the deck function accessible from the outside
+     * @param which (should only be 0 or 1) indicating the index of the UncoveredResourceCard to draw
+     * @return ResourceCard chosen
+     */
+    public ResourceCard DrawFromUncovered(int which){
+        if(which != 0 && which != 1){
+            System.err.println("param which is outOfBounds");
+            return null;
+        }
+        return Draw(which + 1);
     }
 
     /**
