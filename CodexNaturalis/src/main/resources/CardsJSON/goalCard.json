@@ -1,0 +1,138 @@
+{"startingCards":[
+  {
+    "points":2,
+    "isResourceGoal":false,
+    "positionsFromBase": [
+      {"0": "TOP-RIGHT", "1": "TOP-RIGHT"}
+    ],
+    "resourcesFromBase": [
+      {"0": "FUNGI", "1": "FUNGI", "2": "FUNGI"}
+    ]
+  },
+  {
+    "points":2,
+    "isResourceGoal":false,
+    "positionsFromBase": [
+      {"0": "TOP-LEFT", "1": "TOP-LEFT"}
+    ],
+    "resourcesFromBase": [
+      {"0": "PLANT", "1": "PLANT", "2": "PLANT"}
+    ]
+  },
+  {
+    "points":2,
+    "isResourceGoal":false,
+    "positionsFromBase": [
+      {"0": "TOP-RIGHT", "1": "TOP-RIGHT"}
+    ],
+    "resourcesFromBase": [
+      {"0": "ANIMAL", "1": "ANIMAL", "2": "ANIMAL"}
+    ]
+  },
+  {
+    "points":2,
+    "isResourceGoal":false,
+    "positionsFromBase": [
+      {"0": "TOP-LEFT", "1": "TOP-LEFT"}
+    ],
+    "resourcesFromBase": [
+      {"0": "INSECT", "1": "INSECT", "2": "INSECT"}
+    ]
+  },
+  {
+    "points":3,
+    "isResourceGoal":false,
+    "positionsFromBase": [
+      {"0": "TOP-LEFT", "1": "TOP"}
+    ],
+    "resourcesFromBase": [
+      {"0": "PLANT", "1": "FUNGI", "2": "FUNGI"}
+    ]
+  },
+  {
+    "points":3,
+    "isResourceGoal":false,
+    "positionsFromBase": [
+      {"0": "TOP-RIGHT", "1": "TOP"}
+    ],
+    "resourcesFromBase": [
+      {"0": "INSECT", "1": "PLANT", "2": "PLANT"}
+    ]
+  },
+  {
+    "points":3,
+    "isResourceGoal":false,
+    "positionsFromBase": [
+      {"0": "TOP", "1": "TOP-RIGHT"}
+    ],
+    "resourcesFromBase": [
+      {"0": "ANIMAL", "1": "ANIMAL", "2": "FUNGI"}
+    ]
+  },
+  {
+    "points":3,
+    "isResourceGoal":false,
+    "positionsFromBase": [
+      {"0": "TOP", "1": "TOP-LEFT"}
+    ],
+    "resourcesFromBase": [
+      {"0": "INSECT", "1": "INSECT", "2": "ANIMAL"}
+    ]
+  },
+  {
+    "points":2,
+    "isResourceGoal":true,
+    "requirements": [
+      {"resource": "FUNGI", "resource": "FUNGI", "resource":  "FUNGI"}
+    ]
+  },
+  {
+    "points":2,
+    "isResourceGoal":true,
+    "requirements": [
+      {"resource": "PLANT", "resource": "PLANT", "resource":  "PLANT"}
+    ]
+  },
+  {
+    "points":2,
+    "isResourceGoal":true,
+    "requirements": [
+      {"resource": "ANIMAL", "resource": "ANIMAL", "resource":  "ANIMAL"}
+    ]
+  },
+  {
+    "points":2,
+    "isResourceGoal":true,
+    "requirements": [
+      {"resource": "INSECT", "resource": "INSECT", "resource":  "INSECT"}
+    ]
+  },
+  {
+    "points":3,
+    "isResourceGoal":true,
+    "requirements": [
+      {"resource": "FEATHER", "resource": "POTION", "resource":  "SCROLL"}
+    ]
+  },
+  {
+    "points":2,
+    "isResourceGoal":true,
+    "requirements": [
+      {"resource": "SCROLL", "resource": "SCROLL"}
+    ]
+  },
+  {
+    "points":2,
+    "isResourceGoal":true,
+    "requirements": [
+      {"resource": "POTION", "resource": "POTION"}
+    ]
+  },
+  {
+    "points":2,
+    "isResourceGoal":true,
+    "requirements": [
+      {"resource": "FEATHER", "resource": "FEATHER"}
+    ]
+  }
+]}
