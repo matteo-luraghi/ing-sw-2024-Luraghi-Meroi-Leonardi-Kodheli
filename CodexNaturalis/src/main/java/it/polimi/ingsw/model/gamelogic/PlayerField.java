@@ -29,15 +29,17 @@ public class PlayerField {
         gameZone.put(new Coordinates(0,0), startingCard);
         resourceMap = new HashMap<Resource, Integer>();
 
-        for (Resource resource : startingCard.getPermanentResources()) {
-            if (resource != null) {
-                resourceMap.put(resource, resourceMap.get(resource) + 1);
+        if (startingCard.getIsFront()) {
+            for (Resource resource : startingCard.getPermanentResources()) {
+                if (resource != null) {
+                    resourceMap.put(resource, resourceMap.get(resource) + 1);
+                }
             }
         }
-        for (int i = 0; i<=3; i++) {
+        for (int i = 0; i <= 3; i++) {
             Resource resource = startingCard.getCorner(i);
-            if (resource!=null && !resource.equals(Resource.BLANK) && !resource.equals(Resource.HIDDEN)) {
-                resourceMap.put(resource, resourceMap.get(resource)+1);
+            if (resource != null && !resource.equals(Resource.BLANK) && !resource.equals(Resource.HIDDEN)) {
+                resourceMap.put(resource, resourceMap.get(resource) + 1);
             }
         }
 
