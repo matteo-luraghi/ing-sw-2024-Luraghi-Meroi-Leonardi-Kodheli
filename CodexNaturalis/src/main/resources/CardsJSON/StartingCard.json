@@ -1,0 +1,74 @@
+{"startingCards":[
+  {
+    "kingdom":"STARTING",
+    "corners": [
+      {"0": "BLANK", "1": "PLANT", "2": "INSECT", "3":  "BLANK"}
+    ],
+    "backCorners": [
+      {"0": "FUNGI", "1": "PLANT", "2": "INSECT", "3":  "ANIMAL"}
+    ],
+    "permanentResources": [
+      {"resource": "INSECT"}
+    ]
+  },
+  {
+    "kingdom":"STARTING",
+    "corners": [
+      {"0": "ANIMAL", "1": "BLANK", "2": "BLANK", "3":  "FUNGI"}
+    ],
+    "backCorners": [
+      {"0": "PLANT", "1": "ANIMAL", "2": "FUNGI", "3":  "INSECT"}
+    ],
+    "permanentResources": [
+      {"resource": "FUNGI"}
+    ]
+  },
+  {
+    "kingdom":"STARTING",
+    "corners": [
+      {"0": "BLANK", "1": "BLANK", "2": "BLANK", "3":  "BLANK"}
+    ],
+    "backCorners": [
+      {"0": "INSECT", "1": "ANIMAL", "2": "FUNGI", "3":  "PLANT"}
+    ],
+    "permanentResources": [
+      {"resource": "PLANT", "resource": "FUNGI"}
+    ]
+  },
+  {
+    "kingdom":"STARTING",
+    "corners": [
+      {"0": "BLANK", "1": "BLANK", "2": "BLANK", "3":  "BLANK"}
+    ],
+    "backCorners": [
+      {"0": "PLANT", "1": "INSECT", "2": "ANIMAL", "3":  "FUNGI"}
+    ],
+    "permanentResources": [
+      {"resource": "ANIMAL", "resource": "INSECT"}
+    ]
+  },
+  {
+    "kingdom":"STARTING",
+    "corners": [
+      {"0": "BLANK", "1": "BLANK", "2": "HIDDEN", "3":  "HIDDEN"}
+    ],
+    "backCorners": [
+      {"0": "INSECT", "1": "FUNGI", "2": "PLANT", "3":  "ANIMAL"}
+    ],
+    "permanentResources": [
+      {"resource": "ANIMAL", "resource": "INSECT", "resource": "PLANT"}
+    ]
+  },
+  {
+    "kingdom":"STARTING",
+    "corners": [
+      {"0": "BLANK", "1": "BLANK", "2": "HIDDEN", "3":  "HIDDEN"}
+    ],
+    "backCorners": [
+      {"0": "FUNGI", "1": "ANIMAL", "2": "PLANT", "3":  "INSECT"}
+    ],
+    "permanentResources": [
+      {"resource": "PLANT", "resource": "ANIMAL", "resource": "FUNGI"}
+    ]
+  }
+]}
