@@ -1,10 +1,13 @@
 package it.polimi.ingsw.model.gamelogic;
 
+import com.google.gson.Gson;
+import it.polimi.ingsw.model.card.GoldCard;
 import it.polimi.ingsw.model.card.ResourceCard;
 
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
-import java.util.Queue;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.*;
 
 /**
  * Deck class
@@ -21,9 +24,51 @@ public class Deck {
      * @param uncoveredCards array of the uncovered card on the table
      */
     public Deck (Queue<ResourceCard> cards, ResourceCard[] uncoveredCards) {
-        this.cards = new LinkedList<>();
-        this.cards.addAll(cards);
-        this.uncoveredCards = uncoveredCards.clone();
+        // codice per inizializzare e mischiare i mazzi, TODO controllare se va qui o in una classe inizializzatore
+
+        // list needed to shuffle the cards after they're added
+        List<ResourceCard> cardsList = new ArrayList<>();
+
+        // intialize the json parser
+        Gson gson = new Gson();
+
+        // TODO: replace with parameter
+        String type = "resourceCard";
+
+        if(type.equals("resourceCard")){
+            for(int i=1; i<=40; i++) {
+                String cardPath = "../resources/CardsJSON/" + type + i + ".json"; //TODO: fix root path
+                // initialize the json file reader and save the card
+                try(Reader reader = new FileReader(cardPath)) {
+                    ResourceCard card = gson.fromJson(reader, ResourceCard.class);
+                    cardsList.add(card);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else if (type.equals("goldCard")) {
+            for(int i=1; i<=40; i++) {
+                String cardPath = "../resources/CardsJSON/" + type + i + ".json"; //TODO: fix root path
+                // initialize the json file reader and save the card
+                try(Reader reader = new FileReader(cardPath)) {
+                    GoldCard card = gson.fromJson(reader, GoldCard.class);
+                    cardsList.add(card);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // shuffle the cards
+        Collections.shuffle(cardsList);
+
+        // save shuffled cards in the queue
+        cards.addAll(cardsList);
+
+        // TODO: remove/restore old code for deck init
+        //this.cards = new LinkedList<>();
+        //this.cards.addAll(cards);
+        //this.uncoveredCards = uncoveredCards.clone();
     }
 
     /**
