@@ -63,7 +63,13 @@ public class Deck {
         Collections.shuffle(cardsList);
 
         // save shuffled cards in the queue
+        this.cards = new LinkedList<>();
         cards.addAll(cardsList);
+
+        // set the first uncovered cards
+        this.uncoveredCards = new ResourceCard[2];
+        this.uncoveredCards[0] = cards.remove();
+        this.uncoveredCards[1] = cards.remove();
 
         // TODO: remove/restore old code for deck init
         //this.cards = new LinkedList<>();
