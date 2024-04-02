@@ -8,7 +8,7 @@
       {"0": "FUNGI", "1": "PLANT", "2": "INSECT", "3":  "ANIMAL"}
     ],
     "permanentResources": [
-      {"resource": "INSECT"}
+      {"0": "INSECT"}
     ]
   },
   {
@@ -20,7 +20,7 @@
       {"0": "PLANT", "1": "ANIMAL", "2": "FUNGI", "3":  "INSECT"}
     ],
     "permanentResources": [
-      {"resource": "FUNGI"}
+      {"0": "FUNGI"}
     ]
   },
   {
@@ -32,7 +32,7 @@
       {"0": "INSECT", "1": "ANIMAL", "2": "FUNGI", "3":  "PLANT"}
     ],
     "permanentResources": [
-      {"resource": "PLANT", "resource": "FUNGI"}
+      {"0": "PLANT", "1": "FUNGI"}
     ]
   },
   {
@@ -44,7 +44,7 @@
       {"0": "PLANT", "1": "INSECT", "2": "ANIMAL", "3":  "FUNGI"}
     ],
     "permanentResources": [
-      {"resource": "ANIMAL", "resource": "INSECT"}
+      {"0": "ANIMAL", "1": "INSECT"}
     ]
   },
   {
@@ -56,7 +56,7 @@
       {"0": "INSECT", "1": "FUNGI", "2": "PLANT", "3":  "ANIMAL"}
     ],
     "permanentResources": [
-      {"resource": "ANIMAL", "resource": "INSECT", "resource": "PLANT"}
+      {"0": "ANIMAL", "1": "INSECT", "2": "PLANT"}
     ]
   },
   {
@@ -68,7 +68,7 @@
       {"0": "FUNGI", "1": "ANIMAL", "2": "PLANT", "3":  "INSECT"}
     ],
     "permanentResources": [
-      {"resource": "PLANT", "resource": "ANIMAL", "resource": "FUNGI"}
+      {"0": "PLANT", "1": "ANIMAL", "2": "FUNGI"}
     ]
   }
 ]}
