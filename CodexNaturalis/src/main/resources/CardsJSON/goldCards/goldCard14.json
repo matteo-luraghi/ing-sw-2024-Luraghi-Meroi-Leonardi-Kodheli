@@ -1,1 +1,1 @@
-{"kingdom": "", "isFront": true, "corners": ["", "", "", ""], "points": 0, "pointCondition": "", "playableCondition": ["", "", ""]}
+{"kingdom": "PLANT", "isFront": true, "corners": ["HIDDEN", "BLANK", "BLANK", "BLANK"], "points": 2, "pointCondition": "CORNER", "playableCondition": ["PLANT", "PLANT", "PLANT", "INSECT"]}
