@@ -7,7 +7,11 @@ import it.polimi.ingsw.model.card.ResourceCard;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.Collections;
 
 /**
  * Deck class
@@ -26,13 +30,12 @@ public class Deck {
         // list needed to shuffle the cards after they're added
         List<ResourceCard> cardsList = new ArrayList<>();
 
-        // intialize the json parser
+        // initialize the json parser
         Gson gson = new Gson();
 
         if(!isGold){
-           String type = "resourceCards/resourceCard";
             for(int i=1; i<=40; i++) {
-                String cardPath = "../resources/CardsJSON/" + type + i + ".json"; //TODO: fix root path
+                String cardPath = "../resources/CardsJSON/resourceCards/resourceCard" + i + ".json"; //TODO: fix root path
                 // initialize the json file reader and save the card
                 try(Reader reader = new FileReader(cardPath)) {
                     ResourceCard card = gson.fromJson(reader, ResourceCard.class);
@@ -42,9 +45,8 @@ public class Deck {
                 }
             }
         } else {
-            String type = "goldCards/goldCard";
             for(int i=1; i<=40; i++) {
-                String cardPath = "../resources/CardsJSON/" + type + i + ".json"; //TODO: fix root path
+                String cardPath = "../resources/CardsJSON/goldCards/goldCard" + i + ".json"; //TODO: fix root path
                 // initialize the json file reader and save the card
                 try(Reader reader = new FileReader(cardPath)) {
                     GoldCard card = gson.fromJson(reader, GoldCard.class);
@@ -74,7 +76,7 @@ public class Deck {
      * @throws NullPointerException when trying to draw from an uncovered card that does not exist
      * @return ResourceCard chosen
      */
-    private ResourceCard Draw (int which) {
+    private ResourceCard Draw (int which) git {
         if (which == 0) {//drawing from deck
             return cards.remove();
         } else { //drawing from uncovered cards
