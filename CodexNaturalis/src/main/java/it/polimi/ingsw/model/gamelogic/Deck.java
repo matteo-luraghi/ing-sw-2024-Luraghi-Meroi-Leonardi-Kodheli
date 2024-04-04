@@ -20,22 +20,17 @@ public class Deck {
 
     /**
      * Deck constructor
-     * @param cards queue of the cards to be added
-     * @param uncoveredCards array of the uncovered card on the table
+     * @param isGold if true returns a Deck of GoldCards, otherwise one of ResourceCards
      */
-    public Deck (Queue<ResourceCard> cards, ResourceCard[] uncoveredCards) {
-        // codice per inizializzare e mischiare i mazzi, TODO controllare se va qui o in una classe inizializzatore
-
+    public Deck (boolean isGold) {
         // list needed to shuffle the cards after they're added
         List<ResourceCard> cardsList = new ArrayList<>();
 
         // intialize the json parser
         Gson gson = new Gson();
 
-        // TODO: replace with parameter
-        String type = "resourceCard";
-
-        if(type.equals("resourceCard")){
+        if(!isGold){
+           String type = "resourceCards/resourceCard";
             for(int i=1; i<=40; i++) {
                 String cardPath = "../resources/CardsJSON/" + type + i + ".json"; //TODO: fix root path
                 // initialize the json file reader and save the card
@@ -46,7 +41,8 @@ public class Deck {
                     e.printStackTrace();
                 }
             }
-        } else if (type.equals("goldCard")) {
+        } else {
+            String type = "goldCards/goldCard";
             for(int i=1; i<=40; i++) {
                 String cardPath = "../resources/CardsJSON/" + type + i + ".json"; //TODO: fix root path
                 // initialize the json file reader and save the card
@@ -70,11 +66,6 @@ public class Deck {
         this.uncoveredCards = new ResourceCard[2];
         this.uncoveredCards[0] = cards.remove();
         this.uncoveredCards[1] = cards.remove();
-
-        // TODO: remove/restore old code for deck init
-        //this.cards = new LinkedList<>();
-        //this.cards.addAll(cards);
-        //this.uncoveredCards = uncoveredCards.clone();
     }
 
     /**
