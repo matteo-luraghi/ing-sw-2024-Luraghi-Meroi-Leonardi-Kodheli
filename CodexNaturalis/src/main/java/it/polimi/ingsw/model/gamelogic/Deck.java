@@ -7,7 +7,11 @@ import it.polimi.ingsw.model.card.ResourceCard;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.Collections;
 
 /**
  * Deck class
@@ -26,7 +30,7 @@ public class Deck {
         // list needed to shuffle the cards after they're added
         List<ResourceCard> cardsList = new ArrayList<>();
 
-        // intialize the json parser
+        // initialize the json parser
         Gson gson = new Gson();
 
         if(!isGold){

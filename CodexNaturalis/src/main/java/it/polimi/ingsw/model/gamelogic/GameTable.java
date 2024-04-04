@@ -16,7 +16,7 @@ public class GameTable {
     private Deck ResourceDeck;
     private Deck GoldDeck;
     private Map<Player, PlayerField> PlayerZones;
-    private GoalCard[] CommonGoals; //fixed mistyping from GoldCard to GoalCard
+    private GoalCard[] CommonGoals;
     private ScoreBoard Scoreboard;
 
     /**
