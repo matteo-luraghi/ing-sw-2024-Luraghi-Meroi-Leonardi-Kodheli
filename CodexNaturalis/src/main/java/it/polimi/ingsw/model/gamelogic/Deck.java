@@ -30,9 +30,8 @@ public class Deck {
         Gson gson = new Gson();
 
         if(!isGold){
-           String type = "resourceCards/resourceCard";
             for(int i=1; i<=40; i++) {
-                String cardPath = "../resources/CardsJSON/" + type + i + ".json"; //TODO: fix root path
+                String cardPath = "../resources/CardsJSON/resourceCards/resourceCard" + i + ".json"; //TODO: fix root path
                 // initialize the json file reader and save the card
                 try(Reader reader = new FileReader(cardPath)) {
                     ResourceCard card = gson.fromJson(reader, ResourceCard.class);
@@ -42,9 +41,8 @@ public class Deck {
                 }
             }
         } else {
-            String type = "goldCards/goldCard";
             for(int i=1; i<=40; i++) {
-                String cardPath = "../resources/CardsJSON/" + type + i + ".json"; //TODO: fix root path
+                String cardPath = "../resources/CardsJSON/goldCards/goldCard" + i + ".json"; //TODO: fix root path
                 // initialize the json file reader and save the card
                 try(Reader reader = new FileReader(cardPath)) {
                     GoldCard card = gson.fromJson(reader, GoldCard.class);
