@@ -76,7 +76,7 @@ public class Deck {
      * @throws NullPointerException when trying to draw from an uncovered card that does not exist
      * @return ResourceCard chosen
      */
-    private ResourceCard Draw (int which) git {
+    private ResourceCard Draw (int which)  {
         if (which == 0) {//drawing from deck
             return cards.remove();
         } else { //drawing from uncovered cards
