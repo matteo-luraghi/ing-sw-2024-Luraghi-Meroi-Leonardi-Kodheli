@@ -1,1 +1,1 @@
-{"kingdom": "", "isFront": true, "corners": ["", "", "", ""], "points": 0, "pointCondition": "", "playableCondition": ["", "", ""]}
+{"kingdom": "ANIMAL", "isFront": true, "corners": ["BLANK", "HIDDEN", "FEATHER", "BLANK"], "points": 1, "pointCondition": "FEATHER", "playableCondition": ["ANIMAL", "ANIMAL", "FUNGI"]}
