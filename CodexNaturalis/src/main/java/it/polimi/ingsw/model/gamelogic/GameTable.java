@@ -3,10 +3,10 @@ package it.polimi.ingsw.model.gamelogic;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.Resource;
 import it.polimi.ingsw.model.card.ResourceGoalCard;
+import it.polimi.ingsw.model.card.GameCard;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
 
 /**
  * class GameTable
@@ -88,11 +88,20 @@ public class GameTable {
     public ScoreBoard getScoreBoard() {
         return Scoreboard;
     }
+
+
+
+
+    /**
+     * Count of common goals points for a given playerfield
+     * @param Player PlayerField
+     * @return points of common goals int
+     */
     private int countCommonGoalPoints(PlayerField Player)
     {
         int points=0;
         int min=0;
-        Coordinates currentCoordinates=new Coordinates(0,0);
+
         for(int i=0; i<2;i++)
         {
             GoalCard commonGoal=getCommonGoal(i);
@@ -114,6 +123,34 @@ public class GameTable {
             }
             else
             {
+                //arraylist of counted cards contains already counted cards for a given positional goal
+                //the search will always start at the lowest card in the field, trying to follow the goal requirement (going up or at sides). Priority on right.
+                int x=0,y=0, xtemp=x,ytemp=y;
+                Coordinates currentCoordinates=new Coordinates(x,y);
+
+                GameCard currentCard=Player.getGameZone().get(currentCoordinates);
+                GameCard tempCard=currentCard;
+                while(true)
+                {
+
+
+                    tempCard=Player.getDownRight(currentCard);
+                    if(tempCard!=null)
+                        currentCard = tempCard;
+
+                    else //try to search on the left side
+                    {
+                        tempCard=Player.getDownLeft(currentCard);
+                        if(tempCard!=null)
+                            currentCard = tempCard;
+
+                        else  //no cards neither left nor right, so reached the lowest point by only trying to go down on right side.
+                            break;
+
+                    }
+                }
+                //to finish
+
                 //TODO for positional ruling
             }
            // commonGoal.

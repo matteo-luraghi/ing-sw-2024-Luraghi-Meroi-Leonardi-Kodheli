@@ -1,10 +1,11 @@
 package it.polimi.ingsw.model.gamelogic;
 
 import it.polimi.ingsw.model.card.*;
-
+import it.polimi.ingsw.model.gamelogic.Util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * PlayerField class
@@ -330,4 +331,65 @@ public class PlayerField {
     public void setResource(Resource which, int how) {
         resourceMap.put(which, how);
     }
+
+    /**
+     * given a card returns its coordinates if present in the map (1to1 mapping)
+     * @param currentGameCard
+     * @return coordinates of the card or null
+     */
+    public Coordinates getCoordinates(GameCard currentGameCard)
+    {
+        return Util.getKeyByValue(getGameZone(),currentGameCard);
+    }
+
+    /**
+     * Given a gamecard returns the closest card down in the right
+     * @param currentGameCard
+     * @return null if not present or the gamecard if present
+     */
+    public GameCard getDownRight(GameCard currentGameCard)
+    {
+        Coordinates currentCoordinates=getCoordinates(currentGameCard);
+        Coordinates rCoordinates=new Coordinates(currentCoordinates.getX()+1,currentCoordinates.getY()-1);
+        return getGameZone().get(rCoordinates);
+    }
+
+    /**
+     * Given a gamecard returns the closest card down in the left
+     * @param currentGameCard
+     * @return null if not present or the gamecard if present
+     */
+    public GameCard getDownLeft(GameCard currentGameCard)
+    {
+        Coordinates currentCoordinates=getCoordinates(currentGameCard);
+        Coordinates lCoordinates=new Coordinates(currentCoordinates.getX()-1,currentCoordinates.getY()-1);
+        return getGameZone().get(lCoordinates);
+    }
+
+    /**
+     * Given a gamecard returns the closest card up in the right
+     * @param currentGameCard
+     * @return null if not present or the gamecard if present
+     */
+    public GameCard getUpRight(GameCard currentGameCard)
+    {
+        Coordinates currentCoordinates=getCoordinates(currentGameCard);
+        Coordinates rCoordinates=new Coordinates(currentCoordinates.getX()+1,currentCoordinates.getY()+1);
+        return getGameZone().get(rCoordinates);
+    }
+
+    /**
+     * Given a gamecard returns the closest card up in the left
+     * @param currentGameCard
+     * @return null if not present or the gamecard if present
+     */
+    public GameCard getUpLeft(GameCard currentGameCard)
+    {
+        Coordinates currentCoordinates=getCoordinates(currentGameCard);
+        Coordinates lCoordinates=new Coordinates(currentCoordinates.getX()-1,currentCoordinates.getY()+1);
+        return getGameZone().get(lCoordinates);
+    }
+
+
+
 }
