@@ -40,11 +40,12 @@ public class GameFlowState extends State{
             //now the turnState should be a PlayState
             turnState.HandleTurnState();
 
-            if (game.getGameTable().getScoreBoard().getPoints(turn) >= 20)
+            if (game.getGameTable().getScoreBoard().getPoints(turn) >= 20 || (game.getGameTable().getGoldDeck().isDeckEmpty() && game.getGameTable().getResourceDeck().isDeckEmpty()))
                 this.penultimateRound = true;
 
-            //now the turnState should be a DrawState
-            turnState.HandleTurnState();
+            if (!(game.getGameTable().getGoldDeck().isDeckEmpty() && game.getGameTable().getResourceDeck().isDeckEmpty()))
+                //now the turnState should be a DrawState
+                turnState.HandleTurnState();
 
             ChangeTurn();
         }

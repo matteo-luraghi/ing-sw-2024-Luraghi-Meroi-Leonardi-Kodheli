@@ -7,14 +7,14 @@ package it.polimi.ingsw.model.gamelogic;
  */
 public abstract class TurnState {
 
-    protected GameFlowState game;
+    protected GameFlowState gameFlowState;
 
     /**
      * TurnState constructor
      * @param game refers to the GameFlowState object of a determined game
      */
     public TurnState (GameFlowState game) {
-        this.game = game;
+        this.gameFlowState = game;
     }
 
     /**
@@ -27,6 +27,6 @@ public abstract class TurnState {
      * @param turnState refers to which state of a turn to change to
      */
     public void Transition (TurnState turnState) {
-        game.SetTurnState(turnState);
+        gameFlowState.SetTurnState(turnState);
     }
 }

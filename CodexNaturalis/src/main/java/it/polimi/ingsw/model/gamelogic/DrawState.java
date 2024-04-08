@@ -10,8 +10,8 @@ public class DrawState extends TurnState{
      * DrawState constructor
      * @param game refers to the GameFlowState object of a determined game
      */
-    public DrawState(GameFlowState game) {
-        super(game);
+    public DrawState(GameFlowState gameFlowState) {
+        super(gameFlowState);
     }
 
     /**
@@ -19,6 +19,8 @@ public class DrawState extends TurnState{
      */
     @Override
     public void HandleTurnState() {
+        //make the Player choose where to draw from
 
+        this.Transition(new PlayState(this.gameFlowState));
     }
 }
