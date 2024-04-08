@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.gamelogic;
 
+import it.polimi.ingsw.model.card.GoalCard;
+
 /**
  * class Player
  * @author Lorenzo Meroi
@@ -48,5 +50,16 @@ public class Player {
      */
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    /**
+     * private goal card chooser
+     * @param firstGoal first option
+     * @param secondGoal second option
+     * @return the chosen card
+     */
+    public GoalCard choosePrivateGoal(GoalCard firstGoal, GoalCard secondGoal) {
+        // TODO: call to the controller or something to make the player choose the goal
+        return firstGoal;
     }
 }
