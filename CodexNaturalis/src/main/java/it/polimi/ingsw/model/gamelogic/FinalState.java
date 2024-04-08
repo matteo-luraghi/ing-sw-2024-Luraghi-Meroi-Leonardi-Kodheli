@@ -19,6 +19,6 @@ public class FinalState extends State{
      */
     @Override
     public void HandleState() {
-
+        Player winner = game.getWinner();
     }
 }

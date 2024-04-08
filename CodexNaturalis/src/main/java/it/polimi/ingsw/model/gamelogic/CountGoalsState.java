@@ -20,15 +20,9 @@ public class CountGoalsState extends State{
      */
     @Override
     public void HandleState() {
-
-    }
-
-    /**
-     * method to count the goal points for a player
-     * @param player of which you want to calculate the points of
-     * @return the points from the goals gained from the player
-     */
-    private int CountGoalsForPlayer(Player player) {
-
+        for (Player player : game.getPlayers()) {
+            int points = game.getGameTable().countGoalPoints(game.getGameTable().getPlayerZones().get(player));
+            game.getGameTable().getScoreBoard().addPoints(player, points);
+        }
     }
 }
