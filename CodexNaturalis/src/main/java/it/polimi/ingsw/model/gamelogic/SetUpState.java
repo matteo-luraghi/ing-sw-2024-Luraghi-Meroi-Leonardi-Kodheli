@@ -2,15 +2,14 @@ package it.polimi.ingsw.model.gamelogic;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.card.PositionGoalCard;
+import it.polimi.ingsw.model.card.ResourceGoalCard;
 import it.polimi.ingsw.model.card.StartingCard;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * SetUpState class
@@ -43,7 +42,7 @@ public class SetUpState extends State{
 
         ScoreBoard scoreBoard = new ScoreBoard(players);
         Deck goldDeck = new Deck(true);
-        Deck resurceDeck = new Deck(false);
+        Deck resourceDeck = new Deck(false);
 
         Map<Player, PlayerField> playerZones = new HashMap<Player, PlayerField>();
 
@@ -66,34 +65,39 @@ public class SetUpState extends State{
             }
         }
 
-        //@TODO parse goal cards, first give one to each playerfield through the PlayerField.setPrivateGoal method; then choose two of them as the common goals
-        int[] goalCards = new Random().ints(1, 16).distinct().limit(10).toArray();
-        int index = 0;
+        // Goal cards parsing
+        List<GoalCard> goalCards = new ArrayList<>();
+        for(int i=1; i<=8; i++) {
 
-        for (Player player: players) {
-            /*
-            GoalCard[] privateGoals = new GoalCard[2];
-            String cardPath = "../resources/CardsJSON/goalCards/goalCard" + goalCards[index] + ".json"; //TODO: fix root path
-            try(Reader reader = new FileReader(cardPath)) {
-                GoalCard card = gson.fromJson(reader, GoalCard.class);
-                privateGoals[0] = card;
+            //parse resource card
+            String resourceCardPath = "../resources/CardsJSON/goalCards/resourceGoalCard" + i + ".json"; //TODO: fix root path
+            try(Reader reader = new FileReader(resourceCardPath)) {
+                ResourceGoalCard resourceCard = gson.fromJson(reader, ResourceGoalCard.class);
+                goalCards.add(resourceCard);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            index++;
-            cardPath = "../resources/CardsJSON/startingCards/goalCards/goalCard" + goalCards[index] + ".json"; //TODO: fix root path
-            try(Reader reader = new FileReader(cardPath)) {
-                GoalCard card = gson.fromJson(reader, GoalCard.class);
-                privateGoals[1] = card;
+            //parse position card
+            String positionCardPath = "../resources/CardsJSON/goalCards/positionGoalCard" + i + ".json"; //TODO: fix root path
+            try(Reader reader = new FileReader(positionCardPath)) {
+                PositionGoalCard positionCard = gson.fromJson(reader, PositionGoalCard.class);
+                goalCards.add(positionCard);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            index++;
-             */
         }
 
+        Collections.shuffle(goalCards);
+
+        //TODO: logic to make the player choose a goal card
+        // use goalCards.removeFirst() to make each player "draw" from the goalCards deck
+
+        GoalCard[] commonGoals = new GoalCard[2];
+        commonGoals[0] = goalCards.removeFirst();
+        commonGoals[1] = goalCards.removeFirst();
+
         // put them into an array for the GameTable constructor
-        GameTable gameTable = new GameTable(resurceDeck, goldDeck, playerZones);
+        GameTable gameTable = new GameTable(resourceDeck, goldDeck, playerZones, commonGoals ,scoreBoard);
         this.game = new GameState(players, players.get(0), gameTable);
     }
 
