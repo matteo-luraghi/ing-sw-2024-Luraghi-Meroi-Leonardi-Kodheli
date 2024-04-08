@@ -88,8 +88,13 @@ public class SetUpState extends State{
 
         Collections.shuffle(goalCards);
 
-        //TODO: logic to make the player choose a goal card
-        // use goalCards.removeFirst() to make each player "draw" from the goalCards deck
+        // for each player make them select the private goal and save it in its player field
+        for(Map.Entry<Player, PlayerField> entry: playerZones.entrySet()) {
+            Player player = entry.getKey();
+            PlayerField playerField = entry.getValue();
+            GoalCard privateGoal = player.choosePrivateGoal(goalCards.removeFirst(), goalCards.removeFirst());
+            playerField.setPrivateGoal(privateGoal);
+        }
 
         GoalCard[] commonGoals = new GoalCard[2];
         commonGoals[0] = goalCards.removeFirst();
