@@ -20,10 +20,9 @@ public class SetUpState extends State{
 
     /**
      * constructor of the SetUpState class
-     * @param game is the gamestate to which the state refers
      */
-    public SetUpState(GameState game) {
-        super(game);
+    public SetUpState() {
+        HandleState();
     }
 
     /**
@@ -99,20 +98,6 @@ public class SetUpState extends State{
         // put them into an array for the GameTable constructor
         GameTable gameTable = new GameTable(resourceDeck, goldDeck, playerZones, commonGoals ,scoreBoard);
         this.game = new GameState(players, players.get(0), gameTable);
+        this.transition(new GameFlowState(this.game));
     }
-
-    /**
-     * method to create the PlayerFields for each player
-     */
-    private void CreatePlayerFields() {}
-
-    /**
-     * method to create the game's table
-     */
-    private void CreateGametable() {}
-
-    /**
-     * method to create the game's two decks
-     */
-    private void CreateDecks() {}
 }

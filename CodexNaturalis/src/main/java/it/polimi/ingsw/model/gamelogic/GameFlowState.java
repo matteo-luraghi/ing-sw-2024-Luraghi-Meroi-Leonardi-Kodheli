@@ -12,6 +12,7 @@ public class GameFlowState extends State{
 
     private TurnState turnState;
 
+    private boolean penultimateRound;
     private boolean finalTurn;
 
     /**
@@ -23,6 +24,7 @@ public class GameFlowState extends State{
         turn = game.getPlayers().get(0);
         turnState = new PlayState(this);
         finalTurn = false;
+        penultimateRound = false;
     }
 
 
@@ -31,7 +33,21 @@ public class GameFlowState extends State{
      */
     @Override
     public void HandleState() {
+        while(!this.CheckEndState()) {
+            if (penultimateRound && turn.equals(game.getPlayers().get(0)))
+                this.finalTurn = true;
 
+            //now the turnState should be a PlayState
+            turnState.HandleTurnState();
+
+            if (game.getGameTable().getScoreBoard().getPoints(turn) >= 20)
+                this.penultimateRound = true;
+
+            //now the turnState should be a DrawState
+            turnState.HandleTurnState();
+
+            ChangeTurn();
+        }
     }
 
     /**
@@ -73,6 +89,6 @@ public class GameFlowState extends State{
      * @return true if it can, false if it's not yet the case
      */
     private boolean CheckEndState() {
-        return (turn.equals(game.getPlayers().get(0)) && finalTurn);
+        return (turn.equals(game.getPlayers().get(0)) && penultimateRound && finalTurn);
     }
 }

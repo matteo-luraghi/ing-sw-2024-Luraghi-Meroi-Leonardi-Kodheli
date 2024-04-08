@@ -19,6 +19,8 @@ public abstract class State {
         this.game = game;
     }
 
+    protected State() {}
+
     /**
      * Game getter
      * @return the GameState to which the states refer
