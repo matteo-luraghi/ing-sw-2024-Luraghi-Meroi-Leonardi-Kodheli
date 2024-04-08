@@ -23,27 +23,17 @@ public class GameTable {
      * GameTable Constructor
      * @param ResourceDeck Deck with the initial resource cards
      * @param GoldDeck Deck with the initial gold cards
-     * @param Players Arraylist that contains all the initialized players
-     * @param PlayerFields Array list that contain the PlayerFields, wich will be mapped with the Players array list into the PlayerZones map
+     * @param PlayerZones Map that saves player and its player field
      * @param CommonGoals Array wich contains the common goals GoalCard
      * @param scoreboard The scoreboard that contains all the player scores
      */
-    public GameTable(Deck ResourceDeck, Deck GoldDeck, ArrayList<Player> Players, ArrayList<PlayerField> PlayerFields, GoalCard[] CommonGoals, ScoreBoard scoreboard)
+    public GameTable(Deck ResourceDeck, Deck GoldDeck, Map<Player, PlayerField> PlayerZones, GoalCard[] CommonGoals, ScoreBoard scoreboard)
     {
         this.ResourceDeck=ResourceDeck;
         this.GoldDeck=GoldDeck;
-        this.PlayerZones=new HashMap<Player, PlayerField>();
-
-        int i=0;
-        for(PlayerField Playerfield: PlayerFields)
-        {
-            PlayerZones.put(Players.get(i), Playerfield);
-            i++;
-        }
-
+        this.PlayerZones= PlayerZones;
         this.CommonGoals=CommonGoals.clone();
         this.Scoreboard=scoreboard;
-
     }
 
     /**
@@ -88,9 +78,6 @@ public class GameTable {
     public ScoreBoard getScoreBoard() {
         return Scoreboard;
     }
-
-
-
 
     /**
      * Count of common goals points for a given playerfield
