@@ -19,7 +19,7 @@ public class GameState {
      * GameState Constructor, firstly configured as in SETUP state
      *
      * @param Players        ArrayList of the players for the session
-     * @param StartingPlayer The choosen player to start
+     * @param StartingPlayer The chosen player to start
      * @param GameTable      Main GameTable Object
      */
     public GameState(ArrayList<Player> Players, Player StartingPlayer, GameTable GameTable)
@@ -29,7 +29,7 @@ public class GameState {
         this.turn = StartingPlayer;
         this.gameTable = GameTable;
         this.winner = null;
-        this.state = State.SETUP;
+        this.state = new SetUpState(); //TODO: should be safe to do it this way, if something breaks it's this line
     }
 
     /**
@@ -47,6 +47,7 @@ public class GameState {
      */
     public void NextState()
     {
+        /* TODO: Should be safe to delete, waiting because im not sure
         switch (state){
             case SETUP:
                 state = State.GAMEFLOW;
@@ -60,7 +61,6 @@ public class GameState {
             default:
                 throw new IllegalStateException("Unexpected value: " + state);
         }
-        /* TODO: See it's better to implement it here or in Controller class
         if(state==State.COUNTGOALS)
         {
             for(PlayerField playerField: gameTable.getPlayerZones().values()) {
@@ -71,6 +71,12 @@ public class GameState {
         return true;
         */
     }
+
+    /**
+     * Setter for the current state
+     * @param state the state we want to switch to
+     */
+    public void setState(State state){ this.state = state; }
 
     /**
      * Players getter
@@ -117,10 +123,13 @@ public class GameState {
      */
     public void ChangeTurnState()
     {
+        /* TODO: Should also be safe to delete
         if(this.turnState.equals(TurnState.PLAY))
             this.turnState=TurnState.DRAW;
         else
             this.turnState=TurnState.PLAY;
+
+         */
     }
 
     /**
@@ -157,11 +166,5 @@ public class GameState {
  * Gets the winner, to add exception for when the winner is not set or in the wrong game state
  * @return Player
  */
-public Player getWinner()
-    {
-        if(state.equals(State.FINAL)) {
-            return this.winner;
-        }
-        return null;
-    }
+public Player getWinner()   { return winner; }
 }

@@ -36,7 +36,7 @@ public class SetUpState extends State{
         players.add(new Player("Lorenzo", Color.RED));
         players.add(new Player("Gabriel", Color.BLUE));
         players.add(new Player("Matteo", Color.GREEN));
-        players.add(new Player("Francesk", Color.YELLOW));
+        players.add(new Player("Françesk", Color.YELLOW));
         //end of Players initialization
 
         ScoreBoard scoreBoard = new ScoreBoard(players);
