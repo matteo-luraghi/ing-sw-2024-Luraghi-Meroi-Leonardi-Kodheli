@@ -24,5 +24,6 @@ public class CountGoalsState extends State{
             int points = game.getGameTable().countGoalPoints(game.getGameTable().getPlayerZones().get(player));
             game.getGameTable().getScoreBoard().addPoints(player, points);
         }
+        this.transition(new FinalState(this.game));
     }
 }
