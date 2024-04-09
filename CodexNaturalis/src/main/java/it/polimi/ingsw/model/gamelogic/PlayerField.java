@@ -299,14 +299,10 @@ public class PlayerField {
     }
 
     /**
-     * private goal card chooser
-     * @param firstGoal first option
-     * @param secondGoal second option
+     * private goal setter
+     * @param privateGoal chosen private goal
      */
-    public void choosePrivateGoal(GoalCard firstGoal, GoalCard secondGoal) {
-        // TODO: call to the controller or something to make the player choose the goal
-        GoalCard privateGoal = firstGoal;
-
+    public void setPrivateGoal(GoalCard privateGoal) {
         this.privateGoal = privateGoal;
     }
 
