@@ -49,6 +49,7 @@ public class GameFlowState extends State{
 
             ChangeTurn();
         }
+        this.transition(new CountGoalsState(this.game));
     }
 
     /**
