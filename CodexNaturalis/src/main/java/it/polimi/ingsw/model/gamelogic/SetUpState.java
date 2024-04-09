@@ -90,10 +90,8 @@ public class SetUpState extends State{
 
         // for each player make them select the private goal and save it in its player field
         for(Map.Entry<Player, PlayerField> entry: playerZones.entrySet()) {
-            Player player = entry.getKey();
             PlayerField playerField = entry.getValue();
-            GoalCard privateGoal = player.choosePrivateGoal(goalCards.removeFirst(), goalCards.removeFirst());
-            playerField.setPrivateGoal(privateGoal);
+            playerField.choosePrivateGoal(goalCards.removeFirst(), goalCards.removeFirst());
         }
 
         GoalCard[] commonGoals = new GoalCard[2];

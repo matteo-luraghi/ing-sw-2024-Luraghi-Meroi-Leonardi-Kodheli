@@ -52,14 +52,4 @@ public class Player {
         this.color = color;
     }
 
-    /**
-     * private goal card chooser
-     * @param firstGoal first option
-     * @param secondGoal second option
-     * @return the chosen card
-     */
-    public GoalCard choosePrivateGoal(GoalCard firstGoal, GoalCard secondGoal) {
-        // TODO: call to the controller or something to make the player choose the goal
-        return firstGoal;
-    }
 }
