@@ -11,7 +11,6 @@ public class GameState {
     private State state;
     private ArrayList<Player> players;
     private Player turn;
-    private TurnState turnState;
     private GameTable gameTable;
     private Player winner;
 
@@ -107,15 +106,6 @@ public class GameState {
             i=0;
         }
         this.turn=this.players.get(i);
-    }
-
-    /**
-     * TurnState Getter
-     * @return TurnState
-     */
-    public TurnState getTurnState()
-    {
-        return this.turnState;
     }
 
     /**
