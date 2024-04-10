@@ -1,10 +1,8 @@
-package it.polimi.ingsw.model.gamelogic;
+package it.polimi.ingsw.model.states;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.model.card.GoalCard;
-import it.polimi.ingsw.model.card.PositionGoalCard;
-import it.polimi.ingsw.model.card.ResourceGoalCard;
-import it.polimi.ingsw.model.card.StartingCard;
+import it.polimi.ingsw.model.card.*;
+import it.polimi.ingsw.model.gamelogic.*;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -92,7 +90,7 @@ public class SetUpState extends State{
         for(Map.Entry<Player, PlayerField> entry: playerZones.entrySet()) {
             PlayerField playerField = entry.getValue();
             // TODO controller method to choose the private goal
-            GoalCard privateGoal = controller.gameactions.choosePrivateGoal(goalCards.removeFirst(), goalCards.removeFirst());
+            //GoalCard privateGoal = controller.gameactions.choosePrivateGoal(goalCards.removeFirst(), goalCards.removeFirst());
             //playerField.setPrivateGoal(privateGoal);
         }
 

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.gamelogic;
 
+import it.polimi.ingsw.model.states.SetUpState;
+import it.polimi.ingsw.model.states.State;
+
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -75,7 +78,7 @@ public class GameState {
      * Setter for the current state
      * @param state the state we want to switch to
      */
-    public void setState(State state){ this.state = state; }
+    public void setState(State newstate){ this.state = newstate; }
 
     /**
      * Players getter
