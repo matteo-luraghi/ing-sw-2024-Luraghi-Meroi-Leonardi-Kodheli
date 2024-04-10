@@ -266,10 +266,7 @@ public class GameTable {
         Player player=Util.getKeyByValue(PlayerZones,Player);
         Scoreboard.addPoints(player,points);
         return points;
-        //TODO: Complete this function once we have established how we handle coordinates
-        /**
-         * ...
-         */
+
     }
 
 }
