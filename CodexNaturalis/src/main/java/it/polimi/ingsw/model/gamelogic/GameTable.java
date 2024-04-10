@@ -1,12 +1,9 @@
 package it.polimi.ingsw.model.gamelogic;
 
-import it.polimi.ingsw.model.card.GoalCard;
-import it.polimi.ingsw.model.card.Resource;
-import it.polimi.ingsw.model.card.ResourceGoalCard;
-import it.polimi.ingsw.model.card.GameCard;
+import it.polimi.ingsw.model.card.*;
 
 import java.util.*;
-
+import it.polimi.ingsw.model.gamelogic.Util;
 
 /**
  * class GameTable
@@ -105,14 +102,14 @@ public class GameTable {
                         min=numberOfResources;
                     }
                 }
-                points=commonGoal.getPoints()*min; //points times minimum occurrences of that goal
+                points+=commonGoal.getPoints()*min; //points times minimum occurrences of that goal
 
             }
             else
             {
                 //arraylist of counted cards contains already counted cards for a given positional goal
                 //the search will always start at the lowest card in the field, trying to follow the goal requirement (going up or at sides). Priority on right.
-                int x=0,y=0, xtemp=x,ytemp=y;
+            /*    int x=0,y=0, xtemp=x,ytemp=y;
                 Coordinates currentCoordinates=new Coordinates(x,y);
 
                 GameCard currentCard=Player.getGameZone().get(currentCoordinates);
@@ -135,6 +132,52 @@ public class GameTable {
                             break;
 
                     }
+                }*/
+         //       GameCard currentPointer=currentCard;
+                ArrayList<GameCard> usedCardsForGoal=new ArrayList<>(); //contains all the cards already used for an objective;
+
+
+                PositionGoalCard positionalGoal=(PositionGoalCard) commonGoal;
+                ArrayList<Direction> Directions=positionalGoal.getPositionsFromBase();
+
+
+                //logic: will try to match the objective until it visited all the cards;
+                for(GameCard currentCard : Player.getGameZone().values())
+                {
+                    GameCard currentPointer=currentCard;
+
+                    if(positionalGoal.getResourceFromBase().getFirst()!=currentCard.getKingdom())
+                        continue;
+                    ArrayList<GameCard> possibleCards = new ArrayList<>();
+                    if (!usedCardsForGoal.contains(currentPointer))
+                        for (int j = 0; j < Directions.size(); j++)  //also have to do this for each card that has not been used for the goal
+                        {
+
+
+                            Direction currentDir = Directions.get(j);
+                            Kingdom currentResource = positionalGoal.getResourceFromBase().get(j + 1);
+                            if (currentDir == Direction.TOP) {
+                                currentPointer = Player.getUp(currentPointer);
+
+
+                            } else if (currentDir == Direction.TOP_LEFT) {
+                                currentPointer = Player.getUpLeft(currentPointer);
+
+
+                            } else if (currentDir == Direction.TOP_RIGHT) {
+                                currentPointer = Player.getUpRight(currentPointer);
+
+
+                            }
+
+                            if (currentPointer == null || currentPointer.getKingdom() != currentResource || usedCardsForGoal.contains(currentPointer))
+                                break;
+                            possibleCards.add(currentPointer);
+                            if (j == Directions.size() - 1) {
+                                points += commonGoal.getPoints();
+                                usedCardsForGoal.addAll(possibleCards);
+                            }
+                        }
                 }
                 //to finish
 
@@ -151,9 +194,78 @@ public class GameTable {
      */
     public int countGoalPoints (PlayerField Player)
     {
-        int commonGoalPoints=countCommonGoalPoints(Player);
+        int points=countCommonGoalPoints(Player);
 
-        return 0;
+        GoalCard privateGoal=Player.getPrivateGoal();
+        if(privateGoal.isResourceGoal())
+        {
+            ResourceGoalCard ResourceGoal=(ResourceGoalCard)privateGoal;
+            int min=Integer.MAX_VALUE;
+            int numberOfResources;
+            for(Resource resourceGoal: ResourceGoal.getRequirements())
+            {
+                numberOfResources = Player.getResourceFromMap(resourceGoal); //number of occurrences of that resource
+                if(numberOfResources<min)
+                {
+                    min=numberOfResources;
+                }
+            }
+            points+=privateGoal.getPoints()*min; //points times minimum occurrences of that goal
+
+        }
+        else
+        {
+
+            ArrayList<GameCard> usedCardsForGoal=new ArrayList<>(); //contains all the cards already used for an objective;
+
+
+            PositionGoalCard positionalGoal=(PositionGoalCard) privateGoal;
+            ArrayList<Direction> Directions=positionalGoal.getPositionsFromBase();
+
+
+            //logic: will try to match the objective until it visited all the cards;
+            for(GameCard currentCard : Player.getGameZone().values())
+            {
+                GameCard currentPointer=currentCard;
+
+                if(positionalGoal.getResourceFromBase().getFirst()!=currentCard.getKingdom())
+                    continue;
+                ArrayList<GameCard> possibleCards = new ArrayList<>();
+                if (!usedCardsForGoal.contains(currentPointer))
+                    for (int j = 0; j < Directions.size(); j++)  //also have to do this for each card that has not been used for the goal
+                    {
+
+
+                        Direction currentDir = Directions.get(j);
+                        Kingdom currentResource = positionalGoal.getResourceFromBase().get(j + 1);
+                        if (currentDir == Direction.TOP) {
+                            currentPointer = Player.getUp(currentPointer);
+
+
+                        } else if (currentDir == Direction.TOP_LEFT) {
+                            currentPointer = Player.getUpLeft(currentPointer);
+
+
+                        } else if (currentDir == Direction.TOP_RIGHT) {
+                            currentPointer = Player.getUpRight(currentPointer);
+
+
+                        }
+
+                        if (currentPointer == null || currentPointer.getKingdom() != currentResource || usedCardsForGoal.contains(currentPointer))
+                            break;
+                        possibleCards.add(currentPointer);
+                        if (j == Directions.size() - 1) {
+                            points += privateGoal.getPoints();
+                            usedCardsForGoal.addAll(possibleCards);
+                        }
+                    }
+            }
+
+        }
+        Player player=Util.getKeyByValue(PlayerZones,Player);
+        Scoreboard.addPoints(player,points);
+        return points;
         //TODO: Complete this function once we have established how we handle coordinates
         /**
          * ...
