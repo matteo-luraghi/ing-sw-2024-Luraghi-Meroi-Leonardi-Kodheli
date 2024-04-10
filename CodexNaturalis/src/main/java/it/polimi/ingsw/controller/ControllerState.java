@@ -7,7 +7,7 @@ import it.polimi.ingsw.model.gamelogic.State;
  * @author Gabriel Leonardi
  */
 abstract public class ControllerState {
-    private MegaController controller;
+    protected MegaController controller;
 
     /**
      * Method made to handle the current action of the state

@@ -17,7 +17,7 @@ public class MegaController {
      */
     public MegaController(GameState game){
         this.game = game;
-        //this.controllerState = controllerState; TODO: new LoginPlayers();
+        this.controllerState = new LoginPlayer();
     }
     /**
      * ControllerState setter, making it possible to transition between states
@@ -26,9 +26,10 @@ public class MegaController {
     public void setState(ControllerState newState){ this.controllerState = newState; }
 
     /**
-     * ?
+     * gameState getter
+     * @return the current gameState;
      */
-    public void handleController(){
-        //TODO: I have no idea what to put inside of here
+    public GameState getGame() {
+        return game;
     }
 }
