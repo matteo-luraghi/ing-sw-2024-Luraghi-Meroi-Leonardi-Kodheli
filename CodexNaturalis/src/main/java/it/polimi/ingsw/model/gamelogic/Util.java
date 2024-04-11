@@ -23,4 +23,21 @@ public class Util {
         }
         return null;
     }
+
+    /**
+     * Function that return the color equals to the string given
+     * @param s the string we want to turn into a color
+     * @return the color indicated by the string
+     * @throws NullPointerException when s is not equal to one of the colors
+     */
+    public static Color stringToColor(String s) throws NullPointerException{
+        //TODO: make custom InvalidColorException
+        s = s.toLowerCase();
+        if(s.equals("RED")) return Color.RED;
+        if(s.equals("BLUE")) return Color.BLUE;
+        if(s.equals("YELLOW")) return Color.YELLOW;
+        if(s.equals("GREEN")) return Color.GREEN;
+
+        throw new NullPointerException();
+    }
 }
