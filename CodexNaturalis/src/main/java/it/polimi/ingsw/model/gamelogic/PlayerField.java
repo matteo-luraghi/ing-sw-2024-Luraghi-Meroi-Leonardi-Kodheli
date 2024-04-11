@@ -389,7 +389,28 @@ public class PlayerField {
         Coordinates lCoordinates=new Coordinates(currentCoordinates.getX()-1,currentCoordinates.getY()+1);
         return getGameZone().get(lCoordinates);
     }
+    /**
+     * Given a gamecard returns the closest card up
+     * @param currentGameCard
+     * @return null if not present or the gamecard if present
+     */
+    public GameCard getUp(GameCard currentGameCard)
+    {
+        Coordinates currentCoordinates=getCoordinates(currentGameCard);
+        Coordinates Coordinates=new Coordinates(currentCoordinates.getX(),currentCoordinates.getY()+1);
+        return getGameZone().get(Coordinates);
+    }
 
-
+    /**
+     * Given a gamecard returns the closest card down
+     * @param currentGameCard
+     * @return null if not present or the gamecard if present
+     */
+    public GameCard getDown(GameCard currentGameCard)
+    {
+        Coordinates currentCoordinates=getCoordinates(currentGameCard);
+        Coordinates Coordinates=new Coordinates(currentCoordinates.getX(),currentCoordinates.getY()-1);
+        return getGameZone().get(Coordinates);
+    }
 
 }

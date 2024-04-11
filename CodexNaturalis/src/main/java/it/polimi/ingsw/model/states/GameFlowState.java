@@ -1,4 +1,7 @@
-package it.polimi.ingsw.model.gamelogic;
+package it.polimi.ingsw.model.states;
+
+import it.polimi.ingsw.model.gamelogic.GameState;
+import it.polimi.ingsw.model.gamelogic.Player;
 
 /**
  * GameFlowState class

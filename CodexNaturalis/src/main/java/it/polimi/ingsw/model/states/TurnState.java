@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.gamelogic;
+package it.polimi.ingsw.model.states;
 
 /**
  * TurnState abstract class

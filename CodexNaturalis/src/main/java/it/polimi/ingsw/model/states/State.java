@@ -1,4 +1,6 @@
-package it.polimi.ingsw.model.gamelogic;
+package it.polimi.ingsw.model.states;
+
+import it.polimi.ingsw.model.gamelogic.GameState;
 
 import java.util.ArrayList;
 
