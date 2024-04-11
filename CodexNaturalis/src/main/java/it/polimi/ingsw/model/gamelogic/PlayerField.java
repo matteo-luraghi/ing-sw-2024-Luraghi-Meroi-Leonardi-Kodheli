@@ -321,7 +321,7 @@ public class PlayerField {
      */
     public int getResourceFromMap (Resource which) {
         return resourceMap.get(which);
-    } //TODO: should we return a copy?
+    }
 
     /**
      * resource from resource map setter

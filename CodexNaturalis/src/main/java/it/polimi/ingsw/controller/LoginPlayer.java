@@ -111,5 +111,6 @@ public class LoginPlayer extends ControllerState{
         for(int i = 0; i < controller.getNumOfPlayers(); i++){
             setPlayer();
         }
+        transition(new GameActions());
     }
 }
