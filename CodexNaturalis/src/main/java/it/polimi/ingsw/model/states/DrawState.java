@@ -8,7 +8,7 @@ package it.polimi.ingsw.model.states;
 public class DrawState extends TurnState{
     /**
      * DrawState constructor
-     * @param game refers to the GameFlowState object of a determined game
+     * @param gameFlowState refers to the GameFlowState object of a determined game
      */
     public DrawState(GameFlowState gameFlowState) {
         super(gameFlowState);

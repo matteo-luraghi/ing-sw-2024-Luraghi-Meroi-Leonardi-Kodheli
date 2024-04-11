@@ -1,7 +1,5 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.gamelogic.State;
-
 /**
  * ControllerState class, made to give the controller a state
  * @author Gabriel Leonardi

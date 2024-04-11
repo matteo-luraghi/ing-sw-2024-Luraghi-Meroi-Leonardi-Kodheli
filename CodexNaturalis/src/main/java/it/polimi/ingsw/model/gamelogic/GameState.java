@@ -76,9 +76,9 @@ public class GameState {
 
     /**
      * Setter for the current state
-     * @param state the state we want to switch to
+     * @param newState the state we want to switch to
      */
-    public void setState(State newstate){ this.state = newstate; }
+    public void setState(State newState){ this.state = newState; }
 
     /**
      * Players getter

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.gamelogic.GameState;
-import it.polimi.ingsw.model.gamelogic.State;
 
 import java.util.Scanner;
 
