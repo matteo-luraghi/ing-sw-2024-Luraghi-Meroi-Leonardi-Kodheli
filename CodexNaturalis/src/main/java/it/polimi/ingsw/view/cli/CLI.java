@@ -1,4 +1,6 @@
 package it.polimi.ingsw.view.cli;
 
-public class CLI {
+import it.polimi.ingsw.view.mainview.MegaView;
+
+public class CLI implements MegaView {
 }
