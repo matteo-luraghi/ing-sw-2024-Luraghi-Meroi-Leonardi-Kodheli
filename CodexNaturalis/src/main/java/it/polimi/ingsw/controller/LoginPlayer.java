@@ -57,23 +57,22 @@ public class LoginPlayer extends ControllerState{
 
         //Ask the player for his username
         do {
-            //TODO: view the message "Select an username"
             nick = controller.scanner.nextLine();
             correct = checkUniqueNickname(nick);
             if(!correct){
-                //TODO: view the message "The nickname is already present, select another one"
+                controller.view.showMessage("Username already exists, please choose another username");
             }
         }while (!correct);
 
         //Ask the player for his chosen color
         do {
-            //TODO: view the message "Select a color" + Available colors
             colorString = controller.scanner.nextLine();
             try{
                 color = Util.stringToColor(colorString);
                 correct = checkUniqueColor(color);
+                if(!correct) controller.view.showMessage("Color is already taken, please choose a free color");
             } catch (NullPointerException e){
-                //TODO: view the message "Invalid color, select a valid color"
+                controller.view.showMessage("Color doesn't exist, please choose a valid color");
                 correct = false;
             }
         }while (!correct);

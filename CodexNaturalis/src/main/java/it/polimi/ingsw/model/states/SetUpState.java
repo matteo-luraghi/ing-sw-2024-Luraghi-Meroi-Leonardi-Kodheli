@@ -16,6 +16,7 @@ import java.util.*;
  */
 public class SetUpState extends State{
 
+    private int numberOfPlayers;
     /**
      * constructor of the SetUpState class
      */
@@ -24,17 +25,31 @@ public class SetUpState extends State{
     }
 
     /**
+     * Number of players setter
+     * @param numberOfPlayers the number of players to set
+     */
+    public void setNumberOfPlayers(int numberOfPlayers){ this.numberOfPlayers = numberOfPlayers; }
+
+    /**
      * method to handle the setupping state of the game
      */
     @Override
     public void HandleState() {
         Gson gson = new Gson();
         //temporarily I assume there's going to be 4 players
+
+        view.showFirstPlayer();
+        for(int i = 0; i < numberOfPlayers; i++){
+            view.showLogin();
+        }
+        /*
         ArrayList<Player> players = new ArrayList<>();
         players.add(new Player("Lorenzo", Color.RED));
         players.add(new Player("Gabriel", Color.BLUE));
         players.add(new Player("Matteo", Color.GREEN));
         players.add(new Player("Françesk", Color.YELLOW));
+
+        */
         //end of Players initialization
 
         ScoreBoard scoreBoard = new ScoreBoard(players);
