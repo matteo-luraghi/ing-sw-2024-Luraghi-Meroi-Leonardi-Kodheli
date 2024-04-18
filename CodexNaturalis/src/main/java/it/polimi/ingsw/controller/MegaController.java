@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.Util;
+import it.polimi.ingsw.model.states.SetUpState;
 
 import java.util.Scanner;
 
@@ -49,7 +50,10 @@ public class MegaController {
         this.numOfPlayers = numOfPlayers;
     }
 
-    private int giveNumberPlayers(){
+    /**
+     * Asks the first player for the number of players that will be playing this game
+     */
+    protected void giveNumberPlayers(){
         int num;
         if(numOfPlayers == -1){
             //TODO: view the message "You are the first player"
@@ -60,18 +64,17 @@ public class MegaController {
                     //TODO: view the message "Invalid number of players, choose again"
                 }
             }while(num < 2 || num > 4);
-            return num;
+
+            //TODO: Set numberOfPlayers somewhere to the number chosen by the player
         } else {
-            System.err.println("You aren't the first player, you cannot set how many players there are, returning -1");
-            return -1;
+            System.err.println("You aren't the first player, you cannot set how many players there are");
         }
     }
 
     /**
-     * Method to let a user register himself as a player
-     * @return the player object constructed by the user
+     * Method to let a user register himself as a player, passing the created player to the model
      */
-    private Player setPlayer(){
+    protected void setPlayer(){
         String nick;
         String colorString;
         boolean correct;
@@ -99,7 +102,8 @@ public class MegaController {
             }
         }while (!correct);
 
-        return new Player(nick, color);
+        Player player = new Player(nick, color);
+        game.addPlayer(player);
     }
 
     /**

@@ -44,37 +44,6 @@ public class GameState {
     }
 
     /**
-     * Sets the next state SETUP->GAMEFLOW->COUNTGOALS->FINAL (if final won't be changed)
-     * @throws IllegalStateException If State = FINAL or wrong
-     */
-    public void NextState()
-    {
-        /* TODO: Should be safe to delete, waiting because im not sure
-        switch (state){
-            case SETUP:
-                state = State.GAMEFLOW;
-                break;
-            case GAMEFLOW:
-                state = State.COUNTGOALS;
-                break;
-            case COUNTGOALS:
-                state = State.FINAL;
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + state);
-        }
-        if(state==State.COUNTGOALS)
-        {
-            for(PlayerField playerField: gameTable.getPlayerZones().values()) {
-                gameTable.countGoalPoints(playerField);
-            }
-            this.winner=ComputeWinner();
-        }
-        return true;
-        */
-    }
-
-    /**
      * Setter for the current state
      * @param newState the state we want to switch to
      */
@@ -86,6 +55,14 @@ public class GameState {
      */
     public ArrayList<Player> getPlayers() {
         return (ArrayList<Player>) this.players.clone();
+    }
+
+    public void addPlayer(Player player){
+        if(players.size() < 4){
+            players.add(player);
+        } else {
+            System.err.println("More than 4 players in a game");
+        }
     }
 
     /**
@@ -109,20 +86,6 @@ public class GameState {
             i=0;
         }
         this.turn=this.players.get(i);
-    }
-
-    /**
-     * swithces the turnstate between play and draw
-     */
-    public void ChangeTurnState()
-    {
-        /* TODO: Should also be safe to delete
-        if(this.turnState.equals(TurnState.PLAY))
-            this.turnState=TurnState.DRAW;
-        else
-            this.turnState=TurnState.PLAY;
-
-         */
     }
 
     /**
@@ -159,5 +122,5 @@ public class GameState {
  * Gets the winner, to add exception for when the winner is not set or in the wrong game state
  * @return Player
  */
-public Player getWinner()   { return winner; }
+    public Player getWinner()   { return winner; }
 }

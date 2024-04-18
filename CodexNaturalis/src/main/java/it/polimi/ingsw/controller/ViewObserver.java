@@ -5,7 +5,20 @@ package it.polimi.ingsw.controller;
  * @author Gabriel Leonardi
  */
 public class ViewObserver {
+
+    MegaController controller;
+    public ViewObserver(MegaController controller){
+        this.controller = controller;
+    }
     public void publish(String message){
         System.err.println("ViewObserver not yet implemented, message sent: " + message);
+    }
+
+    public void decideNumberOfPlayers(){
+        controller.giveNumberPlayers();
+    }
+
+    public void makePlayerLogin(){
+        controller.setPlayer();
     }
 }
