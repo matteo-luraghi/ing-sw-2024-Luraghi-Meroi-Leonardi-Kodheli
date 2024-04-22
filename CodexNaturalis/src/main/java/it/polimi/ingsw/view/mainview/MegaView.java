@@ -8,11 +8,11 @@ import it.polimi.ingsw.model.gamelogic.Player;
  * @author Lorenzo Meroi
  */
 public interface MegaView {
-    MegaController controller;
-    ViewGameCardFactory gameCardViewer;
-    ViewScoreBoardFactory scoreBoardViewer;
-    ViewPlayerFieldFactory playerFieldViewer;
-    ViewDeckFactory deckViewer;
+    MegaController controller = null;
+    ViewGameCardFactory gameCardViewer = null;
+    ViewScoreBoardFactory scoreBoardViewer  = null;
+    ViewPlayerFieldFactory playerFieldViewer  = null;
+    ViewDeckFactory deckViewer  = null;
 
     void ShowLogin();
 

@@ -21,7 +21,5 @@ public class ScoreBoardObserver {
     /**
      * method to update the viewer on a change
      */
-    public void Update () {
-        this.scoreBoardViewer.show();
-    }
+    public void Update () {}
 }

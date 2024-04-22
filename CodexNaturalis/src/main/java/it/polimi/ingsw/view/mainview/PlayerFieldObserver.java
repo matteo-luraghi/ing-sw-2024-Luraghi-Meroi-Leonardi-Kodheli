@@ -24,6 +24,5 @@ public class PlayerFieldObserver {
      */
     public void Update(PlayerField playerField) {
         this.playerFieldViewer.setPlayerField(playerField);
-        this.playerFieldViewer.show();
     }
 }
