@@ -9,5 +9,15 @@ public enum PointCondition {
     CORNER,
     FEATHER,
     POTION,
-    SCROLL
+    SCROLL;
+
+    public String toString () {
+        switch (this) {
+            case SCROLL -> {return "S";}
+            case POTION -> {return "T";}
+            case CORNER -> {return "C";}
+            case FEATHER -> {return "R";}
+            default -> {return "";}
+        }
+    }
 }
