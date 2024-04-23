@@ -9,5 +9,15 @@ public enum Kingdom {
     ANIMAL,
     INSECT,
     FUNGI,
-    STARTING
+    STARTING;
+
+    public String toString () {
+        switch (this) {
+            case INSECT -> {return "I";}
+            case PLANT -> {return "P";}
+            case FUNGI -> {return "F";}
+            case ANIMAL -> {return "A";}
+            default -> {return "";}
+        }
+    }
 }

@@ -24,6 +24,5 @@ public class DeckObserver {
      */
     public void Update (Deck deck) {
         this.deckViewer.setDeck(deck);
-        this.deckViewer.show();
     }
 }

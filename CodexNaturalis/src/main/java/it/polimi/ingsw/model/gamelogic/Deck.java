@@ -22,6 +22,8 @@ public class Deck {
 
     private ResourceCard[] uncoveredCards;
 
+    private final boolean isGold;
+
     /**
      * Deck constructor
      * @param isGold if true returns a Deck of GoldCards, otherwise one of ResourceCards
@@ -68,6 +70,23 @@ public class Deck {
         this.uncoveredCards = new ResourceCard[2];
         this.uncoveredCards[0] = cards.remove();
         this.uncoveredCards[1] = cards.remove();
+        this.isGold = isGold;
+    }
+
+    /**
+     * IsGold getter
+     * @return a boolean telling whether the deck contains gold cards or not
+     */
+    public boolean isGold() {
+        return isGold;
+    }
+
+    /**
+     * Cards getter
+     * @return the queue of cards
+     */
+    public Queue<ResourceCard> getCards() {
+        return cards;
     }
 
     /**
