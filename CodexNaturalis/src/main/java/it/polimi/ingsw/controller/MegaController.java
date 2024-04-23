@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
@@ -15,7 +16,8 @@ import java.util.Scanner;
 public class MegaController {
     private GameState game;
     protected Scanner scanner;
-    private int numOfPlayers;
+    private Player player;
+
     /**
      * MegaController constructor
      * @param game Game that the megaController manages
@@ -23,7 +25,6 @@ public class MegaController {
     public MegaController(GameState game){
         this.game = game;
         this.scanner = new Scanner(System.in);
-        numOfPlayers = -1;
     }
 
     /**
@@ -35,37 +36,24 @@ public class MegaController {
     }
 
     /**
-     * Number of players getter
-     * @return the numbers of players that this match has
-     */
-    public int getNumOfPlayers() {
-        return numOfPlayers;
-    }
-
-    /**
-     * Number of players setter
-     * @param numOfPlayers the numbers of players for this game decided by the first user
-     */
-    public void setNumOfPlayers(int numOfPlayers) {
-        this.numOfPlayers = numOfPlayers;
-    }
-
-    /**
      * Asks the first player for the number of players that will be playing this game
      */
     protected void giveNumberPlayers(){
-        int num;
+        int numOfPlayers;
+        SetUpState setUpState = (SetUpState) game.getState();
+        numOfPlayers = setUpState.getNumberOfPlayers();
         if(numOfPlayers == -1){
-            //TODO: view the message "You are the first player"
+            view.showMessage("You are the first player");
             do{
-                //TODO: view the message "Choose the number of players for this game"
-                num = scanner.nextInt();
-                if(num < 2 || num > 4){
-                    //TODO: view the message "Invalid number of players, choose again"
+                view.showMessage("Choose the number of players for this game");
+                numOfPlayers = scanner.nextInt();
+                if(numOfPlayers < 2 || numOfPlayers > 4){
+                    view.showMessage("Invalid number of players, choose again");
                 }
-            }while(num < 2 || num > 4);
+            }while(numOfPlayers < 2 || numOfPlayers > 4);
 
-            //TODO: Set numberOfPlayers somewhere to the number chosen by the player
+
+            setUpState.setNumberOfPlayers(numOfPlayers);
         } else {
             System.err.println("You aren't the first player, you cannot set how many players there are");
         }
@@ -85,7 +73,7 @@ public class MegaController {
             nick = scanner.nextLine();
             correct = checkUniqueNickname(nick);
             if(!correct){
-                controller.view.showMessage("Username already exists, please choose another username");
+                view.showMessage("Username already exists, please choose another username");
             }
         }while (!correct);
 
@@ -95,15 +83,45 @@ public class MegaController {
             try{
                 color = Util.stringToColor(colorString);
                 correct = checkUniqueColor(color);
-                if(!correct) controller.view.showMessage("Color is already taken, please choose a free color");
+                if(!correct) view.showMessage("Color is already taken, please choose a free color");
             } catch (NullPointerException e){
-                controller.view.showMessage("Color doesn't exist, please choose a valid color");
+                view.showMessage("Color doesn't exist, please choose a valid color");
                 correct = false;
             }
         }while (!correct);
 
+        view.showMessage("Waiting for players");
         Player player = new Player(nick, color);
         game.addPlayer(player);
+        this.player = player;
+    }
+
+    /**
+     * Method that makes the player select his private goal card
+     * @param option1 The first goal card offered to the player
+     * @param option2 The second goal card offered to the player
+     */
+    public void choosePrivateGoal(GoalCard option1, GoalCard option2){
+        boolean correct = false;
+        int option;
+        do{
+            view.showMessage("Which GoalCard will you choose? (1 or 2)");
+            option = scanner.nextInt();
+            if(option != 1 && option != 2){
+                view.showMessage("Invalid number, choose again");
+            } else {
+                correct = true;
+            }
+        }while(!correct);
+
+        switch(option){
+            case 1:
+                game.getGameTable().getPlayerZones().get(player).setPrivateGoal(option1);
+                break;
+            case 2:
+                game.getGameTable().getPlayerZones().get(player).setPrivateGoal(option2);
+                break;
+        }
     }
 
     /**

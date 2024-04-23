@@ -21,6 +21,7 @@ public class SetUpState extends State{
      * constructor of the SetUpState class
      */
     public SetUpState() {
+        numberOfPlayers = -1;
         HandleState();
     }
 
@@ -29,6 +30,12 @@ public class SetUpState extends State{
      * @param numberOfPlayers the number of players to set
      */
     public void setNumberOfPlayers(int numberOfPlayers){ this.numberOfPlayers = numberOfPlayers; }
+
+    /**
+     * Number of players getter
+     * @return the number of players in this game (-1 if it's not already setted)
+     */
+    public int getNumberOfPlayers(){ return this.numberOfPlayers; }
 
     /**
      * method to handle the setupping state of the game
@@ -42,13 +49,13 @@ public class SetUpState extends State{
         for(int i = 0; i < numberOfPlayers; i++){
             view.showLogin();
         }
-        /*
+
         ArrayList<Player> players = new ArrayList<>();
+        /*
         players.add(new Player("Lorenzo", Color.RED));
         players.add(new Player("Gabriel", Color.BLUE));
         players.add(new Player("Matteo", Color.GREEN));
         players.add(new Player("Françesk", Color.YELLOW));
-
         */
         //end of Players initialization
 
@@ -104,9 +111,7 @@ public class SetUpState extends State{
         // for each player make them select the private goal and save it in its player field
         for(Map.Entry<Player, PlayerField> entry: playerZones.entrySet()) {
             PlayerField playerField = entry.getValue();
-            // TODO controller method to choose the private goal
-            //GoalCard privateGoal = controller.gameactions.choosePrivateGoal(goalCards.removeFirst(), goalCards.removeFirst());
-            //playerField.setPrivateGoal(privateGoal);
+            view.showChoosePrivateGoal(goalCards.removeFirst(), goalCards.removeFirst());
         }
 
         GoalCard[] commonGoals = new GoalCard[2];

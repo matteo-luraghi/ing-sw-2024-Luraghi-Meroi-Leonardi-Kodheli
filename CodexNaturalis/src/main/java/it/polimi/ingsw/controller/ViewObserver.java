@@ -1,5 +1,7 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.card.GoalCard;
+
 /**
  * View Observer, observes the view for game flow changes and updates the MegaController
  * @author Gabriel Leonardi
@@ -21,4 +23,10 @@ public class ViewObserver {
     public void makePlayerLogin(){
         controller.setPlayer();
     }
+
+    public void makePlayerChooseGoal(GoalCard option1, GoalCard option2){
+        controller.choosePrivateGoal(option1, option2);
+    }
+
+
 }
