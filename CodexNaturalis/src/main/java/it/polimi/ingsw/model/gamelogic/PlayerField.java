@@ -328,8 +328,7 @@ public class PlayerField {
      * @param currentGameCard
      * @return coordinates of the card or null
      */
-    public Coordinates getCoordinates(GameCard currentGameCard)
-    {
+    public Coordinates getCoordinates(GameCard currentGameCard) {
         return Util.getKeyByValue(getGameZone(),currentGameCard);
     }
 
@@ -338,8 +337,7 @@ public class PlayerField {
      * @param currentGameCard
      * @return null if not present or the gamecard if present
      */
-    public GameCard getDownRight(GameCard currentGameCard)
-    {
+    public GameCard getDownRight(GameCard currentGameCard) {
         Coordinates currentCoordinates=getCoordinates(currentGameCard);
         Coordinates rCoordinates=new Coordinates(currentCoordinates.getX()+1,currentCoordinates.getY()-1);
         return getGameZone().get(rCoordinates);
@@ -350,8 +348,7 @@ public class PlayerField {
      * @param currentGameCard
      * @return null if not present or the gamecard if present
      */
-    public GameCard getDownLeft(GameCard currentGameCard)
-    {
+    public GameCard getDownLeft(GameCard currentGameCard) {
         Coordinates currentCoordinates=getCoordinates(currentGameCard);
         Coordinates lCoordinates=new Coordinates(currentCoordinates.getX()-1,currentCoordinates.getY()-1);
         return getGameZone().get(lCoordinates);
@@ -362,8 +359,7 @@ public class PlayerField {
      * @param currentGameCard
      * @return null if not present or the gamecard if present
      */
-    public GameCard getUpRight(GameCard currentGameCard)
-    {
+    public GameCard getUpRight(GameCard currentGameCard) {
         Coordinates currentCoordinates=getCoordinates(currentGameCard);
         Coordinates rCoordinates=new Coordinates(currentCoordinates.getX()+1,currentCoordinates.getY()+1);
         return getGameZone().get(rCoordinates);
@@ -374,8 +370,7 @@ public class PlayerField {
      * @param currentGameCard
      * @return null if not present or the gamecard if present
      */
-    public GameCard getUpLeft(GameCard currentGameCard)
-    {
+    public GameCard getUpLeft(GameCard currentGameCard) {
         Coordinates currentCoordinates=getCoordinates(currentGameCard);
         Coordinates lCoordinates=new Coordinates(currentCoordinates.getX()-1,currentCoordinates.getY()+1);
         return getGameZone().get(lCoordinates);
@@ -385,8 +380,7 @@ public class PlayerField {
      * @param currentGameCard
      * @return null if not present or the gamecard if present
      */
-    public GameCard getUp(GameCard currentGameCard)
-    {
+    public GameCard getUp(GameCard currentGameCard) {
         Coordinates currentCoordinates=getCoordinates(currentGameCard);
         Coordinates Coordinates=new Coordinates(currentCoordinates.getX(),currentCoordinates.getY()+1);
         return getGameZone().get(Coordinates);
@@ -397,8 +391,7 @@ public class PlayerField {
      * @param currentGameCard
      * @return null if not present or the gamecard if present
      */
-    public GameCard getDown(GameCard currentGameCard)
-    {
+    public GameCard getDown(GameCard currentGameCard) {
         Coordinates currentCoordinates=getCoordinates(currentGameCard);
         Coordinates Coordinates=new Coordinates(currentCoordinates.getX(),currentCoordinates.getY()-1);
         return getGameZone().get(Coordinates);

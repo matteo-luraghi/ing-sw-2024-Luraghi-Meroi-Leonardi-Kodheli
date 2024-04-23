@@ -17,6 +17,7 @@ public enum Kingdom {
             case PLANT -> {return "P";}
             case FUNGI -> {return "F";}
             case ANIMAL -> {return "A";}
+            case STARTING -> {return "S";}
             default -> {return "";}
         }
     }
