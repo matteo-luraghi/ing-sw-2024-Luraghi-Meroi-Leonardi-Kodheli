@@ -23,6 +23,14 @@ public class ScoreBoard {
     }
 
     /**
+     * Board getter
+     * @return the Game's Board
+     */
+    public Map<Player, Integer> getBoard() {
+        return board;
+    }
+
+    /**
      * Points getter given the player
      * @param player of which you want to know the points
      * @return the points of the given Player
