@@ -1,1 +1,1 @@
-{"kingdom": "PLANT", "isFront": true, "corners": ["PLANT", "BLANK", "PLANT", "HIDDEN"], "points": 0, "isGold": false}
+{"kingdom": "PLANT", "isFront": false, "corners": ["PLANT", "BLANK", "PLANT", "HIDDEN"], "points": 0, "isGold": false}

@@ -1,1 +1,1 @@
-{"kingdom": "ANIMAL", "isFront": true, "corners": ["POTION", "BLANK", "BLANK", "HIDDEN"], "points": 1, "pointCondition": "POTION", "playableCondition": ["ANIMAL", "ANIMAL", "INSECT"]}
+{"kingdom": "ANIMAL", "isFront": false, "corners": ["POTION", "BLANK", "BLANK", "HIDDEN"], "points": 1, "pointCondition": "POTION", "playableCondition": ["ANIMAL", "ANIMAL", "INSECT"]}
