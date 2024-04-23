@@ -1,36 +1,73 @@
 package it.polimi.ingsw.view.cli;
 
+import it.polimi.ingsw.model.card.GoldCard;
+import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.view.mainview.ViewDeckFactory;
 
 public class ViewDeckCLIFactory extends ViewDeckFactory {
 
+    ViewGameCardCLIFactory gameCardViewer;
 
+    public void setGameCardViewer(ViewGameCardCLIFactory gameCardViewer) {
+        this.gameCardViewer = gameCardViewer;
+    }
+
+    /**
+     * method to show a deck and it's card
+     */
     @Override
     public void show() {
-        if (this.deck.isDeckEmpty()) {
-            System.out.println("           _____      _____ ");
-            System.out.println(" deck     |  no |    |  no |");
-            System.out.println("|-----|   |1card|    |2card|");
-            System.out.println("|empty|   |_____|    |_____|");
+        if (this.deck.getCards().isEmpty()) {
+            if (this.deck.getCards().element() instanceof GoldCard) {
+                System.out.println("Gold deck");
+            } else {
+                System.out.println("Resource Deck");
+            }
+
+            System.out.println("|-----------|");
+            System.out.println("|___empty___|");
+
         } else {
-            if (this.deck.isGold())
-                System.out.print("Gold Deck       ");
-            else
-                System.out.print("Resource Deck   ");
+            ResourceCard card;
+            if (this.deck.getCards().element() instanceof GoldCard) {
+                System.out.println("Gold deck");
+                card = (GoldCard) this.deck.getCards().element();
+            } else {
+                System.out.println("Resource Deck");
+                card = this.deck.getCards().element();
+            }
 
-            if (this.deck.getUncoveredCards()[0].getIsGold())
-                System.out.print("Gold       ");
-            else
-                System.out.print("Resource   ");
-
-            if (this.deck.getUncoveredCards()[1].getIsGold())
-                System.out.print("Gold");
-            else
-                System.out.print("Resource");
-            System.out.println("");
-
-            System.out.println("|--"+this.deck.getCards().size()+"--|    -----     -----");
+            gameCardViewer.SetCard(card);
+            gameCardViewer.Show();
+            System.out.println();
         }
+
+        if (this.deck.getUncoveredCards()[0] == null) {
+            System.out.println("Uncovered Card N°1");
+            System.out.println(" ___________");
+            System.out.println("|           |");
+            System.out.println("|     NO    |");
+            System.out.println("|    CARD   |");
+            System.out.println("|___________|");
+        } else {
+            gameCardViewer.SetCard(this.deck.getUncoveredCards()[0]);
+            gameCardViewer.Show();
+        }
+
+        System.out.println();
+
+        if (this.deck.getUncoveredCards()[1] == null) {
+            System.out.println("Uncovered Card N°2");
+            System.out.println(" ___________");
+            System.out.println("|           |");
+            System.out.println("|     NO    |");
+            System.out.println("|    CARD   |");
+            System.out.println("|___________|");
+        } else {
+            gameCardViewer.SetCard(this.deck.getUncoveredCards()[1]);
+            gameCardViewer.Show();
+        }
+
 
     }
 }
