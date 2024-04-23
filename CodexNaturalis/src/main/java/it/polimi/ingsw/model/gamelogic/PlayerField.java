@@ -58,7 +58,7 @@ public class PlayerField {
      * method to draw a card from a deck
      * @param from which deck (Resource or Gold cards) to draw from
      */
-    public void DrawFromDeck (Deck from) {
+    private void drawFromDeck (Deck from) {
         ResourceCard drawn = from.DrawFromDeck();
         hand.add(drawn);
     }
@@ -68,9 +68,22 @@ public class PlayerField {
      * @param from which deck (Resource or Gold cards) to draw from
      * @param which whether to draw from the covered cards in the deck or from the uncovered ones (0 for the first uncovered, 1 for the second)
      */
-    public void DrawFromUncovered (Deck from, int which) {
+    private void drawFromUncovered (Deck from, int which) {
         ResourceCard drawn = from.DrawFromUncovered(which);
         hand.add(drawn);
+    }
+
+    /**
+     * method to draw a card
+     * @param from which deck (Resource or Gold cards) to draw from
+     * @param which whether to draw from the covered cards in the deck or from the uncovered ones (0 for the first uncovered, 1 for the second)
+     */
+    public void draw(Deck from, int which){
+        if(which == 0){
+            drawFromDeck(from);
+        } else {
+            drawFromUncovered(from, which-1);
+        }
     }
 
     /**

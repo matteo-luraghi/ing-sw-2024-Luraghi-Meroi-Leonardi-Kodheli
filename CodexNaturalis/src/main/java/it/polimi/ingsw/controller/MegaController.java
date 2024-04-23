@@ -88,7 +88,7 @@ public class MegaController {
             }
         }while (!correct);
 
-        view.showMessage("Waiting for players");
+        view.showWaitingForPlayers();
         Player player = new Player(nick, color);
         game.addPlayer(player);
         this.player = player;
@@ -150,6 +150,32 @@ public class MegaController {
 
         game.getGameTable().getPlayerZones().get(player).Play(where, card);
         view.showMessage("Card played!");
+    }
+
+    public void chooseCardToDraw(){
+        boolean correct = false;
+        int deckChoice, cardChoice = -27;
+        Deck deck;
+        do{
+            view.showMessage("From which deck will you draw? (1 for resource, 2 for gold");
+            deckChoice = scanner.nextInt();
+            if(deckChoice != 1 && deckChoice != 2){
+                view.showMessage("Invalid Choice");
+            } else {
+                do{
+                    view.showMessage("Which card will you draw? (0 for top of deck, 1 or 2 for uncovered cards");
+                    cardChoice = scanner.nextInt();
+                    if(cardChoice < 0 || cardChoice > 2){
+                        view.showMessage("Invalid Choice");
+                    } else {
+                        correct = true;
+                    }
+                }while(!correct);
+            }
+        }while(!correct);
+
+        deck = deckChoice == 1 ? game.getGameTable().getResourceDeck() : game.getGameTable().getGoldDeck();
+        game.getGameTable().getPlayerZones().get(player).draw(deck, cardChoice);
     }
 
     /**
