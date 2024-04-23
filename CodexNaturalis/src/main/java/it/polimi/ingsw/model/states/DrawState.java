@@ -20,6 +20,7 @@ public class DrawState extends TurnState{
     @Override
     public void HandleTurnState() {
         //make the Player choose where to draw from
+        view.chooseCardToDraw();
 
         this.Transition(new PlayState(this.gameFlowState));
     }
