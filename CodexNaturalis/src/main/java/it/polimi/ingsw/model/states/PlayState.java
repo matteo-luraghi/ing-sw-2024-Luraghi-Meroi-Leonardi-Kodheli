@@ -29,10 +29,10 @@ public class PlayState extends TurnState{
      */
     @Override
     public void HandleTurnState() {
-        //make the player choose a card
+        //make the player choose a card and where to play it
         view.chooseCardToPlay();
-        //this.gameFlowState.game.getGameTable().getPlayerZones().get(gameFlowState.game.getTurn()).Play(where, card);
 
+        //TODO: Check if this transition works
         if (!(gameFlowState.game.getGameTable().getResourceDeck().isDeckEmpty() && gameFlowState.game.getGameTable().getGoldDeck().isDeckEmpty()))
             this.Transition(new DrawState(this.gameFlowState));
     }
