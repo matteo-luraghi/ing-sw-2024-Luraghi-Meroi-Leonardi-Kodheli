@@ -1,10 +1,8 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.card.GoalCard;
-import it.polimi.ingsw.model.gamelogic.Color;
-import it.polimi.ingsw.model.gamelogic.GameState;
-import it.polimi.ingsw.model.gamelogic.Player;
-import it.polimi.ingsw.model.gamelogic.Util;
+import it.polimi.ingsw.model.card.ResourceCard;
+import it.polimi.ingsw.model.gamelogic.*;
 import it.polimi.ingsw.model.states.SetUpState;
 
 import java.util.Scanner;
@@ -122,6 +120,36 @@ public class MegaController {
                 game.getGameTable().getPlayerZones().get(player).setPrivateGoal(option2);
                 break;
         }
+    }
+
+    public void chooseCardToPlay(){
+        boolean correct = false;
+        int index, x, y;
+        ResourceCard card = null;
+        Coordinates where = null;
+        do{
+            view.showMessage("Which card will you play? (1, 2 or 3)");
+            index = scanner.nextInt();
+            if(index <= 0 || index > game.getGameTable().getPlayerZones().get(player).getHand().size()){
+                view.showMessage("Choose a valid card");
+            } else {
+                card = game.getGameTable().getPlayerZones().get(player).getHand().get(index-1);
+                correct = true;
+            }
+        }while(!correct);
+        correct = false;
+        do{
+            view.showMessage("Where do you want to play that card? (first x coordinate then y coordinate)");
+            x = scanner.nextInt();
+            y = scanner.nextInt();
+            where = new Coordinates(x, y);
+            correct = game.getGameTable().getPlayerZones().get(player).IsPlayable(where, card);
+            if(!correct)
+                view.showMessage("This card cannot be played here!");
+        }while(!correct);
+
+        game.getGameTable().getPlayerZones().get(player).Play(where, card);
+        view.showMessage("Card played!");
     }
 
     /**

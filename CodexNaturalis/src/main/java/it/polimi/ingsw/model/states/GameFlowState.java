@@ -38,7 +38,7 @@ public class GameFlowState extends State{
     @Override
     public void HandleState() {
         while(!this.CheckEndState()) {
-            if (penultimateRound && turn.equals(game.getPlayers().get(0)))
+            if (penultimateRound && turn.equals(game.getPlayers().getFirst()))
                 this.finalTurn = true;
 
             //now the turnState should be a PlayState

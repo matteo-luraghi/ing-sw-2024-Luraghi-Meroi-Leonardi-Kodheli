@@ -80,75 +80,66 @@ public class PlayerField {
      * @return the number of points that the card has gotten (0 could also indicate the card could not be played there)
      */
     public int Play (Coordinates where, ResourceCard card) {
-        if (IsPlayable(where, card)) {
-            gameZone.put(where, card);
-
-            //Add the visible resources to the resourceMap
-            if (!card.getIsFront()) {
-                Resource permanentResource = getResource(card);
-
-                resourceMap.put(permanentResource, resourceMap.get(permanentResource)+1);
-            }
-            else {
-                for (int i=0; i<4; i++) {
-                    Resource resource = card.getCorner(i);
-                    if (resource!=null && !resource.equals(Resource.HIDDEN) && !resource.equals(Resource.BLANK) && !resource.equals(Resource.COVERED)) {
-                        resourceMap.put(resource, resourceMap.get(resource)+1);
-                    }
+        //We dont check if the card is playable because it will always be thanks to controller checking it right before
+        gameZone.put(where, card);
+        //Add the visible resources to the resourceMap
+        if (!card.getIsFront()) {
+            Resource permanentResource = getResource(card);
+            resourceMap.put(permanentResource, resourceMap.get(permanentResource) + 1);
+        } else {
+            for (int i = 0; i < 4; i++) {
+                Resource resource = card.getCorner(i);
+                if (resource != null && !resource.equals(Resource.HIDDEN) && !resource.equals(Resource.BLANK) && !resource.equals(Resource.COVERED)) {
+                    resourceMap.put(resource, resourceMap.get(resource) + 1);
                 }
             }
+        }
 
-            int cardX = where.getX();
-            int cardY = where.getY();
-            //Loop over every card in the GameZone, if we find one adjacent to the card we are about to play
-            //and the corner is not BLANK (we know it's not HIDDEN or COVERED thanks to the IsPlayable method
+        int cardX = where.getX();
+        int cardY = where.getY();
+        //Loop over every card in the GameZone, if we find one adjacent to the card we are about to play
+        //and the corner is not BLANK (we know it's not HIDDEN or COVERED thanks to the IsPlayable method
 
-            for (Coordinates coordinate : gameZone.keySet()) {
-                int x = coordinate.getX();
-                int y = coordinate.getY();
-                if (x == cardX+1 && y == cardY+1) { //TopRight
+        for (Coordinates coordinate : gameZone.keySet()) {
+            int x = coordinate.getX();
+            int y = coordinate.getY();
+            if (x == cardX + 1 && y == cardY + 1) { //TopRight
 
-                    if (!gameZone.get(coordinate).getCorner(2).equals(Resource.BLANK))
-                        resourceMap.put(gameZone.get(coordinate).getCorner(2), resourceMap.get(gameZone.get(coordinate).getCorner(2))-1);
+                if (!gameZone.get(coordinate).getCorner(2).equals(Resource.BLANK))
+                    resourceMap.put(gameZone.get(coordinate).getCorner(2), resourceMap.get(gameZone.get(coordinate).getCorner(2)) - 1);
 
-                    gameZone.get(coordinate).coverCorner(2);
+                gameZone.get(coordinate).coverCorner(2);
 
-                } else if (x == cardX+1 && y == cardY-1) { //BottomRight
+            } else if (x == cardX + 1 && y == cardY - 1) { //BottomRight
 
-                    if (!gameZone.get(coordinate).getCorner(0).equals(Resource.BLANK))
-                        resourceMap.put(gameZone.get(coordinate).getCorner(0), resourceMap.get(gameZone.get(coordinate).getCorner(0))-1);
+                if (!gameZone.get(coordinate).getCorner(0).equals(Resource.BLANK))
+                    resourceMap.put(gameZone.get(coordinate).getCorner(0), resourceMap.get(gameZone.get(coordinate).getCorner(0)) - 1);
 
-                    gameZone.get(coordinate).coverCorner(0);
+                gameZone.get(coordinate).coverCorner(0);
 
-                } else if (x == cardX-1 && y == cardY-1) { //BottomLeft
+            } else if (x == cardX - 1 && y == cardY - 1) { //BottomLeft
 
-                    if (!gameZone.get(coordinate).getCorner(1).equals(Resource.BLANK))
-                        resourceMap.put(gameZone.get(coordinate).getCorner(1), resourceMap.get(gameZone.get(coordinate).getCorner(1))-1);
+                if (!gameZone.get(coordinate).getCorner(1).equals(Resource.BLANK))
+                    resourceMap.put(gameZone.get(coordinate).getCorner(1), resourceMap.get(gameZone.get(coordinate).getCorner(1)) - 1);
 
-                    gameZone.get(coordinate).coverCorner(1);
+                gameZone.get(coordinate).coverCorner(1);
 
-                } else if (x == cardX-1 && y == cardY+1) { //TopLeft
+            } else if (x == cardX - 1 && y == cardY + 1) { //TopLeft
 
-                    if (!gameZone.get(coordinate).getCorner(3).equals(Resource.BLANK))
-                        resourceMap.put(gameZone.get(coordinate).getCorner(3), resourceMap.get(gameZone.get(coordinate).getCorner(3))-1);
+                if (!gameZone.get(coordinate).getCorner(3).equals(Resource.BLANK))
+                    resourceMap.put(gameZone.get(coordinate).getCorner(3), resourceMap.get(gameZone.get(coordinate).getCorner(3)) - 1);
 
-                    gameZone.get(coordinate).coverCorner(3);
+                gameZone.get(coordinate).coverCorner(3);
 
-                }
-            }
-
-            //Return the amount of points the card has scored
-            if (!card.getIsGold()) {
-                return card.getPoints();
-            }
-            else {
-                return calculateCardPoints(where, (GoldCard) card);
             }
         }
-        else{
-            System.err.println("This card cannot be played here");
+
+        //Return the amount of points the card has scored
+        if (!card.getIsGold()) {
+            return card.getPoints();
+        } else {
+            return calculateCardPoints(where, (GoldCard) card);
         }
-        return 0;
     }
 
     /**
@@ -180,7 +171,7 @@ public class PlayerField {
     public boolean IsPlayable (Coordinates where, ResourceCard card) {
         if (gameZone.containsKey(where))
             return false;
-        if (card.getIsGold()) {
+        if (card.getIsGold() && card.getIsFront()) {
             if (!checkConditions((GoldCard) card))
                 return false;
         }
