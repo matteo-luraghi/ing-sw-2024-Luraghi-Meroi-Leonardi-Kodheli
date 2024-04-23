@@ -28,7 +28,11 @@ public class ViewObserver {
         controller.choosePrivateGoal(option1, option2);
     }
 
-    public void makePlayerChooseCard(){
+    public void makePlayerPlayCard(){
         controller.chooseCardToPlay();
+    }
+
+    public void makePlayerDrawCard(){
+        controller.chooseCardToDraw();
     }
 }
