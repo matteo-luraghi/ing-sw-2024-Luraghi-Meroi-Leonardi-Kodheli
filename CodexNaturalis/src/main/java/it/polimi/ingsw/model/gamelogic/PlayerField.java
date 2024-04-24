@@ -319,6 +319,14 @@ public class PlayerField {
     } //TODO: should we return a copy?
 
     /**
+     * resourceMap getter
+     * @return the resource map of the playerfield
+     */
+    public Map<Resource, Integer> getResourceMap() {
+        return resourceMap;
+    }
+
+    /**
      * resource from resource map getter
      * @param which resource to get
      * @return int

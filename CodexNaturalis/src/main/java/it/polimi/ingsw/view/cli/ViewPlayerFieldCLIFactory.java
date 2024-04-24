@@ -1,8 +1,10 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.model.card.GameCard;
+import it.polimi.ingsw.model.card.Resource;
 import it.polimi.ingsw.model.gamelogic.Coordinates;
 import it.polimi.ingsw.view.mainview.ViewPlayerFieldFactory;
+import it.polimi.ingsw.view.mainview.AnsiColors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +44,8 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
 
         int southernMost = Integer.MAX_VALUE;
         int easternMost = Integer.MIN_VALUE;
+        int westernMost = Integer.MAX_VALUE;
+        int northernMost = Integer.MIN_VALUE;
 
         for (Coordinates c : sortedCoordinates) {
             if (c.getY() < southernMost) {
@@ -50,14 +54,20 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
             if (c.getX() > easternMost) {
                 easternMost = c.getX();
             }
+            if (c.getX() < westernMost) {
+                westernMost = c.getX();
+            }
+            if (c.getY() > northernMost) {
+                northernMost = c.getY();
+            }
         }
 
 
         int k = 0;
-        for (int i=0; i<easternMost; i++) {
-            for (int j=0; j<southernMost; j++) {
-                if (sortedCoordinates.get(k).getX() == i && sortedCoordinates.get(k).getY() == j) {
-                    System.out.print(CardToString(sortedCoordinates.get(j),this.playerField.getGameZone().get(sortedCoordinates.get(j))));
+        for (int i=northernMost; i>=southernMost; i--) {
+            for (int j=westernMost; j<=easternMost; j++) {
+                if (sortedCoordinates.get(k).getX() == j && sortedCoordinates.get(k).getY() == i) {
+                    System.out.print(CardToString(sortedCoordinates.get(k),this.playerField.getGameZone().get(sortedCoordinates.get(k))));
                     k++;
                 } else {
                     System.out.print("         ");
@@ -65,7 +75,11 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
             }
             System.out.println();
         }
-        //TODO print resourcemap
+
+        System.out.println("Your resources:");
+        for (Resource r : this.playerField.getResourceMap().keySet()) {
+            System.out.println("- " + r.toString() + ": #" + this.playerField.getResourceFromMap(r));
+        }
     }
 
     private String CardToString (Coordinates coor, GameCard card) {
