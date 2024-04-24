@@ -31,7 +31,7 @@ public class GameState {
         this.turn = StartingPlayer;
         this.gameTable = GameTable;
         this.winner = null;
-        this.state = new SetUpState(); //TODO: should be safe to do it this way, if something breaks it's this line
+        this.state = State.SETUP;
     }
 
     /**
