@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.card;
 
+import it.polimi.ingsw.view.mainview.AnsiColors;
+
 /**
  * Resource Enumeration
  * @author Matteo Leonardo Luraghi
@@ -18,16 +20,16 @@ public enum Resource {
 
     public String toString() {
         switch (this) {
-            case ANIMAL -> {return "A";}
-            case BLANK -> {return "B";}
-            case FUNGI -> {return "F";}
-            case PLANT -> {return "P";}
-            case HIDDEN -> {return "H";}
-            case INSECT -> {return "I";}
-            case POTION -> {return "T";}
-            case SCROLL -> {return "S";}
-            case COVERED -> {return "C";}
-            case FEATHER -> {return "R";}
+            case ANIMAL -> {return AnsiColors.ANSI_CYAN+"A";}
+            case BLANK -> {return AnsiColors.ANSI_WHITE+"B";}
+            case FUNGI -> {return AnsiColors.ANSI_RED+"F";}
+            case PLANT -> {return AnsiColors.ANSI_GREEN+"P";}
+            case HIDDEN -> {return AnsiColors.ANSI_BLACK+"H";}
+            case INSECT -> {return AnsiColors.ANSI_PURPLE+"I";}
+            case POTION -> {return AnsiColors.ANSI_YELLOW+"T";}
+            case SCROLL -> {return AnsiColors.ANSI_YELLOW+"S";}
+            case COVERED -> {return AnsiColors.ANSI_WHITE+"C";}
+            case FEATHER -> {return AnsiColors.ANSI_YELLOW+"R";}
             default -> {return "";}
         }
     }
