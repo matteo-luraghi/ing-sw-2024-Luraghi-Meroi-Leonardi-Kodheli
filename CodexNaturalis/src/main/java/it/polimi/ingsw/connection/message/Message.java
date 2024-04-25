@@ -1,6 +1,7 @@
 package it.polimi.ingsw.connection.message;
 
 public enum Message {
+    //server messages
     // init phase
     LOGIN_REQUEST, PLAYERS_NUMBER_REQUEST, USER_ALREADY_PRESENT, WAITING_FOR_PLAYERS,
     // gameflow
@@ -8,6 +9,9 @@ public enum Message {
     PICK_A_CARD, CANNOT_DRAW, CARD_DRAWN, TURN_ENDED,
     // endgame
     WINNER,
-    // utils
+
+    // client messages
+
+    // connection messages
     PING, DISCONNECTION
 }
