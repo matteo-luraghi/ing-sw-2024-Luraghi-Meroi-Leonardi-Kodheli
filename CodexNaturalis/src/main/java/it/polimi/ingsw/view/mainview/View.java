@@ -13,6 +13,7 @@ public interface View {
     ViewScoreBoardFactory scoreBoardViewer  = null;
     ViewPlayerFieldFactory playerFieldViewer  = null;
     ViewDeckFactory deckViewer  = null;
+    ViewGoalCardFactory goalCardViewer = null;
 
     void showMessage (String s);
 

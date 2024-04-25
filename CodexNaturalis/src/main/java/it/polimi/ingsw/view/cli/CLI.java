@@ -20,6 +20,7 @@ public class CLI implements View {
     ViewScoreBoardFactory scoreBoardViewer  = null;
     ViewPlayerFieldFactory playerFieldViewer  = null;
     ViewDeckFactory deckViewer  = null;
+    ViewGoalCardFactory goalCardViewer = null;
 
     /**
      * CLI constructor
@@ -29,12 +30,15 @@ public class CLI implements View {
      * @param playerFieldViewer manages the printing of the players' fields
      * @param deckViewer manages the printing of the decks
      */
-    public CLI (Controller controller, ViewGameCardCLIFactory gameCardViewer, ViewScoreBoardCLIFactory scoreBoardViewer, ViewPlayerFieldCLIFactory playerFieldViewer, ViewDeckCLIFactory deckViewer) {
+    public CLI (Controller controller, ViewGameCardCLIFactory gameCardViewer,
+                ViewScoreBoardCLIFactory scoreBoardViewer, ViewPlayerFieldCLIFactory playerFieldViewer,
+                ViewDeckCLIFactory deckViewer, ViewGoalCardFactory goalCardViewer) {
         this.controller = controller;
         this.deckViewer = deckViewer;
         this.gameCardViewer = gameCardViewer;
         this.playerFieldViewer = playerFieldViewer;
         this.scoreBoardViewer = scoreBoardViewer;
+        this.goalCardViewer = goalCardViewer;
     }
 
     /**
