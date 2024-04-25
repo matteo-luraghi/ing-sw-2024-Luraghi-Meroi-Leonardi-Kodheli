@@ -1,7 +1,6 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.connection.ClientHandler;
-import it.polimi.ingsw.connection.message.clientMessage.ClientMessage;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.gamelogic.*;
@@ -110,11 +109,6 @@ public class Controller {
         } finally {
             connectionLock.unlock();
         }
-    }
-
-    public void receiveMessage(ClientMessage msg) {
-        //TODO: handle the client message, probably in game
-        // game.handleMessage(msg)
     }
 
     /**
