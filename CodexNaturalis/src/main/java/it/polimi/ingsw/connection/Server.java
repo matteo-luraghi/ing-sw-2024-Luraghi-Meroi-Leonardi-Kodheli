@@ -1,11 +1,13 @@
 package it.polimi.ingsw.connection;
 
 import it.polimi.ingsw.connection.message.connectionMessage.Disconnection;
+import it.polimi.ingsw.controller.Controller;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,7 +20,7 @@ public class Server {
     private final int port;
     private ServerSocket serverSocket;
     private final int TIMEOUT = 10000;
-    private final Map<Integer, Integer> games; // Keys as controllers
+    private final Map<Controller, Integer> games;
     private final ExecutorService executor;
     private final Object lobbyLock = new Object();
 

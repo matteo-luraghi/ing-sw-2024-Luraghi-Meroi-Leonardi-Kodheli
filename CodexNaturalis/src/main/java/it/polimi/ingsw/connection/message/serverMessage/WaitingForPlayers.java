@@ -1,7 +1,7 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
 import it.polimi.ingsw.connection.message.Message;
-import it.polimi.ingsw.view.mainview.MegaView;
+import it.polimi.ingsw.view.mainview.View;
 
 /**
  * WaitingForPlayers class
@@ -23,7 +23,7 @@ public class WaitingForPlayers extends ServerMessage {
      * @param view the view interface
      */
     @Override
-    public void show(MegaView view) {
+    public void show(View view) {
         view.ShowWaitingForPlayers();
     }
 }

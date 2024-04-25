@@ -1,28 +1,41 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.connection.ClientHandler;
+import it.polimi.ingsw.connection.message.clientMessage.ClientMessage;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.gamelogic.*;
 import it.polimi.ingsw.model.states.SetUpState;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * MegaController class, manages player input and sends messages to the model
+ * Controller class, manages player input and sends messages to the model
  * @author Gabriel Leonardi
  */
-public class MegaController {
+public class Controller {
     private GameState game;
     protected Scanner scanner;
     private Player player;
 
+    // TODO: use the clienthandlers to send messages to the clients
+    private final ArrayList<ClientHandler> clientHandlers;
+    private final Lock connectionLock;
+
     /**
-     * MegaController constructor
+     * Controller constructor
      * @param game Game that the megaController manages
      */
-    public MegaController(GameState game){
+    public Controller(GameState game){
         this.game = game;
         this.scanner = new Scanner(System.in);
+        //connection attributes setup
+        connectionLock = new ReentrantLock();
+        this.clientHandlers = new ArrayList<>();
     }
 
     /**
@@ -31,6 +44,61 @@ public class MegaController {
      */
     public GameState getGame() {
         return game;
+    }
+
+    /**
+     * Client handlers getter
+     * @return list of handlers
+     */
+    public ArrayList<ClientHandler> getHandlers() {
+        return this.clientHandlers;
+    }
+
+    /**
+     * Add a client handler to the list
+     * @param handler client handler to be added
+     */
+    public void addHandler(ClientHandler handler) {
+        this.clientHandlers.add(handler);
+    }
+
+    /**
+     * Client Handler getter by nickname
+     * @param nickname the nickname of a Player
+     * @return the corresponding ClientHandler
+     */
+    public ClientHandler getHandlerByNickname(String nickname) {
+        connectionLock.lock();
+        try {
+            for(ClientHandler c: this.clientHandlers) {
+                if (c.getClientNickname().equals(nickname)) {
+                    return c;
+                }
+            }
+        } finally {
+            connectionLock.unlock();
+        }
+        return null;
+    }
+
+    /**
+     * Send a message to all the clients
+     * @param msg the message to be sent
+     */
+    public void broadcastMessage(Serializable msg) {
+        connectionLock.lock();
+        try {
+            for(ClientHandler c : this.clientHandlers) {
+                c.sendMessageClient(msg);
+            }
+        } finally {
+            connectionLock.unlock();
+        }
+    }
+
+    public void receiveMessage(ClientMessage msg) {
+        //TODO: handle the client message, probably in game
+        // game.handleMessage(msg)
     }
 
     /**

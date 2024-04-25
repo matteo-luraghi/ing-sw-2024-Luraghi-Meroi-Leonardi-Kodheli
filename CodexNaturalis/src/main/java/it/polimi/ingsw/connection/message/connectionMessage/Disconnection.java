@@ -1,7 +1,7 @@
 package it.polimi.ingsw.connection.message.connectionMessage;
 
 import it.polimi.ingsw.connection.message.Message;
-import it.polimi.ingsw.view.mainview.MegaView;
+import it.polimi.ingsw.view.mainview.View;
 
 /**
  * Disconnection class
@@ -24,7 +24,7 @@ public class Disconnection extends ConnectionMessage {
      * show the message
      * @param view view interface
      */
-    public void show(MegaView view) {
+    public void show(View view) {
         view.displayDisconnectionMessage(clientNickname);
     }
 }

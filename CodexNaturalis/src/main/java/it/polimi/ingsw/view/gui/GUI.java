@@ -1,6 +1,6 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.view.mainview.MegaView;
+import it.polimi.ingsw.view.mainview.View;
 
-public class GUI implements MegaView {
+public class GUI implements View {
 }

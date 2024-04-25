@@ -2,7 +2,7 @@ package it.polimi.ingsw.connection.message.serverMessage;
 
 import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.model.gamelogic.Player;
-import it.polimi.ingsw.view.mainview.MegaView;
+import it.polimi.ingsw.view.mainview.View;
 
 /**
  * CardNotPlayable class
@@ -27,7 +27,7 @@ public class CardNotPlayable extends ServerMessage {
      * @param view the view interface
      */
     @Override
-    public void show(MegaView view) {
+    public void show(View view) {
         view.ShowCardNotPlayable();
         view.ShowPlayerField(player);
     }

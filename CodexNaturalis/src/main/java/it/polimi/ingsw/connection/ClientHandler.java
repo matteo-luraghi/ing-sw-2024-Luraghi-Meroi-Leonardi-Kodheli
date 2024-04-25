@@ -1,6 +1,6 @@
 package it.polimi.ingsw.connection;
 
-import it.polimi.ingsw.controller.MegaController;
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.connection.message.clientMessage.ClientMessage;
 import it.polimi.ingsw.connection.message.connectionMessage.Ping;
 import it.polimi.ingsw.connection.message.serverMessage.ServerMessage;
@@ -24,7 +24,7 @@ public class ClientHandler implements Runnable{
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private String clientNickname;
-    private MegaController controller;
+    private Controller controller;
 
     /**
      * Constructor that initializes a ping thread
@@ -125,7 +125,7 @@ public class ClientHandler implements Runnable{
      * Controller getter
      * @return the client's controller
      */
-    public MegaController getController() {
+    public Controller getController() {
         return this.controller;
     }
 
@@ -133,7 +133,7 @@ public class ClientHandler implements Runnable{
      * Controller setter
      * @param controller to be set
      */
-    public void setController(MegaController controller) {
+    public void setController(Controller controller) {
         this.controller = controller;
     }
 }

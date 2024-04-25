@@ -1,14 +1,14 @@
 package it.polimi.ingsw.view.mainview;
 
-import it.polimi.ingsw.controller.MegaController;
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.gamelogic.Player;
 
 /**
  * Megaview interface, will be implemented for GUI and CLI
  * @author Lorenzo Meroi
  */
-public interface MegaView {
-    MegaController controller = null;
+public interface View {
+    Controller controller = null;
     ViewGameCardFactory gameCardViewer = null;
     ViewScoreBoardFactory scoreBoardViewer  = null;
     ViewPlayerFieldFactory playerFieldViewer  = null;

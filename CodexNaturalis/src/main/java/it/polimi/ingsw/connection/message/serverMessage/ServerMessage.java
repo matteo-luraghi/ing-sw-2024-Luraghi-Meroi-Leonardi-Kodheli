@@ -1,7 +1,7 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
 import it.polimi.ingsw.connection.message.Message;
-import it.polimi.ingsw.view.mainview.MegaView;
+import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serializable;
 
@@ -33,5 +33,5 @@ public abstract class ServerMessage implements Serializable {
      * show the message in the CLI or GUI
      * @param view the view interface
      */
-    public abstract void show(MegaView view);
+    public abstract void show(View view);
 }
