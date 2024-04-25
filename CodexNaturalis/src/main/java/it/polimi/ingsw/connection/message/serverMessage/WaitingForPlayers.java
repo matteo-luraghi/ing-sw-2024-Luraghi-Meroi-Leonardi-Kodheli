@@ -5,13 +5,14 @@ import it.polimi.ingsw.view.mainview.MegaView;
 
 /**
  * WaitingForPlayers class
+ * used to notify the players that more players are needed to start the game
  * @author Matteo Leonardo Luraghi
  */
 public class WaitingForPlayers extends ServerMessage {
     private static final long serialVersionUID = -2339838021795743307L;
 
     /**
-     * constructor
+     * Constructor, sets the message type as WAITING_FOR_PLAYERS
      */
     public WaitingForPlayers() {
         super(Message.WAITING_FOR_PLAYERS);

@@ -5,13 +5,14 @@ import it.polimi.ingsw.view.mainview.MegaView;
 
 /**
  * PlayerNumberRequest class
+ * used to ask the player how many players will be playing the game
  * @author Matteo Leonardo Luraghi
  */
 public class PlayersNumberRequest extends ServerMessage {
     private static final long serialVersionUID = -2083165574856696922L;
 
     /**
-     * constructor
+     * Constructor, sets the message type as PLAYERS_NUMBER_REQUEST
      */
     public PlayersNumberRequest() {
         super(Message.PLAYERS_NUMBER_REQUEST);

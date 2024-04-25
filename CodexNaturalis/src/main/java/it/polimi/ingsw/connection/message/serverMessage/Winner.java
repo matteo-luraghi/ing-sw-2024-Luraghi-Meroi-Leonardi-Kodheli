@@ -5,13 +5,14 @@ import it.polimi.ingsw.view.mainview.MegaView;
 
 /**
  * Winner class
+ * notifies all the players about the winner of the game
  * @author Matteo Leonardo Luraghi
  */
 public class Winner extends ServerMessage {
     private static final long serialVersionUID = -8138532488978566491L;
 
     /**
-     * constructor
+     * Constructor, sets the message type as WINNER
      */
     public Winner() {
         super(Message.WINNER);

@@ -6,7 +6,7 @@ import it.polimi.ingsw.view.mainview.MegaView;
 import java.io.Serializable;
 
 /**
- * ServerMessage class
+ * ServerMessage abstract class
  * @author Matteo Leonardo Luraghi
  */
 public abstract class ServerMessage implements Serializable {
@@ -14,7 +14,7 @@ public abstract class ServerMessage implements Serializable {
     private final Message type;
 
     /**
-     * constructor
+     * Constructor, sets the message type
      * @param type type of the message
      */
     public ServerMessage(Message type) {
@@ -30,7 +30,7 @@ public abstract class ServerMessage implements Serializable {
     }
 
     /**
-     * show the message
+     * show the message in the CLI or GUI
      * @param view the view interface
      */
     public abstract void show(MegaView view);
