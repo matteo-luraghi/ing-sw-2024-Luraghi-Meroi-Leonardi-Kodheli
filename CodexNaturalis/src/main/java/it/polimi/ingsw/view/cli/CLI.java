@@ -29,6 +29,7 @@ public class CLI implements View {
      * @param scoreBoardViewer manages the printing of the scoreboard
      * @param playerFieldViewer manages the printing of the players' fields
      * @param deckViewer manages the printing of the decks
+     * @param goalCardViewer manages the printing of the goal cards
      */
     public CLI (Controller controller, ViewGameCardCLIFactory gameCardViewer,
                 ViewScoreBoardCLIFactory scoreBoardViewer, ViewPlayerFieldCLIFactory playerFieldViewer,
@@ -62,6 +63,9 @@ public class CLI implements View {
         System.out.println(s);
     }
 
+    /**
+     * method to show to players when waiting for others to join
+     */
     @Override
     public void ShowWaitingForPlayers() {
         System.out.println("Waiting for players...");
@@ -69,7 +73,6 @@ public class CLI implements View {
 
     @Override
     public void ShowPrivateGoals(Player player) {
-        this.controller.getGame().getGameTable().getPlayerZones().get(player).
     }
 
     @Override
