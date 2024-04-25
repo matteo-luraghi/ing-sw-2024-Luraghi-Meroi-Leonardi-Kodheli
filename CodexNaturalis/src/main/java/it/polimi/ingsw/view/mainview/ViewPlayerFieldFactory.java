@@ -15,6 +15,9 @@ public abstract class ViewPlayerFieldFactory {
 
     protected ViewGameCardFactory gameCardViewer;
 
+    protected ViewGoalCardFactory goalCardViewer;
+
+
     /**
      * abstract method to show the player field
      */

@@ -19,6 +19,11 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
      */
     public void setGameCardViewer (ViewGameCardCLIFactory gameCardViewer) {this.gameCardViewer = gameCardViewer;}
     /**
+     * goalCardViewer setter
+     * @param goalCardViewer to show cards
+     */
+    public void setGoalCardViewer (ViewGoalCardCLIFactory goalCardViewer) {this.goalCardViewer = goalCardViewer;}
+    /**
      * abstract method to show the player field
      */
     @Override
@@ -32,7 +37,9 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
         - Plant: #N°
         ...
 
-        Player's hand
+        Player's hand:
+
+        Player's private goal:
         */
 
         System.out.println(this.player.toString()+"'s field:");
@@ -101,7 +108,8 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
         }
 
         System.out.println(this.player.toString()+"'s private goal:");
-        gameCardViewer.SetCard(this.playerField.getPrivateGoal());
+        goalCardViewer.SetCard(this.playerField.getPrivateGoal());
+        goalCardViewer.Show();
     }
 
     private String CardToString (Coordinates coor, GameCard card) {

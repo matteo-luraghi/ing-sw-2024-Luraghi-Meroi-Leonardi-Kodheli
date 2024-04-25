@@ -47,7 +47,6 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
          */
 
         if (this.card.isResourceGoal()) {
-            //TODO show a resource goal card
             ArrayList<Resource> requirements = ((ResourceGoalCard) this.card).getRequirements();
 
             System.out.print(AnsiColors.ANSI_WHITE);
@@ -61,7 +60,6 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
             System.out.println("|___________|");
             System.out.print(AnsiColors.ANSI_RESET);
         } else {
-            //TODO show a position goal card
             ArrayList<Direction> directions = ((PositionGoalCard) this.card).getPositionsFromBase();
             ArrayList<Kingdom> resources = ((PositionGoalCard) this.card).getResourceFromBase();
 
@@ -112,5 +110,9 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
             System.out.print(AnsiColors.ANSI_RESET);
         }
 
+    }
+
+    public void show2 (GoalCard[] Goals) {
+        //TODO make it show 2 goalcards next to one another
     }
 }

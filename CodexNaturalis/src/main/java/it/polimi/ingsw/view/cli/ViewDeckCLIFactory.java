@@ -7,10 +7,19 @@ import it.polimi.ingsw.view.mainview.ViewDeckFactory;
 
 public class ViewDeckCLIFactory extends ViewDeckFactory {
 
-    ViewGameCardCLIFactory gameCardViewer;
-
+    /**
+     * gameCardViewer setter
+     * @param gameCardViewer to show cards
+     */
     public void setGameCardViewer(ViewGameCardCLIFactory gameCardViewer) {
         this.gameCardViewer = gameCardViewer;
+    }
+    /**
+     * goalCardViewer setter
+     * @param goalCardViewer to show cards
+     */
+    public void setGameCardViewer(ViewGoalCardCLIFactory goalCardViewer) {
+        this.goalCardViewer = goalCardViewer;
     }
 
     /**
@@ -18,6 +27,14 @@ public class ViewDeckCLIFactory extends ViewDeckFactory {
      */
     @Override
     public void show() {
+        System.out.println();
+        System.out.println("Common Goals:");
+        this.goalCardViewer.SetCard(this.commonGoals[0]);
+        this.goalCardViewer.Show();
+        this.goalCardViewer.SetCard(this.commonGoals[1]);
+        this.goalCardViewer.Show();
+        System.out.println();
+
         if (this.deck.getCards().isEmpty()) {
             if (this.deck.getCards().element() instanceof GoldCard) {
                 System.out.print(AnsiColors.ANSI_YELLOW);
@@ -75,7 +92,6 @@ public class ViewDeckCLIFactory extends ViewDeckFactory {
             gameCardViewer.SetCard(this.deck.getUncoveredCards()[1]);
             gameCardViewer.Show();
         }
-
 
     }
 }
