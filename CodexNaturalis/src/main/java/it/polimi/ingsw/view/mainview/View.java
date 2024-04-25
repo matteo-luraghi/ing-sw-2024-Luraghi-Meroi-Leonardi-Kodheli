@@ -14,7 +14,7 @@ public interface View {
     ViewPlayerFieldFactory playerFieldViewer  = null;
     ViewDeckFactory deckViewer  = null;
 
-    void ShowLogin();
+    void showMessage (String s);
 
     void ShowWaitingForPlayers();
 

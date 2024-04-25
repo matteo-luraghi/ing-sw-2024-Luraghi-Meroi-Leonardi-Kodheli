@@ -11,6 +11,10 @@ public abstract class ViewPlayerFieldFactory {
 
     protected PlayerField playerField;
 
+    protected Player player;
+
+    protected ViewGameCardFactory gameCardViewer;
+
     /**
      * abstract method to show the player field
      */
@@ -20,7 +24,7 @@ public abstract class ViewPlayerFieldFactory {
      * method to set which player field to show
      * @param playerField is the player field you want to be shown
      */
-    public void setPlayerField(PlayerField playerField) {
+    public void setPlayerField(PlayerField playerField, Player player) {
         this.playerField = playerField;
     }
 }

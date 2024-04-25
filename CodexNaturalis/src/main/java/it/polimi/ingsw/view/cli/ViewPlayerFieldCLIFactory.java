@@ -1,8 +1,8 @@
 package it.polimi.ingsw.view.cli;
 
-import it.polimi.ingsw.model.card.GameCard;
-import it.polimi.ingsw.model.card.Resource;
+import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.model.gamelogic.Coordinates;
+import it.polimi.ingsw.view.mainview.ViewGameCardFactory;
 import it.polimi.ingsw.view.mainview.ViewPlayerFieldFactory;
 import it.polimi.ingsw.view.mainview.AnsiColors;
 
@@ -12,6 +12,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
+
+    /**
+     * gameCardViewer setter
+     * @param gameCardViewer to show cards
+     */
+    public void setGameCardViewer (ViewGameCardCLIFactory gameCardViewer) {this.gameCardViewer = gameCardViewer;}
     /**
      * abstract method to show the player field
      */
@@ -24,7 +30,12 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
 
         Resource Map:
         - Plant: #N°
+        ...
+
+        Player's hand
         */
+
+        System.out.println(this.player.toString()+"'s field:");
 
         ArrayList<Coordinates> sortedCoordinates = new ArrayList<>(this.playerField.getGameZone().keySet());
         sortedCoordinates = (ArrayList<Coordinates>) sortedCoordinates.stream()
@@ -76,25 +87,45 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
             System.out.println();
         }
 
-        System.out.println("Your resources:");
+        System.out.println(this.player.toString()+"'s Resources:");
         for (Resource r : this.playerField.getResourceMap().keySet()) {
             System.out.println("- " + r.toString() + ": #" + this.playerField.getResourceFromMap(r));
         }
+
+        System.out.println();
+        System.out.println(this.player.toString()+"'s hand:");
+        for (ResourceCard c : this.playerField.getHand()) {
+            gameCardViewer.SetCard(c);
+            gameCardViewer.Show();
+            System.out.println();
+        }
+
+        System.out.println(this.player.toString()+"'s private goal:");
+        gameCardViewer.SetCard(this.playerField.getPrivateGoal());
     }
 
     private String CardToString (Coordinates coor, GameCard card) {
-        String finalString = "[";
+        String cardString = "";
+        if (card instanceof StartingCard)
+            cardString += AnsiColors.ANSI_WHITE;
+        else if (card instanceof GoldCard)
+            cardString += AnsiColors.ANSI_YELLOW;
+
+        cardString = "[";
 
         if (coor.getX()>=0)
-            finalString += "+";
+            cardString += "+";
 
-        finalString += coor.getX() + ",";
+        cardString += coor.getX() + ",";
 
         if (coor.getY()>=0)
-            finalString += "+";
+            cardString += "+";
 
-        finalString +=coor.getY() + ":" + card.getKingdom().toString() + "]";
+        cardString +=coor.getY() + ":" + card.getKingdom().toString() + "]";
 
-        return finalString;
+        cardString += AnsiColors.ANSI_RESET;
+
+
+        return cardString;
     }
 }
