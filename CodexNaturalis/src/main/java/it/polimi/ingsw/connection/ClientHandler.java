@@ -26,7 +26,6 @@ public class ClientHandler implements Runnable{
     private ObjectOutputStream outputStream;
     private String clientNickname;
     private Controller controller;
-    private ClientHandlerPhase clientHandlerPhase;
 
     /**
      * Constructor that initializes a ping thread
@@ -56,7 +55,6 @@ public class ClientHandler implements Runnable{
             activeClient = true;
 
             pingThread.start();
-            this.clientHandlerPhase = ClientHandlerPhase.WAITING_NICKNAME;
             sendMessageClient(new LoginRequest());
 
             while(activeClient) {
@@ -107,22 +105,6 @@ public class ClientHandler implements Runnable{
                 socket.close();
             } catch (IOException ignored){}
         }
-    }
-
-    /**
-     * Client handler phase's getter
-     * @return the phase
-     */
-    public ClientHandlerPhase getClientHandlerPhase() {
-        return clientHandlerPhase;
-    }
-
-    /**
-     * Client handler phase's setter
-     * @param phase the current phase
-     */
-    public void setClientHandlerPhase(ClientHandlerPhase phase) {
-        this.clientHandlerPhase = phase;
     }
 
     /**

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.connection;
 
 import it.polimi.ingsw.connection.message.connectionMessage.Disconnection;
+import it.polimi.ingsw.connection.message.serverMessage.LoginRequest;
+import it.polimi.ingsw.connection.message.serverMessage.PlayersNumberRequest;
 import it.polimi.ingsw.connection.message.serverMessage.TextMessage;
 import it.polimi.ingsw.connection.message.serverMessage.WaitingForPlayers;
 import it.polimi.ingsw.controller.Controller;
@@ -42,7 +44,6 @@ public class Server {
      * Initialize the socket and accept the clients' connections
      */
     public void start() {
-        //TODO: limit the number of players
         try {
             this.serverSocket = new ServerSocket(this.port);
         } catch (IOException e) {
@@ -62,22 +63,48 @@ public class Server {
         }
     }
 
+    /**
+     * Add a client to a game via its clientHandler
+     * @param clientHandler the clientHandler to save in a game
+     */
     public void addToGame(ClientHandler clientHandler) {
         synchronized (this.gameLock) {
-            Controller gameController = games.keySet().stream().findFirst().get();
-            gameController.addHandler(clientHandler);
-            clientHandler.setController(gameController);
-            checkGame(gameController);
-        }
+            // find the first free game and try to add the player
+            Optional<Controller> optionalController = games.keySet().stream().filter(g -> !g.isGameStarted()).findFirst();
+            if (optionalController.isPresent()) {
+                Controller gameController = optionalController.get();
+                gameController.addHandler(clientHandler);
+                clientHandler.setController(gameController);
+                checkGame(gameController);
 
-        if(!clientHandler.getController().isGameStarted()
-                && clientHandler.getClientHandlerPhase() != ClientHandlerPhase.GAME_WAIT
-                && clientHandler.getClientHandlerPhase() != ClientHandlerPhase.WAITING_FOR_PLAYERS) {
-            clientHandler.setClientHandlerPhase(ClientHandlerPhase.WAITING_FOR_PLAYERS);
-            clientHandler.sendMessageClient(new WaitingForPlayers());
+                if(!clientHandler.getController().isGameStarted()) {
+                    clientHandler.sendMessageClient(new WaitingForPlayers());
+                }
+            } else { // no free games available -> wait for user input of number of players
+                clientHandler.sendMessageClient(new PlayersNumberRequest());
+            }
         }
     }
 
+    /**
+     * Overloading of addToGame with number of players, used in PlayerNumberResponse
+     * @param clientHandler the client handler
+     * @param numberOfPlayers the number of players for the new game
+     */
+    public void addToGame(ClientHandler clientHandler, int numberOfPlayers) {
+        synchronized (this.gameLock) {
+            Controller controller = new Controller();
+            this.games.put(controller, numberOfPlayers);
+            controller.addHandler(clientHandler);
+            clientHandler.setController(controller);
+            checkGame(controller);
+        }
+    }
+
+    /**
+     * Check if the game is ready to start
+     * @param controller the controller related to the game
+     */
     public void checkGame(Controller controller) {
         synchronized (this.gameLock) {
             // check if the number of player is sufficient for the game
@@ -104,14 +131,22 @@ public class Server {
     }
 
     /**
+     * Games getter
+     * @return map of games and number of players
+     */
+    public Map<Controller, Integer> getGames() {
+        return this.games;
+    }
+
+    /**
      * Remove and disconnect a client
-     * @param clientHandler
+     * @param clientHandler the clientHandler relative to the client
      */
     public void removeClient(ClientHandler clientHandler) {
-        Optional<Controller> optionalCcontroller = this.games.keySet().stream().filter(c -> c.getHandlers().contains(clientHandler)).findFirst();
-        if (optionalCcontroller.isPresent()) {
+        Optional<Controller> optionalController = this.games.keySet().stream().filter(c -> c.getHandlers().contains(clientHandler)).findFirst();
+        if (optionalController.isPresent()) {
             synchronized (this.gameLock) {
-                Controller controller = optionalCcontroller.get();
+                Controller controller = optionalController.get();
                 this.games.replace(controller, this.games.get(controller) - 1);
                 if (this.games.get(controller) <= 0 || !controller.isGameStarted())
                     this.games.remove(controller);

@@ -28,7 +28,7 @@ public class CardNotPlayable extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.ShowCardNotPlayable();
+        view.showMessage("Error: the card can't be played there!");
         view.ShowPlayerField(player);
     }
 }

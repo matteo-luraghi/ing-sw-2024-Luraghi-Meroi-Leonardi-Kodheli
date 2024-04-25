@@ -24,6 +24,6 @@ public class TurnEnded extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.ShowEndTurn();
+        view.showMessage("Your turn has ended!");
     }
 }

@@ -1,8 +1,5 @@
 package it.polimi.ingsw.model.gamelogic;
 
-import it.polimi.ingsw.model.states.SetUpState;
-import it.polimi.ingsw.model.states.State;
-
 import java.util.ArrayList;
 import java.util.Set;
 

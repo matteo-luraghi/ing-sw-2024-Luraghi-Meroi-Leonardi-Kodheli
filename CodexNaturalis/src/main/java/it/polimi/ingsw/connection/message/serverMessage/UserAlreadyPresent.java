@@ -24,7 +24,7 @@ public class UserAlreadyPresent extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.ShowUserAlreadyPresent();
+        view.showMessage("User already present");
         view.ShowLogin();
     }
 }

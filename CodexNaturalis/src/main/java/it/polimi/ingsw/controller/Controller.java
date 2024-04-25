@@ -5,7 +5,6 @@ import it.polimi.ingsw.connection.message.clientMessage.ClientMessage;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.gamelogic.*;
-import it.polimi.ingsw.model.states.SetUpState;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,19 +19,28 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Controller {
     private GameState game;
     protected Scanner scanner;
-    private Player player;
+    private Player player; //Why this is needed?
 
-    // TODO: use the clienthandlers to send messages to the clients
+    // TODO: use the client handlers to send messages to the clients
     private final ArrayList<ClientHandler> clientHandlers;
     private final Lock connectionLock;
+    private boolean isGameStarted;
+    private boolean isGameEnded;
 
+    /**
+     * Constructor without parameters
+     */
+    public Controller() {
+        this.connectionLock = new ReentrantLock();
+        this.clientHandlers = new ArrayList<>();
+    }
     /**
      * Controller constructor
      * @param game Game that the megaController manages
      */
     public Controller(GameState game){
         this.game = game;
-        this.scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in); //probably don't need this
         //connection attributes setup
         connectionLock = new ReentrantLock();
         this.clientHandlers = new ArrayList<>();
@@ -44,6 +52,14 @@ public class Controller {
      */
     public GameState getGame() {
         return game;
+    }
+
+    /**
+     * gameState setter
+     * @param game the game
+     */
+    public void setGame(GameState game) {
+        this.game = game;
     }
 
     /**
@@ -99,6 +115,43 @@ public class Controller {
     public void receiveMessage(ClientMessage msg) {
         //TODO: handle the client message, probably in game
         // game.handleMessage(msg)
+    }
+
+    /**
+     * isGamEnded setter
+     * @param gameEnded value
+     */
+    public void setGameEnded(boolean gameEnded) {
+        this.isGameEnded = gameEnded;
+    }
+
+    /**
+     * isGameEnded getter
+     * @return value
+     */
+    public boolean isGameEnded() {
+        return this.isGameEnded;
+    }
+
+    /**
+     * isGameStarted setter
+     * @param gameStarted value
+     */
+    public void setGameStarted(boolean gameStarted) {
+        this.isGameStarted = gameStarted;
+    }
+
+    /**
+     * isGameStarted getter
+     * @return value
+     */
+    public boolean isGameStarted() {
+        return this.isGameStarted;
+    }
+
+    public void start() {
+        this.isGameStarted = true;
+        //TODO: start the game, probably need to initialize gameState, players, player field, etc here
     }
 
     /**

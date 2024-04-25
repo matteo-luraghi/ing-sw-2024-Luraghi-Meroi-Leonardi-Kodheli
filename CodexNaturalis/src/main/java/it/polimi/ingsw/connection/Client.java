@@ -184,7 +184,7 @@ public class Client {
             } catch(IOException e) {}
 
             if(error) {
-                this.view.ShowError("An error occurred, you'll be disconnected from the server");
+                this.view.showMessage("An error occurred, you'll be disconnected from the server");
             }
 
         }

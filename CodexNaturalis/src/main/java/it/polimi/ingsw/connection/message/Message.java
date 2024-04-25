@@ -11,6 +11,7 @@ public enum Message {
     WINNER,
 
     // client messages
+    LOGIN_RESPONSE, PLAYERS_NUMBER_RESPONSE, DRAW_CARD_RESPONSE,
 
     // connection messages
     PING, DISCONNECTION, TEXT

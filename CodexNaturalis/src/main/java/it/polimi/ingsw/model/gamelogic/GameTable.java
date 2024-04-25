@@ -21,7 +21,7 @@ public class GameTable {
      * @param ResourceDeck Deck with the initial resource cards
      * @param GoldDeck Deck with the initial gold cards
      * @param PlayerZones Map that saves player and its player field
-     * @param CommonGoals Array wich contains the common goals GoalCard
+     * @param CommonGoals Array which contains the common goals GoalCard
      * @param scoreboard The scoreboard that contains all the player scores
      */
     public GameTable(Deck ResourceDeck, Deck GoldDeck, Map<Player, PlayerField> PlayerZones, GoalCard[] CommonGoals, ScoreBoard scoreboard)
@@ -34,7 +34,7 @@ public class GameTable {
     }
 
     /**
-     * ResouceDeck getter
+     * ResourceDeck getter
      * @return Deck
      */
     public Deck getResourceDeck() {

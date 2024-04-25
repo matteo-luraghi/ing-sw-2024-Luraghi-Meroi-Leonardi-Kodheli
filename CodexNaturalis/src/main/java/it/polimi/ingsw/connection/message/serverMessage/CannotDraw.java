@@ -24,6 +24,7 @@ public class CannotDraw extends ServerMessage {
      */
     @Override
     public void show(View view) {
+        view.showMessage("Error drawing, draw again!");
         view.ShowDecks();
     }
 }
