@@ -13,5 +13,5 @@ public enum Message {
     // client messages
 
     // connection messages
-    PING, DISCONNECTION
+    PING, DISCONNECTION, TEXT
 }
