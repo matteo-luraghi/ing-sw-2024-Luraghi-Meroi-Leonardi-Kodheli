@@ -10,8 +10,8 @@ import it.polimi.ingsw.connection.message.serverMessage.LoginRequest;
  * used to set the clientHandler nickname or ask for a new nickname
  */
 public class LoginResponse extends ClientMessage {
-    private static final long serialVersionUID = 3624677593154184852L;
-    private String nickname;
+    private static final long serialVersionUID = 6913153965860413805L;
+    private final String nickname;
 
     /**
      * Constructor, sets the message type as LOGIN_RESPONSE

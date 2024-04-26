@@ -8,7 +8,7 @@ import it.polimi.ingsw.view.mainview.View;
  * @author Matteo Leonardo Luraghi
  */
 public class Disconnection extends ConnectionMessage {
-    private static final long serialVersionUID = 3339787176056507046L;
+    private static final long serialVersionUID = 6000054069559657434L;
     private final String clientNickname;
 
     /**

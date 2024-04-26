@@ -9,7 +9,7 @@ import it.polimi.ingsw.view.mainview.View;
  * @author Matteo Leonardo Luraghi
  */
 public class UserAlreadyPresent extends ServerMessage {
-    private static final long serialVersionUID = -5600698207138090264L;
+    private static final long serialVersionUID = -3064229876009797501L;
 
     /**
      * Constructor thad assigns the message type as USER_ALREADY_PRESENT

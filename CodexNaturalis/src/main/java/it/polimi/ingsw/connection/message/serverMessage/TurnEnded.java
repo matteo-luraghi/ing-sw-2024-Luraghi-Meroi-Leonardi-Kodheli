@@ -9,7 +9,7 @@ import it.polimi.ingsw.view.mainview.View;
  * @author Matteo Leonardo Luraghi
  */
 public class TurnEnded extends ServerMessage {
-    private static final long serialVersionUID = -350188259113524461L;
+    private static final long serialVersionUID = 2741292733883597798L;
 
     /**
      * Constructor, sets the message type as TURN_ENDED

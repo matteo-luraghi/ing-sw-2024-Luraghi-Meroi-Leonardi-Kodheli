@@ -1,10 +1,7 @@
 package it.polimi.ingsw.connection;
 
 import it.polimi.ingsw.connection.message.connectionMessage.Disconnection;
-import it.polimi.ingsw.connection.message.serverMessage.LoginRequest;
-import it.polimi.ingsw.connection.message.serverMessage.PlayersNumberRequest;
-import it.polimi.ingsw.connection.message.serverMessage.TextMessage;
-import it.polimi.ingsw.connection.message.serverMessage.WaitingForPlayers;
+import it.polimi.ingsw.connection.message.serverMessage.*;
 import it.polimi.ingsw.controller.Controller;
 
 import java.io.IOException;
@@ -77,10 +74,7 @@ public class Server {
                 gameController.addHandler(clientHandler);
                 clientHandler.setController(gameController);
                 checkGame(gameController);
-
-                if(!clientHandler.getController().isGameStarted()) {
-                    clientHandler.sendMessageClient(new WaitingForPlayers());
-                }
+                clientHandler.sendMessageClient(new ColorRequest());
             } else { // no free games available -> wait for user input of number of players
                 clientHandler.sendMessageClient(new PlayersNumberRequest());
             }
@@ -98,6 +92,7 @@ public class Server {
             this.games.put(controller, numberOfPlayers);
             controller.addHandler(clientHandler);
             clientHandler.setController(controller);
+            clientHandler.sendMessageClient(new ColorRequest());
             checkGame(controller);
         }
     }

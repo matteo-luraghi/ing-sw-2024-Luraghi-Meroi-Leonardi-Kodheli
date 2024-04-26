@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author Matteo Leonardo Luraghi
  */
 public abstract class ClientMessage implements Serializable {
-    private static final long serialVersionUID = 6277215629364450602L;
+    private static final long serialVersionUID = -748320518806449772L;
     private final Message type;
 
     /**

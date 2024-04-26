@@ -10,7 +10,7 @@ import it.polimi.ingsw.view.mainview.View;
  * @author Matteo Leonardo Luraghi
  */
 public class CardDrawn extends ServerMessage {
-    private static final long serialVersionUID = 6244125026089623480L;
+    private static final long serialVersionUID = 360746976821865126L;
     private final Player player;
 
     /**

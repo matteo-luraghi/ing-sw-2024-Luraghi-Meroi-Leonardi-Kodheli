@@ -10,7 +10,7 @@ import it.polimi.ingsw.view.mainview.View;
  * @author Matteo Leonardo Luraghi
  */
 public class YourTurn extends ServerMessage {
-    private static final long serialVersionUID = 2526525956650403074L;
+    private static final long serialVersionUID = -532540375599572593L;
     private final Player player;
 
     /**

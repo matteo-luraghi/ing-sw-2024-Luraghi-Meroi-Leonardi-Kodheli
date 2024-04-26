@@ -9,7 +9,7 @@ import it.polimi.ingsw.view.mainview.View;
  * @author Matteo Leonardo Luraghi
  */
 public class LoginRequest extends ServerMessage {
-    private static final long serialVersionUID = 6670755359860541301L;
+    private static final long serialVersionUID = -4505766063795951757L;
 
     /**
      * Constructor, sets the message type as LOGIN_REQUEST

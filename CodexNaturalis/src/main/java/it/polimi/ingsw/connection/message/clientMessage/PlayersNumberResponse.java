@@ -3,7 +3,7 @@ package it.polimi.ingsw.connection.message.clientMessage;
 import it.polimi.ingsw.connection.ClientHandler;
 import it.polimi.ingsw.connection.Server;
 import it.polimi.ingsw.connection.message.Message;
-import it.polimi.ingsw.connection.message.serverMessage.WaitingForPlayers;
+import it.polimi.ingsw.connection.message.serverMessage.ColorRequest;
 
 /**
  * PlayersNumberResponse class
@@ -11,8 +11,8 @@ import it.polimi.ingsw.connection.message.serverMessage.WaitingForPlayers;
  * @author Matteo Leonardo Luraghi
  */
 public class PlayersNumberResponse extends ClientMessage{
-    private static final long serialVersionUID = -7752965836181499280L;
-    private int numPlayers;
+    private static final long serialVersionUID = -4677442179211411089L;
+    private final int numPlayers;
 
     /**
      * Constructor, sets the message type as PLAYER_NUMBER_RESPONSE and sets the number of players
@@ -32,6 +32,5 @@ public class PlayersNumberResponse extends ClientMessage{
     @Override
     public void execute(Server server, ClientHandler clientHandler) {
         server.addToGame(clientHandler, this.numPlayers);
-        clientHandler.sendMessageClient(new WaitingForPlayers());
     }
 }

@@ -1,13 +1,18 @@
 package it.polimi.ingsw.controller;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.connection.ClientHandler;
+import it.polimi.ingsw.connection.message.serverMessage.GoalCardRequest;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.ResourceCard;
+import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.*;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -143,9 +148,76 @@ public class Controller {
         return this.isGameStarted;
     }
 
+    /**
+     * Get all the starting cards from the json files
+     * @return the shuffled queue of starting cards
+     */
+    private Queue<StartingCard> getStartingCards() {
+        List<StartingCard> cardsList = new ArrayList<>();
+        Gson gson = new Gson();
+        for(int i=1; i<=8; i++) {
+            String cardPath = "../resources/CardsJSON/startingCards/startingCard" + i + ".json"; //TODO: fix root path
+            try(Reader reader = new FileReader(cardPath)) {
+                StartingCard card = gson.fromJson(reader, StartingCard.class);
+                cardsList.add(card);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Collections.shuffle(cardsList);
+        return new LinkedList<>(cardsList);
+    }
+
+    /**
+     * Get all the goal cards from the json files
+     * @return the shuffled queue of goal cards
+     */
+    private Queue<GoalCard> getGoalCards() {
+        List<GoalCard> cardsList = new ArrayList<>();
+        Gson gson = new Gson();
+        for(int i=1; i<=8; i++) {
+            String cardPath = "../resources/CardsJSON/goalCards/goalCard" + i + ".json"; //TODO: fix root path
+            try(Reader reader = new FileReader(cardPath)) {
+                GoalCard card = gson.fromJson(reader, GoalCard.class);
+                cardsList.add(card);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Collections.shuffle(cardsList);
+        return new LinkedList<>(cardsList);
+    }
     public void start() {
         this.isGameStarted = true;
-        //TODO: start the game, probably need to initialize gameState, players, player field, etc here
+
+        Queue<StartingCard> startingCardsQueue = getStartingCards();
+        Queue<GoalCard> goalCardsQueue = getGoalCards();
+        ArrayList<Player> players = new ArrayList<>();
+        Map<Player, PlayerField> playerZones = new HashMap<>();
+
+        for (ClientHandler c: this.clientHandlers) {
+            Player player = new Player(c.getClientNickname(), c.getClientColor());
+            players.add(player);
+            // randomly pick a starting card for the user
+            StartingCard startingCard = startingCardsQueue.poll();
+            PlayerField field = new PlayerField(startingCard);
+            playerZones.put(player, field);
+            // make the user choose a goal card
+            GoalCard[] goalCardsOptions = new GoalCard[2];
+            goalCardsOptions[0] = goalCardsQueue.poll();
+            goalCardsOptions[1] = goalCardsQueue.poll();
+            c.sendMessageClient(new GoalCardRequest(goalCardsOptions));
+        }
+
+        ScoreBoard scoreBoard = new ScoreBoard(players);
+        // pick the common goals from the remaining goal cards
+        GoalCard[] goalCards = new GoalCard[2];
+        goalCards[0] = goalCardsQueue.poll();
+        goalCards[1] = goalCardsQueue.poll();
+
+        GameTable table = new GameTable(new Deck(false), new Deck(true), playerZones, goalCards, scoreBoard);
+        // the first player is the starting one
+        this.game = new GameState(players, players.get(0), table);
     }
 
     /**

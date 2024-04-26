@@ -5,6 +5,8 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.connection.message.clientMessage.ClientMessage;
 import it.polimi.ingsw.connection.message.connectionMessage.Ping;
 import it.polimi.ingsw.connection.message.serverMessage.ServerMessage;
+import it.polimi.ingsw.model.gamelogic.Color;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,6 +27,7 @@ public class ClientHandler implements Runnable{
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private String clientNickname;
+    private Color clientColor;
     private Controller controller;
 
     /**
@@ -121,6 +124,22 @@ public class ClientHandler implements Runnable{
      */
     public void setClientNickname(String nickname) {
         this.clientNickname = nickname;
+    }
+
+    /**
+     * Get the client's color
+     * @return the color
+     */
+    public Color getClientColor() {
+        return this.clientColor;
+    }
+
+    /**
+     * Set the client's color
+     * @param color the color to set
+     */
+    public void setClientColor(Color color) {
+        this.clientColor = color;
     }
 
     /**

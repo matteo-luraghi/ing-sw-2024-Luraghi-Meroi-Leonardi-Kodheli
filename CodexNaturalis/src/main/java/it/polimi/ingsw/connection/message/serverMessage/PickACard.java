@@ -9,7 +9,7 @@ import it.polimi.ingsw.view.mainview.View;
  * @author Matteo Leonardo Luraghi
  */
 public class PickACard extends ServerMessage {
-    private static final long serialVersionUID = -7020861182647833795L;
+    private static final long serialVersionUID = 4055891453804268070L;
 
     /**
      * Constructor, sets the message type as PICK_A_CARD

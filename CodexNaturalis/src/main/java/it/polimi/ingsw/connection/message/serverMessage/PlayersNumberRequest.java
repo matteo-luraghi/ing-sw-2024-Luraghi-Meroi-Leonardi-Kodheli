@@ -9,7 +9,7 @@ import it.polimi.ingsw.view.mainview.View;
  * @author Matteo Leonardo Luraghi
  */
 public class PlayersNumberRequest extends ServerMessage {
-    private static final long serialVersionUID = -2083165574856696922L;
+    private static final long serialVersionUID = 6899284951355020884L;
 
     /**
      * Constructor, sets the message type as PLAYERS_NUMBER_REQUEST

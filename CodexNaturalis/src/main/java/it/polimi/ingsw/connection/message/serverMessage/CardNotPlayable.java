@@ -10,7 +10,7 @@ import it.polimi.ingsw.view.mainview.View;
  * @author Matteo Leonardo Luraghi
  */
 public class CardNotPlayable extends ServerMessage {
-    private static final long serialVersionUID = 4873171479370449853L;
+    private static final long serialVersionUID = 4674329930548128834L;
     private final Player player;
 
     /**

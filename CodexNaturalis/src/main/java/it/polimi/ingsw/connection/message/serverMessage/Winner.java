@@ -9,7 +9,7 @@ import it.polimi.ingsw.view.mainview.View;
  * @author Matteo Leonardo Luraghi
  */
 public class Winner extends ServerMessage {
-    private static final long serialVersionUID = -8138532488978566491L;
+    private static final long serialVersionUID = -9101701077881585L;
 
     /**
      * Constructor, sets the message type as WINNER

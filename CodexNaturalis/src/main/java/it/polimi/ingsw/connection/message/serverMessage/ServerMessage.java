@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author Matteo Leonardo Luraghi
  */
 public abstract class ServerMessage implements Serializable {
-    private static final long serialVersionUID = -4496975448812853270L;
+    private static final long serialVersionUID = -5503253453512925709L;
     private final Message type;
 
     /**

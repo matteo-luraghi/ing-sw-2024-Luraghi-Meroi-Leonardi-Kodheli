@@ -9,7 +9,7 @@ import it.polimi.ingsw.view.mainview.View;
  * @author Matteo Leonardo Luraghi
  */
 public class CannotDraw extends ServerMessage {
-    private static final long serialVersionUID = 7060318590315655178L;
+    private static final long serialVersionUID = -2006750568154173071L;
 
     /**
      * Constructor, sets the message type as CANNOT_DRAW

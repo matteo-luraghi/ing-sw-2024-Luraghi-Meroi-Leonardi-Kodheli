@@ -9,7 +9,7 @@ import it.polimi.ingsw.view.mainview.View;
  * @author Matteo Leonardo Luraghi
  */
 public class WaitingForPlayers extends ServerMessage {
-    private static final long serialVersionUID = -2339838021795743307L;
+    private static final long serialVersionUID = 4830636966703229889L;
 
     /**
      * Constructor, sets the message type as WAITING_FOR_PLAYERS

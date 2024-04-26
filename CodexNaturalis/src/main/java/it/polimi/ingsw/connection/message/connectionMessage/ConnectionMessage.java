@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Matteo Leonardo Luraghi
  */
 public class ConnectionMessage implements Serializable {
-    private static final long serialVersionUID = -2679854370210223392L;
+    private static final long serialVersionUID = 8885896690210036828L;
     private final Message type;
 
     /**
