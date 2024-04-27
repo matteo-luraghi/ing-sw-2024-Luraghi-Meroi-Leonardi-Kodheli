@@ -101,7 +101,9 @@ public class Deck {
         } else { //drawing from uncovered cards
             try {
                 ResourceCard drawn = uncoveredCards[which-1];
-                setUncoveredCard(which);
+                if(drawn!=null) {
+                    setUncoveredCard(which); //no need to call this if the uncovered card is already absent!
+                }
                 return drawn;
             } catch (NullPointerException e) {  //TODO: Custom exception?
                 System.err.println("No such card in here");
