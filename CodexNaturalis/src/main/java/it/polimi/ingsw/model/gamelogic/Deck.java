@@ -37,7 +37,6 @@ public class Deck {
 
 
                 String cardPath = "./CodexNaturalis/src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
-                //fixed path
 
                 // initialize the json file reader and save the card
                 try(Reader reader = new FileReader(cardPath)) {
@@ -50,7 +49,7 @@ public class Deck {
         } else {
             for(int i=1; i<=40; i++) {
                 String cardPath = "./CodexNaturalis/src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
-                //fixed path
+
                 // initialize the json file reader and save the card
                 try(Reader reader = new FileReader(cardPath)) {
                     GoldCard card = gson.fromJson(reader, GoldCard.class);
@@ -112,7 +111,9 @@ public class Deck {
             try {
                 ResourceCard drawn = uncoveredCards[which-1];
                 if(drawn!=null) //check in case there are no covered, neither covered cards
-                setUncoveredCard(which);
+                {
+                    setUncoveredCard(which);
+                }
                 return drawn;
             } catch (NullPointerException e) {  //TODO: Custom exception?
                 System.err.println("No such card in here");

@@ -28,7 +28,7 @@ public class PlayerField {
         hand = new ArrayList<ResourceCard>();
         gameZone = new HashMap<Coordinates, GameCard>();
         gameZone.put(new Coordinates(0,0), startingCard);
-        resourceMap = new HashMap<Resource, Integer>();
+        resourceMap = getInitializeResourceMap(); //resource map has to be initialized otherwise in resourceMap.get you get a null pointer
 
         if (startingCard.getIsFront()) {
             for (Resource resource : startingCard.getPermanentResources()) {
@@ -40,12 +40,26 @@ public class PlayerField {
         for (int i = 0; i <= 3; i++) {
             Resource resource = startingCard.getCorner(i);
             if (resource != null && !resource.equals(Resource.BLANK) && !resource.equals(Resource.HIDDEN)) {
+
                 resourceMap.put(resource, resourceMap.get(resource) + 1);
             }
         }
 
     }
 
+    /**
+     * Initialize the hashmap to have all the resources counter at 0
+     * @return the initialized hashmap
+     */
+    private HashMap<Resource, Integer> getInitializeResourceMap()
+    {
+        HashMap<Resource, Integer> map=new HashMap<Resource, Integer>();
+        for(int i=0;i<Resource.values().length;i++)
+        {
+            map.put(Resource.values()[i],0);
+        }
+        return map;
+    }
     /**
      * Hand getter
      * @return ArrayList<ResourceCard>
@@ -76,14 +90,16 @@ public class PlayerField {
     /**
      * method to draw a card
      * @param from which deck (Resource or Gold cards) to draw from
-     * @param which whether to draw from the covered cards in the deck or from the uncovered ones (0 for the first uncovered, 1 for the second)
+     * @param which whether to draw from the covered cards in the deck or from the uncovered ones (0 for the covered, 1 for the first uncovered, 2 for the second)
      */
     public void draw(Deck from, int which){
         if(which == 0){
             drawFromDeck(from);
-        } else {
+        } else if( which==1 || which==2){
             drawFromUncovered(from, which-1);
         }
+        else
+            System.err.println("Index out of bound");
     }
 
     /**
@@ -92,7 +108,9 @@ public class PlayerField {
      * @param card the card you want to play
      * @return the number of points that the card has gotten (0 could also indicate the card could not be played there)
      */
+    //TODO proper test
     public int Play (Coordinates where, ResourceCard card) {
+
         //We dont check if the card is playable because it will always be thanks to controller checking it right before
         gameZone.put(where, card);
         //Add the visible resources to the resourceMap
