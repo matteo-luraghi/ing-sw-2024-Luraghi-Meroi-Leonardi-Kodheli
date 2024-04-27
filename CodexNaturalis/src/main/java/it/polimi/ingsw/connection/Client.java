@@ -79,7 +79,7 @@ public class Client {
 
     /**
      * Initialize the client
-     * @throws IOException if errors occour
+     * @throws IOException if errors occur
      */
     public void init() throws IOException {
         this.clientSocket = new Socket();
