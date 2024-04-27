@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.model.card.GoldCard;
 import it.polimi.ingsw.model.card.ResourceCard;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -34,7 +33,6 @@ public class Deck {
 
         if(!isGold){
             for(int i=1; i<=40; i++) {
-
 
                 String cardPath = "./CodexNaturalis/src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
                 //fixed path
@@ -99,19 +97,10 @@ public class Deck {
      */
     private ResourceCard Draw (int which)  {
         if (which == 0) {//drawing from deck
-            try {
-
-
-                return cards.remove();
-            }
-            catch (NoSuchElementException e) //added exception in case the deck is empty and the call is made from the  uncovered method
-            {
-                System.err.println("Empty Deck");
-            }
+            return cards.poll(); //returns null if the deck is empty
         } else { //drawing from uncovered cards
             try {
                 ResourceCard drawn = uncoveredCards[which-1];
-                if(drawn!=null) //check in case there are no covered, neither covered cards
                 setUncoveredCard(which);
                 return drawn;
             } catch (NullPointerException e) {  //TODO: Custom exception?
@@ -159,8 +148,7 @@ public class Deck {
      * @param Which can be 1(first uncovered card) or 2(second uncovered card)
      */
     public void setUncoveredCard (int Which) {
-
-        uncoveredCards[Which-1] = Draw(0);
+        this.uncoveredCards[Which-1] = this.Draw(0);
     }
 
     public boolean isDeckEmpty () {
