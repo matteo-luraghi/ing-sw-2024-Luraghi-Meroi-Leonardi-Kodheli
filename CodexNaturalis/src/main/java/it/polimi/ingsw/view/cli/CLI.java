@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 public class CLI implements View {
 
-    Controller controller = null;
+    Controller controller = null; //TODO: check if this is needed or if Client reference is needed
     ViewGameCardFactory gameCardViewer = null;
     ViewScoreBoardFactory scoreBoardViewer  = null;
     ViewPlayerFieldFactory playerFieldViewer  = null;

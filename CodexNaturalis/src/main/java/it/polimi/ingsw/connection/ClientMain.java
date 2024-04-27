@@ -16,12 +16,12 @@ public class ClientMain {
      */
     public static void main(String[] args) {
         if(args.length == 0) {
-            GUI.start();
+            new GUI().start();
         } else if (args.length > 1) {
             System.out.println("Too many arguments, insert -cli to start in CLI mode (default GUI mode)");
         } else {
             if(args[0].equals("-cli")) {
-                CLI.start();
+                new CLI().start();
             } else {
                 System.out.println("Command not found, insert -cli to start in CLI mode (default GUI mode)");
             }
