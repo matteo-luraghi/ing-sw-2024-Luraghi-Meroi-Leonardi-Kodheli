@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.mainview;
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 
 /**
@@ -24,23 +25,23 @@ public interface View {
 
     void showMessage (String s);
 
-    void ShowLogin();
+    Player ShowLogin();
 
-    void askForPlayersNumber();
+    int askForPlayersNumber();
 
     void ShowWaitingForPlayers();
 
+    void ShowPrivateGoal(Player player, GameState game);
+
     void ShowChoosePrivateGoal(GoalCard[] goalCards);
 
-    void ShowPrivateGoal(Player player);
+    void ShowPlayerField(Player playerToSee, Player playerAsking, GameState game);
 
-    void ShowPlayerField(Player player);
-
-    void ShowDecks();
+    void ShowDecks(GameState game);
 
     void ShowScoreBoard();
 
-    void ShowWinner();
+    void ShowWinner(GameState game);
 
     void ShowEndOfGame();
 }

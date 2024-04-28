@@ -27,7 +27,7 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
      * abstract method to show the player field
      */
     @Override
-    public void show() {
+    public void showComplete() {
         /*
                  [-1,+1:P]
         [-2,+0:A]         [+0,+0:S]
@@ -42,6 +42,37 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
         Player's private goal:
         */
 
+        ShowGameZone();
+
+        System.out.println();
+        System.out.println(this.player.toString()+"'s hand:");
+        for (ResourceCard c : this.playerField.getHand()) {
+            gameCardViewer.SetCard(c);
+            gameCardViewer.Show();
+            System.out.println();
+        }
+
+        System.out.println(this.player.toString()+"'s private goal:");
+        goalCardViewer.SetCard(this.playerField.getPrivateGoal());
+        goalCardViewer.Show();
+    }
+
+    @Override
+    public void showToOthers() {
+        /*
+                 [-1,+1:P]
+        [-2,+0:A]         [+0,+0:S]
+                 [-1,-1:A]         [+1,-1:I]
+
+        Resource Map:
+        - Plant: #N°
+        ...
+        */
+
+        ShowGameZone();
+    }
+
+    private void ShowGameZone() {
         System.out.println(this.player.toString()+"'s field:");
 
         ArrayList<Coordinates> sortedCoordinates = new ArrayList<>(this.playerField.getGameZone().keySet());
@@ -98,18 +129,6 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
         for (Resource r : this.playerField.getResourceMap().keySet()) {
             System.out.println("- " + r.toString() + ": #" + this.playerField.getResourceFromMap(r));
         }
-
-        System.out.println();
-        System.out.println(this.player.toString()+"'s hand:");
-        for (ResourceCard c : this.playerField.getHand()) {
-            gameCardViewer.SetCard(c);
-            gameCardViewer.Show();
-            System.out.println();
-        }
-
-        System.out.println(this.player.toString()+"'s private goal:");
-        goalCardViewer.SetCard(this.playerField.getPrivateGoal());
-        goalCardViewer.Show();
     }
 
     private String CardToString (Coordinates coor, GameCard card) {

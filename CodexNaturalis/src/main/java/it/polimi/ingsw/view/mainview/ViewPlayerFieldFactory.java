@@ -19,9 +19,14 @@ public abstract class ViewPlayerFieldFactory {
 
 
     /**
-     * abstract method to show the player field
+     * abstract method to display the player field to it's owner
      */
-    public abstract void show();
+    public abstract void showComplete();
+
+    /**
+     * abstract method to display the player field to those who do not own it
+     */
+    public abstract void showToOthers();
 
     /**
      * method to set which player field to show

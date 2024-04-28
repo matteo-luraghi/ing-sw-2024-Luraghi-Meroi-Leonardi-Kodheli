@@ -2,6 +2,8 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.gamelogic.Color;
+import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.view.mainview.View;
 
 import it.polimi.ingsw.model.gamelogic.Player;
@@ -16,7 +18,7 @@ import java.util.Scanner;
  */
 public class CLI implements View {
     private Client client;
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
     private ViewGameCardFactory gameCardViewer = null;
     private ViewScoreBoardFactory scoreBoardViewer  = null;
     private ViewPlayerFieldFactory playerFieldViewer  = null;
@@ -134,17 +136,19 @@ public class CLI implements View {
      */
     @Override
     public void showMessage(String s) {
+        ClearScreen();
         System.out.println(s);
     }
 
     @Override
-    public void ShowLogin() {
-
+    public Player ShowLogin() {
+        return new Player("default", Color.RED);
     }
 
     @Override
-    public void askForPlayersNumber() {
-
+    public int askForPlayersNumber() {
+        System.out.println("How many player will play the game?");
+        return scanner.nextInt();
     }
 
     /**
@@ -152,40 +156,59 @@ public class CLI implements View {
      */
     @Override
     public void ShowWaitingForPlayers() {
+        ClearScreen();
         System.out.println("Waiting for players...");
     }
 
     @Override
-    public void ShowPrivateGoal(Player player) {
-
+    public void ShowPrivateGoal(Player player, GameState game) {
+        ClearScreen();
+        this.goalCardViewer.SetCard(game.getGameTable().getPlayerZones().get(player).getPrivateGoal());
+        this.goalCardViewer.Show();
     }
 
     @Override
     public void ShowChoosePrivateGoal(GoalCard[] goalCards) {
+        ClearScreen();
+        this.goalCardViewer.SetCard(goalCards[0]);
+        this.goalCardViewer.Show();
+        this.goalCardViewer.SetCard(goalCards[1]);
+        this.goalCardViewer.Show();
     }
 
     @Override
-    public void ShowPlayerField(Player player) {
-
+    public void ShowPlayerField(Player playerToSee, Player playerAsking, GameState game) {
+        ClearScreen();
+        this.playerFieldViewer.setPlayerField(game.getGameTable().getPlayerZones().get(playerToSee), playerToSee);
+        if (playerAsking.equals(playerToSee))
+            this.playerFieldViewer.showComplete();
+        else
+            this.playerFieldViewer.showToOthers();
     }
 
     @Override
-    public void ShowDecks() {
-
+    public void ShowDecks(GameState game) {
+        ClearScreen();
+        this.deckViewer.setDeck(game.getGameTable().getGoldDeck());
+        this.deckViewer.show();
+        this.deckViewer.setDeck(game.getGameTable().getResourceDeck());
+        this.deckViewer.show();
     }
 
     @Override
     public void ShowScoreBoard() {
-
+        ClearScreen();
+        this.scoreBoardViewer.show();
     }
 
     @Override
-    public void ShowWinner() {
-
+    public void ShowWinner(GameState game) {
+        ClearScreen();
+        System.out.println(game.getWinner().toString() + "has won!");
     }
 
     @Override
     public void ShowEndOfGame() {
-
+        System.out.println("The game has ended...");
     }
 }
