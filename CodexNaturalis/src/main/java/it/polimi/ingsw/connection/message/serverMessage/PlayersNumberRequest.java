@@ -24,6 +24,6 @@ public class PlayersNumberRequest extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.askPlayersNumber();
+        view.askForPlayersNumber();
     }
 }
