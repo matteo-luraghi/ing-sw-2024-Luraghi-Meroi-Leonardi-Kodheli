@@ -1,6 +1,5 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
-import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.view.mainview.View;
 
 /**
@@ -12,10 +11,9 @@ public class PlayersNumberRequest extends ServerMessage {
     private static final long serialVersionUID = 6899284951355020884L;
 
     /**
-     * Constructor, sets the message type as PLAYERS_NUMBER_REQUEST
+     * Constructor
      */
     public PlayersNumberRequest() {
-        super(Message.PLAYERS_NUMBER_REQUEST);
     }
 
     /**

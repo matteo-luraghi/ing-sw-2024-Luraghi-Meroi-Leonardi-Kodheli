@@ -1,6 +1,5 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
-import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.view.mainview.View;
 
 /**
@@ -12,10 +11,9 @@ public class TurnEnded extends ServerMessage {
     private static final long serialVersionUID = 2741292733883597798L;
 
     /**
-     * Constructor, sets the message type as TURN_ENDED
+     * Constructor
      */
     public TurnEnded() {
-        super(Message.TURN_ENDED);
     }
 
     /**

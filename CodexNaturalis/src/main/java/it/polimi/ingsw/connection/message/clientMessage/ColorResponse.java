@@ -2,7 +2,6 @@ package it.polimi.ingsw.connection.message.clientMessage;
 
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
-import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.connection.message.serverMessage.ColorRequest;
 import it.polimi.ingsw.connection.message.serverMessage.TextMessage;
 import it.polimi.ingsw.connection.message.serverMessage.WaitingForPlayers;
@@ -18,11 +17,10 @@ public class ColorResponse extends ClientMessage{
     private final Color color;
 
     /**
-     * Constructor, sets the message typ as COLOR_RESPONSE and the color
+     * Constructor
      * @param color the chosen color
      */
     public ColorResponse(Color color) {
-        super(Message.COLOR_RESPONSE);
         this.color = color;
     }
 

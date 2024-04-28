@@ -1,6 +1,5 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
-import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serializable;
@@ -11,22 +10,11 @@ import java.io.Serializable;
  */
 public abstract class ServerMessage implements Serializable {
     private static final long serialVersionUID = -5503253453512925709L;
-    private final Message type;
 
     /**
      * Constructor, sets the message type
-     * @param type type of the message
      */
-    public ServerMessage(Message type) {
-        this.type = type;
-    }
-
-    /**
-     * type getter
-     * @return type of the message
-     */
-    public Message getType() {
-        return this.type;
+    public ServerMessage() {
     }
 
     /**

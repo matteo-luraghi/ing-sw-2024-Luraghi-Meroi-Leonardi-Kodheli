@@ -2,7 +2,6 @@ package it.polimi.ingsw.connection.message.clientMessage;
 
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
-import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.connection.message.serverMessage.DrawCardRequest;
 import it.polimi.ingsw.connection.message.serverMessage.TextMessage;
 import it.polimi.ingsw.connection.message.serverMessage.TurnEnded;
@@ -18,11 +17,10 @@ public class DrawCardResponse extends ClientMessage {
     private final int which;
 
     /**
-     * Constructor, sets the message type as DRAW_CARD_RESPONSE
+     * Constructor
      * @param which card to be drawn
      */
     public DrawCardResponse(int which) {
-        super(Message.DRAW_CARD_RESPONSE);
         this.which = which;
     }
 

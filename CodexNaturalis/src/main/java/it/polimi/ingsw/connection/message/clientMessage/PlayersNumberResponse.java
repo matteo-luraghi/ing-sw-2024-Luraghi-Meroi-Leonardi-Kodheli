@@ -2,7 +2,6 @@ package it.polimi.ingsw.connection.message.clientMessage;
 
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
-import it.polimi.ingsw.connection.message.Message;
 
 /**
  * PlayersNumberResponse class
@@ -14,11 +13,10 @@ public class PlayersNumberResponse extends ClientMessage{
     private final int numPlayers;
 
     /**
-     * Constructor, sets the message type as PLAYER_NUMBER_RESPONSE and sets the number of players
+     * Constructor
      * @param numPlayers number of players
      */
     public PlayersNumberResponse(int numPlayers) {
-        super(Message.PLAYERS_NUMBER_RESPONSE);
         this.numPlayers = numPlayers;
     }
 

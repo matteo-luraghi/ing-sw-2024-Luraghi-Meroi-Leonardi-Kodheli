@@ -1,6 +1,5 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
-import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.view.mainview.View;
 
@@ -14,10 +13,9 @@ public class Winner extends ServerMessage {
     private final GameState game;
 
     /**
-     * Constructor, sets the message type as WINNER
+     * Constructor
      */
     public Winner(GameState game) {
-        super(Message.WINNER);
         this.game = game;
     }
 

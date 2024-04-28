@@ -2,7 +2,6 @@ package it.polimi.ingsw.connection.message.clientMessage;
 
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
-import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.connection.message.serverMessage.LoginRequest;
 
 /**
@@ -14,11 +13,10 @@ public class LoginResponse extends ClientMessage {
     private final String nickname;
 
     /**
-     * Constructor, sets the message type as LOGIN_RESPONSE
+     * Constructor
      * @param nickname the user's input for a nickname
      */
     public LoginResponse(String nickname) {
-        super(Message.LOGIN_RESPONSE);
         this.nickname = nickname;
     }
 
@@ -29,8 +27,7 @@ public class LoginResponse extends ClientMessage {
      */
     @Override
     public void execute(Server server, ConnectionHandler connectionHandler) {
-        String REGEX = "^([a-zA-Z]\\w{2,10})$";
-        if (this.nickname == null || !this.nickname.matches(REGEX)) {
+        if (this.nickname == null || this.nickname.isEmpty()) {
             connectionHandler.sendMessageClient(new LoginRequest());
         } else {
             connectionHandler.setClientNickname(nickname);
