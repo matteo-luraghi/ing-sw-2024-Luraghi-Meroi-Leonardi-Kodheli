@@ -1,6 +1,8 @@
 package it.polimi.ingsw.view.mainview;
 
+import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.gamelogic.Player;
 
 /**
@@ -8,12 +10,17 @@ import it.polimi.ingsw.model.gamelogic.Player;
  * @author Lorenzo Meroi
  */
 public interface View {
+    Client client = null;
     Controller controller = null;
     ViewGameCardFactory gameCardViewer = null;
     ViewScoreBoardFactory scoreBoardViewer  = null;
     ViewPlayerFieldFactory playerFieldViewer  = null;
     ViewDeckFactory deckViewer  = null;
     ViewGoalCardFactory goalCardViewer = null;
+
+    void start();
+
+    Client connectToServer();
 
     void showMessage (String s);
 
@@ -23,7 +30,9 @@ public interface View {
 
     void ShowWaitingForPlayers();
 
-    void ShowChoosePrivateGoal(Player player);
+    void ShowChoosePrivateGoal(GoalCard[] goalCards);
+
+    void ShowPrivateGoal(Player player);
 
     void ShowPlayerField(Player player);
 
