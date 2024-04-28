@@ -155,8 +155,8 @@ public class Controller {
     private Queue<StartingCard> getStartingCards() {
         List<StartingCard> cardsList = new ArrayList<>();
         Gson gson = new Gson();
-        for(int i=1; i<=8; i++) {
-            String cardPath = "../resources/CardsJSON/startingCards/startingCard" + i + ".json"; //TODO: fix root path
+        for(int i=1; i<=6; i++) {
+            String cardPath = "./src/main/resources/CardsJSON/startingCards/startingCard" + i + ".json";
             try(Reader reader = new FileReader(cardPath)) {
                 StartingCard card = gson.fromJson(reader, StartingCard.class);
                 cardsList.add(card);
@@ -176,7 +176,7 @@ public class Controller {
         List<GoalCard> cardsList = new ArrayList<>();
         Gson gson = new Gson();
         for(int i=1; i<=8; i++) {
-            String cardPath = "../resources/CardsJSON/goalCards/goalCard" + i + ".json"; //TODO: fix root path
+            String cardPath = "./src/main/resources/CardsJSON/goalCards/goalCard" + i + ".json";
             try(Reader reader = new FileReader(cardPath)) {
                 GoalCard card = gson.fromJson(reader, GoalCard.class);
                 cardsList.add(card);
