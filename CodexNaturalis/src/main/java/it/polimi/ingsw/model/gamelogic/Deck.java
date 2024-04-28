@@ -33,10 +33,7 @@ public class Deck {
 
         if(!isGold){
             for(int i=1; i<=40; i++) {
-
-                String cardPath = "./CodexNaturalis/src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
-                //fixed path
-
+                String cardPath = "./src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
                 // initialize the json file reader and save the card
                 try(Reader reader = new FileReader(cardPath)) {
                     ResourceCard card = gson.fromJson(reader, ResourceCard.class);
@@ -47,8 +44,7 @@ public class Deck {
             }
         } else {
             for(int i=1; i<=40; i++) {
-                String cardPath = "./CodexNaturalis/src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
-                //fixed path
+                String cardPath = "./src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
                 // initialize the json file reader and save the card
                 try(Reader reader = new FileReader(cardPath)) {
                     GoldCard card = gson.fromJson(reader, GoldCard.class);

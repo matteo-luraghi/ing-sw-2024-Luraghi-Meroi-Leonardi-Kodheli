@@ -1,6 +1,5 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
-import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.view.mainview.View;
 
 /**

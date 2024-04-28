@@ -1,6 +1,5 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
-import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.view.mainview.View;
 
@@ -14,11 +13,10 @@ public class GoalCardRequest extends ServerMessage  {
     private final GoalCard[] goalCards;
 
     /**
-     * Constructor, sets the message type as GOAL_CARD_REQUEST
+     * Constructor
      * @param goalCards the possible goal cards the player has to choose from
      */
     public GoalCardRequest(GoalCard[] goalCards) {
-        super(Message.GOAL_CARD_REQUEST);
         this.goalCards = goalCards;
     }
 

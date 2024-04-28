@@ -4,7 +4,6 @@ import it.polimi.ingsw.connection.message.serverMessage.LoginRequest;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.connection.message.clientMessage.ClientMessage;
 import it.polimi.ingsw.connection.message.connectionMessage.Ping;
-import it.polimi.ingsw.connection.message.serverMessage.ServerMessage;
 import it.polimi.ingsw.model.gamelogic.Color;
 
 import java.io.IOException;
@@ -15,15 +14,14 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 /**
- * ClientHandler class
+ * ConnectionHandler class
  * @author Matteo Leonardo Luraghi
  */
-public class ClientHandler implements Runnable{
-    private final int PING_TIME = 5000;
+public class ConnectionHandler implements Runnable{
     private final Server server;
     private final Socket socket;
     private final Thread pingThread;
-    private boolean activeClient;
+    private boolean active;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private String clientNickname;
@@ -35,13 +33,13 @@ public class ClientHandler implements Runnable{
      * @param server a server
      * @param socket a socket
      */
-    public ClientHandler(Server server, Socket socket) {
+    public ConnectionHandler(Server server, Socket socket) {
         this.server = server;
         this.socket = socket;
-        pingThread = new Thread(() -> {
-            while(activeClient) {
+        this.pingThread = new Thread(() -> {
+            while(active) {
                 try {
-                    Thread.sleep(this.PING_TIME);
+                    Thread.sleep(5000);
                     sendMessageClient(new Ping());
                 } catch (InterruptedException e) {
                     break;
@@ -53,19 +51,19 @@ public class ClientHandler implements Runnable{
     @Override
     public void run() {
         try {
-            this.outputStream = new ObjectOutputStream(socket.getOutputStream());
             this.inputStream = new ObjectInputStream(socket.getInputStream());
-            activeClient = true;
+            this.outputStream = new ObjectOutputStream(socket.getOutputStream());
+            this.active = true;
 
-            pingThread.start();
+            this.pingThread.start();
             sendMessageClient(new LoginRequest());
 
-            while(activeClient) {
+            while(this.active) {
                 try {
-                    Object object = inputStream.readObject();
+                    Object object = this.inputStream.readObject();
                     if(!(object instanceof Ping)) {
                         ClientMessage msg = (ClientMessage) object;
-                        msg.execute(server, this);
+                        msg.execute(this.server, this);
                     }
                 } catch (ClassNotFoundException | SocketTimeoutException e) {
                     disconnect();
@@ -81,11 +79,10 @@ public class ClientHandler implements Runnable{
      * @param msg message to be sent
      */
     public void sendMessageClient(Serializable msg){
-        assert (msg instanceof ServerMessage) || (msg instanceof Ping);
         try {
-            outputStream.writeObject(msg);
-            outputStream.flush();
-            outputStream.reset();
+            this.outputStream.writeObject(msg);
+            this.outputStream.flush();
+            this.outputStream.reset();
         } catch (IOException e) {
             disconnect();
         }
@@ -95,17 +92,17 @@ public class ClientHandler implements Runnable{
      * Disconnects the server closing input and output stream and socket
      */
     public void disconnect() {
-        if (activeClient){
-            activeClient = false;
-            server.removeClient(this);
+        if (this.active){
+            this.active = false;
+            this.server.removeClient(this);
             try {
-                inputStream.close();
+                this.inputStream.close();
             } catch (IOException ignored){}
             try {
-                outputStream.close();
+                this.outputStream.close();
             } catch (IOException ignored){}
             try {
-                socket.close();
+                this.socket.close();
             } catch (IOException ignored){}
         }
     }

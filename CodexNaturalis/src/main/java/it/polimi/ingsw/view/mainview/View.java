@@ -1,6 +1,9 @@
 package it.polimi.ingsw.view.mainview;
 
+import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 
 /**
@@ -8,6 +11,7 @@ import it.polimi.ingsw.model.gamelogic.Player;
  * @author Lorenzo Meroi
  */
 public interface View {
+    Client client = null;
     Controller controller = null;
     ViewGameCardFactory gameCardViewer = null;
     ViewScoreBoardFactory scoreBoardViewer  = null;
@@ -15,19 +19,74 @@ public interface View {
     ViewDeckFactory deckViewer  = null;
     ViewGoalCardFactory goalCardViewer = null;
 
+    /**
+     * method to initialize the CLI for a specific Client
+     */
+    void start();
+
+    /**
+     * method to show any type of String
+     * @param s is the string you want to be displayed
+     */
     void showMessage (String s);
 
+    /**
+     * method to login a player into a game
+     * @return the new player to insert into the game
+     */
+    Player ShowLogin();
+
+    /**
+     * asks the client how many players there has to be in the game
+     * @return the number of player that will be in the game
+     */
+    int askForPlayersNumber();
+
+    /**
+     * method to display the waiting for players page
+     */
     void ShowWaitingForPlayers();
 
-    void ShowPrivateGoals(Player player);
+    /**
+     * method to show the private goal of a specific player
+     * @param player of which to display the goal
+     * @param game in which the player is partecipating
+     */
+    void ShowPrivateGoal(Player player, GameState game);
 
-    void ShowPlayerField(Player player);
+    /**
+     * displays the two private goals the client has to choose between
+     * @param goalCards is an array of two goal cards
+     */
+    void ShowChoosePrivateGoal(GoalCard[] goalCards);
 
-    void ShowDecks();
+    /**
+     * displays the player field of a specific player
+     * @param playerToSee specifies which playerfield has to be displayed
+     * @param playerAsking tells which player is asking to see it
+     * @param game we are referring to
+     */
+    void ShowPlayerField(Player playerToSee, Player playerAsking, GameState game);
 
+    /**
+     * displays the two decks and the uncovered cards
+     * @param game we are referring to
+     */
+    void ShowDecks(GameState game);
+
+    /**
+     * displays the scoreboard
+     */
     void ShowScoreBoard();
 
-    void ShowWinner();
+    /**
+     * shows who has won the game
+     * @param game we are referring to
+     */
+    void ShowWinner(GameState game);
 
+    /**
+     * shows the end of game text
+     */
     void ShowEndOfGame();
 }

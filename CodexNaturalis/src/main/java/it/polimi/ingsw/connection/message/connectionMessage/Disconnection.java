@@ -1,22 +1,22 @@
 package it.polimi.ingsw.connection.message.connectionMessage;
 
-import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.view.mainview.View;
+
+import java.io.Serializable;
 
 /**
  * Disconnection class
  * @author Matteo Leonardo Luraghi
  */
-public class Disconnection extends ConnectionMessage {
+public class Disconnection implements Serializable {
     private static final long serialVersionUID = 6000054069559657434L;
     private final String clientNickname;
 
     /**
-     * constructor
+     * Constructor
      * @param clientNickname nickname of the disconnected player
      */
     public Disconnection(String clientNickname) {
-        super(Message.DISCONNECTION);
         this.clientNickname = clientNickname;
     }
 
@@ -25,6 +25,6 @@ public class Disconnection extends ConnectionMessage {
      * @param view view interface
      */
     public void show(View view) {
-        view.displayDisconnectionMessage(clientNickname);
+        view.showMessage(clientNickname + "was disconnected");
     }
 }

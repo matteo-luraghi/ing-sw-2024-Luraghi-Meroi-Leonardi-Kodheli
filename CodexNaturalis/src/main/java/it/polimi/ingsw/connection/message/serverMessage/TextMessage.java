@@ -1,17 +1,28 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
-import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.view.mainview.View;
 
+/**
+ * TextMessage class
+ * used to send text messages to clients
+ * @author Matteo Leonardo Luraghi
+ */
 public class TextMessage extends ServerMessage {
     private static final long serialVersionUID = -8177785563760959331L;
     private final String message;
 
+    /**
+     * Constructor
+     * @param message the message to display
+     */
     public TextMessage(String message) {
-        super(Message.TEXT);
         this.message = message;
     }
 
+    /**
+     * Show the message in the CLI or GUI
+     * @param view the view interface
+     */
     @Override
     public void show(View view) {
         view.showMessage(this.message);

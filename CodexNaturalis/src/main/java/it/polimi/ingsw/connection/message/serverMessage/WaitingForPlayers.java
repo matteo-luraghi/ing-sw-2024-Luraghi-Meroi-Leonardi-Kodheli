@@ -1,6 +1,5 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
-import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.view.mainview.View;
 
 /**
@@ -12,10 +11,9 @@ public class WaitingForPlayers extends ServerMessage {
     private static final long serialVersionUID = 4830636966703229889L;
 
     /**
-     * Constructor, sets the message type as WAITING_FOR_PLAYERS
+     * Constructor
      */
     public WaitingForPlayers() {
-        super(Message.WAITING_FOR_PLAYERS);
     }
 
     /**

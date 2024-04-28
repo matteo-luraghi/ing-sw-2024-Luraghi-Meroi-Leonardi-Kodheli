@@ -146,7 +146,7 @@ public class GameTable {
                 {
                     GameCard currentPointer=currentCard;
 
-                    if(positionalGoal.getResourceFromBase().getFirst()!=currentCard.getKingdom())
+                    if(positionalGoal.getResourceFromBase().get(0)!=currentCard.getKingdom())
                         continue;
                     ArrayList<GameCard> possibleCards = new ArrayList<>();
                     if (!usedCardsForGoal.contains(currentPointer))

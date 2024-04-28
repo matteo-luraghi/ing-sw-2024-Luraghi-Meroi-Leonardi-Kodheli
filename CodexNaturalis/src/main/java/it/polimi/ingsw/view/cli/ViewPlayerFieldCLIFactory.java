@@ -11,23 +11,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * ViewPlayerFieldCLIFactory class
+ * @author Lorenzo Meroi
+ */
 public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
 
     /**
-     * gameCardViewer setter
-     * @param gameCardViewer to show cards
-     */
-    public void setGameCardViewer (ViewGameCardCLIFactory gameCardViewer) {this.gameCardViewer = gameCardViewer;}
-    /**
-     * goalCardViewer setter
-     * @param goalCardViewer to show cards
-     */
-    public void setGoalCardViewer (ViewGoalCardCLIFactory goalCardViewer) {this.goalCardViewer = goalCardViewer;}
-    /**
-     * abstract method to show the player field
+     * abstract method to show the player field to its owner
      */
     @Override
-    public void show() {
+    public void showComplete() {
         /*
                  [-1,+1:P]
         [-2,+0:A]         [+0,+0:S]
@@ -42,6 +36,43 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
         Player's private goal:
         */
 
+        ShowGameZone();
+
+        System.out.println();
+        System.out.println(this.player.toString()+"'s hand:");
+        for (ResourceCard c : this.playerField.getHand()) {
+            gameCardViewer.SetCard(c);
+            gameCardViewer.Show();
+            System.out.println();
+        }
+
+        System.out.println(this.player.toString()+"'s private goal:");
+        goalCardViewer.SetCard(this.playerField.getPrivateGoal());
+        goalCardViewer.Show();
+    }
+
+    /**
+     * show the player field to those who are not its owner
+     */
+    @Override
+    public void showToOthers() {
+        /*
+                 [-1,+1:P]
+        [-2,+0:A]         [+0,+0:S]
+                 [-1,-1:A]         [+1,-1:I]
+
+        Resource Map:
+        - Plant: #N°
+        ...
+        */
+
+        ShowGameZone();
+    }
+
+    /**
+     * displays a player's game zone
+     */
+    private void ShowGameZone() {
         System.out.println(this.player.toString()+"'s field:");
 
         ArrayList<Coordinates> sortedCoordinates = new ArrayList<>(this.playerField.getGameZone().keySet());
@@ -98,20 +129,14 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
         for (Resource r : this.playerField.getResourceMap().keySet()) {
             System.out.println("- " + r.toString() + ": #" + this.playerField.getResourceFromMap(r));
         }
-
-        System.out.println();
-        System.out.println(this.player.toString()+"'s hand:");
-        for (ResourceCard c : this.playerField.getHand()) {
-            gameCardViewer.SetCard(c);
-            gameCardViewer.Show();
-            System.out.println();
-        }
-
-        System.out.println(this.player.toString()+"'s private goal:");
-        goalCardViewer.SetCard(this.playerField.getPrivateGoal());
-        goalCardViewer.Show();
     }
 
+    /**
+     * displays a card in the player field
+     * @param coor refers to the position in which the card sits
+     * @param card refers to the card to display
+     * @return a string representing the card
+     */
     private String CardToString (Coordinates coor, GameCard card) {
         String cardString = "";
         if (card instanceof StartingCard)

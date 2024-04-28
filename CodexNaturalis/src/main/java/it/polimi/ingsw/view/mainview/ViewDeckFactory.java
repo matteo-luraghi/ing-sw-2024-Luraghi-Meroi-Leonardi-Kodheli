@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.gamelogic.Deck;
 import it.polimi.ingsw.model.gamelogic.GameTable;
 import it.polimi.ingsw.view.cli.ViewGameCardCLIFactory;
+import it.polimi.ingsw.view.cli.ViewGoalCardCLIFactory;
 
 /**
  * viewDeckFactory abstract class
@@ -35,5 +36,20 @@ public abstract class ViewDeckFactory {
      */
     public void setCommonGoals(GoalCard[] commonGoals) {
         this.commonGoals = commonGoals;
+    }
+
+    /**
+     * gameCardViewer setter
+     * @param gameCardViewer to show cards
+     */
+    public void setGameCardViewer(ViewGameCardFactory gameCardViewer) {
+        this.gameCardViewer = gameCardViewer;
+    }
+    /**
+     * goalCardViewer setter
+     * @param goalCardViewer to show cards
+     */
+    public void setGameCardViewer(ViewGoalCardFactory goalCardViewer) {
+        this.goalCardViewer = goalCardViewer;
     }
 }

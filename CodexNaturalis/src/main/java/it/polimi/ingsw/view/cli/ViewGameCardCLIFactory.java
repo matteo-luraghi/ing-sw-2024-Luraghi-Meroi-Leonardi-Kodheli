@@ -9,6 +9,10 @@ import it.polimi.ingsw.view.mainview.AnsiColors;
 
 import java.util.ArrayList;
 
+/**
+ * ViewGameCardCLIFactory class
+ * @author Lorenzo Meroi
+ */
 public class ViewGameCardCLIFactory extends ViewGameCardFactory {
     /**
      * method to show on screen a game card

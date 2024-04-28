@@ -7,7 +7,6 @@ import it.polimi.ingsw.controller.Controller;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,40 +19,25 @@ import java.util.concurrent.Executors;
  * @author Matteo Leonardo Luraghi
  */
 public class Server {
-    private final int port;
-    private ServerSocket serverSocket;
-    private final int TIMEOUT = 10000;
     private final Map<Controller, Integer> games;
-    private final ExecutorService executor;
     private final Object gameLock = new Object();
 
     /**
      * Constructor
      * @param port server port
      */
-    public Server(int port) {
-        this.port = port;
+    public Server(int port) throws IOException {
         this.games = new ConcurrentHashMap<>();
-        this.executor = Executors.newCachedThreadPool();
-    }
-
-    /**
-     * Initialize the socket and accept the clients' connections
-     */
-    public void start() {
-        try {
-            this.serverSocket = new ServerSocket(this.port);
-        } catch (IOException e) {
-            System.out.println("Unable to connect!");
-            return;
-        }
+        ExecutorService executor = Executors.newCachedThreadPool();
+        // throws if the socket init fails
+        ServerSocket serverSocket = new ServerSocket(port);
 
         try {
-            while(true) {
-                Socket clientSocket = this.serverSocket.accept();
-                clientSocket.setSoTimeout(this.TIMEOUT);
-                ClientHandler clientConnection = new ClientHandler(this, clientSocket);
-                this.executor.submit(clientConnection);
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+                clientSocket.setSoTimeout(10000);
+                ConnectionHandler clientConnection = new ConnectionHandler(this, clientSocket);
+                executor.submit(clientConnection);
                 clientConnection.sendMessageClient(new LoginRequest());
             }
         } catch (IOException e) {
@@ -62,37 +46,37 @@ public class Server {
     }
 
     /**
-     * Add a client to a game via its clientHandler
-     * @param clientHandler the clientHandler to save in a game
+     * Add a client to a game via its connectionHandler
+     * @param connectionHandler the connectionHandler to save in a game
      */
-    public void addToGame(ClientHandler clientHandler) {
+    public void addToGame(ConnectionHandler connectionHandler) {
         synchronized (this.gameLock) {
             // find the first free game and try to add the player
             Optional<Controller> optionalController = games.keySet().stream().filter(g -> !g.isGameStarted()).findFirst();
             if (optionalController.isPresent()) {
                 Controller gameController = optionalController.get();
-                gameController.addHandler(clientHandler);
-                clientHandler.setController(gameController);
+                gameController.addHandler(connectionHandler);
+                connectionHandler.setController(gameController);
                 checkGame(gameController);
-                clientHandler.sendMessageClient(new ColorRequest());
+                connectionHandler.sendMessageClient(new ColorRequest());
             } else { // no free games available -> wait for user input of number of players
-                clientHandler.sendMessageClient(new PlayersNumberRequest());
+                connectionHandler.sendMessageClient(new PlayersNumberRequest());
             }
         }
     }
 
     /**
      * Overloading of addToGame with number of players, used in PlayerNumberResponse
-     * @param clientHandler the client handler
+     * @param connectionHandler the client handler
      * @param numberOfPlayers the number of players for the new game
      */
-    public void addToGame(ClientHandler clientHandler, int numberOfPlayers) {
+    public void addToGame(ConnectionHandler connectionHandler, int numberOfPlayers) {
         synchronized (this.gameLock) {
             Controller controller = new Controller();
             this.games.put(controller, numberOfPlayers);
-            controller.addHandler(clientHandler);
-            clientHandler.setController(controller);
-            clientHandler.sendMessageClient(new ColorRequest());
+            controller.addHandler(connectionHandler);
+            connectionHandler.setController(controller);
+            connectionHandler.sendMessageClient(new ColorRequest());
             checkGame(controller);
         }
     }
@@ -106,40 +90,16 @@ public class Server {
             // check if the number of player is sufficient for the game
             if(games.get(controller) == controller.getHandlers().size()) {
                 controller.start();
-                return;
             }
-            if(games.get(controller) != -1 && (games.get(controller) < controller.getHandlers().size())) {
-                ArrayList<ClientHandler> removed = new ArrayList<>();
-                for (ClientHandler c: controller.getHandlers()) {
-                    if(controller.getHandlers().indexOf(c)>= games.get(controller)) {
-                        removed.add(c);
-                    }
-                }
-
-                for(ClientHandler c: removed) {
-                    controller.getHandlers().remove(c);
-                    c.sendMessageClient(new TextMessage("The game is full, you're disconnected"));
-                    c.disconnect();
-                }
-            }
-            controller.start();
         }
     }
 
     /**
-     * Games getter
-     * @return map of games and number of players
-     */
-    public Map<Controller, Integer> getGames() {
-        return this.games;
-    }
-
-    /**
      * Remove and disconnect a client
-     * @param clientHandler the clientHandler relative to the client
+     * @param connectionHandler the connectionHandler relative to the client
      */
-    public void removeClient(ClientHandler clientHandler) {
-        Optional<Controller> optionalController = this.games.keySet().stream().filter(c -> c.getHandlers().contains(clientHandler)).findFirst();
+    public void removeClient(ConnectionHandler connectionHandler) {
+        Optional<Controller> optionalController = this.games.keySet().stream().filter(c -> c.getHandlers().contains(connectionHandler)).findFirst();
         if (optionalController.isPresent()) {
             synchronized (this.gameLock) {
                 Controller controller = optionalController.get();
@@ -147,7 +107,7 @@ public class Server {
                 if (this.games.get(controller) <= 0 || !controller.isGameStarted())
                     this.games.remove(controller);
                 else if (!controller.isGameEnded())
-                    controller.broadcastMessage(new Disconnection(clientHandler.getClientNickname()));
+                    controller.broadcastMessage(new Disconnection(connectionHandler.getClientNickname()));
             }
         }
     }

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.connection.ClientHandler;
+import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.message.serverMessage.GoalCardRequest;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.ResourceCard;
@@ -26,7 +26,7 @@ public class Controller {
     private Player player; //Why this is needed?
 
     // TODO: use the client handlers to send messages to the clients
-    private final ArrayList<ClientHandler> clientHandlers;
+    private final ArrayList<ConnectionHandler> connectionHandlers;
     private final Lock connectionLock;
     private boolean isGameStarted;
     private boolean isGameEnded;
@@ -36,7 +36,7 @@ public class Controller {
      */
     public Controller() {
         this.connectionLock = new ReentrantLock();
-        this.clientHandlers = new ArrayList<>();
+        this.connectionHandlers = new ArrayList<>();
     }
     /**
      * Controller constructor
@@ -47,7 +47,7 @@ public class Controller {
         this.scanner = new Scanner(System.in); //probably don't need this
         //connection attributes setup
         connectionLock = new ReentrantLock();
-        this.clientHandlers = new ArrayList<>();
+        this.connectionHandlers = new ArrayList<>();
     }
 
     /**
@@ -70,27 +70,27 @@ public class Controller {
      * Client handlers getter
      * @return list of handlers
      */
-    public ArrayList<ClientHandler> getHandlers() {
-        return this.clientHandlers;
+    public ArrayList<ConnectionHandler> getHandlers() {
+        return this.connectionHandlers;
     }
 
     /**
      * Add a client handler to the list
      * @param handler client handler to be added
      */
-    public void addHandler(ClientHandler handler) {
-        this.clientHandlers.add(handler);
+    public void addHandler(ConnectionHandler handler) {
+        this.connectionHandlers.add(handler);
     }
 
     /**
      * Client Handler getter by nickname
      * @param nickname the nickname of a Player
-     * @return the corresponding ClientHandler
+     * @return the corresponding ConnectionHandler
      */
-    public ClientHandler getHandlerByNickname(String nickname) {
+    public ConnectionHandler getHandlerByNickname(String nickname) {
         connectionLock.lock();
         try {
-            for(ClientHandler c: this.clientHandlers) {
+            for(ConnectionHandler c: this.connectionHandlers) {
                 if (c.getClientNickname().equals(nickname)) {
                     return c;
                 }
@@ -108,7 +108,7 @@ public class Controller {
     public void broadcastMessage(Serializable msg) {
         connectionLock.lock();
         try {
-            for(ClientHandler c : this.clientHandlers) {
+            for(ConnectionHandler c : this.connectionHandlers) {
                 c.sendMessageClient(msg);
             }
         } finally {
@@ -155,8 +155,8 @@ public class Controller {
     private Queue<StartingCard> getStartingCards() {
         List<StartingCard> cardsList = new ArrayList<>();
         Gson gson = new Gson();
-        for(int i=1; i<=8; i++) {
-            String cardPath = "../resources/CardsJSON/startingCards/startingCard" + i + ".json"; //TODO: fix root path
+        for(int i=1; i<=6; i++) {
+            String cardPath = "./src/main/resources/CardsJSON/startingCards/startingCard" + i + ".json";
             try(Reader reader = new FileReader(cardPath)) {
                 StartingCard card = gson.fromJson(reader, StartingCard.class);
                 cardsList.add(card);
@@ -176,7 +176,7 @@ public class Controller {
         List<GoalCard> cardsList = new ArrayList<>();
         Gson gson = new Gson();
         for(int i=1; i<=8; i++) {
-            String cardPath = "../resources/CardsJSON/goalCards/goalCard" + i + ".json"; //TODO: fix root path
+            String cardPath = "./src/main/resources/CardsJSON/goalCards/goalCard" + i + ".json";
             try(Reader reader = new FileReader(cardPath)) {
                 GoalCard card = gson.fromJson(reader, GoalCard.class);
                 cardsList.add(card);
@@ -195,7 +195,7 @@ public class Controller {
         ArrayList<Player> players = new ArrayList<>();
         Map<Player, PlayerField> playerZones = new HashMap<>();
 
-        for (ClientHandler c: this.clientHandlers) {
+        for (ConnectionHandler c: this.connectionHandlers) {
             Player player = new Player(c.getClientNickname(), c.getClientColor());
             players.add(player);
             // randomly pick a starting card for the user

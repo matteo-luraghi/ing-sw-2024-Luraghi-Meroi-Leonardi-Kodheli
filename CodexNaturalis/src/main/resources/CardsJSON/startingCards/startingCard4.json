@@ -1,1 +1,1 @@
-{"kingdom": "STARTING", "corners": ["BLANK", "BLANK", "BLANK", "BLANK"], "backCorners": ["PLANT", "INSECT", "ANIMAL", "FUNGI"], "permanentResources": ["ANIMAL", "INSECT"]}
+{"kingdom": "STARTING", "isFront": true, "corners": ["BLANK", "BLANK", "BLANK", "BLANK"], "backCorners": ["PLANT", "INSECT", "ANIMAL", "FUNGI"], "permanentResources": ["ANIMAL", "INSECT"]}

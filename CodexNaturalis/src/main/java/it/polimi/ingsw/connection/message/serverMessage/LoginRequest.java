@@ -1,6 +1,5 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
-import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.view.mainview.View;
 
 /**
@@ -12,10 +11,9 @@ public class LoginRequest extends ServerMessage {
     private static final long serialVersionUID = -4505766063795951757L;
 
     /**
-     * Constructor, sets the message type as LOGIN_REQUEST
+     * Constructor
      */
     public LoginRequest() {
-        super(Message.LOGIN_REQUEST);
     }
 
     /**

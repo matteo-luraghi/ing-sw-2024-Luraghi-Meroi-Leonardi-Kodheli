@@ -6,6 +6,10 @@ import it.polimi.ingsw.view.mainview.ViewGoalCardFactory;
 
 import java.util.ArrayList;
 
+/**
+ * ViewGoalCardCLIFactory class
+ * @author Lorenzo Meroi
+ */
 public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
 
     /**
