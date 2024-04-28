@@ -25,12 +25,6 @@ public interface View {
     void start();
 
     /**
-     * method to connect a client to the server
-     * @return the client connected
-     */
-    Client connectToServer();
-
-    /**
      * method to show any type of String
      * @param s is the string you want to be displayed
      */
