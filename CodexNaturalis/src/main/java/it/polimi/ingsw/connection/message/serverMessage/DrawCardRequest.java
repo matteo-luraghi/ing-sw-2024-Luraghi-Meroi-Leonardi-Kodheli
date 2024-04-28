@@ -4,18 +4,18 @@ import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.view.mainview.View;
 
 /**
- * PickACard class
+ * DrawCardRequest class
  * used to notify the player that they need to draw
  * @author Matteo Leonardo Luraghi
  */
-public class PickACard extends ServerMessage {
+public class DrawCardRequest extends ServerMessage {
     private static final long serialVersionUID = 4055891453804268070L;
 
     /**
      * Constructor, sets the message type as PICK_A_CARD
      */
-    public PickACard() {
-        super(Message.PICK_A_CARD);
+    public DrawCardRequest() {
+        super(Message.DRAW_CARD_REQUEST);
     }
 
     /**
