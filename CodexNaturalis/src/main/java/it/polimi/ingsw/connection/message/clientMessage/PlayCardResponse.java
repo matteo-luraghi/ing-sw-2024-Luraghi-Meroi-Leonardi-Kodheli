@@ -1,6 +1,6 @@
 package it.polimi.ingsw.connection.message.clientMessage;
 
-import it.polimi.ingsw.connection.ClientHandler;
+import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
 import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.connection.message.serverMessage.DrawCardRequest;
@@ -30,18 +30,18 @@ public class PlayCardResponse extends ClientMessage {
     /**
      * Try to play the card, if success go to the next state, otherwise ask for another card to play
      * @param server server to use
-     * @param clientHandler client handler
+     * @param connectionHandler client handler
      */
     @Override
-    public void execute(Server server, ClientHandler clientHandler) {
-        if (clientHandler.getController().cardPlayed(clientHandler, card)) {
-            clientHandler.getController().setTurnState(DRAW);
-            clientHandler.sendMessageClient(new DrawCardRequest(clientHandler.getController().getGame()));
+    public void execute(Server server, ConnectionHandler connectionHandler) {
+        if (connectionHandler.getController().cardPlayed(connectionHandler, card)) {
+            connectionHandler.getController().setTurnState(DRAW);
+            connectionHandler.sendMessageClient(new DrawCardRequest(connectionHandler.getController().getGame()));
         } else {
-            clientHandler.sendMessageClient(new TextMessage("Impossible to play the card, choose another one to play"));
-            Player player = clientHandler.getController().getGame()
-                    .getPlayers().stream().filter(p -> p.getNickname().equals(clientHandler.getClientNickname())).findFirst().get();
-            clientHandler.sendMessageClient(new PlayCardRequest(player, clientHandler.getController().getGame()));
+            connectionHandler.sendMessageClient(new TextMessage("Impossible to play the card, choose another one to play"));
+            Player player = connectionHandler.getController().getGame()
+                    .getPlayers().stream().filter(p -> p.getNickname().equals(connectionHandler.getClientNickname())).findFirst().get();
+            connectionHandler.sendMessageClient(new PlayCardRequest(player, connectionHandler.getController().getGame()));
         }
     }
 }

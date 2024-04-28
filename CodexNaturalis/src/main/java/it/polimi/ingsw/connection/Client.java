@@ -20,9 +20,9 @@ import java.net.Socket;
 public class Client {
     private final View view;
     private boolean connected;
-    private Socket clientSocket;
-    private ObjectInputStream inputStream;
-    private ObjectOutputStream outputStream;
+    private final Socket clientSocket;
+    private final ObjectInputStream inputStream;
+    private final ObjectOutputStream outputStream;
     private final Thread messageReceiver;
 
     /**
@@ -103,13 +103,9 @@ public class Client {
 
             try {
                 this.inputStream.close();
-            } catch(IOException e) {}
-            try {
                 this.outputStream.close();
-            } catch(IOException e) {}
-            try {
                 this.clientSocket.close();
-            } catch(IOException e) {}
+            } catch (IOException ignored) {}
         }
     }
 

@@ -37,19 +37,10 @@ public class CLI implements View {
     }
 
     /**
-     * method to initialize the CLI for a specific Client
+     * method to connect a client to the server
      */
     @Override
     public void start() {
-        this.client = connectToServer();
-    }
-
-    /**
-     * method to connect a client to the server
-     * @return the client connected
-     */
-    @Override
-    public Client connectToServer() {
         boolean connected = false;
         String ip = null;
         int port = 0;
@@ -70,7 +61,7 @@ public class CLI implements View {
 
         } while(!connected);
 
-        return client;
+        this.client = client;
     }
 
     /**

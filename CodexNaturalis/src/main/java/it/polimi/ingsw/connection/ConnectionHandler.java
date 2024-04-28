@@ -14,10 +14,10 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 /**
- * ClientHandler class
+ * ConnectionHandler class
  * @author Matteo Leonardo Luraghi
  */
-public class ClientHandler implements Runnable{
+public class ConnectionHandler implements Runnable{
     private final Server server;
     private final Socket socket;
     private final Thread pingThread;
@@ -33,10 +33,10 @@ public class ClientHandler implements Runnable{
      * @param server a server
      * @param socket a socket
      */
-    public ClientHandler(Server server, Socket socket) {
+    public ConnectionHandler(Server server, Socket socket) {
         this.server = server;
         this.socket = socket;
-        pingThread = new Thread(() -> {
+        this.pingThread = new Thread(() -> {
             while(active) {
                 try {
                     Thread.sleep(5000);
@@ -51,19 +51,19 @@ public class ClientHandler implements Runnable{
     @Override
     public void run() {
         try {
-            this.outputStream = new ObjectOutputStream(socket.getOutputStream());
             this.inputStream = new ObjectInputStream(socket.getInputStream());
-            active = true;
+            this.outputStream = new ObjectOutputStream(socket.getOutputStream());
+            this.active = true;
 
-            pingThread.start();
+            this.pingThread.start();
             sendMessageClient(new LoginRequest());
 
-            while(active) {
+            while(this.active) {
                 try {
-                    Object object = inputStream.readObject();
+                    Object object = this.inputStream.readObject();
                     if(!(object instanceof Ping)) {
                         ClientMessage msg = (ClientMessage) object;
-                        msg.execute(server, this);
+                        msg.execute(this.server, this);
                     }
                 } catch (ClassNotFoundException | SocketTimeoutException e) {
                     disconnect();
@@ -80,9 +80,9 @@ public class ClientHandler implements Runnable{
      */
     public void sendMessageClient(Serializable msg){
         try {
-            outputStream.writeObject(msg);
-            outputStream.flush();
-            outputStream.reset();
+            this.outputStream.writeObject(msg);
+            this.outputStream.flush();
+            this.outputStream.reset();
         } catch (IOException e) {
             disconnect();
         }
@@ -92,17 +92,17 @@ public class ClientHandler implements Runnable{
      * Disconnects the server closing input and output stream and socket
      */
     public void disconnect() {
-        if (active){
-            active = false;
-            server.removeClient(this);
+        if (this.active){
+            this.active = false;
+            this.server.removeClient(this);
             try {
-                inputStream.close();
+                this.inputStream.close();
             } catch (IOException ignored){}
             try {
-                outputStream.close();
+                this.outputStream.close();
             } catch (IOException ignored){}
             try {
-                socket.close();
+                this.socket.close();
             } catch (IOException ignored){}
         }
     }

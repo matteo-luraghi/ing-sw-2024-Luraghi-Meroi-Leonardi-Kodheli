@@ -1,6 +1,6 @@
 package it.polimi.ingsw.connection.message.clientMessage;
 
-import it.polimi.ingsw.connection.ClientHandler;
+import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
 import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.connection.message.serverMessage.ColorRequest;
@@ -29,20 +29,20 @@ public class ColorResponse extends ClientMessage{
     /**
      * Check if the selected color is not already chosen by another player
      * @param server server to use
-     * @param clientHandler client handler
+     * @param connectionHandler client handler
      */
     @Override
-    public void execute(Server server, ClientHandler clientHandler) {
-        for(ClientHandler c: clientHandler.getController().getHandlers()) {
-            if (c.getClientColor().equals(this.color) && !c.getClientNickname().equals(clientHandler.getClientNickname())) {
-                clientHandler.sendMessageClient(new TextMessage("Color unavailable, please choose another color"));
-                clientHandler.sendMessageClient(new ColorRequest());
+    public void execute(Server server, ConnectionHandler connectionHandler) {
+        for(ConnectionHandler c: connectionHandler.getController().getHandlers()) {
+            if (c.getClientColor().equals(this.color) && !c.getClientNickname().equals(connectionHandler.getClientNickname())) {
+                connectionHandler.sendMessageClient(new TextMessage("Color unavailable, please choose another color"));
+                connectionHandler.sendMessageClient(new ColorRequest());
                 return;
             }
         }
-        clientHandler.setClientColor(this.color);
-        if (!clientHandler.getController().isGameStarted()) {
-            clientHandler.sendMessageClient(new WaitingForPlayers());
+        connectionHandler.setClientColor(this.color);
+        if (!connectionHandler.getController().isGameStarted()) {
+            connectionHandler.sendMessageClient(new WaitingForPlayers());
         }
     }
 }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.connection.message.clientMessage;
 
-import it.polimi.ingsw.connection.ClientHandler;
+import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
 import it.polimi.ingsw.connection.message.Message;
 import it.polimi.ingsw.connection.message.serverMessage.DrawCardRequest;
@@ -29,18 +29,18 @@ public class DrawCardResponse extends ClientMessage {
     /**
      * Try to draw, if success go to the next state, otherwise ask for drawing again
      * @param server server to use
-     * @param clientHandler client handler
+     * @param connectionHandler client handler
      */
     @Override
-    public void execute(Server server, ClientHandler clientHandler) {
-        Controller controller = clientHandler.getController();
+    public void execute(Server server, ConnectionHandler connectionHandler) {
+        Controller controller = connectionHandler.getController();
         if (controller.drawCard(which)) {
             controller.setTurnState(ENDED);
             controller.setState(NEXT_PLAYER);
-            clientHandler.sendMessageClient(new TurnEnded());
+            connectionHandler.sendMessageClient(new TurnEnded());
         } else {
-            clientHandler.sendMessageClient(new TextMessage("Unable to draw the card, try again"));
-            clientHandler.sendMessageClient(new DrawCardRequest(controller.getGame()));
+            connectionHandler.sendMessageClient(new TextMessage("Unable to draw the card, try again"));
+            connectionHandler.sendMessageClient(new DrawCardRequest(controller.getGame()));
         }
     }
 }

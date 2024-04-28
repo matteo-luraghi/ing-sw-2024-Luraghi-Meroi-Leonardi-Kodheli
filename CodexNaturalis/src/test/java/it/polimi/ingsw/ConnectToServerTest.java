@@ -1,7 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.connection.Client;
-import it.polimi.ingsw.connection.ClientHandler;
+import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
 import it.polimi.ingsw.view.cli.CLI;
 import org.junit.After;
@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 public class ConnectToServerTest {
 
@@ -18,7 +17,7 @@ public class ConnectToServerTest {
     CLI cli = null;
     Server server = null;
 
-    ClientHandler clientHandler = null;
+    ConnectionHandler connectionHandler = null;
 
     Thread serverThread = null;
 
