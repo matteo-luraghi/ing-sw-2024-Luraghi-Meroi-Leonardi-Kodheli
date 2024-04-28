@@ -11,9 +11,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Client class
@@ -21,41 +18,39 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Matteo Leonardo Luraghi
  */
 public class Client {
-    private final String ip;
-    private final int port;
     private final View view;
-    private final int PING_TIME = 5000;
-    private final Thread pingThread;
-    private final AtomicBoolean clientConnected = new AtomicBoolean();
+    private boolean connected;
     private Socket clientSocket;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
-    private final Queue<ServerMessage> messageQueue = new LinkedList<>();
-    private final Thread messageListener;
-    private final Thread messageHandler;
-    private String nickname;
+    private final Thread messageReceiver;
 
     /**
      * Constructor, builds the threads needed for messages
      * @param ip the ip address
      * @param port the port of the connection
      * @param view View interface
+     * @throws IOException if the connection with the server fails
      */
-    public Client(String ip, int port, View view) {
-        this.ip = ip;
-        this.port = port;
+    public Client(String ip, int port, View view) throws IOException {
         this.view = view;
+        this.messageReceiver = new Thread(this::readMessages);
+        this.clientSocket = new Socket();
+        this.clientSocket.connect(new InetSocketAddress(ip, port));
+        this.inputStream = new ObjectInputStream(this.clientSocket.getInputStream());
+        this.outputStream = new ObjectOutputStream(this.clientSocket.getOutputStream());
+        this.connected = true;
+        messageReceiver.start();
 
-        this.messageListener = new Thread(this::readMessages);
-        this.messageHandler = new Thread(this::handleMessages);
-
-        this.pingThread = new Thread(() -> {
-            while (this.clientConnected.get()) {
+        // if the server is not online, disconnect the client
+        Thread pingThread = new Thread(() -> {
+            while (this.connected) {
                 try {
-                    Thread.sleep(PING_TIME);
+                    Thread.sleep(5000);
                     sendMessageServer(new Ping());
                 } catch (InterruptedException e) {
-                    disconnect(true);
+                    // if the server is not online, disconnect the client
+                    disconnect();
                 }
             }
         });
@@ -66,30 +61,15 @@ public class Client {
      * @param message the message to be sent
      */
     public void sendMessageServer(Serializable message) {
-        if(this.clientConnected.get()) {
+        if(this.connected) {
             try {
                 outputStream.writeObject(message);
                 outputStream.flush();
                 outputStream.reset();
             } catch (IOException e) {
-                disconnect(true);
+                disconnect();
             }
         }
-    }
-
-    /**
-     * Initialize the client
-     * @throws IOException if errors occur
-     */
-    public void init() throws IOException {
-        this.clientSocket = new Socket();
-        this.clientSocket.connect(new InetSocketAddress(ip, port));
-        this.outputStream = new ObjectOutputStream(this.clientSocket.getOutputStream());
-        this.inputStream = new ObjectInputStream(this.clientSocket.getInputStream());
-        this.clientConnected.set(true);
-        pingThread.start();
-        messageHandler.start();
-        messageListener.start();
     }
 
     /**
@@ -97,69 +77,29 @@ public class Client {
      */
     public void readMessages() {
         try {
-            while(this.clientConnected.get()) {
+            while(this.connected) {
                 Object msg = this.inputStream.readObject();
                 if(msg instanceof ServerMessage) {
-                    if (msg instanceof Disconnection) {
-                        this.messageQueue.clear();
-                        ((Disconnection) msg).show(view);
-                        disconnect(false);
-                    }
-
-                    this.messageQueue.add((ServerMessage) msg);
-
-                    switch (((ServerMessage) msg).getType()) {
-                        case LOGIN_REQUEST -> {
-
-                        }
-                        case PLAYERS_NUMBER_REQUEST -> {
-
-                        }
-                        case WAITING_FOR_PLAYERS -> {
-
-                        }
-                        case YOUR_TURN -> {
-
-                        }
-                        case DRAW_CARD_REQUEST -> {
-
-                        }
-                        case TURN_ENDED -> {
-
-                        }
-                        case WINNER -> {
-
-                        }
-                    }
+                    // view the message via the CLI or GUI
+                    ((ServerMessage) msg).show(this.view);
+                }
+                else if (msg instanceof Disconnection) {
+                    ((Disconnection) msg).show(view);
+                    disconnect();
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
-            disconnect(true);
-        }
-    }
-
-    /**
-     * Handles the messages by removing them from the queue and showing them
-     */
-    public void handleMessages() {
-        while(this.clientConnected.get()) {
-            if(!messageQueue.isEmpty()) {
-                ServerMessage msg = messageQueue.poll();
-                assert msg != null;
-                msg.show(this.view);
-            }
+            disconnect();
         }
     }
 
     /**
      * Disconnect the client
-     * @param error if the disconnection emerges from an error the client is notified
      */
-    public void disconnect(boolean error) {
-        if(this.clientConnected.get()) {
-            this.clientConnected.set(false);
-            if(this.messageListener.isAlive()) this.messageListener.interrupt();
-            if(this.messageHandler.isAlive()) this.messageHandler.interrupt();
+    public void disconnect() {
+        if(this.connected) {
+            this.connected = false;
+            if(this.messageReceiver.isAlive()) this.messageReceiver.interrupt();
 
             try {
                 this.inputStream.close();
@@ -170,27 +110,7 @@ public class Client {
             try {
                 this.clientSocket.close();
             } catch(IOException e) {}
-
-            if(error) {
-                this.view.showMessage("An error occurred, you'll be disconnected from the server");
-            }
-
         }
     }
 
-    /**
-     * Nickname getter
-     * @return the current nickname
-     */
-    public String getNickname() {
-        return this.nickname;
-    }
-
-    /**
-     * Nickname setter
-     * @param nickname the nickname
-     */
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
 }

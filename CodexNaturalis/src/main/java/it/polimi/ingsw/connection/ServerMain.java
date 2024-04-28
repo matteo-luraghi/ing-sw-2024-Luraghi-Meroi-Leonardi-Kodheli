@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class ServerMain {
     private static final int MIN = 1024;
     private static final int MAX = 65535;
-    private static final int DEFAULT = 2807;
+    private static final int DEFAULT = 3356;
     public static void main(String[] args) {
         int port = DEFAULT;
         String input;

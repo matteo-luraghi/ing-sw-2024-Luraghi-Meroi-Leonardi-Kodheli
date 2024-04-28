@@ -22,7 +22,6 @@ import java.util.concurrent.Executors;
 public class Server {
     private final int port;
     private ServerSocket serverSocket;
-    private final int TIMEOUT = 10000;
     private final Map<Controller, Integer> games;
     private final ExecutorService executor;
     private final Object gameLock = new Object();
@@ -51,7 +50,7 @@ public class Server {
         try {
             while(true) {
                 Socket clientSocket = this.serverSocket.accept();
-                clientSocket.setSoTimeout(this.TIMEOUT);
+                clientSocket.setSoTimeout(10000);
                 ClientHandler clientConnection = new ClientHandler(this, clientSocket);
                 this.executor.submit(clientConnection);
                 clientConnection.sendMessageClient(new LoginRequest());
@@ -106,32 +105,8 @@ public class Server {
             // check if the number of player is sufficient for the game
             if(games.get(controller) == controller.getHandlers().size()) {
                 controller.start();
-                return;
             }
-            if(games.get(controller) != -1 && (games.get(controller) < controller.getHandlers().size())) {
-                ArrayList<ClientHandler> removed = new ArrayList<>();
-                for (ClientHandler c: controller.getHandlers()) {
-                    if(controller.getHandlers().indexOf(c)>= games.get(controller)) {
-                        removed.add(c);
-                    }
-                }
-
-                for(ClientHandler c: removed) {
-                    controller.getHandlers().remove(c);
-                    c.sendMessageClient(new TextMessage("The game is full, you're disconnected"));
-                    c.disconnect();
-                }
-            }
-            controller.start();
         }
-    }
-
-    /**
-     * Games getter
-     * @return map of games and number of players
-     */
-    public Map<Controller, Integer> getGames() {
-        return this.games;
     }
 
     /**

@@ -4,7 +4,6 @@ import it.polimi.ingsw.connection.message.serverMessage.LoginRequest;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.connection.message.clientMessage.ClientMessage;
 import it.polimi.ingsw.connection.message.connectionMessage.Ping;
-import it.polimi.ingsw.connection.message.serverMessage.ServerMessage;
 import it.polimi.ingsw.model.gamelogic.Color;
 
 import java.io.IOException;
@@ -19,11 +18,10 @@ import java.net.SocketTimeoutException;
  * @author Matteo Leonardo Luraghi
  */
 public class ClientHandler implements Runnable{
-    private final int PING_TIME = 5000;
     private final Server server;
     private final Socket socket;
     private final Thread pingThread;
-    private boolean activeClient;
+    private boolean active;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private String clientNickname;
@@ -39,9 +37,9 @@ public class ClientHandler implements Runnable{
         this.server = server;
         this.socket = socket;
         pingThread = new Thread(() -> {
-            while(activeClient) {
+            while(active) {
                 try {
-                    Thread.sleep(this.PING_TIME);
+                    Thread.sleep(5000);
                     sendMessageClient(new Ping());
                 } catch (InterruptedException e) {
                     break;
@@ -55,12 +53,12 @@ public class ClientHandler implements Runnable{
         try {
             this.outputStream = new ObjectOutputStream(socket.getOutputStream());
             this.inputStream = new ObjectInputStream(socket.getInputStream());
-            activeClient = true;
+            active = true;
 
             pingThread.start();
             sendMessageClient(new LoginRequest());
 
-            while(activeClient) {
+            while(active) {
                 try {
                     Object object = inputStream.readObject();
                     if(!(object instanceof Ping)) {
@@ -81,7 +79,6 @@ public class ClientHandler implements Runnable{
      * @param msg message to be sent
      */
     public void sendMessageClient(Serializable msg){
-        assert (msg instanceof ServerMessage) || (msg instanceof Ping);
         try {
             outputStream.writeObject(msg);
             outputStream.flush();
@@ -95,8 +92,8 @@ public class ClientHandler implements Runnable{
      * Disconnects the server closing input and output stream and socket
      */
     public void disconnect() {
-        if (activeClient){
-            activeClient = false;
+        if (active){
+            active = false;
             server.removeClient(this);
             try {
                 inputStream.close();

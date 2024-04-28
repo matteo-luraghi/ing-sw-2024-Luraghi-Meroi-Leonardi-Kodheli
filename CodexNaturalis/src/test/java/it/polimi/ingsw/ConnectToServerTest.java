@@ -28,17 +28,16 @@ public class ConnectToServerTest {
     }
 
     @Before
-    public void SetUp() throws UnknownHostException {
+    public void SetUp() {
         server = new Server(8080);
         cli = new CLI();
-        client = new Client(InetAddress.getLocalHost().getHostAddress(), 8080, cli); //to get your
-        // private ip
         serverThread = new Thread(() -> {server.start();});
     }
 
     @Test
     public void CheckConnection () throws IOException {
         serverThread.start();
-        client.init();
+        client = new Client(InetAddress.getLocalHost().getHostAddress(), 8080, cli); //to get your
+        // private ip
     }
 }

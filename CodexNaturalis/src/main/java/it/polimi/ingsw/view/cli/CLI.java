@@ -41,25 +41,7 @@ public class CLI implements View {
      */
     @Override
     public void start() {
-        boolean socketError = true;
-        while (socketError) {
-            try {
-                this.client = connectToServer();
-                this.client.init();
-                socketError = false;
-            } catch (IOException e) {}
-        }
-    }
-
-    /**
-     * method to check wheter or not an IP address is valid
-     * @param address is the String in which the IP is contained
-     * @return a boolean telling whether it is valid or not
-     */
-    private boolean validateIP(String address) {
-        String zeroTo255 = "([01]?\\d{1,2}|2[0-4]\\d|25[0-5])";
-        String IP_REGEX = "^(" + zeroTo255 + "\\." + zeroTo255 + "\\." + zeroTo255 + "\\." + zeroTo255 + ")$";
-        return address.matches(IP_REGEX);
+        this.client = connectToServer();
     }
 
     /**
@@ -68,66 +50,27 @@ public class CLI implements View {
      */
     @Override
     public Client connectToServer() {
-        final int DEFAULT_PORT = 2807;
-        final String DEFAULT_ADDRESS = "127.0.0.1";
-        final int MIN_PORT = 1024;
-        final int MAX_PORT = 65535;
-        int port = DEFAULT_PORT;
-        String ip = DEFAULT_ADDRESS;
-        boolean validInput = false;
-        boolean firstTry = true;
-        boolean notAnInt = false;
-        boolean wrongPort = false;
+        boolean connected = false;
+        String ip = null;
+        int port = 0;
+        Client client = null;
 
         do {
-            if (!firstTry) {
-                System.out.println("ERROR: Invalid address!");
-            } else {
-                System.out.println("Enter the server address");
-            }
-            System.out.print("Insert 'd' for the default value (" + DEFAULT_ADDRESS + "): ");
-            String address = scanner.nextLine();
-            if (address.equalsIgnoreCase("d") || address.equalsIgnoreCase("localhost") || address.equals(DEFAULT_ADDRESS)) {
-                validInput = true;
-            } else if (validateIP(address)) {
-                ip = address;
-                validInput = true;
-            } else {
-                firstTry = false;
-            }
-        } while(!validInput);
+            System.out.println("Insert a valid ip address:");
+            ip = scanner.nextLine();
+            System.out.println("Insert a valid port to connect:");
+            port = scanner.nextInt();
 
-        validInput = false;
+            try {
+                 client = new Client(ip, port, this);
+                 connected = true;
+            } catch (IOException e) {
+                System.out.println("Error connecting to the server, try again");
+            }
 
-        while (!validInput) {
-            if (notAnInt) {
-                notAnInt = false;
-                System.out.println("Please insert only numbers");
-            }
-            if (wrongPort) {
-                wrongPort = false;
-                System.out.println("ERROR: MIN PORT = " + MIN_PORT + ", MAX PORT = " + MAX_PORT);
-            }
-            System.out.println("Select a valid port between [" + MIN_PORT + ", " + MAX_PORT + "]");
-            System.out.print("Insert 'd' for the default value (" + DEFAULT_PORT + "): ");
+        } while(!connected);
 
-            String input = scanner.nextLine();
-            if(input.equalsIgnoreCase("d")){
-                validInput = true;
-            } else {
-                try {
-                    port = Integer.parseInt(input);
-                    if(MIN_PORT <= port && port <= MAX_PORT){
-                        validInput = true;
-                    } else {
-                        wrongPort = true;
-                    }
-                } catch (NumberFormatException e){
-                    notAnInt = true;
-                }
-            }
-        }
-        return new Client(ip, port, this);
+        return client;
     }
 
     /**
