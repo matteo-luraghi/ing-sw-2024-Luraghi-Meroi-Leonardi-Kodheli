@@ -11,20 +11,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * ViewPlayerFieldCLIFactory class
+ * @author Lorenzo Meroi
+ */
 public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
 
     /**
-     * gameCardViewer setter
-     * @param gameCardViewer to show cards
-     */
-    public void setGameCardViewer (ViewGameCardCLIFactory gameCardViewer) {this.gameCardViewer = gameCardViewer;}
-    /**
-     * goalCardViewer setter
-     * @param goalCardViewer to show cards
-     */
-    public void setGoalCardViewer (ViewGoalCardCLIFactory goalCardViewer) {this.goalCardViewer = goalCardViewer;}
-    /**
-     * abstract method to show the player field
+     * abstract method to show the player field to its owner
      */
     @Override
     public void showComplete() {
@@ -57,6 +51,9 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
         goalCardViewer.Show();
     }
 
+    /**
+     * show the player field to those who are not its owner
+     */
     @Override
     public void showToOthers() {
         /*
@@ -72,6 +69,9 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
         ShowGameZone();
     }
 
+    /**
+     * displays a player's game zone
+     */
     private void ShowGameZone() {
         System.out.println(this.player.toString()+"'s field:");
 
@@ -131,6 +131,12 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
         }
     }
 
+    /**
+     * displays a card in the player field
+     * @param coor refers to the position in which the card sits
+     * @param card refers to the card to display
+     * @return a string representing the card
+     */
     private String CardToString (Coordinates coor, GameCard card) {
         String cardString = "";
         if (card instanceof StartingCard)

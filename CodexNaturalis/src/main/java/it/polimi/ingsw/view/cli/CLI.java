@@ -36,6 +36,9 @@ public class CLI implements View {
         this.goalCardViewer = new ViewGoalCardCLIFactory();
     }
 
+    /**
+     * method to initialize the CLI for a specific Client
+     */
     @Override
     public void start() {
         boolean socketError = true;
@@ -48,12 +51,21 @@ public class CLI implements View {
         }
     }
 
+    /**
+     * method to check wheter or not an IP address is valid
+     * @param address is the String in which the IP is contained
+     * @return a boolean telling whether it is valid or not
+     */
     private boolean validateIP(String address) {
         String zeroTo255 = "([01]?\\d{1,2}|2[0-4]\\d|25[0-5])";
         String IP_REGEX = "^(" + zeroTo255 + "\\." + zeroTo255 + "\\." + zeroTo255 + "\\." + zeroTo255 + ")$";
         return address.matches(IP_REGEX);
     }
 
+    /**
+     * method to connect a client to the server
+     * @return the client connected
+     */
     @Override
     public Client connectToServer() {
         final int DEFAULT_PORT = 2807;
@@ -121,7 +133,7 @@ public class CLI implements View {
     /**
      * method to clear the console if the program is being run in the windows console
      */
-    public void ClearScreen () {
+    private void ClearScreen () {
         try {
             if (System.getProperty("os.name").contains("Windows"))
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -140,11 +152,19 @@ public class CLI implements View {
         System.out.println(s);
     }
 
+    /**
+     * method to login a player into a game
+     * @return the new player to insert into the game
+     */
     @Override
     public Player ShowLogin() {
         return new Player("default", Color.RED);
     }
 
+    /**
+     * asks the client how many players there has to be in the game
+     * @return the number of player that will be in the game
+     */
     @Override
     public int askForPlayersNumber() {
         System.out.println("How many player will play the game?");
@@ -160,6 +180,11 @@ public class CLI implements View {
         System.out.println("Waiting for players...");
     }
 
+    /**
+     * method to show the private goal of a specific player
+     * @param player of which to display the goal
+     * @param game in which the player is partecipating
+     */
     @Override
     public void ShowPrivateGoal(Player player, GameState game) {
         ClearScreen();
@@ -167,6 +192,10 @@ public class CLI implements View {
         this.goalCardViewer.Show();
     }
 
+    /**
+     * displays the two private goals the client has to choose between
+     * @param goalCards is an array of two goal cards
+     */
     @Override
     public void ShowChoosePrivateGoal(GoalCard[] goalCards) {
         ClearScreen();
@@ -176,6 +205,12 @@ public class CLI implements View {
         this.goalCardViewer.Show();
     }
 
+    /**
+     * displays the player field of a specific player
+     * @param playerToSee specifies which playerfield has to be displayed
+     * @param playerAsking tells which player is asking to see it
+     * @param game we are referring to
+     */
     @Override
     public void ShowPlayerField(Player playerToSee, Player playerAsking, GameState game) {
         ClearScreen();
@@ -186,6 +221,10 @@ public class CLI implements View {
             this.playerFieldViewer.showToOthers();
     }
 
+    /**
+     * displays the two decks and the uncovered cards
+     * @param game we are referring to
+     */
     @Override
     public void ShowDecks(GameState game) {
         ClearScreen();
@@ -195,18 +234,28 @@ public class CLI implements View {
         this.deckViewer.show();
     }
 
+    /**
+     * displays the scoreboard
+     */
     @Override
     public void ShowScoreBoard() {
         ClearScreen();
         this.scoreBoardViewer.show();
     }
 
+    /**
+     * shows who has won the game
+     * @param game we are referring to
+     */
     @Override
     public void ShowWinner(GameState game) {
         ClearScreen();
         System.out.println(game.getWinner().toString() + "has won!");
     }
 
+    /**
+     * shows the end of game text
+     */
     @Override
     public void ShowEndOfGame() {
         System.out.println("The game has ended...");

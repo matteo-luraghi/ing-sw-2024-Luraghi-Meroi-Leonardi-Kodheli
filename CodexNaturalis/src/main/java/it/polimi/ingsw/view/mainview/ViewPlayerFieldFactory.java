@@ -2,6 +2,8 @@ package it.polimi.ingsw.view.mainview;
 
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.PlayerField;
+import it.polimi.ingsw.view.cli.ViewGameCardCLIFactory;
+import it.polimi.ingsw.view.cli.ViewGoalCardCLIFactory;
 
 /**
  * viewPlayerFieldFactory abstract class
@@ -35,4 +37,16 @@ public abstract class ViewPlayerFieldFactory {
     public void setPlayerField(PlayerField playerField, Player player) {
         this.playerField = playerField;
     }
+
+    /**
+     * gameCardViewer setter
+     * @param gameCardViewer to show cards
+     */
+    public void setGameCardViewer (ViewGameCardFactory gameCardViewer) {this.gameCardViewer = gameCardViewer;}
+
+    /**
+     * goalCardViewer setter
+     * @param goalCardViewer to show cards
+     */
+    public void setGoalCardViewer (ViewGoalCardFactory goalCardViewer) {this.goalCardViewer = goalCardViewer;}
 }

@@ -19,29 +19,80 @@ public interface View {
     ViewDeckFactory deckViewer  = null;
     ViewGoalCardFactory goalCardViewer = null;
 
+    /**
+     * method to initialize the CLI for a specific Client
+     */
     void start();
 
+    /**
+     * method to connect a client to the server
+     * @return the client connected
+     */
     Client connectToServer();
 
+    /**
+     * method to show any type of String
+     * @param s is the string you want to be displayed
+     */
     void showMessage (String s);
 
+    /**
+     * method to login a player into a game
+     * @return the new player to insert into the game
+     */
     Player ShowLogin();
 
+    /**
+     * asks the client how many players there has to be in the game
+     * @return the number of player that will be in the game
+     */
     int askForPlayersNumber();
 
+    /**
+     * method to display the waiting for players page
+     */
     void ShowWaitingForPlayers();
 
+    /**
+     * method to show the private goal of a specific player
+     * @param player of which to display the goal
+     * @param game in which the player is partecipating
+     */
     void ShowPrivateGoal(Player player, GameState game);
 
+    /**
+     * displays the two private goals the client has to choose between
+     * @param goalCards is an array of two goal cards
+     */
     void ShowChoosePrivateGoal(GoalCard[] goalCards);
 
+    /**
+     * displays the player field of a specific player
+     * @param playerToSee specifies which playerfield has to be displayed
+     * @param playerAsking tells which player is asking to see it
+     * @param game we are referring to
+     */
     void ShowPlayerField(Player playerToSee, Player playerAsking, GameState game);
 
+    /**
+     * displays the two decks and the uncovered cards
+     * @param game we are referring to
+     */
     void ShowDecks(GameState game);
 
+    /**
+     * displays the scoreboard
+     */
     void ShowScoreBoard();
 
+    /**
+     * shows who has won the game
+     * @param game we are referring to
+     */
     void ShowWinner(GameState game);
 
+    /**
+     * shows the end of game text
+     */
     void ShowEndOfGame();
 }

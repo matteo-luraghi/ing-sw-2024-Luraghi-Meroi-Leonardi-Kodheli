@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.mainview;
 
+import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.PlayerField;
 
 /**
@@ -21,8 +22,9 @@ public class PlayerFieldObserver {
     /**
      * method to update the viewer on a change
      * @param playerField is the playerField that has changed
+     * @param player is the owner of the player field
      */
-    public void Update(PlayerField playerField) {
-        this.playerFieldViewer.setPlayerField(playerField);
+    public void Update(PlayerField playerField, Player player) {
+        this.playerFieldViewer.setPlayerField(playerField, player);
     }
 }

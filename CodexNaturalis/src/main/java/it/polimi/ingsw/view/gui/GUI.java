@@ -1,71 +1,144 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.connection.Client;
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
-import it.polimi.ingsw.view.mainview.View;
+import it.polimi.ingsw.view.mainview.*;
 
+/**
+ * GUI class to show the game using graphic interface
+ */
 public class GUI implements View {
+    Client client = null;
+    Controller controller = null;
+    ViewGameCardFactory gameCardViewer = null;
+    ViewScoreBoardFactory scoreBoardViewer  = null;
+    ViewPlayerFieldFactory playerFieldViewer  = null;
+    ViewDeckFactory deckViewer  = null;
+    ViewGoalCardFactory goalCardViewer = null;
+
+    /**
+     * method to initialize the CLI for a specific Client
+     */
     @Override
     public void start() {
 
     }
 
+    /**
+     * method to connect a client to the server
+     *
+     * @return the client connected
+     */
     @Override
     public Client connectToServer() {
         return null;
     }
 
+    /**
+     * method to show any type of String
+     *
+     * @param s is the string you want to be displayed
+     */
     @Override
     public void showMessage(String s) {
 
     }
 
+    /**
+     * method to login a player into a game
+     *
+     * @return the new player to insert into the game
+     */
     @Override
-    public void ShowLogin() {
-
+    public Player ShowLogin() {
+        return null;
     }
 
+    /**
+     * asks the client how many players there has to be in the game
+     *
+     * @return the number of player that will be in the game
+     */
     @Override
-    public void askForPlayersNumber() {
-
+    public int askForPlayersNumber() {
+        return 0;
     }
 
+    /**
+     * method to display the waiting for players page
+     */
     @Override
     public void ShowWaitingForPlayers() {
 
     }
 
+    /**
+     * method to show the private goal of a specific player
+     *
+     * @param player of which to display the goal
+     * @param game   in which the player is partecipating
+     */
+    @Override
+    public void ShowPrivateGoal(Player player, GameState game) {
+
+    }
+
+    /**
+     * displays the two private goals the client has to choose between
+     *
+     * @param goalCards is an array of two goal cards
+     */
     @Override
     public void ShowChoosePrivateGoal(GoalCard[] goalCards) {
 
     }
 
+    /**
+     * displays the player field of a specific player
+     *
+     * @param playerToSee  specifies which playerfield has to be displayed
+     * @param playerAsking tells which player is asking to see it
+     * @param game         we are referring to
+     */
     @Override
-    public void ShowPrivateGoal(Player player) {
+    public void ShowPlayerField(Player playerToSee, Player playerAsking, GameState game) {
 
     }
 
+    /**
+     * displays the two decks and the uncovered cards
+     *
+     * @param game we are referring to
+     */
     @Override
-    public void ShowPlayerField(Player player) {
+    public void ShowDecks(GameState game) {
 
     }
 
-    @Override
-    public void ShowDecks() {
-
-    }
-
+    /**
+     * displays the scoreboard
+     */
     @Override
     public void ShowScoreBoard() {
 
     }
 
+    /**
+     * shows who has won the game
+     *
+     * @param game we are referring to
+     */
     @Override
-    public void ShowWinner() {
+    public void ShowWinner(GameState game) {
 
     }
 
+    /**
+     * shows the end of game text
+     */
     @Override
     public void ShowEndOfGame() {
 

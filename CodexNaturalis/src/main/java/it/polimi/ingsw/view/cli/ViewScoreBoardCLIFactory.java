@@ -9,9 +9,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * ViewScoreBoardCLIFactory class
+ * @author Lorenzo Meroi
+ */
 public class ViewScoreBoardCLIFactory extends ViewScoreBoardFactory {
+
     /**
-     * abstract method to show the scoreboard
+     * method to show the scoreboard
      */
     @Override
     public void show() {

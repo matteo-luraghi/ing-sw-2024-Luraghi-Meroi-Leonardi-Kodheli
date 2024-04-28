@@ -5,22 +5,11 @@ import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.view.mainview.AnsiColors;
 import it.polimi.ingsw.view.mainview.ViewDeckFactory;
 
+/**
+ * ViewDeckCLIFactory class
+ * @author Lorenzo Meroi
+ */
 public class ViewDeckCLIFactory extends ViewDeckFactory {
-
-    /**
-     * gameCardViewer setter
-     * @param gameCardViewer to show cards
-     */
-    public void setGameCardViewer(ViewGameCardCLIFactory gameCardViewer) {
-        this.gameCardViewer = gameCardViewer;
-    }
-    /**
-     * goalCardViewer setter
-     * @param goalCardViewer to show cards
-     */
-    public void setGameCardViewer(ViewGoalCardCLIFactory goalCardViewer) {
-        this.goalCardViewer = goalCardViewer;
-    }
 
     /**
      * method to show a deck and it's card
