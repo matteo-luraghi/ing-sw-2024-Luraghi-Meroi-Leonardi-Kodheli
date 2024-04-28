@@ -9,6 +9,7 @@ import java.util.Set;
  */
 public class GameState {
     private State state;
+    private TurnState turnState;
     private ArrayList<Player> players;
     private Player turn;
     private GameTable gameTable;
@@ -41,10 +42,26 @@ public class GameState {
     }
 
     /**
+     * getTurnState returns the current turn state
+     * @return TurnState
+     */
+    public TurnState getTurnState() {
+        return this.turnState;
+    }
+
+    /**
      * Setter for the current state
      * @param newState the state we want to switch to
      */
     public void setState(State newState){ this.state = newState; }
+
+    /**
+     * Setter for the current turn state
+     * @param turnState the turn state we want to switch to
+     */
+    public void setTurnState(TurnState turnState) {
+        this.turnState = turnState;
+    }
 
     /**
      * Players getter
