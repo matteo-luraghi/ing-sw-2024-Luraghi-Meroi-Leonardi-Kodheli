@@ -127,7 +127,7 @@ public class Client {
                         case CARD_PLAYED -> {
 
                         }
-                        case PICK_A_CARD -> {
+                        case DRAW_CARD_REQUEST -> {
 
                         }
                         case CANNOT_DRAW -> {
