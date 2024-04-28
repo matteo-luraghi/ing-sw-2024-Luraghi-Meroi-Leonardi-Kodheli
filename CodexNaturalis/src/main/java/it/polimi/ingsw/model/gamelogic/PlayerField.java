@@ -106,12 +106,17 @@ public class PlayerField {
      * method to play a card in a position
      * @param where the coordinates in which you want to play
      * @param card the card you want to play
-     * @return the number of points that the card has gotten (0 could also indicate the card could not be played there)
+     * @return the number of points that the card has gotten (-1 for unplaced card)
      */
-    //TODO proper test
+
     public int Play (Coordinates where, ResourceCard card) {
 
-        //We dont check if the card is playable because it will always be thanks to controller checking it right before
+        //better if we check
+        if(!IsPlayable(where,card))
+        {
+            return -1;
+        }
+
         gameZone.put(where, card);
         //Add the visible resources to the resourceMap
         if (!card.getIsFront()) {
@@ -229,16 +234,16 @@ public class PlayerField {
 
             if (x == cardX+1 && y == cardY+1) {
                 existsTR = true;
-                canTR = !card.getCorner(2).equals(Resource.HIDDEN);
+                canTR = !card.getCorner(1).equals(Resource.HIDDEN);
             } else if (x == cardX+1 && y == cardY-1) {
                 existsBR = true;
-                canBR  =!card.getCorner(1).equals(Resource.HIDDEN);
+                canBR  =!card.getCorner(3).equals(Resource.HIDDEN);
             } else if (x == cardX-1 && y == cardY+1) {
                 existsTL = true;
-                canTL  =!card.getCorner(1).equals(Resource.HIDDEN);
+                canTL  =!card.getCorner(0).equals(Resource.HIDDEN);
             } else if (x == cardX-1 && y == cardY-1) {
                 existsBL = true;
-                canBL  =!card.getCorner(1).equals(Resource.HIDDEN);
+                canBL  =!card.getCorner(2).equals(Resource.HIDDEN);
             }
         }
         return (canTR && canBR && canTL && canBL && (existsTR || existsBR || existsTL || existsBL));
@@ -334,7 +339,7 @@ public class PlayerField {
      */
     public Map<Coordinates, GameCard> getGameZone() {
         return gameZone;
-    } //TODO: should we return a copy?
+    }
 
     /**
      * resourceMap getter
