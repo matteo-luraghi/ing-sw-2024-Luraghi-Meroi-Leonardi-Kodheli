@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class ConnectToServerTest {
@@ -30,7 +31,7 @@ public class ConnectToServerTest {
     public void SetUp() throws UnknownHostException {
         server = new Server(8080);
         cli = new CLI();
-        client = new Client(/*InetAddress.getLocalHost().toString()*/ "192.168.1.128", 8080, cli); //to get your
+        client = new Client(InetAddress.getLocalHost().getHostAddress(), 8080, cli); //to get your
         // private ip
         serverThread = new Thread(() -> {server.start();});
     }
