@@ -25,6 +25,6 @@ public class Disconnection extends ConnectionMessage {
      * @param view view interface
      */
     public void show(View view) {
-        view.displayDisconnectionMessage(clientNickname);
+        view.showMessage(clientNickname + "was disconnected");
     }
 }
