@@ -1,6 +1,7 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
 import it.polimi.ingsw.connection.message.Message;
+import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.view.mainview.View;
 
 /**
@@ -10,12 +11,14 @@ import it.polimi.ingsw.view.mainview.View;
  */
 public class Winner extends ServerMessage {
     private static final long serialVersionUID = -9101701077881585L;
+    private final GameState game;
 
     /**
      * Constructor, sets the message type as WINNER
      */
-    public Winner() {
+    public Winner(GameState game) {
         super(Message.WINNER);
+        this.game = game;
     }
 
     /**
@@ -24,6 +27,6 @@ public class Winner extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.ShowWinner();
+        view.ShowWinner(this.game);
     }
 }

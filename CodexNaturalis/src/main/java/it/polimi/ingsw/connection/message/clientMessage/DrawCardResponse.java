@@ -40,7 +40,7 @@ public class DrawCardResponse extends ClientMessage {
             clientHandler.sendMessageClient(new TurnEnded());
         } else {
             clientHandler.sendMessageClient(new TextMessage("Unable to draw the card, try again"));
-            clientHandler.sendMessageClient(new DrawCardRequest());
+            clientHandler.sendMessageClient(new DrawCardRequest(controller.getGame()));
         }
     }
 }
