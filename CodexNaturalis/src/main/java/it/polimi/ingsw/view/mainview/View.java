@@ -17,9 +17,13 @@ public interface View {
 
     void showMessage (String s);
 
+    void ShowLogin();
+
+    void askForPlayersNumber();
+
     void ShowWaitingForPlayers();
 
-    void ShowPrivateGoals(Player player);
+    void ShowChoosePrivateGoal(Player player);
 
     void ShowPlayerField(Player player);
 
