@@ -9,15 +9,29 @@ import it.polimi.ingsw.connection.message.serverMessage.TextMessage;
 import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.gamelogic.Player;
 
+/**
+ * PlayCardResponse class
+ * used to tell the controller which card to play
+ * @author Matteo Leonardo Luraghi
+ */
 public class PlayCardResponse extends ClientMessage {
     private static final long serialVersionUID = -7671795239367074793L;
-    private ResourceCard card;
+    private final ResourceCard card;
 
+    /**
+     * Constructor, sets the message type as PLAY_CARD_RESPONSE
+     * @param card the card to play
+     */
     public PlayCardResponse(ResourceCard card) {
         super(Message.PLAY_CARD_RESPONSE);
         this.card = card;
     }
 
+    /**
+     * Try to play the card, if success go to the next state, otherwise ask for another card to play
+     * @param server server to use
+     * @param clientHandler client handler
+     */
     @Override
     public void execute(Server server, ClientHandler clientHandler) {
         if (clientHandler.getController().cardPlayed(clientHandler, card)) {

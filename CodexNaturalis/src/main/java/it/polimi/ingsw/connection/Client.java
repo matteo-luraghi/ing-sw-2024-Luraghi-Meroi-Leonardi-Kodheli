@@ -121,19 +121,7 @@ public class Client {
                         case YOUR_TURN -> {
 
                         }
-                        case CARD_NOT_PLAYABLE -> {
-
-                        }
-                        case CARD_PLAYED -> {
-
-                        }
                         case DRAW_CARD_REQUEST -> {
-
-                        }
-                        case CANNOT_DRAW -> {
-
-                        }
-                        case CARD_DRAWN -> {
 
                         }
                         case TURN_ENDED -> {
