@@ -5,18 +5,11 @@ import it.polimi.ingsw.connection.ClientHandler;
 import it.polimi.ingsw.connection.Server;
 import it.polimi.ingsw.view.cli.CLI;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Scanner;
 
 public class ConnectToServerTest {
 
@@ -37,7 +30,8 @@ public class ConnectToServerTest {
     public void SetUp() throws UnknownHostException {
         server = new Server(8080);
         cli = new CLI();
-        client = new Client("192.168.1.128", 8080, cli);
+        client = new Client(/*InetAddress.getLocalHost().toString()*/ "192.168.1.128", 8080, cli); //to get your
+        // private ip
         serverThread = new Thread(() -> {server.start();});
     }
 
