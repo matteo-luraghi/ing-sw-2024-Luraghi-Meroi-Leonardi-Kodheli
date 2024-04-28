@@ -28,9 +28,14 @@ public class ConnectToServerTest {
 
     @Before
     public void SetUp() {
-        server = new Server(8080);
         cli = new CLI();
-        serverThread = new Thread(() -> {server.start();});
+        serverThread = new Thread(() -> {
+            try {
+                new Server(8080);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Test
