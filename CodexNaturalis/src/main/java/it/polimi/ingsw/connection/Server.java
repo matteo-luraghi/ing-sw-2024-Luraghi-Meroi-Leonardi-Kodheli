@@ -19,6 +19,9 @@ import java.util.concurrent.Executors;
  * @author Matteo Leonardo Luraghi
  */
 public class Server {
+    private final int port;
+    private ServerSocket serverSocket;
+    private final ExecutorService executor;
     private final Map<Controller, Integer> games;
     private final Object gameLock = new Object();
 
@@ -26,12 +29,15 @@ public class Server {
      * Constructor
      * @param port server port
      */
-    public Server(int port) throws IOException {
+    public Server(int port) {
+        this.port = port;
         this.games = new ConcurrentHashMap<>();
-        ExecutorService executor = Executors.newCachedThreadPool();
-        // throws if the socket init fails
-        ServerSocket serverSocket = new ServerSocket(port);
+        this.executor = Executors.newCachedThreadPool();
+    }
 
+    public void start() throws IOException {
+        // throws if the socket init fails
+        this.serverSocket = new ServerSocket(this.port);
         try {
             while (true) {
                 Socket clientSocket = serverSocket.accept();

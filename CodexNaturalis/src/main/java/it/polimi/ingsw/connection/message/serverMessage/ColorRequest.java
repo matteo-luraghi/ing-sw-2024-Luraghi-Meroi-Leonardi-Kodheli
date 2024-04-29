@@ -11,10 +11,9 @@ public class ColorRequest extends ServerMessage {
     private static final long serialVersionUID = 7874353162024038116L;
 
     /**
-     * Constructor, sets the message type as COLOR_REQUEST
+     * Constructor
      */
     public ColorRequest() {
-        super(Message.COLOR_REQUEST);
     }
 
     /**

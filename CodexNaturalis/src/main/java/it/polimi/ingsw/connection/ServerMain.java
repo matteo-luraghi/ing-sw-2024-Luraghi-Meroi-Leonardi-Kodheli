@@ -18,6 +18,7 @@ public class ServerMain {
             try {
                 int port = Integer.parseInt(portStr);
                 Server server = new Server(port);
+                server.start();
                 started = true;
             } catch(NumberFormatException e) {
                 System.out.println("Insert a valid number!");

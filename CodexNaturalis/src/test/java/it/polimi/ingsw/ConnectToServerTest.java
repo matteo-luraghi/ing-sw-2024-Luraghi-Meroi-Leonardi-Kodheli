@@ -31,7 +31,8 @@ public class ConnectToServerTest {
         cli = new CLI();
         serverThread = new Thread(() -> {
             try {
-                new Server(8080);
+                Server server = new Server(8080);
+                server.start();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
