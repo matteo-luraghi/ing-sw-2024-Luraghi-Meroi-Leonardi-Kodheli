@@ -29,6 +29,7 @@ public class YourTurn extends ServerMessage {
      */
     @Override
     public void show(View view) {
+        //Set my turn to true
         view.ShowPlayerField(player, player, game);
     }
 }
