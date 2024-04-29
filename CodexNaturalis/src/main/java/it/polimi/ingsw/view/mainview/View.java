@@ -7,6 +7,8 @@ import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 
+import java.util.ArrayList;
+
 /**
  * Megaview interface, will be implemented for GUI and CLI
  * @author Lorenzo Meroi
@@ -40,7 +42,7 @@ public interface View {
      * method to make the player choose its color
      * @param colors available
      */
-    void insertColor(Color[] colors);
+    void insertColor(ArrayList<Color> colors);
 
     /**
      * asks the client how many players there has to be in the game

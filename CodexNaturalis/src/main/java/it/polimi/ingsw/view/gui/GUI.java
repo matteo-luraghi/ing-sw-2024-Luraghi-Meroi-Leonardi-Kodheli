@@ -8,6 +8,8 @@ import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.view.mainview.*;
 
+import java.util.ArrayList;
+
 /**
  * GUI class to show the game using graphic interface
  */
@@ -50,7 +52,7 @@ public class GUI implements View {
      * @param colors available
      */
     @Override
-    public void insertColor(Color[] colors) {}
+    public void insertColor(ArrayList<Color> colors) {}
 
     /**
      * asks the client how many players there has to be in the game
