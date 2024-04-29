@@ -28,6 +28,7 @@ public class CLI implements View {
     private ViewPlayerFieldFactory playerFieldViewer  = null;
     private ViewDeckFactory deckViewer  = null;
     private ViewGoalCardFactory goalCardViewer = null;
+    private boolean isMyTurn = false;
 
     /**
      * CLI constructor
@@ -227,4 +228,41 @@ public class CLI implements View {
     public void ShowEndOfGame() {
         System.out.println("The game has ended...");
     }
+
+    /**
+     * isMyTurn setter
+     * @param isMyTurn tells whether it's the client's turn or not
+     */
+    public void setMyTurn (boolean isMyTurn) {
+        this.isMyTurn = isMyTurn;
+    }
+
+    /**
+     * isMyTurn getter
+     * @return whether it is my turn or not
+     */
+    public boolean getIsMyTurn() {
+        return isMyTurn;
+    }
+
+    /**
+     * method to parse and get the user's input as commands when it's not the client's turn
+     */
+    public void GetCommandWhileNotYourTurn() {}
+
+    /**
+     * method to parse and get the user's input as commands when it's the playing phase of the client's turn
+     */
+    public void GetCommandInPlayState() {}
+
+    /**
+     * method to parse and get the user's input as commands when it's the drawing phase of the client's turn
+     */
+    public void GetCommandInDrawState() {}
+
+    /**
+     * method to show all the available commands the user can ask for
+     * @param playing is used to distinguish the playing phase of the turn from its drawing phase
+     */
+    private void ShowCommands(boolean playing) {}
 }
