@@ -129,6 +129,16 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
         for (Resource r : this.playerField.getResourceMap().keySet()) {
             System.out.println("- " + r.toString() + ": #" + this.playerField.getResourceFromMap(r));
         }
+
+        System.out.println();
+        System.out.println(this.player.toString()+"'s hand:");
+        int counter = 1;
+        for (ResourceCard card : this.playerField.getHand()) {
+            System.out.println("card N°"+counter);
+            counter++;
+            this.gameCardViewer.SetCard(card);
+            this.gameCardViewer.Show();
+        }
     }
 
     /**

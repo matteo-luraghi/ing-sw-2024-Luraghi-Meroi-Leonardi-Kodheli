@@ -1,9 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.connection.Client;
-import it.polimi.ingsw.connection.message.clientMessage.ColorResponse;
-import it.polimi.ingsw.connection.message.clientMessage.LoginResponse;
-import it.polimi.ingsw.connection.message.clientMessage.PlayersNumberResponse;
+import it.polimi.ingsw.connection.message.clientMessage.*;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
@@ -248,21 +246,152 @@ public class CLI implements View {
     /**
      * method to parse and get the user's input as commands when it's not the client's turn
      */
-    public void GetCommandWhileNotYourTurn(GameState game) {}
+    public void GetCommandWhileNotYourTurn(GameState game, Player asking) {
+        String command = "";
+        while (!this.isMyTurn) {
+            System.out.print("Enter a command: ");
+            command = scanner.nextLine();
+
+            switch (command.toLowerCase()) {
+                case "show my goal card" -> {ShowPrivateGoal(asking, game);}
+                case "show field" -> {
+                    System.out.println("Which player do you want to see the field of?");
+                    for (Player p : game.getPlayers()) {
+                        System.out.print(p.toString()+"| ");
+                    }
+                    System.out.println();
+                    String nickname = scanner.nextLine();
+                    Player player = null;
+                    for (Player p : game.getPlayers()) {
+                        if (p.getNickname().equals(nickname))
+                            player = p;
+                    }
+                    if (player == null)
+                        System.out.println(AnsiColors.ANSI_RED + "Not a valid nickname. Enter a new command." + AnsiColors.ANSI_RESET);
+                    else
+                        ShowPlayerField(player, asking, game);
+                }
+                case "show decks" -> {ShowDecks(game);}
+                case "show scoreboard" -> {ShowScoreBoard();}
+                case "help" -> {ShowCommands(false);}
+                default -> {System.out.println(AnsiColors.ANSI_RED + "Not a valid command, type 'help' to show all the commands available."  + AnsiColors.ANSI_RESET);}
+            }
+        }
+    }
 
     /**
      * method to parse and get the user's input as commands when it's the playing phase of the client's turn
      */
-    public void GetCommandInPlayState(GameState game) {}
+    public void GetCommandInPlayState(GameState game, Player asking) {
+        String command = "";
+        while (!command.equals("play card")) {
+            System.out.print("Enter a command: ");
+            command = scanner.nextLine();
+
+            switch (command.toLowerCase()) {
+                case "show my goal card" -> {ShowPrivateGoal(asking, game);}
+                case "show field" -> {
+                    System.out.println("Which player do you want to see the field of?");
+                    String nickname = scanner.nextLine();
+                    Player player = null;
+                    for (Player p : game.getPlayers()) {
+                        if (p.getNickname().equals(nickname))
+                            player = p;
+                    }
+                    ShowPlayerField(player, asking, game);
+                }
+                case "show decks" -> {ShowDecks(game);}
+                case "show scoreboard" -> {ShowScoreBoard();}
+                case "play card" -> {
+                    ShowPlayerField(asking, asking, game);
+                    System.out.println();
+                    System.out.println("Which of your hand's cards?\n1|2|3");
+                    int card = scanner.nextInt();
+                    if (card < 1 || card > 3)
+                        System.out.println(AnsiColors.ANSI_RED + "Invalid number. Enter a new command." + AnsiColors.ANSI_RESET);
+                    else {
+                        System.out.println("Where do you want to play it?");
+                        System.out.println("Write X coordinate");
+                        int x = scanner.nextInt();
+                        System.out.println("Write Y coordinate");
+                        int y = scanner.nextInt();
+
+                        client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(asking).getHand().get(card-1)));
+                    }
+                }
+                case "help" -> {ShowCommands(true);}
+                default -> {System.out.println(AnsiColors.ANSI_RED + "Not a valid command, type 'help' to show all the commands available."  + AnsiColors.ANSI_RESET);}
+            }
+        }
+    }
 
     /**
      * method to parse and get the user's input as commands when it's the drawing phase of the client's turn
      */
-    public void GetCommandInDrawState(GameState game) {}
+    public void GetCommandInDrawState(GameState game, Player asking) {
+        String command = "";
+        while (!command.equals("draw card")) {
+            System.out.print("Enter a command: ");
+            command = scanner.nextLine();
+
+            switch (command.toLowerCase()) {
+                case "show my goal card" -> {ShowPrivateGoal(asking, game);}
+                case "show field" -> {
+                    System.out.println("Which player do you want to see the field of?");
+                    String nickname = scanner.nextLine();
+                    Player player = null;
+                    for (Player p : game.getPlayers()) {
+                        if (p.getNickname().equals(nickname)) player = p;
+                    }
+                    ShowPlayerField(player, asking, game);
+                }
+                case "show decks" -> {ShowDecks(game);}
+                case "show scoreboard" -> {ShowScoreBoard();}
+                case "draw card" -> {
+                    ShowDecks(game);
+                    System.out.println();
+                    System.out.println("From which deck do you want to draw from?\nResource|Gold");
+                    String deck = scanner.nextLine();
+                    if (deck.equalsIgnoreCase("resource") || deck.equalsIgnoreCase("gold")) {
+                        System.out.println("Where do you want to draw from?\nDeck|U1|U2");
+                        String where = scanner.nextLine();
+                        if (where.equalsIgnoreCase("deck") || where.equalsIgnoreCase("u1") || where.equalsIgnoreCase("u2")) {
+                            int which = 0;
+                            switch (where) {
+                                case "deck" -> {which = 0;}
+                                case "u1" -> {which = 1;}
+                                case "u2" -> {which = 2;}
+                            }
+
+                            client.sendMessageServer(new DrawCardResponse(which));
+                        }
+                    } else {
+                        System.out.println(AnsiColors.ANSI_RED + "Invalid input. Enter a new command." + AnsiColors.ANSI_RESET);
+                    }
+                }
+                case "help" -> {ShowCommands(false);}
+                default -> {System.out.println(AnsiColors.ANSI_RED + "Not a valid command, type 'help' to show all the commands available."  + AnsiColors.ANSI_RESET);}
+            }
+        }
+    }
 
     /**
      * method to show all the available commands the user can ask for
      * @param playing is used to distinguish the playing phase of the turn from its drawing phase
      */
-    private void ShowCommands(boolean playing) {}
+    private void ShowCommands(boolean playing) {
+        System.out.println("The available commands in this phase are:");
+        System.out.println("help -> displays all the available commands");
+        System.out.println("show my goal card -> displays your private goal card");
+        System.out.println("show field -> displays a player's field");
+        System.out.println("show decks -> displays the decks, the uncovered cards you can draw from and the common goals");
+        System.out.println("show scoreboard -> displays the game's scoreboard");
+        if (isMyTurn) {
+            if (playing) {
+                System.out.println("play card -> allows you to play a card from your hand onto your field");
+            } else {
+                System.out.println("draw card -> allows you to draw a card from the uncovered ones or from the decks");
+            }
+        }
+    }
 }
