@@ -12,6 +12,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * ConnectionHandler class
@@ -21,7 +22,7 @@ public class ConnectionHandler implements Runnable{
     private final Server server;
     private final Socket socket;
     private final Thread pingThread;
-    private boolean active;
+    private final AtomicBoolean active = new AtomicBoolean(false);
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private String clientNickname;
@@ -37,7 +38,7 @@ public class ConnectionHandler implements Runnable{
         this.server = server;
         this.socket = socket;
         this.pingThread = new Thread(() -> {
-            while(active) {
+            while(active.get()) {
                 try {
                     Thread.sleep(5000);
                     sendMessageClient(new Ping());
@@ -53,12 +54,12 @@ public class ConnectionHandler implements Runnable{
         try {
             this.outputStream = new ObjectOutputStream(socket.getOutputStream());
             this.inputStream = new ObjectInputStream(socket.getInputStream());
-            this.active = true;
+            this.active.set(true);
 
             this.pingThread.start();
             sendMessageClient(new LoginRequest());
 
-            while(this.active) {
+            while(this.active.get()) {
                 try {
                     Object object = this.inputStream.readObject();
                     if(!(object instanceof Ping)) {
@@ -92,8 +93,8 @@ public class ConnectionHandler implements Runnable{
      * Disconnects the server closing input and output stream and socket
      */
     public void disconnect() {
-        if (this.active){
-            this.active = false;
+        if (this.active.get()){
+            this.active .set(false);
             this.server.removeClient(this);
             try {
                 this.inputStream.close();
