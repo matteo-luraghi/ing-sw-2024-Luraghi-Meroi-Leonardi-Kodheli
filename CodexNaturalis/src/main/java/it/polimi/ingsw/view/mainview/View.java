@@ -37,9 +37,8 @@ public interface View {
 
     /**
      * asks the client how many players there has to be in the game
-     * @return the number of player that will be in the game
      */
-    int askForPlayersNumber();
+    void askForPlayersNumber();
 
     /**
      * method to display the waiting for players page

@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.connection.message.clientMessage.LoginResponse;
+import it.polimi.ingsw.connection.message.clientMessage.PlayersNumberResponse;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.view.mainview.View;
@@ -98,12 +99,12 @@ public class CLI implements View {
 
     /**
      * asks the client how many players there has to be in the game
-     * @return the number of player that will be in the game
      */
     @Override
-    public int askForPlayersNumber() {
+    public void askForPlayersNumber() {
         System.out.println("How many player will play the game?");
-        return scanner.nextInt();
+        int number = scanner.nextInt();
+        client.sendMessageServer(new PlayersNumberResponse(number));
     }
 
     /**

@@ -1,8 +1,8 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.connection.Client;
-import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
+import it.polimi.ingsw.connection.message.clientMessage.LoginResponse;
 import it.polimi.ingsw.view.cli.CLI;
 import org.junit.After;
 import org.junit.Before;
@@ -39,6 +39,9 @@ public class ConnectToServerTest {
     public void CheckConnection () throws IOException {
         serverThread.start();
         client = new Client(InetAddress.getLocalHost().getHostAddress(), 5004, cli); //to get your
+
+        client.sendMessageServer(new LoginResponse("Giovanni"));
+
         try {
             Thread.sleep(2000);
         } catch (InterruptedException ignored) {

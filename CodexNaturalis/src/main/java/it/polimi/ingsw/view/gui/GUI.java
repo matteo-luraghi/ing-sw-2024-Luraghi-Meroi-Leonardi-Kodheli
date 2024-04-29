@@ -46,12 +46,9 @@ public class GUI implements View {
 
     /**
      * asks the client how many players there has to be in the game
-     *
-     * @return the number of player that will be in the game
      */
     @Override
-    public int askForPlayersNumber() {
-        return 0;
+    public void askForPlayersNumber() {
     }
 
     /**
