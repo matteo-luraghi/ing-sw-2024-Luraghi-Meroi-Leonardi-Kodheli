@@ -33,13 +33,12 @@ public class PlayCardResponse extends ClientMessage {
     @Override
     public void execute(Server server, ConnectionHandler connectionHandler) {
         if (connectionHandler.getController().cardPlayed(connectionHandler, card)) {
-            connectionHandler.getController().setTurnState(DRAW);
-            connectionHandler.sendMessageClient(new DrawCardRequest(connectionHandler.getController().getGame()));
+            // set the state of the controller to draw card
+            connectionHandler.getController().drawCardState();
         } else {
             connectionHandler.sendMessageClient(new TextMessage("Impossible to play the card, choose another one to play"));
-            Player player = connectionHandler.getController().getGame()
-                    .getPlayers().stream().filter(p -> p.getNickname().equals(connectionHandler.getClientNickname())).findFirst().get();
-            connectionHandler.sendMessageClient(new PlayCardRequest(player, connectionHandler.getController().getGame()));
+            // set the state of the controller to play a card
+            connectionHandler.getController().playCardState();
         }
     }
 }
