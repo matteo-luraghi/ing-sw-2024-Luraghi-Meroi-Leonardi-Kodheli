@@ -43,8 +43,8 @@ public class Server {
                 Socket clientSocket = serverSocket.accept();
                 clientSocket.setSoTimeout(10000);
                 ConnectionHandler clientConnection = new ConnectionHandler(this, clientSocket);
+                // start the clientConnection thread
                 executor.submit(clientConnection);
-                clientConnection.sendMessageClient(new LoginRequest());
             }
         } catch (IOException e) {
             System.out.println("Error connecting to the client");

@@ -15,10 +15,6 @@ public class ConnectToServerTest {
 
     Client client = null;
     CLI cli = null;
-    Server server = null;
-
-    ConnectionHandler connectionHandler = null;
-
     Thread serverThread = null;
 
     @After
@@ -43,6 +39,10 @@ public class ConnectToServerTest {
     public void CheckConnection () throws IOException {
         serverThread.start();
         client = new Client(InetAddress.getLocalHost().getHostAddress(), 5004, cli); //to get your
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ignored) {
+        }
         // private ip
     }
 }
