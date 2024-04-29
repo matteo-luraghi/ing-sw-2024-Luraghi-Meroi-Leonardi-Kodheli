@@ -11,25 +11,18 @@ import it.polimi.ingsw.view.mainview.View;
  */
 public class YourTurn extends ServerMessage {
     private static final long serialVersionUID = -532540375599572593L;
-    private final Player player;
-    private final GameState game;
-
     /**
      * Constructor
-     * @param player it's this player's turn
      */
-    public YourTurn(Player player, GameState game) {
-        this.player = player;
-        this.game = game;
+    public YourTurn() {
     }
 
     /**
-     * Show the player's hand and zone in the CLI or GUI
+     * Sets the view's private variable yourTurn to true
      * @param view the view interface
      */
     @Override
     public void show(View view) {
-        //Set my turn to true
-        view.ShowPlayerField(player, player, game);
+        view.setYourTurn(true);
     }
 }

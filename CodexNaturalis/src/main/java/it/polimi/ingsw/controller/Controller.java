@@ -263,7 +263,7 @@ public class Controller {
     public void yourTurnState() {
         Player currentPlayer = game.getTurn();
         ConnectionHandler c = getHandlerByNickname(currentPlayer.getNickname());
-        c.sendMessageClient(new YourTurn(currentPlayer, game));
+        c.sendMessageClient(new YourTurn());
     }
 
     /**

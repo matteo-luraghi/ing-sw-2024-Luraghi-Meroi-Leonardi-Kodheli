@@ -35,7 +35,6 @@ public class DrawCardResponse extends ClientMessage {
         if (controller.drawCard(which)) {
             controller.setTurnState(ENDED);
             controller.setState(NEXT_PLAYER);
-            connectionHandler.sendMessageClient(new TurnEnded());
         } else {
             connectionHandler.sendMessageClient(new TextMessage("Unable to draw the card, try again"));
             connectionHandler.sendMessageClient(new DrawCardRequest(controller.getGame()));

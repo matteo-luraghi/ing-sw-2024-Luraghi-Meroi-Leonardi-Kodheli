@@ -25,7 +25,7 @@ public class PlayCardRequest extends ServerMessage {
     }
 
     /**
-     * Show the player's playerfield to make them choose which card to play and where
+     * Show the player's playerfield and starts listening for view commands
      * @param view the view interface
      */
     @Override
