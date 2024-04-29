@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.view.mainview.*;
@@ -38,11 +39,18 @@ public class GUI implements View {
     }
 
     /**
-     * method to login a player into a game
+     * method to make the player insert its nickname
      */
     @Override
-    public void ShowLogin() {
+    public void insertNickname() {
     }
+
+    /**
+     * method to make the player choose its color
+     * @param colors available
+     */
+    @Override
+    public void insertColor(Color[] colors) {}
 
     /**
      * asks the client how many players there has to be in the game

@@ -22,6 +22,6 @@ public class LoginRequest extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.ShowLogin();
+        view.insertNickname();
     }
 }

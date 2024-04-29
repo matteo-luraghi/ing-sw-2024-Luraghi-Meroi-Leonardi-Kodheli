@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.mainview;
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 
@@ -31,9 +32,15 @@ public interface View {
     void showMessage (String s);
 
     /**
-     * method to login a player into a game
+     * method to make the player insert its nickname
      */
-    void ShowLogin();
+    void insertNickname();
+
+    /**
+     * method to make the player choose its color
+     * @param colors available
+     */
+    void insertColor(Color[] colors);
 
     /**
      * asks the client how many players there has to be in the game

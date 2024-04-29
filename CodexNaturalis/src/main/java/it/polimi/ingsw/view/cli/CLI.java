@@ -1,9 +1,11 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.connection.Client;
+import it.polimi.ingsw.connection.message.clientMessage.ColorResponse;
 import it.polimi.ingsw.connection.message.clientMessage.LoginResponse;
 import it.polimi.ingsw.connection.message.clientMessage.PlayersNumberResponse;
 import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.view.mainview.View;
 
@@ -11,6 +13,7 @@ import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.view.mainview.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -88,13 +91,41 @@ public class CLI implements View {
     }
 
     /**
-     * method to login a player into a game
+     * method to make the player insert its nickname
      */
     @Override
-    public void ShowLogin() {
+    public void insertNickname() {
         System.out.println("Choose a nickname");
         String nickname = scanner.nextLine();
         client.sendMessageServer(new LoginResponse(nickname));
+    }
+
+    /**
+     * method to make the player choose its color
+     * @param colors available
+     */
+    public void insertColor(ArrayList<Color> colors) {
+        boolean correct = false;
+        Color color = null;
+
+        while (!correct) {
+            System.out.print("Choose a color from the ones available: ");
+            for (Color c : colors) {
+                System.out.print(c.toString() + "| ");
+            }
+            System.out.println();
+            String choice = scanner.nextLine();
+            
+            switch (choice.toUpperCase()) {
+                case ("RED") -> {if (colors.contains(Color.RED)) {color = Color.RED; correct = true;}}
+                case ("BLUE") -> {if (colors.contains(Color.BLUE)) {color = Color.BLUE; correct = true;}}
+                case ("YELLOW") -> {if (colors.contains(Color.YELLOW)) {color = Color.YELLOW; correct = true;}}
+                case ("GREEN") -> {if (colors.contains(Color.GREEN)) {color = Color.GREEN; correct = true;}}
+                default -> {System.out.println(AnsiColors.ANSI_RED+"Incorrect input."+AnsiColors.ANSI_RESET);}
+            }
+        };
+
+        client.sendMessageServer(new ColorResponse(color));
     }
 
     /**

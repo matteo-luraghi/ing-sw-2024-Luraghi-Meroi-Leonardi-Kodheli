@@ -31,6 +31,7 @@ public class ColorResponse extends ClientMessage{
      */
     @Override
     public void execute(Server server, ConnectionHandler connectionHandler) {
+        //TODO exception handling must be server side
         for(ConnectionHandler c: connectionHandler.getController().getHandlers()) {
             if (c.getClientColor().equals(this.color) && !c.getClientNickname().equals(connectionHandler.getClientNickname())) {
                 connectionHandler.sendMessageClient(new TextMessage("Color unavailable, please choose another color"));
