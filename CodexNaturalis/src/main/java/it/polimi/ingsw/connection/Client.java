@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Client class
@@ -19,7 +20,7 @@ import java.net.Socket;
  */
 public class Client {
     private final View view;
-    private boolean connected;
+    private final AtomicBoolean connected = new AtomicBoolean();
     private final Socket clientSocket;
     private final ObjectInputStream inputStream;
     private final ObjectOutputStream outputStream;
@@ -39,12 +40,12 @@ public class Client {
         this.clientSocket.connect(new InetSocketAddress(ip, port));
         this.outputStream = new ObjectOutputStream(this.clientSocket.getOutputStream());
         this.inputStream = new ObjectInputStream(this.clientSocket.getInputStream());
-        this.connected = true;
+        this.connected.set(true);
         messageReceiver.start();
 
         // if the server is not online, disconnect the client
         Thread pingThread = new Thread(() -> {
-            while (this.connected) {
+            while (this.connected.get()) {
                 try {
                     Thread.sleep(5000);
                     sendMessageServer(new Ping());
@@ -61,7 +62,7 @@ public class Client {
      * @param message the message to be sent
      */
     public void sendMessageServer(Serializable message) {
-        if(this.connected) {
+        if(this.connected.get()) {
             try {
                 outputStream.writeObject(message);
                 outputStream.flush();
@@ -77,7 +78,7 @@ public class Client {
      */
     public void readMessages() {
         try {
-            while(this.connected) {
+            while(this.connected.get()) {
                 Object msg = this.inputStream.readObject();
                 if(msg instanceof ServerMessage) {
                     // view the message via the CLI or GUI
@@ -97,8 +98,8 @@ public class Client {
      * Disconnect the client
      */
     public void disconnect() {
-        if(this.connected) {
-            this.connected = false;
+        if(this.connected.get()) {
+            this.connected.set(false);
             if(this.messageReceiver.isAlive()) this.messageReceiver.interrupt();
 
             try {
