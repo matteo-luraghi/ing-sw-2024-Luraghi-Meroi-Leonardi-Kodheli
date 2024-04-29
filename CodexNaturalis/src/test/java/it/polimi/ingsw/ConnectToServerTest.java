@@ -42,16 +42,11 @@ public class ConnectToServerTest {
     public void CheckConnection () throws IOException {
         serverThread.start();
         client = new Client(InetAddress.getLocalHost().getHostAddress(), 5004, cli); //to get your
-
-        client.sendMessageServer(new LoginResponse("Giovanni"));
-
-        for(Controller c : server.getGames()) {
-            System.out.println(c.isGameStarted());
-            for (ConnectionHandler ch : c.getHandlers()) {
-                System.out.println(ch.getClientNickname());
-            }
-        }
-
         // private ip
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
