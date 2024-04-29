@@ -31,5 +31,6 @@ public class PlayCardRequest extends ServerMessage {
     @Override
     public void show(View view) {
         view.ShowPlayerField(player, player, game);
+        view.waitCommandsPlayState(player, game);
     }
 }
