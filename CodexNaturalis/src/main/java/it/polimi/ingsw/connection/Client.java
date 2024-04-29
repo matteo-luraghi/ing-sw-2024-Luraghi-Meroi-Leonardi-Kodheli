@@ -55,6 +55,7 @@ public class Client {
                 }
             }
         });
+        pingThread.start();
     }
 
     /**
