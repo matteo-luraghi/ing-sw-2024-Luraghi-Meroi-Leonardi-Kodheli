@@ -37,8 +37,8 @@ public class Client {
         this.messageReceiver = new Thread(this::readMessages);
         this.clientSocket = new Socket();
         this.clientSocket.connect(new InetSocketAddress(ip, port));
-        this.inputStream = new ObjectInputStream(this.clientSocket.getInputStream());
         this.outputStream = new ObjectOutputStream(this.clientSocket.getOutputStream());
+        this.inputStream = new ObjectInputStream(this.clientSocket.getInputStream());
         this.connected = true;
         messageReceiver.start();
 

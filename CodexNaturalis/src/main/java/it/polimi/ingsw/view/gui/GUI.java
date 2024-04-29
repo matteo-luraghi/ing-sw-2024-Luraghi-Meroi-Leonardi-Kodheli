@@ -28,16 +28,6 @@ public class GUI implements View {
     }
 
     /**
-     * method to connect a client to the server
-     *
-     * @return the client connected
-     */
-    @Override
-    public Client connectToServer() {
-        return null;
-    }
-
-    /**
      * method to show any type of String
      *
      * @param s is the string you want to be displayed
@@ -49,12 +39,9 @@ public class GUI implements View {
 
     /**
      * method to login a player into a game
-     *
-     * @return the new player to insert into the game
      */
     @Override
-    public Player ShowLogin() {
-        return null;
+    public void ShowLogin() {
     }
 
     /**

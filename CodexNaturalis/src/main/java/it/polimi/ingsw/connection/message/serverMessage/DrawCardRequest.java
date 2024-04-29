@@ -16,7 +16,6 @@ public class DrawCardRequest extends ServerMessage {
      * Constructor, sets the message type as PICK_A_CARD
      */
     public DrawCardRequest(GameState game) {
-        super(Message.DRAW_CARD_REQUEST);
         this.game = game;
     }
 

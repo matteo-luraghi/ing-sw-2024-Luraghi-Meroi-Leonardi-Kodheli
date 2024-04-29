@@ -1,8 +1,8 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.connection.Client;
+import it.polimi.ingsw.connection.message.clientMessage.LoginResponse;
 import it.polimi.ingsw.model.card.GoalCard;
-import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.view.mainview.View;
 
@@ -88,11 +88,12 @@ public class CLI implements View {
 
     /**
      * method to login a player into a game
-     * @return the new player to insert into the game
      */
     @Override
-    public Player ShowLogin() {
-        return new Player("default", Color.RED);
+    public void ShowLogin() {
+        System.out.println("Choose a nickname");
+        String nickname = scanner.nextLine();
+        client.sendMessageServer(new LoginResponse(nickname));
     }
 
     /**

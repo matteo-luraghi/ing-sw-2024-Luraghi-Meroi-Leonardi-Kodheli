@@ -31,7 +31,7 @@ public class ConnectToServerTest {
         cli = new CLI();
         serverThread = new Thread(() -> {
             try {
-                Server server = new Server(8080);
+                Server server = new Server(5004);
                 server.start();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -42,7 +42,7 @@ public class ConnectToServerTest {
     @Test
     public void CheckConnection () throws IOException {
         serverThread.start();
-        client = new Client(InetAddress.getLocalHost().getHostAddress(), 8080, cli); //to get your
+        client = new Client(InetAddress.getLocalHost().getHostAddress(), 5004, cli); //to get your
         // private ip
     }
 }

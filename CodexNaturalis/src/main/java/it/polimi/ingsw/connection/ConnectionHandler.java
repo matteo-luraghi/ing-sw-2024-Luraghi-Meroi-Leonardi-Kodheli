@@ -51,8 +51,8 @@ public class ConnectionHandler implements Runnable{
     @Override
     public void run() {
         try {
-            this.inputStream = new ObjectInputStream(socket.getInputStream());
             this.outputStream = new ObjectOutputStream(socket.getOutputStream());
+            this.inputStream = new ObjectInputStream(socket.getInputStream());
             this.active = true;
 
             this.pingThread.start();

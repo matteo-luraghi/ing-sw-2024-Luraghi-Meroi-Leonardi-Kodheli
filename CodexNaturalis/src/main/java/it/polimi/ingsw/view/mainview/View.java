@@ -32,9 +32,8 @@ public interface View {
 
     /**
      * method to login a player into a game
-     * @return the new player to insert into the game
      */
-    Player ShowLogin();
+    void ShowLogin();
 
     /**
      * asks the client how many players there has to be in the game
