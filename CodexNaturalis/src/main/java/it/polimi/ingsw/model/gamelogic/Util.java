@@ -1,5 +1,14 @@
 package it.polimi.ingsw.model.gamelogic;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import it.polimi.ingsw.model.card.*;
+import it.polimi.ingsw.view.mainview.AnsiColors;
+
+import javax.swing.text.Position;
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -39,5 +48,233 @@ public class Util {
         if(s.equals("GREEN")) return Color.GREEN;
 
         throw new NullPointerException();
+    }
+
+    /**
+     * from string to Kingdom enum
+     * @param string input string
+     * @return Kingdom enum
+     */
+    public static Kingdom fromStringToKingdom(String string)
+    {
+        switch(string)
+        {
+            case "INSECT" -> {return Kingdom.INSECT;}
+            case "PLANT" -> {return Kingdom.PLANT;}
+            case "FUNGI" -> {return Kingdom.FUNGI;}
+            case "ANIMAL" -> {return Kingdom.ANIMAL;}
+            case "STARTING" -> {return Kingdom.STARTING;}
+            default -> {return Kingdom.UNKNOWN;}
+        }
+    }
+
+    /**
+     * from string to Resource enum
+     * @param string input string
+     * @return Resource enum
+     */
+    public static Resource fromStringToResource(String string)
+    {
+        switch(string)
+        {
+            case "ANIMAL" -> {return Resource.ANIMAL;}
+            case "BLANK" -> {return Resource.BLANK;}
+            case "FUNGI" -> {return Resource.FUNGI;}
+            case "PLANT" -> {return Resource.PLANT;}
+            case "HIDDEN" -> {return Resource.HIDDEN;}
+            case "INSECT" -> {return Resource.INSECT;}
+            case "POTION" -> {return Resource.POTION;}
+            case "SCROLL" -> {return Resource.SCROLL;}
+            case "COVERED" -> {return Resource.COVERED;}
+            case "FEATHER" -> {return Resource.FEATHER;}
+
+            default -> {return Resource.UNKNOWN;}
+        }
+    }
+
+    /**
+     * from string to PointCondition enum
+     * @param string input string
+     * @return PointCondition enum
+     */
+    public static PointCondition fromStringToPointCondition(String string)
+    {
+        switch(string)
+        {
+            case "NORMAL" -> {return PointCondition.NORMAL;}
+            case "CORNER" -> {return PointCondition.CORNER;}
+            case "FEATHER" -> {return PointCondition.FEATHER;}
+            case "POTION" -> {return PointCondition.POTION;}
+            case "SCROLL" -> {return PointCondition.SCROLL;}
+
+
+            default -> {return PointCondition.UNKNOWN;}
+        }
+    }
+
+    /**
+     * from string to direction enum
+     * @param string input string
+     * @return direction enum
+     */
+    public static Direction fromStringToDirection(String string)
+    {
+        switch(string)
+        {
+            case "TOP_RIGHT" -> {return Direction.TOP_RIGHT;}
+            case "TOP_LEFT" -> {return Direction.TOP_LEFT;}
+            case "TOP" -> {return Direction.TOP;}
+
+
+            default -> {return Direction.UNKNOWN;}
+        }
+    }
+    /**
+     * JSON parser for Resource Cards
+     * @param Json Json object
+     * @return ResourceCard
+     */
+    public static ResourceCard fromJSONtoResourceCard(JsonObject Json)
+    {
+        Kingdom kingdom=Util.fromStringToKingdom(Json.get("kingdom").getAsString());
+        boolean isFront=Json.get("isFront").getAsBoolean();
+        JsonArray cornersArray =Json.getAsJsonArray("corners");
+        Resource[] corners=new Resource[4];
+        int n=0;
+        for(JsonElement o: cornersArray)
+        {
+            corners[n]=Util.fromStringToResource(o.getAsString()); //to check
+        }
+        int points=Json.get("points").getAsInt();
+        boolean isGoldJ=Json.get("isGold").getAsBoolean();
+        return new ResourceCard(kingdom,isFront,corners, points,isGoldJ);
+
+    }
+    /**
+     * JSON parser for Gold Cards
+     * @param Json Json object
+     * @return GoldCard
+     */
+    public static GoldCard fromJSONtoGoldCard(JsonObject Json)
+    {
+        Kingdom kingdom=Util.fromStringToKingdom(Json.get("kingdom").getAsString());
+        boolean isFront=Json.get("isFront").getAsBoolean();
+        JsonArray cornersArray =Json.getAsJsonArray("corners");
+        Resource[] corners=new Resource[4];
+        int n=0;
+        for(JsonElement o: cornersArray)
+        {
+            corners[n]=Util.fromStringToResource(o.getAsString()); //to check
+        }
+        int points=Json.get("points").getAsInt();
+
+
+
+        PointCondition pointCondition=fromStringToPointCondition(Json.get("pointCondition").getAsString());
+        ArrayList<Resource> playableCondition= new ArrayList<Resource>();
+
+        JsonArray playableConditionArray=Json.getAsJsonArray("playableCondition");
+
+        for(JsonElement o: playableConditionArray)
+        {
+            playableCondition.add(fromStringToResource(o.getAsString()));
+        }
+
+        return new GoldCard(kingdom,isFront,corners, points,pointCondition,playableCondition);
+
+    }
+
+    /**
+     * JSON parser for Starting Cards
+     * @param Json Json object
+     * @return StartingCard
+     */
+    public static StartingCard fromJSONtoStartingCard(JsonObject Json)
+    {
+        Kingdom kingdom=Util.fromStringToKingdom(Json.get("kingdom").getAsString());
+        boolean isFront=Json.get("isFront").getAsBoolean();
+        JsonArray cornersArray =Json.getAsJsonArray("corners");
+        Resource[] corners=new Resource[4];
+        int n=0;
+        for(JsonElement o: cornersArray)
+        {
+            corners[n]=Util.fromStringToResource(o.getAsString()); //to check
+        }
+
+        JsonArray backCornersArray =Json.getAsJsonArray("backCorners");
+        Resource[] backCorners=new Resource[4];
+        n=0;
+        for(JsonElement o: backCornersArray)
+        {
+            backCorners[n]=Util.fromStringToResource(o.getAsString()); //to check
+        }
+        JsonArray permanentResourcesArray =Json.getAsJsonArray("permanentResources");
+        Resource[] permanentResources=new Resource[permanentResourcesArray.size()];
+
+        n=0;
+        for(JsonElement o: permanentResourcesArray)
+        {
+            permanentResources[n]=Util.fromStringToResource(o.getAsString()); //to check
+        }
+
+
+
+
+
+
+
+
+        return new StartingCard(kingdom,isFront,corners,backCorners,permanentResources);
+
+    }
+
+    /**
+     * JSON parser for Resource Goal Cards
+     * @param Json Json object
+     * @return ResourceGoalCard
+     */
+    public static ResourceGoalCard fromJSONtoResourceGoalCard(JsonObject Json)
+    {
+
+        int points=Json.get("points").getAsInt();
+
+        JsonArray requirementsArray =Json.getAsJsonArray("requirements");
+        ArrayList<Resource> requirements=new  ArrayList<Resource>();
+        int n=0;
+        for(JsonElement o: requirementsArray)
+        {
+            requirements.add(Util.fromStringToResource(o.getAsString()));
+        }
+
+        return new ResourceGoalCard(points,requirements);
+
+    }
+
+    /**
+     * JSON parser for Positional Goal Cards
+     * @param Json Json object
+     * @return PositionGoalCard
+     */
+    public static PositionGoalCard fromJSONtoPositionGoalCard(JsonObject Json)
+    {
+
+        int points=Json.get("points").getAsInt();
+
+        JsonArray resourceFromBase =Json.getAsJsonArray("resourceFromBase");
+        ArrayList<Kingdom> requirements=new  ArrayList<Kingdom>();
+        int n=0;
+        for(JsonElement o: resourceFromBase)
+        {
+            requirements.add(Util.fromStringToKingdom(o.getAsString()));
+        }
+        JsonArray directionArray =Json.getAsJsonArray("positionsFromBase");
+        ArrayList<Direction> direction=new  ArrayList<Direction>();
+        n=0;
+        for(JsonElement o: directionArray)
+        {
+            direction.add(Util.fromStringToDirection(o.getAsString()));
+        }
+        return new PositionGoalCard(points,direction,requirements);
+
     }
 }

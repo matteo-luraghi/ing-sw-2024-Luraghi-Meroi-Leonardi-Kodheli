@@ -1,7 +1,9 @@
 package it.polimi.ingsw.model.gamelogic;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import it.polimi.ingsw.model.card.GoldCard;
+import it.polimi.ingsw.model.card.Kingdom;
+import it.polimi.ingsw.model.card.Resource;
 import it.polimi.ingsw.model.card.ResourceCard;
 
 import java.io.FileReader;
@@ -29,26 +31,25 @@ public class Deck {
         List<ResourceCard> cardsList = new ArrayList<>();
 
         // initialize the json parser
-        Gson gson = new Gson();
-
+        JsonParser parser = new JsonParser();
         if(!isGold){
             for(int i=1; i<=40; i++) {
-                String cardPath = "./src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
+                String cardPath = "./CodexNaturalis/src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
                 // initialize the json file reader and save the card
                 try(Reader reader = new FileReader(cardPath)) {
-                    ResourceCard card = gson.fromJson(reader, ResourceCard.class);
-                    cardsList.add(card);
+                    JsonObject parsedResourceCard = parser.parse(reader).getAsJsonObject();
+                    cardsList.add(Util.fromJSONtoResourceCard(parsedResourceCard));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         } else {
             for(int i=1; i<=40; i++) {
-                String cardPath = "./src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
+                String cardPath = "./CodexNaturalis/src/main/resources/CardsJSON/goldCards/goldCard" + i + ".json";
                 // initialize the json file reader and save the card
                 try(Reader reader = new FileReader(cardPath)) {
-                    GoldCard card = gson.fromJson(reader, GoldCard.class);
-                    cardsList.add(card);
+                    JsonObject parsedGoldCard = parser.parse(reader).getAsJsonObject();
+                    cardsList.add(Util.fromJSONtoGoldCard(parsedGoldCard));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

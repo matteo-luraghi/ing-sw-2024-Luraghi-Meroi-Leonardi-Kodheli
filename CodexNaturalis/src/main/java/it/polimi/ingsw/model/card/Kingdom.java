@@ -5,6 +5,7 @@ package it.polimi.ingsw.model.card;
  * @author Gabriel Leonardi
  */
 public enum Kingdom {
+    UNKNOWN,
     PLANT,
     ANIMAL,
     INSECT,
@@ -18,7 +19,8 @@ public enum Kingdom {
             case FUNGI -> {return "F";}
             case ANIMAL -> {return "A";}
             case STARTING -> {return "S";}
-            default -> {return "";}
+            default -> {return "UNKNOWN";}
         }
     }
+
 }

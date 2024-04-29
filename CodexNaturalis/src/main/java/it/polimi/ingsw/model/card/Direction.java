@@ -7,5 +7,6 @@ package it.polimi.ingsw.model.card;
 public enum Direction {
     TOP_RIGHT,
     TOP_LEFT,
-    TOP
+    TOP,
+    UNKNOWN;
 }

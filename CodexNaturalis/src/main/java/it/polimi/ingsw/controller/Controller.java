@@ -1,6 +1,8 @@
 package it.polimi.ingsw.controller;
 
-import com.google.gson.Gson;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.message.serverMessage.GoalCardRequest;
 import it.polimi.ingsw.model.card.GoalCard;
@@ -154,12 +156,12 @@ public class Controller {
      */
     private Queue<StartingCard> getStartingCards() {
         List<StartingCard> cardsList = new ArrayList<>();
-        Gson gson = new Gson();
+        JsonParser parser = new JsonParser();;
         for(int i=1; i<=6; i++) {
             String cardPath = "./src/main/resources/CardsJSON/startingCards/startingCard" + i + ".json";
             try(Reader reader = new FileReader(cardPath)) {
-                StartingCard card = gson.fromJson(reader, StartingCard.class);
-                cardsList.add(card);
+                JsonObject parsedStartingCard = parser.parse(reader).getAsJsonObject();
+                cardsList.add(Util.fromJSONtoStartingCard(parsedStartingCard));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -174,12 +176,21 @@ public class Controller {
      */
     private Queue<GoalCard> getGoalCards() {
         List<GoalCard> cardsList = new ArrayList<>();
-        Gson gson = new Gson();
+        JsonParser parser = new JsonParser();;
         for(int i=1; i<=8; i++) {
             String cardPath = "./src/main/resources/CardsJSON/goalCards/goalCard" + i + ".json";
             try(Reader reader = new FileReader(cardPath)) {
-                GoalCard card = gson.fromJson(reader, GoalCard.class);
-                cardsList.add(card);
+                JsonObject parsedGoalCard = parser.parse(reader).getAsJsonObject();
+                boolean isResourceGoal=parsedGoalCard.get("isResourceGoal").getAsBoolean();
+                if(isResourceGoal)
+                {
+                    cardsList.add(Util.fromJSONtoResourceGoalCard(parsedGoalCard));
+                }
+                else
+                {
+                    cardsList.add(Util.fromJSONtoPositionGoalCard(parsedGoalCard));
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

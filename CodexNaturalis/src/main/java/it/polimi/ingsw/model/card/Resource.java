@@ -16,7 +16,8 @@ public enum Resource {
     SCROLL,
     BLANK,
     HIDDEN,
-    COVERED;
+    COVERED,
+    UNKNOWN;
 
     public String toString() {
         switch (this) {
@@ -30,7 +31,7 @@ public enum Resource {
             case SCROLL -> {return AnsiColors.ANSI_YELLOW+"S";}
             case COVERED -> {return AnsiColors.ANSI_WHITE+"C";}
             case FEATHER -> {return AnsiColors.ANSI_YELLOW+"R";}
-            default -> {return "";}
+            default -> {return "UNKNOWN";}
         }
     }
 }
