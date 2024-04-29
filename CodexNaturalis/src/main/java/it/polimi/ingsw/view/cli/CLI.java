@@ -248,17 +248,17 @@ public class CLI implements View {
     /**
      * method to parse and get the user's input as commands when it's not the client's turn
      */
-    public void GetCommandWhileNotYourTurn() {}
+    public void GetCommandWhileNotYourTurn(GameState game) {}
 
     /**
      * method to parse and get the user's input as commands when it's the playing phase of the client's turn
      */
-    public void GetCommandInPlayState() {}
+    public void GetCommandInPlayState(GameState game) {}
 
     /**
      * method to parse and get the user's input as commands when it's the drawing phase of the client's turn
      */
-    public void GetCommandInDrawState() {}
+    public void GetCommandInDrawState(GameState game) {}
 
     /**
      * method to show all the available commands the user can ask for
