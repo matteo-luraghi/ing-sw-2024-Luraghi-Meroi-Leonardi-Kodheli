@@ -336,6 +336,7 @@ public class Controller {
         //Do i have to do something for when the game ends?
     }
 
+    // TODO: implement these mock methods
     public void chooseColorState() {
     }
 
