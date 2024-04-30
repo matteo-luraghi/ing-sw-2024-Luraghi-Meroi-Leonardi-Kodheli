@@ -340,7 +340,8 @@ public class Controller {
     public void chooseColorState() {
     }
 
-    public boolean drawCard(int which) {
+    //boolean isGold used to check which deck the player is drawing from
+    public boolean drawCard(int which, boolean isGold) {
         return true;
     }
 

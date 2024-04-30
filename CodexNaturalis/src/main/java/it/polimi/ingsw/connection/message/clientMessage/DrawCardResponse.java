@@ -13,13 +13,15 @@ import it.polimi.ingsw.controller.Controller;
 public class DrawCardResponse extends ClientMessage {
     private static final long serialVersionUID = 408226450774679976L;
     private final int which;
+    private final boolean isGold;
 
     /**
      * Constructor
      * @param which card to be drawn
      */
-    public DrawCardResponse(int which) {
+    public DrawCardResponse(int which, boolean isGold) {
         this.which = which;
+        this.isGold = isGold;
     }
 
     /**
@@ -30,7 +32,7 @@ public class DrawCardResponse extends ClientMessage {
     @Override
     public void execute(Server server, ConnectionHandler connectionHandler) {
         Controller controller = connectionHandler.getController();
-        if (controller.drawCard(which)) {
+        if (controller.drawCard(which, isGold)) {
             // set the controller state to next player's turn
             controller.changeTurnState();
         } else {
