@@ -65,7 +65,7 @@ public class Server {
                 gameController.addHandler(connectionHandler);
                 connectionHandler.setController(gameController);
                 checkGame(gameController);
-                connectionHandler.sendMessageClient(new ColorRequest());
+                connectionHandler.chooseColorState();
             } else { // no free games available -> wait for user input of number of players
                 connectionHandler.sendMessageClient(new PlayersNumberRequest());
             }
@@ -83,7 +83,7 @@ public class Server {
             this.games.put(controller, numberOfPlayers);
             controller.addHandler(connectionHandler);
             connectionHandler.setController(controller);
-            connectionHandler.sendMessageClient(new ColorRequest());
+            connectionHandler.getController().chooseColorState();
             checkGame(controller);
         }
     }

@@ -35,7 +35,7 @@ public class ColorResponse extends ClientMessage{
         for(ConnectionHandler c: connectionHandler.getController().getHandlers()) {
             if (c.getClientColor().equals(this.color) && !c.getClientNickname().equals(connectionHandler.getClientNickname())) {
                 connectionHandler.sendMessageClient(new TextMessage("Color unavailable, please choose another color"));
-                connectionHandler.sendMessageClient(new ColorRequest());
+                connectionHandler.getController().chooseColorState();
                 return;
             }
         }

@@ -6,6 +6,7 @@ import it.polimi.ingsw.connection.message.serverMessage.DrawCardRequest;
 import it.polimi.ingsw.connection.message.serverMessage.PlayCardRequest;
 import it.polimi.ingsw.connection.message.serverMessage.TextMessage;
 import it.polimi.ingsw.model.card.ResourceCard;
+import it.polimi.ingsw.model.gamelogic.Coordinates;
 import it.polimi.ingsw.model.gamelogic.Player;
 
 /**
@@ -16,13 +17,15 @@ import it.polimi.ingsw.model.gamelogic.Player;
 public class PlayCardResponse extends ClientMessage {
     private static final long serialVersionUID = -7671795239367074793L;
     private final ResourceCard card;
+    private final Coordinates where;
 
     /**
      * Constructor
      * @param card the card to play
      */
-    public PlayCardResponse(ResourceCard card) {
+    public PlayCardResponse(ResourceCard card, Coordinates where) {
         this.card = card;
+        this.where = where;
     }
 
     /**
@@ -32,7 +35,7 @@ public class PlayCardResponse extends ClientMessage {
      */
     @Override
     public void execute(Server server, ConnectionHandler connectionHandler) {
-        if (connectionHandler.getController().cardPlayed(connectionHandler, card)) {
+        if (connectionHandler.getController().cardPlayed(connectionHandler, card, where)) {
             // set the state of the controller to draw card
             connectionHandler.getController().drawCardState();
         } else {

@@ -4,6 +4,7 @@ import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.connection.message.clientMessage.*;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.gamelogic.Color;
+import it.polimi.ingsw.model.gamelogic.Coordinates;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.view.mainview.View;
 
@@ -315,8 +316,8 @@ public class CLI implements View {
                         int x = scanner.nextInt();
                         System.out.println("Write Y coordinate");
                         int y = scanner.nextInt();
-
-                        client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(asking).getHand().get(card-1)));
+                        Coordinates where = new Coordinates(x, y);
+                        client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(asking).getHand().get(card-1), where));
                     }
                 }
                 case "help" -> {ShowCommands(true);}
