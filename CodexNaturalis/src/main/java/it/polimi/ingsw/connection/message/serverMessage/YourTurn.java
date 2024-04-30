@@ -1,7 +1,6 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
-import it.polimi.ingsw.model.gamelogic.GameState;
-import it.polimi.ingsw.model.gamelogic.Player;
+import it.polimi.ingsw.view.cli.CLI;
 import it.polimi.ingsw.view.mainview.View;
 
 /**
@@ -23,6 +22,8 @@ public class YourTurn extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.setYourTurn(true);
+        if(view.getClass() == CLI.class) {
+            ((CLI) view).setMyTurn(true);
+        }
     }
 }

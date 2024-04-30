@@ -282,7 +282,7 @@ public class Controller {
         Player currentPlayer = game.getTurn();
         ConnectionHandler c = getHandlerByNickname(currentPlayer.getNickname());
         game.setTurnState(TurnState.DRAW);
-        c.sendMessageClient(new DrawCardRequest(game));
+        c.sendMessageClient(new DrawCardRequest(game, currentPlayer));
     }
     /**
      * Passes the turn to the next player, while checking if it's the penultimate or the last turn

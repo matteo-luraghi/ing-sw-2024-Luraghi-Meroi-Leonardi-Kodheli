@@ -1,6 +1,8 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
 import it.polimi.ingsw.model.gamelogic.GameState;
+import it.polimi.ingsw.model.gamelogic.Player;
+import it.polimi.ingsw.view.cli.CLI;
 import it.polimi.ingsw.view.mainview.View;
 
 /**
@@ -11,12 +13,14 @@ import it.polimi.ingsw.view.mainview.View;
 public class DrawCardRequest extends ServerMessage {
     private static final long serialVersionUID = 4055891453804268070L;
     private final GameState game;
+    private final Player player;
 
     /**
      * Constructor, sets the message type as PICK_A_CARD
      */
-    public DrawCardRequest(GameState game) {
+    public DrawCardRequest(GameState game, Player player) {
         this.game = game;
+        this.player = player;
     }
 
     /**
@@ -26,5 +30,8 @@ public class DrawCardRequest extends ServerMessage {
     @Override
     public void show(View view) {
         view.ShowDecks(this.game);
+        if (view.getClass() == CLI.class) {
+            ((CLI) view).GetCommandInDrawState(game, player);
+        }
     }
 }
