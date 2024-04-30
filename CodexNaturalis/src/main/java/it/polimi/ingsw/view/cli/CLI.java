@@ -2,7 +2,10 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.connection.message.clientMessage.*;
+import it.polimi.ingsw.model.card.GameCard;
 import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.card.GoldCard;
+import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.Coordinates;
 import it.polimi.ingsw.model.gamelogic.GameState;
@@ -249,6 +252,7 @@ public class CLI implements View {
      */
     public void GetCommandWhileNotYourTurn(GameState game, Player asking) {
         String command = "";
+        Player lastPlayerField = null;
         while (!this.isMyTurn) {
             System.out.print("Enter a command: ");
             command = scanner.nextLine();
@@ -269,11 +273,65 @@ public class CLI implements View {
                     }
                     if (player == null)
                         System.out.println(AnsiColors.ANSI_RED + "Not a valid nickname. Enter a new command." + AnsiColors.ANSI_RESET);
-                    else
+                    else {
                         ShowPlayerField(player, asking, game);
+                        lastPlayerField = player;
+                    }
                 }
                 case "show decks" -> {ShowDecks(game);}
                 case "show scoreboard" -> {ShowScoreBoard();}
+                case "show card" -> {
+                    if (lastPlayerField == null) {
+                        System.out.println("Enter the player you want to see the card of:");
+                        for (Player p : game.getPlayers()) {
+                            System.out.print(p.toString()+"| ");
+                        }
+                        System.out.println();
+                        String nickname = scanner.nextLine();
+                        Player player = null;
+                        for (Player p : game.getPlayers()) {
+                            if (p.getNickname().equals(nickname))
+                                player = p;
+                        }
+                        if (player == null)
+                            System.out.println(AnsiColors.ANSI_RED + "Not a valid nickname. Enter a new command." + AnsiColors.ANSI_RESET);
+                        else {
+                            lastPlayerField = player;
+                        }
+                    }
+                    ShowPlayerField(lastPlayerField, asking, game);
+                    System.out.println();
+                    System.out.println("Which card do you want to see?");
+                    System.out.println("Insert x coordinate:");
+                    int x = scanner.nextInt();
+                    System.out.println("Insert y coordinate:");
+                    int y = scanner.nextInt();
+                    Coordinates where = new Coordinates(x,y);
+
+                    GameCard card;
+                    if (x==0 && y == 0) {
+                        card = game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(where);
+                        if (card == null) {
+                            System.out.println(AnsiColors.ANSI_RED + "Invalid coordinate. Enter a new command." + AnsiColors.ANSI_RESET);
+                        } else {
+                            gameCardViewer.SetCard(card);
+                            gameCardViewer.Show();
+                        }
+                    } else {
+                        card = (ResourceCard) game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(where);
+                        if (card == null) {
+                            System.out.println(AnsiColors.ANSI_RED + "Invalid coordinate. Enter a new command." + AnsiColors.ANSI_RESET);
+                        } else {
+                            if (((ResourceCard) card).getIsGold()) {
+                                gameCardViewer.SetCard((GoldCard) card);
+                                gameCardViewer.Show();
+                            } else {
+                                gameCardViewer.SetCard((ResourceCard) card);
+                                gameCardViewer.Show();
+                            }
+                        }
+                    }
+                }
                 case "help" -> {ShowCommands(false);}
                 default -> {System.out.println(AnsiColors.ANSI_RED + "Not a valid command, type 'help' to show all the commands available."  + AnsiColors.ANSI_RESET);}
             }
@@ -285,6 +343,7 @@ public class CLI implements View {
      */
     public void GetCommandInPlayState(GameState game, Player asking) {
         String command = "";
+        Player lastPlayerField = null;
         while (!command.equals("play card")) {
             System.out.print("Enter a command: ");
             command = scanner.nextLine();
@@ -300,9 +359,62 @@ public class CLI implements View {
                             player = p;
                     }
                     ShowPlayerField(player, asking, game);
+                    lastPlayerField = player;
                 }
                 case "show decks" -> {ShowDecks(game);}
                 case "show scoreboard" -> {ShowScoreBoard();}
+                case "show card" -> {
+                    if (lastPlayerField == null) {
+                        System.out.println("Enter the player you want to see the card of:");
+                        for (Player p : game.getPlayers()) {
+                            System.out.print(p.toString()+"| ");
+                        }
+                        System.out.println();
+                        String nickname = scanner.nextLine();
+                        Player player = null;
+                        for (Player p : game.getPlayers()) {
+                            if (p.getNickname().equals(nickname))
+                                player = p;
+                        }
+                        if (player == null)
+                            System.out.println(AnsiColors.ANSI_RED + "Not a valid nickname. Enter a new command." + AnsiColors.ANSI_RESET);
+                        else {
+                            lastPlayerField = player;
+                        }
+                    }
+                    ShowPlayerField(lastPlayerField, asking, game);
+                    System.out.println();
+                    System.out.println("Which card do you want to see?");
+                    System.out.println("Insert x coordinate:");
+                    int x = scanner.nextInt();
+                    System.out.println("Insert y coordinate:");
+                    int y = scanner.nextInt();
+                    Coordinates where = new Coordinates(x,y);
+
+                    GameCard card;
+                    if (x==0 && y == 0) {
+                        card = game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(where);
+                        if (card == null) {
+                            System.out.println(AnsiColors.ANSI_RED + "Invalid coordinate. Enter a new command." + AnsiColors.ANSI_RESET);
+                        } else {
+                            gameCardViewer.SetCard(card);
+                            gameCardViewer.Show();
+                        }
+                    } else {
+                        card = (ResourceCard) game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(where);
+                        if (card == null) {
+                            System.out.println(AnsiColors.ANSI_RED + "Invalid coordinate. Enter a new command." + AnsiColors.ANSI_RESET);
+                        } else {
+                            if (((ResourceCard) card).getIsGold()) {
+                                gameCardViewer.SetCard((GoldCard) card);
+                                gameCardViewer.Show();
+                            } else {
+                                gameCardViewer.SetCard((ResourceCard) card);
+                                gameCardViewer.Show();
+                            }
+                        }
+                    }
+                }
                 case "play card" -> {
                     ShowPlayerField(asking, asking, game);
                     System.out.println();
@@ -331,6 +443,7 @@ public class CLI implements View {
      */
     public void GetCommandInDrawState(GameState game, Player asking) {
         String command = "";
+        Player lastPlayerField = null;
         while (!command.equals("draw card")) {
             System.out.print("Enter a command: ");
             command = scanner.nextLine();
@@ -345,9 +458,62 @@ public class CLI implements View {
                         if (p.getNickname().equals(nickname)) player = p;
                     }
                     ShowPlayerField(player, asking, game);
+                    lastPlayerField = player;
                 }
                 case "show decks" -> {ShowDecks(game);}
                 case "show scoreboard" -> {ShowScoreBoard();}
+                case "show card" -> {
+                    if (lastPlayerField == null) {
+                        System.out.println("Enter the player you want to see the card of:");
+                        for (Player p : game.getPlayers()) {
+                            System.out.print(p.toString()+"| ");
+                        }
+                        System.out.println();
+                        String nickname = scanner.nextLine();
+                        Player player = null;
+                        for (Player p : game.getPlayers()) {
+                            if (p.getNickname().equals(nickname))
+                                player = p;
+                        }
+                        if (player == null)
+                            System.out.println(AnsiColors.ANSI_RED + "Not a valid nickname. Enter a new command." + AnsiColors.ANSI_RESET);
+                        else {
+                            lastPlayerField = player;
+                        }
+                    }
+                    ShowPlayerField(lastPlayerField, asking, game);
+                    System.out.println();
+                    System.out.println("Which card do you want to see?");
+                    System.out.println("Insert x coordinate:");
+                    int x = scanner.nextInt();
+                    System.out.println("Insert y coordinate:");
+                    int y = scanner.nextInt();
+                    Coordinates where = new Coordinates(x,y);
+
+                    GameCard card;
+                    if (x==0 && y == 0) {
+                        card = game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(where);
+                        if (card == null) {
+                            System.out.println(AnsiColors.ANSI_RED + "Invalid coordinate. Enter a new command." + AnsiColors.ANSI_RESET);
+                        } else {
+                            gameCardViewer.SetCard(card);
+                            gameCardViewer.Show();
+                        }
+                    } else {
+                        card = (ResourceCard) game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(where);
+                        if (card == null) {
+                            System.out.println(AnsiColors.ANSI_RED + "Invalid coordinate. Enter a new command." + AnsiColors.ANSI_RESET);
+                        } else {
+                            if (((ResourceCard) card).getIsGold()) {
+                                gameCardViewer.SetCard((GoldCard) card);
+                                gameCardViewer.Show();
+                            } else {
+                                gameCardViewer.SetCard((ResourceCard) card);
+                                gameCardViewer.Show();
+                            }
+                        }
+                    }
+                }
                 case "draw card" -> {
                     ShowDecks(game);
                     System.out.println();
@@ -382,16 +548,17 @@ public class CLI implements View {
      */
     private void ShowCommands(boolean playing) {
         System.out.println("The available commands in this phase are:");
-        System.out.println("help -> displays all the available commands");
+        System.out.println("help              -> displays all the available commands");
         System.out.println("show my goal card -> displays your private goal card");
-        System.out.println("show field -> displays a player's field");
-        System.out.println("show decks -> displays the decks, the uncovered cards you can draw from and the common goals");
-        System.out.println("show scoreboard -> displays the game's scoreboard");
+        System.out.println("show field        -> displays a player's field");
+        System.out.println("show decks        -> displays the decks, the uncovered cards you can draw from and the common goals");
+        System.out.println("show scoreboard   -> displays the game's scoreboard");
+        System.out.println("show card         -> displays a specific card");
         if (isMyTurn) {
             if (playing) {
-                System.out.println("play card -> allows you to play a card from your hand onto your field");
+                System.out.println("play card         -> allows you to play a card from your hand onto your field");
             } else {
-                System.out.println("draw card -> allows you to draw a card from the uncovered ones or from the decks");
+                System.out.println("draw card         -> allows you to draw a card from the uncovered ones or from the decks");
             }
         }
     }
