@@ -65,7 +65,7 @@ public class Server {
                 gameController.addHandler(connectionHandler);
                 connectionHandler.setController(gameController);
                 checkGame(gameController);
-                connectionHandler.chooseColorState();
+                connectionHandler.getController().chooseColorState();
             } else { // no free games available -> wait for user input of number of players
                 connectionHandler.sendMessageClient(new PlayersNumberRequest());
             }

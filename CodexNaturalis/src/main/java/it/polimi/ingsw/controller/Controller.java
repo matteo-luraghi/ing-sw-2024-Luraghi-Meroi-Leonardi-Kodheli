@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.message.serverMessage.*;
 import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.*;
 
@@ -335,4 +336,14 @@ public class Controller {
         //Do i have to do something for when the game ends?
     }
 
+    public void chooseColorState() {
+    }
+
+    public boolean drawCard(int which) {
+        return true;
+    }
+
+    public boolean cardPlayed(ConnectionHandler connectionHandler, ResourceCard card, Coordinates where) {
+        return true;
+    }
 }
