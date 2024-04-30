@@ -2,9 +2,7 @@ package it.polimi.ingsw.connection.message.clientMessage;
 
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
-import it.polimi.ingsw.connection.message.serverMessage.DrawCardRequest;
 import it.polimi.ingsw.connection.message.serverMessage.TextMessage;
-import it.polimi.ingsw.connection.message.serverMessage.TurnEnded;
 import it.polimi.ingsw.controller.Controller;
 
 /**

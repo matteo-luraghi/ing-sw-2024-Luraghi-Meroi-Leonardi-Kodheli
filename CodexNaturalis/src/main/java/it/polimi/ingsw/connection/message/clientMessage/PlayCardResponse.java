@@ -2,12 +2,9 @@ package it.polimi.ingsw.connection.message.clientMessage;
 
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
-import it.polimi.ingsw.connection.message.serverMessage.DrawCardRequest;
-import it.polimi.ingsw.connection.message.serverMessage.PlayCardRequest;
 import it.polimi.ingsw.connection.message.serverMessage.TextMessage;
 import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.gamelogic.Coordinates;
-import it.polimi.ingsw.model.gamelogic.Player;
 
 /**
  * PlayCardResponse class

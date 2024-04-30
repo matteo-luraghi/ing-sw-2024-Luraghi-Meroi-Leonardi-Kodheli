@@ -2,7 +2,6 @@ package it.polimi.ingsw.connection.message.clientMessage;
 
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
-import it.polimi.ingsw.connection.message.serverMessage.ColorRequest;
 import it.polimi.ingsw.connection.message.serverMessage.TextMessage;
 import it.polimi.ingsw.connection.message.serverMessage.WaitingForPlayers;
 import it.polimi.ingsw.model.gamelogic.Color;
