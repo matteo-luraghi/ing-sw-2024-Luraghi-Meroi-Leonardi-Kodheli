@@ -530,7 +530,7 @@ public class CLI implements View {
                                 case "u2" -> {which = 2;}
                             }
 
-                            client.sendMessageServer(new DrawCardResponse(which));
+                            client.sendMessageServer(new DrawCardResponse(which, (deck.equalsIgnoreCase("gold"))));
                         }
                     } else {
                         System.out.println(AnsiColors.ANSI_RED + "Invalid input. Enter a new command." + AnsiColors.ANSI_RESET);
