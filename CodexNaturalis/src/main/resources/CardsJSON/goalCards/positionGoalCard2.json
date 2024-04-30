@@ -1,6 +1,0 @@
-{
-    "points":2,
-    "isResourceGoal":false,
-    "positionsFromBase": ["TOP_LEFT", "TOP_LEFT"],
-    "resourceFromBase": ["PLANT", "PLANT", "PLANT"]
-  }

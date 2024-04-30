@@ -39,6 +39,7 @@ public class Server {
     public void start() throws IOException {
         // throws if the socket init fails
         this.serverSocket = new ServerSocket(this.port);
+        System.out.println("Server running...");
         try {
             while (true) {
                 Socket clientSocket = serverSocket.accept();

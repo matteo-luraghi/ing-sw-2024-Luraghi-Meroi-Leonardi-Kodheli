@@ -175,7 +175,7 @@ public class Controller {
      */
     private Queue<StartingCard> getStartingCards() {
         List<StartingCard> cardsList = new ArrayList<>();
-        JsonParser parser = new JsonParser();;
+        JsonParser parser = new JsonParser();
         for(int i=1; i<=6; i++) {
             String cardPath = "./src/main/resources/CardsJSON/startingCards/startingCard" + i + ".json";
             try(Reader reader = new FileReader(cardPath)) {
@@ -196,7 +196,7 @@ public class Controller {
      */
     private Queue<GoalCard> getGoalCards() {
         List<GoalCard> cardsList = new ArrayList<>();
-        JsonParser parser = new JsonParser();;
+        JsonParser parser = new JsonParser();
         for(int i=1; i<=8; i++) {
             String cardPath = "./src/main/resources/CardsJSON/goalCards/goalCard" + i + ".json";
             try(Reader reader = new FileReader(cardPath)) {

@@ -1,6 +1,0 @@
-{
-    "points":3,
-    "isResourceGoal":false,
-    "positionsFromBase": ["TOP", "TOP_RIGHT"],
-    "resourceFromBase": ["ANIMAL", "ANIMAL", "FUNGI"]
-  }

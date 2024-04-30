@@ -34,7 +34,7 @@ public class Deck {
         JsonParser parser = new JsonParser();
         if(!isGold){
             for(int i=1; i<=40; i++) {
-                String cardPath = "./CodexNaturalis/src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
+                String cardPath = "./src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
                 // initialize the json file reader and save the card
                 try(Reader reader = new FileReader(cardPath)) {
                     JsonObject parsedResourceCard = parser.parse(reader).getAsJsonObject();
@@ -45,7 +45,7 @@ public class Deck {
             }
         } else {
             for(int i=1; i<=40; i++) {
-                String cardPath = "./CodexNaturalis/src/main/resources/CardsJSON/goldCards/goldCard" + i + ".json";
+                String cardPath = "./src/main/resources/CardsJSON/goldCards/goldCard" + i + ".json";
                 // initialize the json file reader and save the card
                 try(Reader reader = new FileReader(cardPath)) {
                     JsonObject parsedGoldCard = parser.parse(reader).getAsJsonObject();
