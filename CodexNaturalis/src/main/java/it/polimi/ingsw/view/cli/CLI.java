@@ -57,13 +57,17 @@ public class CLI implements View {
             System.out.println("Insert a valid ip address:");
             ip = scanner.nextLine();
             System.out.println("Insert a valid port to connect:");
-            port = scanner.nextInt();
-
+            String portStr = scanner.nextLine();
             try {
-                 client = new Client(ip, port, this);
-                 connected = true;
-            } catch (IOException e) {
-                System.out.println("Error connecting to the server, try again");
+                port = Integer.parseInt(portStr);
+                try {
+                    client = new Client(ip, port, this);
+                    connected = true;
+                } catch (IOException | IllegalArgumentException e) {
+                    System.out.println("Error connecting to the server, try again");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Insert a valid port number!");
             }
 
         } while(!connected);
