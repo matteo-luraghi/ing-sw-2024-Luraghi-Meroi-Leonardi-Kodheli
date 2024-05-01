@@ -46,24 +46,6 @@ public class Controller {
     }
 
     /**
-     * Controller constructor
-     *
-     * @param game Game that the megaController manages
-     */
-    public Controller(GameState game) {
-        this.game = game;
-        this.scanner = new Scanner(System.in); //probably don't need this
-        //connection attributes setup
-        connectionLock = new ReentrantLock();
-        this.connectionHandlers = new ArrayList<>();
-        isGameStarted = false;
-        isGameEnded = false;
-        isPenultimateTurn = false;
-        isLastTurn = false;
-        numOfGoalCardsChosen = 0;
-    }
-
-    /**
      * gameState getter
      *
      * @return the current gameState;
@@ -224,32 +206,22 @@ public class Controller {
 
     public void chooseColorState(ConnectionHandler connectionHandler) {
         ArrayList<Color> availableColors = new ArrayList<>(List.of(Color.values()));
-        for(Player player: game.getPlayers()){
-            availableColors.remove(player.getColor());
+        for(ConnectionHandler c : getHandlers()){
+            availableColors.remove(c.getClientColor());
         }
         connectionHandler.sendMessageClient(new ColorRequest(availableColors));
     }
 
     public void setColor(ConnectionHandler connectionHandler, Color color){
-        Player currentPlayer = null;
-        for(Player p : game.getPlayers()){
-            if(p.getNickname().equals(connectionHandler.getClientNickname()))
-                currentPlayer = p;
-        }
-        if(currentPlayer == null){
-            System.err.println("Didn't find a player with your nickname");
-            return;
-        }
-
-        for(Player p : game.getPlayers()){
-            if(p.getColor() != null && p.getColor() == color){
+        for(ConnectionHandler c: getHandlers()){
+            if(c.getClientColor() != null && c.getClientColor() == color){
                 connectionHandler.sendMessageClient(new TextMessage("That color is unavailable, try again!"));
                 chooseColorState(connectionHandler);
                 return;
             }
         }
         //if the program arrives here, the color is available
-        currentPlayer.setColor(color);
+        connectionHandler.setClientColor(color);
     }
     /**
      * Start the game, creating the necessary resources
@@ -262,7 +234,7 @@ public class Controller {
         ArrayList<Player> players = new ArrayList<>();
         Map<Player, PlayerField> playerZones = new HashMap<>();
 
-        for (ConnectionHandler c : this.connectionHandlers) {
+        for (ConnectionHandler c : getHandlers()) {
             Player player = new Player(c.getClientNickname(), c.getClientColor());
             players.add(player);
             // randomly pick a starting card for the user
@@ -285,7 +257,6 @@ public class Controller {
         GameTable table = new GameTable(new Deck(false), new Deck(true), playerZones, goalCards, scoreBoard);
         // the first player is the starting one
         this.game = new GameState(players, players.get(0), table);
-
     }
 
     /**

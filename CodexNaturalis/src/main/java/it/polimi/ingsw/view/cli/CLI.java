@@ -177,6 +177,15 @@ public class CLI implements View {
         this.goalCardViewer.Show();
         this.goalCardViewer.SetCard(goalCards[1]);
         this.goalCardViewer.Show();
+
+        // TODO: you know (check user input)
+        System.out.println("Select a card:");
+        int result = scanner.nextInt();
+        if (result == 1) {
+            client.sendMessageServer(new GoalCardResponse(goalCards[0]));
+        } else if (result == 2) {
+            client.sendMessageServer(new GoalCardResponse(goalCards[1]));
+        }
     }
 
     /**

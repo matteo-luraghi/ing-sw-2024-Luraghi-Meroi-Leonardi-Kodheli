@@ -26,7 +26,7 @@ public class ConnectionHandler implements Runnable{
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private String clientNickname;
-    private Color clientColor;
+    private Color clientColor = null;
     private Controller controller;
 
     /**
