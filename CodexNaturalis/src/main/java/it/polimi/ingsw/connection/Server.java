@@ -65,12 +65,13 @@ public class Server {
                 Controller gameController = optionalController.get();
                 gameController.addHandler(connectionHandler);
                 connectionHandler.setController(gameController);
-                checkGame(gameController);
                 connectionHandler.getController().chooseColorState(connectionHandler);
-            } else { // no free games available -> wait for user input of number of players
-                connectionHandler.sendMessageClient(new PlayersNumberRequest());
+                checkGame(gameController);
+                return;
             }
         }
+        // no free games available -> wait for user input of number of players
+        connectionHandler.sendMessageClient(new PlayersNumberRequest());
     }
 
     /**
@@ -79,14 +80,14 @@ public class Server {
      * @param numberOfPlayers the number of players for the new game
      */
     public void addToGame(ConnectionHandler connectionHandler, int numberOfPlayers) {
+        Controller controller = new Controller();
         synchronized (this.gameLock) {
-            Controller controller = new Controller();
             this.games.put(controller, numberOfPlayers);
+        }
             controller.addHandler(connectionHandler);
             connectionHandler.setController(controller);
             connectionHandler.getController().chooseColorState(connectionHandler);
             checkGame(controller);
-        }
     }
 
     /**
@@ -94,11 +95,13 @@ public class Server {
      * @param controller the controller related to the game
      */
     public void checkGame(Controller controller) {
+        int playersNeeded;
         synchronized (this.gameLock) {
             // check if the number of player is sufficient for the game
-            if(games.get(controller) == controller.getHandlers().size()) {
-                controller.start();
-            }
+            playersNeeded = games.get(controller);
+        }
+        if(playersNeeded == controller.getHandlers().size()) {
+            controller.start();
         }
     }
 
