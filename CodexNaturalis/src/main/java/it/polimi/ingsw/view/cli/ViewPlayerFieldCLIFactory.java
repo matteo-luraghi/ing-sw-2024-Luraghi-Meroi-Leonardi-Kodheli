@@ -2,20 +2,22 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.model.gamelogic.Coordinates;
-import it.polimi.ingsw.view.mainview.ViewGameCardFactory;
 import it.polimi.ingsw.view.mainview.ViewPlayerFieldFactory;
 import it.polimi.ingsw.view.mainview.AnsiColors;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.List;
 
 /**
  * ViewPlayerFieldCLIFactory class
  * @author Lorenzo Meroi
  */
 public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
+
+    public ViewPlayerFieldCLIFactory() {
+        this.gameCardViewer = new ViewGameCardCLIFactory();
+        this.goalCardViewer = new ViewGoalCardCLIFactory();
+    }
 
     /**
      * abstract method to show the player field to its owner
@@ -78,8 +80,8 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
     private void ShowGameZone() {
         System.out.println(this.player.toString()+"'s field:");
 
-        ArrayList<Coordinates> sortedCoordinates = new ArrayList<>(this.playerField.getGameZone().keySet());
-        sortedCoordinates = (ArrayList<Coordinates>) sortedCoordinates.stream()
+        List<Coordinates> sortedCoordinates = new ArrayList<>(this.playerField.getGameZone().keySet());
+        sortedCoordinates = sortedCoordinates.stream()
                 .sorted((Coordinates c1, Coordinates c2) -> {
                     if (c1.getY() > c2.getY()) {
                         return 1;
