@@ -36,6 +36,7 @@ public abstract class ViewPlayerFieldFactory {
      */
     public void setPlayerField(PlayerField playerField, Player player) {
         this.playerField = playerField;
+        this.player = player;
     }
 
     /**

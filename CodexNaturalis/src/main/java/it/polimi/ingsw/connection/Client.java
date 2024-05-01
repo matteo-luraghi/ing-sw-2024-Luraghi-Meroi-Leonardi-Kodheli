@@ -91,6 +91,7 @@ public class Client {
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error reading message:" + e);
             disconnect();
         }
     }

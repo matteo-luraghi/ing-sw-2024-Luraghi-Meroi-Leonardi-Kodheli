@@ -267,8 +267,9 @@ public class Controller {
     public void setPrivateGoalCard(GoalCard goal, ConnectionHandler connectionHandler){
         Player currentPlayer = null;
         for(Player p : game.getPlayers()){
-            if(p.getNickname().equals(connectionHandler.getClientNickname()))
+            if(p.getNickname().equals(connectionHandler.getClientNickname())) {
                 currentPlayer = p;
+            }
         }
         if(currentPlayer == null){
             System.err.println("Didn't find a player with your nickname");
