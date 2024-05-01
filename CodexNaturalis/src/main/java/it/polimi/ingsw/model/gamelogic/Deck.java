@@ -92,31 +92,25 @@ public class Deck {
      * @throws NullPointerException when trying to draw from an uncovered card that does not exist
      * @return ResourceCard chosen
      */
-    private ResourceCard Draw (int which)  {
+    private ResourceCard Draw (int which) throws NullPointerException{
         if (which == 0) {//drawing from deck
             return cards.poll(); //returns null if the deck is empty
         } else { //drawing from uncovered cards
-            try {
-                ResourceCard drawn = uncoveredCards[which-1];
-                if(drawn!=null) {
-                    setUncoveredCard(which); //no need to call this if the uncovered card is already absent!
-                }
-                return drawn;
-            } catch (NullPointerException e) {  //TODO: Custom exception?
-                System.err.println("No such card in here");
+            ResourceCard drawn = uncoveredCards[which-1];
+            if(drawn!=null) {
+                setUncoveredCard(which); //no need to call this if the uncovered card is already absent!
             }
+            return drawn;
         }
-        return null;
     }
 
     /**
      * Draw from the deck function accessible from the outside
      * @return ResourceCard chosen
      */
-    public ResourceCard DrawFromDeck(){
+    public ResourceCard DrawFromDeck() throws NullPointerException{
         if(cards.isEmpty()){
-            System.err.println("Deck empty, cannot Draw");
-            return null;
+            throw new NullPointerException();
         }
         return Draw(0);
     }
@@ -126,10 +120,9 @@ public class Deck {
      * @param which (should only be 0 or 1) indicating the index of the UncoveredResourceCard to draw
      * @return ResourceCard chosen
      */
-    public ResourceCard DrawFromUncovered(int which){
+    public ResourceCard DrawFromUncovered(int which) throws NullPointerException{
         if(which != 0 && which != 1){
-            System.err.println("param which is outOfBounds");
-            return null;
+            throw new NullPointerException();
         }
         return Draw(which + 1);
     }

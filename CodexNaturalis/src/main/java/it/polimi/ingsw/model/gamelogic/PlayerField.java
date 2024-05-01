@@ -92,14 +92,15 @@ public class PlayerField {
      * @param from which deck (Resource or Gold cards) to draw from
      * @param which whether to draw from the covered cards in the deck or from the uncovered ones (0 for the covered, 1 for the first uncovered, 2 for the second)
      */
-    public void draw(Deck from, int which){
+    public void draw(Deck from, int which) throws NullPointerException{
         if(which == 0){
             drawFromDeck(from);
         } else if( which==1 || which==2){
             drawFromUncovered(from, which-1);
+        } else{
+            throw new NullPointerException();
         }
-        else
-            System.err.println("Index out of bound");
+
     }
 
     /**
