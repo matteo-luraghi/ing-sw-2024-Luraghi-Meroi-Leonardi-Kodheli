@@ -279,12 +279,13 @@ public class Controller {
             return;
         }
 
+        game.getGameTable().getPlayerZones().get(currentPlayer).setPrivateGoal(goal);
+
         // if it's not the player's turn notify them
         if(!currentPlayer.getNickname().equals(game.getTurn().getNickname())) {
-           connectionHandler.sendMessageClient(new TurnEnded(currentPlayer, game));
+            connectionHandler.sendMessageClient(new TurnEnded(currentPlayer, game));
         }
 
-        game.getGameTable().getPlayerZones().get(currentPlayer).setPrivateGoal(goal);
         numOfGoalCardsChosen++;
         if(numOfGoalCardsChosen == game.getPlayers().size()){ //When all the players have chosen their goal cards
             this.game.setState(State.GAMEFLOW);
