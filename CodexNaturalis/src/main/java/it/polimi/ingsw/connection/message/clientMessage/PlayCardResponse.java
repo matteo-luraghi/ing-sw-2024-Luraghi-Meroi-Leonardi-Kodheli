@@ -2,7 +2,6 @@ package it.polimi.ingsw.connection.message.clientMessage;
 
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
-import it.polimi.ingsw.connection.message.serverMessage.TextMessage;
 import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.gamelogic.Coordinates;
 
@@ -32,13 +31,6 @@ public class PlayCardResponse extends ClientMessage {
      */
     @Override
     public void execute(Server server, ConnectionHandler connectionHandler) {
-        if (connectionHandler.getController().cardPlayed(connectionHandler, card, where)) {
-            // set the state of the controller to draw card
-            connectionHandler.getController().drawCardState();
-        } else {
-            connectionHandler.sendMessageClient(new TextMessage("Impossible to play the card, choose another one to play"));
-            // set the state of the controller to play a card
-            connectionHandler.getController().playCardState();
-        }
+        connectionHandler.getController().playCard(connectionHandler, card, where);
     }
 }

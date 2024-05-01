@@ -31,6 +31,7 @@ public class Controller {
     private boolean isGameEnded;
     private boolean isPenultimateTurn;
     private boolean isLastTurn;
+    private int numOfGoalCardsChosen;
     /**
      * Constructor without parameters
      */
@@ -41,6 +42,7 @@ public class Controller {
         isGameEnded = false;
         isPenultimateTurn = false;
         isLastTurn = false;
+        numOfGoalCardsChosen = 0;
     }
 
     /**
@@ -58,6 +60,7 @@ public class Controller {
         isGameEnded = false;
         isPenultimateTurn = false;
         isLastTurn = false;
+        numOfGoalCardsChosen = 0;
     }
 
     /**
@@ -219,6 +222,35 @@ public class Controller {
         return new LinkedList<>(cardsList);
     }
 
+    public void chooseColorState(ConnectionHandler connectionHandler) {
+        ArrayList<Color> availableColors = new ArrayList<>(List.of(Color.values()));
+        for(Player player: game.getPlayers()){
+            availableColors.remove(player.getColor());
+        }
+        connectionHandler.sendMessageClient(new ColorRequest(availableColors));
+    }
+
+    public void setColor(ConnectionHandler connectionHandler, Color color){
+        Player currentPlayer = null;
+        for(Player p : game.getPlayers()){
+            if(p.getNickname().equals(connectionHandler.getClientNickname()))
+                currentPlayer = p;
+        }
+        if(currentPlayer == null){
+            System.err.println("Didn't find a player with your nickname");
+            return;
+        }
+
+        for(Player p : game.getPlayers()){
+            if(p.getColor() != null && p.getColor() == color){
+                connectionHandler.sendMessageClient(new TextMessage("That color is unavailable, try again!"));
+                chooseColorState(connectionHandler);
+                return;
+            }
+        }
+        //if the program arrives here, the color is available
+        currentPlayer.setColor(color);
+    }
     /**
      * Start the game, creating the necessary resources
      */
@@ -253,9 +285,30 @@ public class Controller {
         GameTable table = new GameTable(new Deck(false), new Deck(true), playerZones, goalCards, scoreBoard);
         // the first player is the starting one
         this.game = new GameState(players, players.get(0), table);
-        this.game.setState(State.GAMEFLOW);
-        // TODO: select goal card state
-        yourTurnState();
+
+    }
+
+    /**
+     * Sets the chosen goal card as a private goal for a certain player
+     * @param goal the goal card chosen
+     * @param connectionHandler the player that is sending the request
+     */
+    public void setPrivateGoalCard(GoalCard goal, ConnectionHandler connectionHandler){
+        Player currentPlayer = null;
+        for(Player p : game.getPlayers()){
+            if(p.getNickname().equals(connectionHandler.getClientNickname()))
+                currentPlayer = p;
+        }
+        if(currentPlayer == null){
+            System.err.println("Didn't find a player with your nickname");
+            return;
+        }
+        game.getGameTable().getPlayerZones().get(currentPlayer).setPrivateGoal(goal);
+        numOfGoalCardsChosen++;
+        if(numOfGoalCardsChosen == game.getPlayers().size()){ //When all the players have chosen their goal cards
+            this.game.setState(State.GAMEFLOW);
+            yourTurnState();
+        }
     }
 
     /**
@@ -276,6 +329,31 @@ public class Controller {
         game.setTurnState(TurnState.PLAY);
         c.sendMessageClient(new PlayCardRequest(currentPlayer, game));
     }
+
+    /**
+     * Make the player play a card if it can be played, otherwise make the player chose a new pair of card/where
+     * @param card The card that needs to be played
+     * @param where Where the card needs to be played
+     * @param connectionHandler The player who is playing the card
+     */
+    public void playCard(ConnectionHandler connectionHandler, ResourceCard card, Coordinates where) {
+        Player currentPlayer = game.getTurn();
+        if(!currentPlayer.getNickname().equals(connectionHandler.getClientNickname())){
+            System.err.println("Someone who isn't the current player is playing");
+            return;
+        }
+
+        PlayerField playerZone = game.getGameTable().getPlayerZones().get(currentPlayer);
+        if(playerZone.IsPlayable(where, card)){
+            int score = playerZone.Play(where, card);
+            game.getGameTable().getScoreBoard().addPoints(currentPlayer, score);
+            drawCardState();
+        }else{
+            connectionHandler.sendMessageClient(new TextMessage("Unable to play the card, try again"));
+            playCardState();
+        }
+    }
+
     /**
      * Send a DrawCardRequest message to the player that needs to choose which card to draw
      */
@@ -285,6 +363,40 @@ public class Controller {
         game.setTurnState(TurnState.DRAW);
         c.sendMessageClient(new DrawCardRequest(game, currentPlayer));
     }
+
+    /**
+     * Make the player draw a card if it can be drawn, otherwise make the player draw from somewhere else
+     * @param which the card he wants to draw
+     * @param isGold which deck he wants to draw from
+     * @param connectionHandler The player who is playing the card
+     */
+    public void drawCard(ConnectionHandler connectionHandler, int which, boolean isGold) {
+        Player currentPlayer = game.getTurn();
+        if(!currentPlayer.getNickname().equals(connectionHandler.getClientNickname())){
+            System.err.println("Someone who isn't the current player is playing");
+            return;
+        }
+
+        PlayerField playerZone = game.getGameTable().getPlayerZones().get(currentPlayer);
+        Deck deck;
+
+        //choose the appropriate deck
+        if(isGold)  deck = game.getGameTable().getGoldDeck();
+        else        deck = game.getGameTable().getResourceDeck();
+
+        //Draw the card
+        try{
+            ResourceCard drawnCard;
+            playerZone.draw(deck, which);
+
+            //Won't be called if the card isn't drawn thanks to NullPointerExceptions
+            changeTurnState();
+        }catch (NullPointerException e){
+            connectionHandler.sendMessageClient(new TextMessage("Unable to draw the card, try again"));
+            drawCardState();
+        }
+    }
+
     /**
      * Passes the turn to the next player, while checking if it's the penultimate or the last turn
      */
@@ -335,18 +447,5 @@ public class Controller {
             c.sendMessageClient(new Winner(game));
         }
         //Do i have to do something for when the game ends?
-    }
-
-    // TODO: implement these mock methods
-    public void chooseColorState() {
-    }
-
-    //boolean isGold used to check which deck the player is drawing from
-    public boolean drawCard(int which, boolean isGold) {
-        return true;
-    }
-
-    public boolean cardPlayed(ConnectionHandler connectionHandler, ResourceCard card, Coordinates where) {
-        return true;
     }
 }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.connection.message.clientMessage;
 
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
+import it.polimi.ingsw.connection.message.serverMessage.ColorRequest;
 import it.polimi.ingsw.connection.message.serverMessage.TextMessage;
 import it.polimi.ingsw.connection.message.serverMessage.WaitingForPlayers;
 import it.polimi.ingsw.model.gamelogic.Color;
@@ -30,17 +31,6 @@ public class ColorResponse extends ClientMessage{
      */
     @Override
     public void execute(Server server, ConnectionHandler connectionHandler) {
-        //TODO exception handling must be server side
-        for(ConnectionHandler c: connectionHandler.getController().getHandlers()) {
-            if (c.getClientColor().equals(this.color) && !c.getClientNickname().equals(connectionHandler.getClientNickname())) {
-                connectionHandler.sendMessageClient(new TextMessage("Color unavailable, please choose another color"));
-                connectionHandler.getController().chooseColorState();
-                return;
-            }
-        }
-        connectionHandler.setClientColor(this.color);
-        if (!connectionHandler.getController().isGameStarted()) {
-            connectionHandler.sendMessageClient(new WaitingForPlayers());
-        }
+        connectionHandler.getController().setColor(connectionHandler, color);
     }
 }

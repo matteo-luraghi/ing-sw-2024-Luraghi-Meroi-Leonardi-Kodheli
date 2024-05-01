@@ -31,14 +31,6 @@ public class DrawCardResponse extends ClientMessage {
      */
     @Override
     public void execute(Server server, ConnectionHandler connectionHandler) {
-        Controller controller = connectionHandler.getController();
-        if (controller.drawCard(which, isGold)) {
-            // set the controller state to next player's turn
-            controller.changeTurnState();
-        } else {
-            connectionHandler.sendMessageClient(new TextMessage("Unable to draw the card, try again"));
-            // set the controller state to draw card
-            controller.drawCardState();
-        }
+        connectionHandler.getController().drawCard(connectionHandler, which, isGold);
     }
 }
