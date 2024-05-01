@@ -140,8 +140,19 @@ public class CLI implements View {
      */
     @Override
     public void askForPlayersNumber() {
-        System.out.println("How many player will play the game?");
-        int number = scanner.nextInt();
+        int number = -1;
+        do {
+            System.out.println("How many player will play the game? (2-4)");
+            String numberStr = scanner.nextLine();
+            try {
+                number = Integer.parseInt(numberStr);
+            } catch (NumberFormatException e) {
+                number = -1;
+            }
+            if (number <= 1 || number > 4) {
+                System.out.println("Insert a valid number! (2-4)");
+            }
+        } while (number<=1 || number > 4);
         client.sendMessageServer(new PlayersNumberResponse(number));
     }
 

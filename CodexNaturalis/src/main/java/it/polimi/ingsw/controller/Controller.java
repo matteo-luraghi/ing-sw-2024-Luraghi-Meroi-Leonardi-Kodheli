@@ -222,6 +222,9 @@ public class Controller {
         }
         //if the program arrives here, the color is available
         connectionHandler.setClientColor(color);
+        if(!this.isGameStarted()) {
+            connectionHandler.sendMessageClient(new WaitingForPlayers());
+        }
     }
     /**
      * Start the game, creating the necessary resources
@@ -275,6 +278,12 @@ public class Controller {
             System.err.println("Didn't find a player with your nickname");
             return;
         }
+
+        // if it's not the player's turn notify them
+        if(!currentPlayer.getNickname().equals(game.getTurn().getNickname())) {
+           connectionHandler.sendMessageClient(new TurnEnded(currentPlayer, game));
+        }
+
         game.getGameTable().getPlayerZones().get(currentPlayer).setPrivateGoal(goal);
         numOfGoalCardsChosen++;
         if(numOfGoalCardsChosen == game.getPlayers().size()){ //When all the players have chosen their goal cards
