@@ -9,7 +9,7 @@ import it.polimi.ingsw.view.mainview.AnsiColors;
  */
 public class Player {
     private String nickname;
-    private Color color;
+    private Color color = null;
 
     /**
      * Player constructor

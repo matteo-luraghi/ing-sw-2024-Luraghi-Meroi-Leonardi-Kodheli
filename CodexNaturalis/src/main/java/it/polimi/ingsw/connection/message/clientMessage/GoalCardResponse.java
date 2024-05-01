@@ -32,12 +32,6 @@ public class GoalCardResponse extends ClientMessage{
      */
     @Override
     public void execute(Server server, ConnectionHandler connectionHandler) {
-        Map<Player, PlayerField> playerZones = connectionHandler.getController().getGame().getGameTable().getPlayerZones();
-        PlayerField field = playerZones.get(
-                playerZones.keySet().stream()
-                        .filter(player ->
-                                player.getNickname().equals(connectionHandler.getClientNickname()))
-                        .findFirst().get());
-        field.setPrivateGoal(this.goalCard);
+        connectionHandler.getController().setPrivateGoalCard(this.goalCard, connectionHandler);
     }
 }
