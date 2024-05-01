@@ -254,6 +254,7 @@ public class Controller {
         // the first player is the starting one
         this.game = new GameState(players, players.get(0), table);
         this.game.setState(State.GAMEFLOW);
+        // TODO: select goal card state
         yourTurnState();
     }
 

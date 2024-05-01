@@ -25,6 +25,6 @@ public class Disconnection implements Serializable {
      * @param view view interface
      */
     public void show(View view) {
-        view.showMessage(clientNickname + "was disconnected");
+        view.showMessage(clientNickname + " was disconnected");
     }
 }
