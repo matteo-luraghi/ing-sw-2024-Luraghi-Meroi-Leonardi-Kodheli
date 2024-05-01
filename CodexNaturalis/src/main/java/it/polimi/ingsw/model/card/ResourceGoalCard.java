@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.card;
 
+import java.io.Serial;
 import java.util.ArrayList;
 
 /**
@@ -7,7 +8,9 @@ import java.util.ArrayList;
  * @author Lorenzo Meroi
  */
 public class ResourceGoalCard extends GoalCard{
-    private ArrayList<Resource> requirements;
+    @Serial
+    private static final long serialVersionUID = 7547895155229358446L;
+    private final ArrayList<Resource> requirements;
 
     /**
      * ResourceGoalCard constructor
@@ -17,7 +20,7 @@ public class ResourceGoalCard extends GoalCard{
      */
     public ResourceGoalCard (int Points, ArrayList<Resource> requirements) {
         super(Points, true);
-        requirements = new ArrayList<>();
+        this.requirements = new ArrayList<>();
         this.requirements.addAll(requirements);
     }
 

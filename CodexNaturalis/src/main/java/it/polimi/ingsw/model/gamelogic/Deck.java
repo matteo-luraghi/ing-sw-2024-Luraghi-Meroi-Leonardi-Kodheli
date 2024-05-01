@@ -1,21 +1,18 @@
 package it.polimi.ingsw.model.gamelogic;
 
 import com.google.gson.*;
-import it.polimi.ingsw.model.card.GoldCard;
-import it.polimi.ingsw.model.card.Kingdom;
-import it.polimi.ingsw.model.card.Resource;
 import it.polimi.ingsw.model.card.ResourceCard;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.*;
 
 /**
  * Deck class
  * @author Lorenzo Meroi
  */
-public class Deck {
+public class Deck implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -4453030266153945511L;
     private Queue<ResourceCard> cards;
 
     private ResourceCard[] uncoveredCards;

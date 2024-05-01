@@ -2,6 +2,7 @@ package it.polimi.ingsw.connection.message.serverMessage;
 
 import it.polimi.ingsw.view.mainview.View;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -9,6 +10,7 @@ import java.io.Serializable;
  * @author Matteo Leonardo Luraghi
  */
 public abstract class ServerMessage implements Serializable {
+    @Serial
     private static final long serialVersionUID = -5503253453512925709L;
 
     /**

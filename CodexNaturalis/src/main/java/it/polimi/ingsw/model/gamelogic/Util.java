@@ -41,7 +41,7 @@ public class Util {
      */
     public static Color stringToColor(String s) throws NullPointerException{
         //TODO: make custom InvalidColorException
-        s = s.toLowerCase();
+        s = s.toUpperCase();
         if(s.equals("RED")) return Color.RED;
         if(s.equals("BLUE")) return Color.BLUE;
         if(s.equals("YELLOW")) return Color.YELLOW;

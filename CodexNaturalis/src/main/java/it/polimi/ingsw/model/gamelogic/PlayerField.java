@@ -1,7 +1,9 @@
 package it.polimi.ingsw.model.gamelogic;
 
 import it.polimi.ingsw.model.card.*;
-import it.polimi.ingsw.model.gamelogic.Util;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +13,9 @@ import java.util.Map;
  * PlayerField class
  * @author Lorenzo Meroi
  */
-public class PlayerField {
+public class PlayerField implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1638400040589664145L;
     private ArrayList<ResourceCard> hand;
 
     private GoalCard privateGoal;

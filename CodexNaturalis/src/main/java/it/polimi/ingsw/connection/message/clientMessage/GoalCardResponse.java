@@ -3,10 +3,8 @@ package it.polimi.ingsw.connection.message.clientMessage;
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
 import it.polimi.ingsw.model.card.GoalCard;
-import it.polimi.ingsw.model.gamelogic.Player;
-import it.polimi.ingsw.model.gamelogic.PlayerField;
 
-import java.util.Map;
+import java.io.Serial;
 
 /**
  * GoalCardResponse class
@@ -14,6 +12,7 @@ import java.util.Map;
  * @author Matteo Leonardo Luraghi
  */
 public class GoalCardResponse extends ClientMessage{
+    @Serial
     private static final long serialVersionUID = 8737646869053799287L;
     private final GoalCard goalCard;
 

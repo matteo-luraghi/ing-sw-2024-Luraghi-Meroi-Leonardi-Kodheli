@@ -2,12 +2,15 @@ package it.polimi.ingsw.connection.message.serverMessage;
 
 import it.polimi.ingsw.view.mainview.View;
 
+import java.io.Serial;
+
 /**
  * TextMessage class
  * used to send text messages to clients
  * @author Matteo Leonardo Luraghi
  */
 public class TextMessage extends ServerMessage {
+    @Serial
     private static final long serialVersionUID = -8177785563760959331L;
     private final String message;
 

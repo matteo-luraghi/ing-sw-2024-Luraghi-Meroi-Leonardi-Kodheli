@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.card;
 
+import java.io.Serial;
 import java.util.ArrayList;
 
 /**
@@ -7,6 +8,8 @@ import java.util.ArrayList;
  * @author Matteo Leonardo Luraghi
  */
 public class GoldCard extends ResourceCard{
+    @Serial
+    private static final long serialVersionUID = -190142351748065027L;
     private final PointCondition pointCondition;
     private final ArrayList<Resource> playableCondition;
 

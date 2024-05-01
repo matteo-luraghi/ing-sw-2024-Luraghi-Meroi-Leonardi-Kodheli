@@ -1,10 +1,14 @@
 package it.polimi.ingsw.model.card;
 
+import java.io.Serial;
+
 /**
  * ResourceCard Class
  * @author Matteo Leonardo Luraghi
  */
 public class ResourceCard extends GameCard{
+    @Serial
+    private static final long serialVersionUID = 5448274245993938851L;
     private final int points;
     private final boolean isGold;
     /**

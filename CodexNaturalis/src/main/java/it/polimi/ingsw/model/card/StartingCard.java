@@ -1,10 +1,14 @@
 package it.polimi.ingsw.model.card;
 
+import java.io.Serial;
+
 /**
  * StartingCard Class
  * @author Matteo Leonardo Luraghi
  */
 public class StartingCard extends GameCard{
+    @Serial
+    private static final long serialVersionUID = 9123759669995065774L;
     private final Resource[] backCorners;
     private final Resource[] permanentResources;
 

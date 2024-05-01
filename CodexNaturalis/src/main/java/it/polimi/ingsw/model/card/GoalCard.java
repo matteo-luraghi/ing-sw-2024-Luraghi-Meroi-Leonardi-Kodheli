@@ -1,10 +1,15 @@
 package it.polimi.ingsw.model.card;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * class GoalCard
  * @author Lorenzo Meroi
  */
-abstract public class GoalCard {
+abstract public class GoalCard implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -7316931387701617984L;
     private final int points;
 
     private final boolean isResourceGoal;

@@ -3,12 +3,15 @@ package it.polimi.ingsw.connection.message.clientMessage;
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
 
+import java.io.Serial;
+
 /**
  * PlayersNumberResponse class
  * used to send to the server the number of players for a new game
  * @author Matteo Leonardo Luraghi
  */
 public class PlayersNumberResponse extends ClientMessage{
+    @Serial
     private static final long serialVersionUID = -4677442179211411089L;
     private final int numPlayers;
 

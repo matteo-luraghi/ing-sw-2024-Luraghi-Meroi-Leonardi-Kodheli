@@ -4,11 +4,14 @@ import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
 import it.polimi.ingsw.connection.message.serverMessage.LoginRequest;
 
+import java.io.Serial;
+
 /**
  * LoginResponse class
  * used to set the clientHandler nickname or ask for a new nickname
  */
 public class LoginResponse extends ClientMessage {
+    @Serial
     private static final long serialVersionUID = 6913153965860413805L;
     private final String nickname;
 

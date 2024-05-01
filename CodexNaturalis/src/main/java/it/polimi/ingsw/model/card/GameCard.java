@@ -1,11 +1,16 @@
 package it.polimi.ingsw.model.card;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * GameCard Class
  * @author Matteo Leonardo Luraghi
  */
-abstract public class GameCard {
-    private Resource[] corners; //0 is Top LEFT, 1 is TOP RIGHT, 2 is BOTTOM LEFT, 3 is BOTTOM RIGHT
+abstract public class GameCard implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -1051010533191723823L;
+    private final Resource[] corners; //0 is Top LEFT, 1 is TOP RIGHT, 2 is BOTTOM LEFT, 3 is BOTTOM RIGHT
     private final Kingdom kingdom;
     private boolean isFront;
 

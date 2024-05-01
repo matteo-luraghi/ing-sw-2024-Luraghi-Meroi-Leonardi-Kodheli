@@ -1,13 +1,16 @@
 package it.polimi.ingsw.model.gamelogic;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Set;
 
 /**
  * class GameState
  * @author Françesk Kodheli
  */
-public class GameState {
+public class GameState implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -1032793492526071375L;
     private State state;
     private TurnState turnState;
     private ArrayList<Player> players;

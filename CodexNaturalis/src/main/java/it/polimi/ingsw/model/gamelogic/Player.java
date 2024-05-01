@@ -1,15 +1,19 @@
 package it.polimi.ingsw.model.gamelogic;
 
-import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.view.mainview.AnsiColors;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * class Player
  * @author Lorenzo Meroi
  */
-public class Player {
+public class Player implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -6069725265370341586L;
     private String nickname;
-    private Color color = null;
+    private Color color;
 
     /**
      * Player constructor

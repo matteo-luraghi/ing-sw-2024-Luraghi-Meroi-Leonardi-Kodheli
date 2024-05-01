@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.card;
 
+import java.io.Serial;
 import java.util.ArrayList;
 
 /**
@@ -7,9 +8,11 @@ import java.util.ArrayList;
  * @author Lorenzo Meroi
  */
 public class PositionGoalCard extends GoalCard{
-    private ArrayList<Direction> positionsFromBase;
+    @Serial
+    private static final long serialVersionUID = 7206421742827841283L;
+    private final ArrayList<Direction> positionsFromBase;
 
-    private ArrayList<Kingdom> resourceFromBase;
+    private final ArrayList<Kingdom> resourceFromBase;
 
     /**
      * PositionGoalCard constructor

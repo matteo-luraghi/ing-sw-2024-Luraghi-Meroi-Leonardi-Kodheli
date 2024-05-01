@@ -2,8 +2,8 @@ package it.polimi.ingsw.connection.message.clientMessage;
 
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
-import it.polimi.ingsw.connection.message.serverMessage.TextMessage;
-import it.polimi.ingsw.controller.Controller;
+
+import java.io.Serial;
 
 /**
  * DrawCardResponse class
@@ -11,6 +11,7 @@ import it.polimi.ingsw.controller.Controller;
  * @author Matteo Leonardo Luraghi
  */
 public class DrawCardResponse extends ClientMessage {
+    @Serial
     private static final long serialVersionUID = 408226450774679976L;
     private final int which;
     private final boolean isGold;

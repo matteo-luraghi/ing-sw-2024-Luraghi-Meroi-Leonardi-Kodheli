@@ -3,12 +3,15 @@ package it.polimi.ingsw.connection.message.serverMessage;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.view.mainview.View;
 
+import java.io.Serial;
+
 /**
  * GoalCardRequest class
  * used to ask the player to choose a goal card
  * @author Matteo Leonardo Luraghi
  */
 public class GoalCardRequest extends ServerMessage  {
+    @Serial
     private static final long serialVersionUID = -338428875046753414L;
     private final GoalCard[] goalCards;
 

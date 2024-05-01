@@ -2,10 +2,9 @@ package it.polimi.ingsw.connection.message.clientMessage;
 
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
-import it.polimi.ingsw.connection.message.serverMessage.ColorRequest;
-import it.polimi.ingsw.connection.message.serverMessage.TextMessage;
-import it.polimi.ingsw.connection.message.serverMessage.WaitingForPlayers;
 import it.polimi.ingsw.model.gamelogic.Color;
+
+import java.io.Serial;
 
 /**
  * ColorResponse class
@@ -13,6 +12,7 @@ import it.polimi.ingsw.model.gamelogic.Color;
  * @author Matteo Leonardo Luraghi
  */
 public class ColorResponse extends ClientMessage{
+    @Serial
     private static final long serialVersionUID = 2193088654980431024L;
     private final Color color;
 

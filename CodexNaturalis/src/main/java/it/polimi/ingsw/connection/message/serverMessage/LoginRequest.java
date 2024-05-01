@@ -2,12 +2,15 @@ package it.polimi.ingsw.connection.message.serverMessage;
 
 import it.polimi.ingsw.view.mainview.View;
 
+import java.io.Serial;
+
 /**
  * LoginRequest class
  * used to make the user select a nickname
  * @author Matteo Leonardo Luraghi
  */
 public class LoginRequest extends ServerMessage {
+    @Serial
     private static final long serialVersionUID = -4505766063795951757L;
 
     /**

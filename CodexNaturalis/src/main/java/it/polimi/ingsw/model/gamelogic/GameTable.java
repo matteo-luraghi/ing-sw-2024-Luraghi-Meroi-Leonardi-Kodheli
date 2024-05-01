@@ -2,14 +2,17 @@ package it.polimi.ingsw.model.gamelogic;
 
 import it.polimi.ingsw.model.card.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.*;
-import it.polimi.ingsw.model.gamelogic.Util;
 
 /**
  * class GameTable
  * @author Francesk Kodheli
  */
-public class GameTable {
+public class GameTable implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -7226967485514133707L;
     private Deck ResourceDeck;
     private Deck GoldDeck;
     private Map<Player, PlayerField> PlayerZones;

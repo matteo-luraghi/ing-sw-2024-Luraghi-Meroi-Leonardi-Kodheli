@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.gamelogic;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +10,9 @@ import java.util.Map;
  * class ScoreBoard
  * @author Lorenzo Meroi
  */
-public class ScoreBoard {
+public class ScoreBoard implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -5530929421267416333L;
     private Map<Player, Integer> board;
 
     /**

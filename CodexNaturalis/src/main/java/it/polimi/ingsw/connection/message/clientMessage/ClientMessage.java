@@ -3,6 +3,7 @@ package it.polimi.ingsw.connection.message.clientMessage;
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * @author Matteo Leonardo Luraghi
  */
 public abstract class ClientMessage implements Serializable {
+    @Serial
     private static final long serialVersionUID = -748320518806449772L;
 
     /**
