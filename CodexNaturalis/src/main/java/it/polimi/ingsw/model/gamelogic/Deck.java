@@ -135,8 +135,11 @@ public class Deck implements Serializable {
     /**
      * UncoveredCards setter, it is taken from the deck
      * @param Which can be 1(first uncovered card) or 2(second uncovered card)
+     * @throws IndexOutOfBoundsException if Which not equal to 1 and 2
      */
-    public void setUncoveredCard (int Which) {
+    public void setUncoveredCard (int Which) throws NullPointerException{
+        if(Which!= 1 && Which!=2)
+            throw new IndexOutOfBoundsException();
         this.uncoveredCards[Which-1] = this.Draw(0);
     }
 
