@@ -261,7 +261,9 @@ public class CLI implements View {
      */
     public void setMyTurn (boolean isMyTurn) {
         this.isMyTurn = isMyTurn;
-        this.client.sendMessageServer(new YourTurnOk());
+        if (isMyTurn) {
+            this.client.sendMessageServer(new YourTurnOk());
+        }
     }
 
     /**

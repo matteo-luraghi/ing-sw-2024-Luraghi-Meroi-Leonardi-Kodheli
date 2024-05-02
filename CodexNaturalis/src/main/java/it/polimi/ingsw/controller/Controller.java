@@ -24,7 +24,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Controller {
     private GameState game;
-    protected Scanner scanner;
+    private final int numOfPlayers;
     private final ArrayList<ConnectionHandler> connectionHandlers;
     private final Lock connectionLock;
     private boolean isGameStarted;
@@ -35,7 +35,8 @@ public class Controller {
     /**
      * Constructor without parameters
      */
-    public Controller() {
+    public Controller(int numOfPlayers) {
+        this.numOfPlayers = numOfPlayers;
         this.connectionLock = new ReentrantLock();
         this.connectionHandlers = new ArrayList<>();
         isGameStarted = false;
@@ -224,18 +225,25 @@ public class Controller {
         connectionHandler.setClientColor(color);
         if(!this.isGameStarted()) {
             connectionHandler.sendMessageClient(new WaitingForPlayers());
+            checkGame();
         }
     }
+
+    public void checkGame() {
+        if (getHandlers().size() == this.numOfPlayers) {
+            start();
+        }
+    }
+
     /**
      * Start the game, creating the necessary resources
      */
     public void start() {
-        this.isGameStarted = true;
-
         Queue<StartingCard> startingCardsQueue = getStartingCards();
         Queue<GoalCard> goalCardsQueue = getGoalCards();
         ArrayList<Player> players = new ArrayList<>();
         Map<Player, PlayerField> playerZones = new HashMap<>();
+        Map<Player, GoalCard[]> privateGoals = new HashMap<>();
 
         for (ConnectionHandler c : getHandlers()) {
             Player player = new Player(c.getClientNickname(), c.getClientColor());
@@ -248,7 +256,7 @@ public class Controller {
             GoalCard[] goalCardsOptions = new GoalCard[2];
             goalCardsOptions[0] = goalCardsQueue.poll();
             goalCardsOptions[1] = goalCardsQueue.poll();
-            c.sendMessageClient(new GoalCardRequest(goalCardsOptions));
+            privateGoals.put(player, goalCardsOptions);
         }
 
         ScoreBoard scoreBoard = new ScoreBoard(players);
@@ -260,6 +268,19 @@ public class Controller {
         GameTable table = new GameTable(new Deck(false), new Deck(true), playerZones, goalCards, scoreBoard);
         // the first player is the starting one
         this.game = new GameState(players, players.get(0), table);
+        this.isGameStarted = true;
+
+        for (ConnectionHandler c: getHandlers()) {
+            Player player = null;
+            for (Player p : players) {
+                if (c.getClientNickname().equals(p.getNickname())) {
+                    player = p;
+                }
+            }
+            if (player != null) {
+                c.sendMessageClient(new GoalCardRequest(privateGoals.get(player)));
+            }
+        }
     }
 
     /**
@@ -287,7 +308,7 @@ public class Controller {
         }
 
         numOfGoalCardsChosen++;
-        if(numOfGoalCardsChosen == game.getPlayers().size()){ //When all the players have chosen their goal cards
+        if(numOfGoalCardsChosen == getHandlers().size()){ //When all the players have chosen their goal cards
             this.game.setState(State.GAMEFLOW);
             yourTurnState();
         }

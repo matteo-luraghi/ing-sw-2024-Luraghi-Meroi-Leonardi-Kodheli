@@ -25,7 +25,7 @@ public class ConnectionHandler implements Runnable{
     private final AtomicBoolean active = new AtomicBoolean(false);
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
-    private String clientNickname;
+    private String clientNickname = null;
     private Color clientColor = null;
     private Controller controller;
 

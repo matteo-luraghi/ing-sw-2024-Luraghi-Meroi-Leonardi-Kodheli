@@ -1,1 +1,1 @@
-{"kingdom": "FUNGI", "isFront": false, "corners": ["BLANK", "HIDDEN", "BLANK", "BLANK"], "points": 2, "pointCondition": "CORNER", "playableCondition": ["FUNGI", "FUNGI", "FUNGI", "INSECT"]}
+{"kingdom": "FUNGI", "isFront": false, "corners": ["BLANK", "HIDDEN", "BLANK", "BLANK"], "points": 2, "isGold": true, "pointCondition": "CORNER", "playableCondition": ["FUNGI", "FUNGI", "FUNGI", "INSECT"]}

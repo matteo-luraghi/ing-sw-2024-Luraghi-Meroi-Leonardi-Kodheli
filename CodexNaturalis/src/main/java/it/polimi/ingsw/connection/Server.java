@@ -66,7 +66,6 @@ public class Server {
                 gameController.addHandler(connectionHandler);
                 connectionHandler.setController(gameController);
                 connectionHandler.getController().chooseColorState(connectionHandler);
-                checkGame(gameController);
                 return;
             }
         }
@@ -80,29 +79,13 @@ public class Server {
      * @param numberOfPlayers the number of players for the new game
      */
     public void addToGame(ConnectionHandler connectionHandler, int numberOfPlayers) {
-        Controller controller = new Controller();
+        Controller controller = new Controller(numberOfPlayers);
         synchronized (this.gameLock) {
             this.games.put(controller, numberOfPlayers);
         }
             controller.addHandler(connectionHandler);
             connectionHandler.setController(controller);
             connectionHandler.getController().chooseColorState(connectionHandler);
-            checkGame(controller);
-    }
-
-    /**
-     * Check if the game is ready to start
-     * @param controller the controller related to the game
-     */
-    public void checkGame(Controller controller) {
-        int playersNeeded;
-        synchronized (this.gameLock) {
-            // check if the number of player is sufficient for the game
-            playersNeeded = games.get(controller);
-        }
-        if(playersNeeded == controller.getHandlers().size()) {
-            controller.start();
-        }
     }
 
     /**
