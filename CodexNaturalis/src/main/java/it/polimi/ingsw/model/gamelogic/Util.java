@@ -144,6 +144,7 @@ public class Util {
         for(JsonElement o: cornersArray)
         {
             corners[n]=Util.fromStringToResource(o.getAsString()); //to check
+            n++;
         }
         int points=Json.get("points").getAsInt();
         boolean isGoldJ=Json.get("isGold").getAsBoolean();
@@ -165,6 +166,7 @@ public class Util {
         for(JsonElement o: cornersArray)
         {
             corners[n]=Util.fromStringToResource(o.getAsString()); //to check
+            n++;
         }
         int points=Json.get("points").getAsInt();
 
@@ -178,6 +180,7 @@ public class Util {
         for(JsonElement o: playableConditionArray)
         {
             playableCondition.add(fromStringToResource(o.getAsString()));
+
         }
 
         return new GoldCard(kingdom,isFront,corners, points,pointCondition,playableCondition);
@@ -194,19 +197,23 @@ public class Util {
         Kingdom kingdom=Util.fromStringToKingdom(Json.get("kingdom").getAsString());
         boolean isFront=Json.get("isFront").getAsBoolean();
         JsonArray cornersArray =Json.getAsJsonArray("corners");
-        Resource[] corners=new Resource[4];
+        Resource[] corners=new Resource[cornersArray.size()];
         int n=0;
         for(JsonElement o: cornersArray)
         {
+
             corners[n]=Util.fromStringToResource(o.getAsString()); //to check
+            n++;
         }
 
         JsonArray backCornersArray =Json.getAsJsonArray("backCorners");
-        Resource[] backCorners=new Resource[4];
+        Resource[] backCorners=new Resource[backCornersArray.size()];
         n=0;
         for(JsonElement o: backCornersArray)
         {
+
             backCorners[n]=Util.fromStringToResource(o.getAsString()); //to check
+            n++;
         }
         JsonArray permanentResourcesArray =Json.getAsJsonArray("permanentResources");
         Resource[] permanentResources=new Resource[permanentResourcesArray.size()];
@@ -215,8 +222,8 @@ public class Util {
         for(JsonElement o: permanentResourcesArray)
         {
             permanentResources[n]=Util.fromStringToResource(o.getAsString()); //to check
+            n++;
         }
-
 
 
 
@@ -240,10 +247,11 @@ public class Util {
 
         JsonArray requirementsArray =Json.getAsJsonArray("requirements");
         ArrayList<Resource> requirements=new  ArrayList<Resource>();
-        int n=0;
+
         for(JsonElement o: requirementsArray)
         {
             requirements.add(Util.fromStringToResource(o.getAsString()));
+
         }
 
         return new ResourceGoalCard(points,requirements);
@@ -262,14 +270,14 @@ public class Util {
 
         JsonArray resourceFromBase =Json.getAsJsonArray("resourceFromBase");
         ArrayList<Kingdom> requirements=new  ArrayList<Kingdom>();
-        int n=0;
+
         for(JsonElement o: resourceFromBase)
         {
             requirements.add(Util.fromStringToKingdom(o.getAsString()));
         }
         JsonArray directionArray =Json.getAsJsonArray("positionsFromBase");
         ArrayList<Direction> direction=new  ArrayList<Direction>();
-        n=0;
+
         for(JsonElement o: directionArray)
         {
             direction.add(Util.fromStringToDirection(o.getAsString()));
