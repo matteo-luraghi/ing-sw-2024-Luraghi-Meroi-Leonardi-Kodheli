@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
+import it.polimi.ingsw.model.gamelogic.ScoreBoard;
 import it.polimi.ingsw.view.mainview.*;
 
 import java.util.ArrayList;
@@ -116,7 +117,7 @@ public class GUI implements View {
      * displays the scoreboard
      */
     @Override
-    public void ShowScoreBoard() {
+    public void ShowScoreBoard(ScoreBoard scoreBoard) {
 
     }
 

@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
+import it.polimi.ingsw.model.gamelogic.ScoreBoard;
 
 import java.util.ArrayList;
 
@@ -84,7 +85,7 @@ public interface View {
     /**
      * displays the scoreboard
      */
-    void ShowScoreBoard();
+    void ShowScoreBoard(ScoreBoard scoreBoard);
 
     /**
      * shows who has won the game

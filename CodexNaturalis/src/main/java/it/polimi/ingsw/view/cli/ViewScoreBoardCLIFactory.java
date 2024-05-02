@@ -1,6 +1,8 @@
 package it.polimi.ingsw.view.cli;
 
+import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
+import it.polimi.ingsw.model.gamelogic.ScoreBoard;
 import it.polimi.ingsw.view.mainview.AnsiColors;
 import it.polimi.ingsw.view.mainview.ViewScoreBoardFactory;
 

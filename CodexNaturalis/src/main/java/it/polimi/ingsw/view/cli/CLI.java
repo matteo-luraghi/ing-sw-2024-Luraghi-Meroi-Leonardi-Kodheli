@@ -6,12 +6,9 @@ import it.polimi.ingsw.model.card.GameCard;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.GoldCard;
 import it.polimi.ingsw.model.card.ResourceCard;
-import it.polimi.ingsw.model.gamelogic.Color;
-import it.polimi.ingsw.model.gamelogic.Coordinates;
-import it.polimi.ingsw.model.gamelogic.GameState;
+import it.polimi.ingsw.model.gamelogic.*;
 import it.polimi.ingsw.view.mainview.View;
 
-import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.view.mainview.*;
 
 import java.io.IOException;
@@ -222,6 +219,10 @@ public class CLI implements View {
     @Override
     public void ShowDecks(GameState game) {
         ClearScreen();
+        GoalCard[] commonGoals = new GoalCard[2];
+        commonGoals[0] = game.getGameTable().getCommonGoal(0);
+        commonGoals[1] = game.getGameTable().getCommonGoal(1);
+        this.deckViewer.setCommonGoals(commonGoals);
         this.deckViewer.setDeck(game.getGameTable().getGoldDeck());
         this.deckViewer.show();
         this.deckViewer.setDeck(game.getGameTable().getResourceDeck());
@@ -232,8 +233,9 @@ public class CLI implements View {
      * displays the scoreboard
      */
     @Override
-    public void ShowScoreBoard() {
+    public void ShowScoreBoard(ScoreBoard scoreBoard) {
         ClearScreen();
+        this.scoreBoardViewer.set(scoreBoard);
         this.scoreBoardViewer.show();
     }
 
@@ -306,7 +308,7 @@ public class CLI implements View {
                     }
                 }
                 case "show decks" -> {ShowDecks(game);}
-                case "show scoreboard" -> {ShowScoreBoard();}
+                case "show scoreboard" -> {ShowScoreBoard(game.getGameTable().getScoreBoard());}
                 case "show card" -> {
                     if (lastPlayerField == null) {
                         System.out.println("Enter the player you want to see the card of:");
@@ -389,7 +391,7 @@ public class CLI implements View {
                     lastPlayerField = player;
                 }
                 case "show decks" -> {ShowDecks(game);}
-                case "show scoreboard" -> {ShowScoreBoard();}
+                case "show scoreboard" -> {ShowScoreBoard(game.getGameTable().getScoreBoard());}
                 case "show card" -> {
                     if (lastPlayerField == null) {
                         System.out.println("Enter the player you want to see the card of:");
@@ -488,7 +490,7 @@ public class CLI implements View {
                     lastPlayerField = player;
                 }
                 case "show decks" -> {ShowDecks(game);}
-                case "show scoreboard" -> {ShowScoreBoard();}
+                case "show scoreboard" -> {ShowScoreBoard(game.getGameTable().getScoreBoard());}
                 case "show card" -> {
                     if (lastPlayerField == null) {
                         System.out.println("Enter the player you want to see the card of:");

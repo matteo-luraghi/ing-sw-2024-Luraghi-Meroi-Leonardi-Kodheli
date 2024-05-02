@@ -10,6 +10,9 @@ public abstract class ViewScoreBoardFactory {
 
     protected ScoreBoard scoreBoard;
 
+    public void set(ScoreBoard scoreBoard) {
+        this.scoreBoard = scoreBoard;
+    }
     /**
      * abstract method to show the scoreboard
      */
