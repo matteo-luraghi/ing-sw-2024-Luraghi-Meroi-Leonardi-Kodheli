@@ -278,6 +278,9 @@ public class Controller {
                 }
             }
             if (player != null) {
+                game.getGameTable().getPlayerZones().get(player).draw(game.getGameTable().getGoldDeck(), 0);
+                game.getGameTable().getPlayerZones().get(player).draw(game.getGameTable().getResourceDeck(), 0);
+                game.getGameTable().getPlayerZones().get(player).draw(game.getGameTable().getResourceDeck(), 0);
                 c.sendMessageClient(new GoalCardRequest(privateGoals.get(player)));
             }
         }
