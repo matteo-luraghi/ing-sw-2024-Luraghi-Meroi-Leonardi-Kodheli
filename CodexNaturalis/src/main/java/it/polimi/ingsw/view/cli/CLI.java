@@ -76,12 +76,7 @@ public class CLI implements View {
      * method to clear the console if the program is being run in the windows console
      */
     private void ClearScreen () {
-        try {
-            if (System.getProperty("os.name").contains("Windows"))
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            else
-                Runtime.getRuntime().exec("clear");
-        } catch (IOException | InterruptedException ex) {}
+        System.out.print("\033c");
     }
 
     /**
@@ -337,9 +332,13 @@ public class CLI implements View {
                     int y = scanner.nextInt();
                     Coordinates where = new Coordinates(x,y);
 
-                    GameCard card;
+                    GameCard card = null;
+                    for (Coordinates c : game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().keySet()) {
+                        if (c.getX()==x && c.getY()==y) {
+                            card = game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(c);
+                        }
+                    }
                     if (x==0 && y == 0) {
-                        card = game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(where);
                         if (card == null) {
                             System.out.println(AnsiColors.ANSI_RED + "Invalid coordinate. Enter a new command." + AnsiColors.ANSI_RESET);
                         } else {
@@ -347,7 +346,6 @@ public class CLI implements View {
                             gameCardViewer.Show();
                         }
                     } else {
-                        card = (ResourceCard) game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(where);
                         if (card == null) {
                             System.out.println(AnsiColors.ANSI_RED + "Invalid coordinate. Enter a new command." + AnsiColors.ANSI_RESET);
                         } else {
@@ -420,9 +418,13 @@ public class CLI implements View {
                     int y = scanner.nextInt();
                     Coordinates where = new Coordinates(x,y);
 
-                    GameCard card;
+                    GameCard card = null;
+                    for (Coordinates c : game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().keySet()) {
+                        if (c.getX()==x && c.getY()==y) {
+                            card = game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(c);
+                        }
+                    }
                     if (x==0 && y == 0) {
-                        card = game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(where);
                         if (card == null) {
                             System.out.println(AnsiColors.ANSI_RED + "Invalid coordinate. Enter a new command." + AnsiColors.ANSI_RESET);
                         } else {
@@ -430,7 +432,6 @@ public class CLI implements View {
                             gameCardViewer.Show();
                         }
                     } else {
-                        card = (ResourceCard) game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(where);
                         if (card == null) {
                             System.out.println(AnsiColors.ANSI_RED + "Invalid coordinate. Enter a new command." + AnsiColors.ANSI_RESET);
                         } else {
@@ -465,7 +466,7 @@ public class CLI implements View {
                             int y = scanner.nextInt();
                             Coordinates where = new Coordinates(x, y);
                             //TODO add boolean isFront to playCardResponse
-                            client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(asking).getHand().get(card-1), where, isFront));
+                            client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(asking).getHand().get(card-1), where));
                         } else {
                             System.out.println(AnsiColors.ANSI_RED + "Invalid input. Enter a new command." + AnsiColors.ANSI_RESET);
                         }
@@ -529,9 +530,13 @@ public class CLI implements View {
                     int y = scanner.nextInt();
                     Coordinates where = new Coordinates(x,y);
 
-                    GameCard card;
+                    GameCard card = null;
+                    for (Coordinates c : game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().keySet()) {
+                        if (c.getX()==x && c.getY()==y) {
+                            card = game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(c);
+                        }
+                    }
                     if (x==0 && y == 0) {
-                        card = game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(where);
                         if (card == null) {
                             System.out.println(AnsiColors.ANSI_RED + "Invalid coordinate. Enter a new command." + AnsiColors.ANSI_RESET);
                         } else {
@@ -539,7 +544,6 @@ public class CLI implements View {
                             gameCardViewer.Show();
                         }
                     } else {
-                        card = (ResourceCard) game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(where);
                         if (card == null) {
                             System.out.println(AnsiColors.ANSI_RED + "Invalid coordinate. Enter a new command." + AnsiColors.ANSI_RESET);
                         } else {

@@ -44,7 +44,7 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
             }
 
             System.out.println("|"+this.card.getCorner(2).toString()+ AnsiColors.ANSI_WHITE + "         " + this.card.getCorner(3).toString()+ AnsiColors.ANSI_WHITE+"|");
-            System.out.println("|__________|"+AnsiColors.ANSI_RESET);
+            System.out.println("|___________|"+AnsiColors.ANSI_RESET);
         }  else if (this.card instanceof GoldCard) {
 
             if (!this.card.getIsFront()) {
@@ -55,7 +55,7 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
                 System.out.println("|     "+this.card.getKingdom().toString()+AnsiColors.ANSI_YELLOW+"     |");
 
                 System.out.println("|"+Resource.HIDDEN.toString()+AnsiColors.ANSI_YELLOW + "         " + Resource.HIDDEN.toString()+AnsiColors.ANSI_YELLOW+"|");
-                System.out.println("|__________|"+ AnsiColors.ANSI_RESET);
+                System.out.println("|___________|"+ AnsiColors.ANSI_RESET);
             } else {
                 System.out.println(" Gold      "+this.card.getKingdom().toString()+AnsiColors.ANSI_YELLOW);
                 System.out.println(" ____"+((GoldCard) this.card).getPointCondition().toString()+AnsiColors.ANSI_YELLOW+"_"+((GoldCard) this.card).getPoints()+"____");
@@ -66,7 +66,7 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
                 ArrayList<Resource> PlayableCondition = ((GoldCard) this.card).getPlayableCondition();
                 switch (PlayableCondition.size()) {
                     case 3 -> {System.out.println("|____"+PlayableCondition.get(0).toString()+AnsiColors.ANSI_YELLOW+PlayableCondition.get(1).toString()+AnsiColors.ANSI_YELLOW+PlayableCondition.get(2).toString()+AnsiColors.ANSI_YELLOW+"____|");}
-                    case 4 -> {System.out.println("|___"+PlayableCondition.get(0).toString()+AnsiColors.ANSI_YELLOW+PlayableCondition.get(1).toString()+AnsiColors.ANSI_YELLOW+"_"+PlayableCondition.get(2).toString()+AnsiColors.ANSI_YELLOW+PlayableCondition.get(3).toString()+AnsiColors.ANSI_YELLOW+"___|");}
+                    case 4 -> {System.out.println("|___"+PlayableCondition.get(0).toString()+AnsiColors.ANSI_YELLOW+PlayableCondition.get(1).toString()+"_"+AnsiColors.ANSI_YELLOW+"_"+PlayableCondition.get(2).toString()+AnsiColors.ANSI_YELLOW+PlayableCondition.get(3).toString()+AnsiColors.ANSI_YELLOW+"___|");}
                     case 5 -> {System.out.println("|___"+PlayableCondition.get(0).toString()+AnsiColors.ANSI_YELLOW+PlayableCondition.get(1).toString()+AnsiColors.ANSI_YELLOW+PlayableCondition.get(2).toString()+AnsiColors.ANSI_YELLOW+PlayableCondition.get(3).toString()+AnsiColors.ANSI_YELLOW+PlayableCondition.get(4).toString()+AnsiColors.ANSI_YELLOW+"___|");}
                 }
                 System.out.print(AnsiColors.ANSI_RESET);
@@ -82,7 +82,7 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
                 System.out.println("|     "+this.card.getKingdom().toString()+"     |");
 
                 System.out.println("|"+Resource.HIDDEN.toString()+AnsiColors.ANSI_RESET + "         " + Resource.HIDDEN.toString()+AnsiColors.ANSI_RESET+"|");
-                System.out.println("|__________|"+AnsiColors.ANSI_RESET);
+                System.out.println("|___________|"+AnsiColors.ANSI_RESET);
             } else {
                 System.out.println(" Resource  "+this.card.getKingdom().toString()+AnsiColors.ANSI_RESET);
                 if (((ResourceCard) this.card).getPoints()==0)
@@ -92,7 +92,7 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
                 System.out.println("|" + this.card.getCorner(0).toString()+AnsiColors.ANSI_RESET + "         " + this.card.getCorner(1).toString()+AnsiColors.ANSI_RESET + "|");
                 System.out.println("|           |");
                 System.out.println("|"+this.card.getCorner(2).toString()+AnsiColors.ANSI_RESET + "         " + this.card.getCorner(3).toString()+AnsiColors.ANSI_RESET+"|");
-                System.out.println("|__________|"+AnsiColors.ANSI_RESET);
+                System.out.println("|___________|"+AnsiColors.ANSI_RESET);
             }
         }
     }

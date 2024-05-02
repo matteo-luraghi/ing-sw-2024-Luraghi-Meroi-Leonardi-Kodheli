@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.card;
 
+import it.polimi.ingsw.view.mainview.AnsiColors;
+
 /**
  * Kingdom Enumeration
  * @author Gabriel Leonardi
@@ -14,11 +16,11 @@ public enum Kingdom {
 
     public String toString () {
         switch (this) {
-            case INSECT -> {return "I";}
-            case PLANT -> {return "P";}
-            case FUNGI -> {return "F";}
-            case ANIMAL -> {return "A";}
-            case STARTING -> {return "S";}
+            case INSECT -> {return AnsiColors.ANSI_PURPLE+"I";}
+            case PLANT -> {return AnsiColors.ANSI_GREEN+"P";}
+            case FUNGI -> {return AnsiColors.ANSI_RED+"F";}
+            case ANIMAL -> {return AnsiColors.ANSI_BLUE+"A";}
+            case STARTING -> {return AnsiColors.ANSI_WHITE+"S";}
             default -> {return "UNKNOWN";}
         }
     }
