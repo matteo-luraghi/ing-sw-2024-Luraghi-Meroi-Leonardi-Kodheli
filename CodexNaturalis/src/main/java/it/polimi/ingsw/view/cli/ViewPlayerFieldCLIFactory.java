@@ -132,7 +132,8 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
 
         System.out.println(this.player.toString()+"'s Resources:");
         for (Resource r : this.playerField.getResourceMap().keySet()) {
-            System.out.println("- " + r.toString() + ": #" + this.playerField.getResourceFromMap(r));
+            if (!r.equals(Resource.UNKNOWN))
+                System.out.println("- " + r.toString() + ": #" + this.playerField.getResourceFromMap(r)+AnsiColors.ANSI_RESET);
         }
     }
 
