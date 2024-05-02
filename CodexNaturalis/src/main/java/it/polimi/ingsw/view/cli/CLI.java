@@ -452,13 +452,23 @@ public class CLI implements View {
                     if (card < 1 || card > 3)
                         System.out.println(AnsiColors.ANSI_RED + "Invalid number. Enter a new command." + AnsiColors.ANSI_RESET);
                     else {
-                        System.out.println("Where do you want to play it?");
-                        System.out.println("Write X coordinate");
-                        int x = scanner.nextInt();
-                        System.out.println("Write Y coordinate");
-                        int y = scanner.nextInt();
-                        Coordinates where = new Coordinates(x, y);
-                        client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(asking).getHand().get(card-1), where));
+                        System.out.println("On which side do you want to play it?\nFRONT|BACK");
+                        boolean isFront;
+                        String isFrontString = scanner.nextLine();
+                        if (isFrontString.equalsIgnoreCase("front") || isFrontString.equalsIgnoreCase("back")) {
+                            isFront = isFrontString.equalsIgnoreCase("front");
+
+                            System.out.println("Where do you want to play it?");
+                            System.out.println("Write X coordinate");
+                            int x = scanner.nextInt();
+                            System.out.println("Write Y coordinate");
+                            int y = scanner.nextInt();
+                            Coordinates where = new Coordinates(x, y);
+                            //TODO add boolean isFront to playCardResponse
+                            client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(asking).getHand().get(card-1), where, isFront));
+                        } else {
+                            System.out.println(AnsiColors.ANSI_RED + "Invalid input. Enter a new command." + AnsiColors.ANSI_RESET);
+                        }
                     }
                 }
                 case "help" -> {ShowCommands(true);}
