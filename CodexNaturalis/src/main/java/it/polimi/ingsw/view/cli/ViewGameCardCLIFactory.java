@@ -79,7 +79,7 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
                 System.out.println(" Resource  "+this.card.getKingdom().toString()+AnsiColors.ANSI_RESET);
                 System.out.println(" ___________");
                 System.out.println("|" + Resource.HIDDEN.toString()+AnsiColors.ANSI_RESET + "         " + Resource.HIDDEN.toString()+AnsiColors.ANSI_RESET + "|");
-                System.out.println("|     "+this.card.getKingdom().toString()+"     |");
+                System.out.println("|     "+this.card.getKingdom().toString()+AnsiColors.ANSI_RESET+"     |");
 
                 System.out.println("|"+Resource.HIDDEN.toString()+AnsiColors.ANSI_RESET + "         " + Resource.HIDDEN.toString()+AnsiColors.ANSI_RESET+"|");
                 System.out.println("|___________|"+AnsiColors.ANSI_RESET);

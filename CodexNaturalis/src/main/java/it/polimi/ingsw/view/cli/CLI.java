@@ -328,23 +328,27 @@ public class CLI implements View {
             switch (command.toLowerCase()) {
                 case "show my goal card" -> {ShowPrivateGoal(asking, game);}
                 case "show field" -> {
-                    System.out.println("Which player do you want to see the field of?");
-                    for (Player p : game.getPlayers()) {
-                        System.out.print(p.toString()+"| ");
-                    }
-                    System.out.println();
-                    String nickname = scanner.nextLine();
+                    boolean correctInput = false;
                     Player player = null;
-                    for (Player p : game.getPlayers()) {
-                        if (p.getNickname().equals(nickname))
-                            player = p;
-                    }
-                    if (player == null)
-                        System.out.println(AnsiColors.ANSI_RED + "Not a valid nickname. Enter a new command." + AnsiColors.ANSI_RESET);
-                    else {
-                        ShowPlayerField(player, asking, game);
-                        lastPlayerField = player;
-                    }
+                    do {
+                        System.out.println("Which player do you want to see the field of?");
+                        for (Player p : game.getPlayers()) {
+                            System.out.print(p.toString()+"| ");
+                        }
+                        System.out.println();
+                        String nickname = scanner.nextLine();
+                        for (Player p : game.getPlayers()) {
+                            if (p.getNickname().equals(nickname)) {
+                                player = p;
+                                correctInput = true;
+                            }
+                        }
+                        if (player==null) {
+                            System.out.println(AnsiColors.ANSI_RED+"Nickname not valid. Try again."+AnsiColors.ANSI_RESET);
+                        }
+                    } while (!correctInput);
+                    ShowPlayerField(player, asking, game);
+                    lastPlayerField = player;
                 }
                 case "show decks" -> {ShowDecks(game);}
                 case "show scoreboard" -> {ShowScoreBoard(game.getGameTable().getScoreBoard());}
@@ -444,13 +448,25 @@ public class CLI implements View {
             switch (command.toLowerCase()) {
                 case "show my goal card" -> {ShowPrivateGoal(asking, game);}
                 case "show field" -> {
-                    System.out.println("Which player do you want to see the field of?");
-                    String nickname = scanner.nextLine();
+                    boolean correctInput = false;
                     Player player = null;
-                    for (Player p : game.getPlayers()) {
-                        if (p.getNickname().equals(nickname))
-                            player = p;
-                    }
+                    do {
+                        System.out.println("Which player do you want to see the field of?");
+                        for (Player p : game.getPlayers()) {
+                            System.out.print(p.toString()+"| ");
+                        }
+                        System.out.println();
+                        String nickname = scanner.nextLine();
+                        for (Player p : game.getPlayers()) {
+                            if (p.getNickname().equals(nickname)) {
+                                player = p;
+                                correctInput = true;
+                            }
+                        }
+                        if (player==null) {
+                            System.out.println(AnsiColors.ANSI_RED+"Nickname not valid. Try again."+AnsiColors.ANSI_RESET);
+                        }
+                    } while (!correctInput);
                     ShowPlayerField(player, asking, game);
                     lastPlayerField = player;
                 }
@@ -547,11 +563,32 @@ public class CLI implements View {
                         if (isFrontString.equalsIgnoreCase("front") || isFrontString.equalsIgnoreCase("back")) {
                             isFront = isFrontString.equalsIgnoreCase("front");
 
-                            System.out.println("Where do you want to play it?");
-                            System.out.println("Write X coordinate");
-                            int x = scanner.nextInt();
-                            System.out.println("Write Y coordinate");
-                            int y = scanner.nextInt();
+                            boolean correctInput = false;
+                            int x = 0;
+                            int y = 0;
+                            do {
+                                System.out.println("Insert x coordinate:");
+                                try {
+                                    String xString = scanner.nextLine();
+                                    x = Integer.parseInt(xString);
+                                    correctInput = true;
+                                } catch (NumberFormatException e) {
+                                    correctInput = false;
+                                    System.out.println(AnsiColors.ANSI_RED+"Invalid input. Enter a number."+AnsiColors.ANSI_RESET);
+                                }
+                            } while (!correctInput);
+                            correctInput = false;
+                            do {
+                                System.out.println("Insert y coordinate:");
+                                try {
+                                    String yString = scanner.nextLine();
+                                    y = Integer.parseInt(yString);
+                                    correctInput = true;
+                                } catch (NumberFormatException e) {
+                                    correctInput = false;
+                                    System.out.println(AnsiColors.ANSI_RED+"Invalid input. Enter a number."+AnsiColors.ANSI_RESET);
+                                }
+                            } while (!correctInput);
                             Coordinates where = new Coordinates(x, y);
                             //TODO add boolean isFront to playCardResponse
                             client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(asking).getHand().get(card-1), where));
@@ -579,12 +616,25 @@ public class CLI implements View {
             switch (command.toLowerCase()) {
                 case "show my goal card" -> {ShowPrivateGoal(asking, game);}
                 case "show field" -> {
-                    System.out.println("Which player do you want to see the field of?");
-                    String nickname = scanner.nextLine();
+                    boolean correctInput = false;
                     Player player = null;
-                    for (Player p : game.getPlayers()) {
-                        if (p.getNickname().equals(nickname)) player = p;
-                    }
+                    do {
+                        System.out.println("Which player do you want to see the field of?");
+                        for (Player p : game.getPlayers()) {
+                            System.out.print(p.toString()+"| ");
+                        }
+                        System.out.println();
+                        String nickname = scanner.nextLine();
+                        for (Player p : game.getPlayers()) {
+                            if (p.getNickname().equals(nickname)) {
+                                player = p;
+                                correctInput = true;
+                            }
+                        }
+                        if (player==null) {
+                            System.out.println(AnsiColors.ANSI_RED+"Nickname not valid. Try again."+AnsiColors.ANSI_RESET);
+                        }
+                    } while (!correctInput);
                     ShowPlayerField(player, asking, game);
                     lastPlayerField = player;
                 }
