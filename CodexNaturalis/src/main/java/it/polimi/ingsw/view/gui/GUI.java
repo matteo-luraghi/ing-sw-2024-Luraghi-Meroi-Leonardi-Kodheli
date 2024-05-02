@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
@@ -78,6 +79,11 @@ public class GUI implements View {
      */
     @Override
     public void ShowPrivateGoal(Player player, GameState game) {
+
+    }
+
+    @Override
+    public void ChooseStartingCardSide(StartingCard card) {
 
     }
 

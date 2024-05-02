@@ -58,7 +58,7 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
                 System.out.println("|___________|"+ AnsiColors.ANSI_RESET);
             } else {
                 System.out.println(" Gold      "+this.card.getKingdom().toString()+AnsiColors.ANSI_YELLOW);
-                System.out.println(" ____"+((GoldCard) this.card).getPointCondition().toString()+AnsiColors.ANSI_YELLOW+"_"+((GoldCard) this.card).getPoints()+"____");
+                System.out.println(" ____"+AnsiColors.ANSI_WHITE+((GoldCard) this.card).getPointCondition().toString()+AnsiColors.ANSI_YELLOW+"_"+AnsiColors.ANSI_WHITE+((GoldCard) this.card).getPoints()+AnsiColors.ANSI_YELLOW+"____");
                 System.out.println("|" + this.card.getCorner(0).toString()+AnsiColors.ANSI_YELLOW + "         " + this.card.getCorner(1).toString()+AnsiColors.ANSI_YELLOW + "|");
                 System.out.println("|           |");
                 System.out.println("|"+this.card.getCorner(2).toString()+AnsiColors.ANSI_YELLOW + "         " + this.card.getCorner(3).toString()+AnsiColors.ANSI_YELLOW+"|");
@@ -88,7 +88,7 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
                 if (((ResourceCard) this.card).getPoints()==0)
                     System.out.println(" ___________");
                 else
-                    System.out.println(" _____"+((ResourceCard) this.card).getPoints()+"_____");
+                    System.out.println(" _____"+AnsiColors.ANSI_WHITE+((ResourceCard) this.card).getPoints()+AnsiColors.ANSI_RESET+"_____");
                 System.out.println("|" + this.card.getCorner(0).toString()+AnsiColors.ANSI_RESET + "         " + this.card.getCorner(1).toString()+AnsiColors.ANSI_RESET + "|");
                 System.out.println("|           |");
                 System.out.println("|"+this.card.getCorner(2).toString()+AnsiColors.ANSI_RESET + "         " + this.card.getCorner(3).toString()+AnsiColors.ANSI_RESET+"|");

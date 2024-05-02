@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.mainview;
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
@@ -61,6 +62,8 @@ public interface View {
      * @param game in which the player is partecipating
      */
     void ShowPrivateGoal(Player player, GameState game);
+
+    void ChooseStartingCardSide(StartingCard card);
 
     /**
      * displays the two private goals the client has to choose between

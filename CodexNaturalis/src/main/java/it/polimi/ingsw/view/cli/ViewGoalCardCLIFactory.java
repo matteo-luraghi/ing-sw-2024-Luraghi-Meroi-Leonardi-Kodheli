@@ -54,7 +54,7 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
             ArrayList<Resource> requirements = ((ResourceGoalCard) this.card).getRequirements();
 
             System.out.print(AnsiColors.ANSI_WHITE);
-            System.out.println(" _____"+this.card.getPoints()+"_____ ");
+            System.out.println(" _____"+AnsiColors.ANSI_WHITE+this.card.getPoints()+AnsiColors.ANSI_RESET+"_____ ");
             System.out.println("|           |");
             switch (requirements.size()) {
                 case 2 -> {System.out.println("|    "+requirements.get(0).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(1).toString()+AnsiColors.ANSI_WHITE+"    |");}

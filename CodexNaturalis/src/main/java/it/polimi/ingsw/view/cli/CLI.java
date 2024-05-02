@@ -2,10 +2,7 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.connection.message.clientMessage.*;
-import it.polimi.ingsw.model.card.GameCard;
-import it.polimi.ingsw.model.card.GoalCard;
-import it.polimi.ingsw.model.card.GoldCard;
-import it.polimi.ingsw.model.card.ResourceCard;
+import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.model.gamelogic.*;
 import it.polimi.ingsw.view.mainview.View;
 
@@ -13,6 +10,7 @@ import it.polimi.ingsw.view.mainview.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -169,6 +167,40 @@ public class CLI implements View {
         this.goalCardViewer.Show();
     }
 
+    @Override
+    public void ChooseStartingCardSide(StartingCard card) {
+        if (card.getIsFront()) {
+            System.out.println("This is the front of your starting card:");
+            ShowCard(card);
+            card.flip();
+            System.out.println("This is the back of your starting card:");
+            ShowCard(card);
+            card.flip();
+        } else {
+            card.flip();
+            System.out.println("This is the front of your starting card:");
+            ShowCard(card);
+            card.flip();
+            System.out.println("This is the back of your starting card:");
+            ShowCard(card);
+        }
+        boolean correct = false;
+        while (!correct)
+            System.out.println("On which side do you want to play it?\nFRONT|BACK");
+            String side = scanner.nextLine();
+            if (side.equalsIgnoreCase("front") || side.equalsIgnoreCase("back")) {
+                correct = true;
+                //TODO need a playStartingCardRequest with argument the card and the side(boolean)
+            } else {
+                System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." +AnsiColors.ANSI_RESET);
+            }
+    }
+
+    public void ShowCard(GameCard card) {
+        this.gameCardViewer.SetCard(card);
+        this.gameCardViewer.Show();
+    }
+
     /**
      * displays the two private goals the client has to choose between
      * @param goalCards is an array of two goal cards
@@ -181,14 +213,26 @@ public class CLI implements View {
         this.goalCardViewer.SetCard(goalCards[1]);
         this.goalCardViewer.Show();
 
-        // TODO: you know (check user input)
-        System.out.println("Select a card:");
-        int result = scanner.nextInt();
+        boolean correctInput = false;
+        int result = 1;
+        do {
+            System.out.println("Select a card:");
+            try {
+                String choice = scanner.nextLine();
+                result = Integer.parseInt(choice);
+                correctInput = true;
+            } catch (NumberFormatException e) {
+                correctInput = false;
+                System.out.println(AnsiColors.ANSI_RED+"Invalid input. Insert a number."+AnsiColors.ANSI_RESET);
+            }
+        } while (!correctInput);
+
         if (result == 1) {
             client.sendMessageServer(new GoalCardResponse(goalCards[0]));
         } else if (result == 2) {
             client.sendMessageServer(new GoalCardResponse(goalCards[1]));
         }
+
     }
 
     /**
@@ -326,10 +370,32 @@ public class CLI implements View {
                     ShowPlayerField(lastPlayerField, asking, game);
                     System.out.println();
                     System.out.println("Which card do you want to see?");
-                    System.out.println("Insert x coordinate:");
-                    int x = scanner.nextInt();
-                    System.out.println("Insert y coordinate:");
-                    int y = scanner.nextInt();
+                    boolean correctInput = false;
+                    int x = 0;
+                    int y = 0;
+                    do {
+                        System.out.println("Insert x coordinate:");
+                        try {
+                            String xString = scanner.nextLine();
+                            x = Integer.parseInt(xString);
+                            correctInput = true;
+                        } catch (NumberFormatException e) {
+                            correctInput = false;
+                            System.out.println(AnsiColors.ANSI_RED+"Invalid input. Enter a number."+AnsiColors.ANSI_RESET);
+                        }
+                    } while (!correctInput);
+                    correctInput = false;
+                    do {
+                        System.out.println("Insert y coordinate:");
+                        try {
+                            String yString = scanner.nextLine();
+                            y = Integer.parseInt(yString);
+                            correctInput = true;
+                        } catch (NumberFormatException e) {
+                            correctInput = false;
+                            System.out.println(AnsiColors.ANSI_RED+"Invalid input. Enter a number."+AnsiColors.ANSI_RESET);
+                        }
+                    } while (!correctInput);
                     Coordinates where = new Coordinates(x,y);
 
                     GameCard card = null;
@@ -412,10 +478,32 @@ public class CLI implements View {
                     ShowPlayerField(lastPlayerField, asking, game);
                     System.out.println();
                     System.out.println("Which card do you want to see?");
-                    System.out.println("Insert x coordinate:");
-                    int x = scanner.nextInt();
-                    System.out.println("Insert y coordinate:");
-                    int y = scanner.nextInt();
+                    boolean correctInput = false;
+                    int x = 0;
+                    int y = 0;
+                    do {
+                        System.out.println("Insert x coordinate:");
+                        try {
+                            String xString = scanner.nextLine();
+                            x = Integer.parseInt(xString);
+                            correctInput = true;
+                        } catch (NumberFormatException e) {
+                            correctInput = false;
+                            System.out.println(AnsiColors.ANSI_RED+"Invalid input. Enter a number."+AnsiColors.ANSI_RESET);
+                        }
+                    } while (!correctInput);
+                    correctInput = false;
+                    do {
+                        System.out.println("Insert y coordinate:");
+                        try {
+                            String yString = scanner.nextLine();
+                            y = Integer.parseInt(yString);
+                            correctInput = true;
+                        } catch (NumberFormatException e) {
+                            correctInput = false;
+                            System.out.println(AnsiColors.ANSI_RED+"Invalid input. Enter a number."+AnsiColors.ANSI_RESET);
+                        }
+                    } while (!correctInput);
                     Coordinates where = new Coordinates(x,y);
 
                     GameCard card = null;
@@ -524,10 +612,32 @@ public class CLI implements View {
                     ShowPlayerField(lastPlayerField, asking, game);
                     System.out.println();
                     System.out.println("Which card do you want to see?");
-                    System.out.println("Insert x coordinate:");
-                    int x = scanner.nextInt();
-                    System.out.println("Insert y coordinate:");
-                    int y = scanner.nextInt();
+                    boolean correctInput = false;
+                    int x = 0;
+                    int y = 0;
+                    do {
+                        System.out.println("Insert x coordinate:");
+                        try {
+                            String xString = scanner.nextLine();
+                            x = Integer.parseInt(xString);
+                            correctInput = true;
+                        } catch (NumberFormatException e) {
+                            correctInput = false;
+                            System.out.println(AnsiColors.ANSI_RED+"Invalid input. Enter a number."+AnsiColors.ANSI_RESET);
+                        }
+                    } while (!correctInput);
+                    correctInput = false;
+                    do {
+                        System.out.println("Insert y coordinate:");
+                        try {
+                            String yString = scanner.nextLine();
+                            y = Integer.parseInt(yString);
+                            correctInput = true;
+                        } catch (NumberFormatException e) {
+                            correctInput = false;
+                            System.out.println(AnsiColors.ANSI_RED+"Invalid input. Enter a number."+AnsiColors.ANSI_RESET);
+                        }
+                    } while (!correctInput);
                     Coordinates where = new Coordinates(x,y);
 
                     GameCard card = null;

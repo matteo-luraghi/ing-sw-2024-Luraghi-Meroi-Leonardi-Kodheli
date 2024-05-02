@@ -34,4 +34,20 @@ public enum Resource {
             default -> {return "UNKNOWN";}
         }
     }
+
+    public String toStringExt() {
+        switch (this) {
+            case ANIMAL -> {return AnsiColors.ANSI_CYAN+"Animal (A)";}
+            case BLANK -> {return AnsiColors.ANSI_WHITE+"Blank (B)";}
+            case FUNGI -> {return AnsiColors.ANSI_RED+"Fungi (F)";}
+            case PLANT -> {return AnsiColors.ANSI_GREEN+"Plant (P)";}
+            case HIDDEN -> {return AnsiColors.ANSI_BLACK+"Hidden (H)";}
+            case INSECT -> {return AnsiColors.ANSI_PURPLE+"Insect (I)";}
+            case POTION -> {return AnsiColors.ANSI_YELLOW+"Potion (T)";}
+            case SCROLL -> {return AnsiColors.ANSI_YELLOW+"Scroll (S)";}
+            case COVERED -> {return AnsiColors.ANSI_WHITE+"Covered (C)";}
+            case FEATHER -> {return AnsiColors.ANSI_YELLOW+"Feather (R)";}
+            default -> {return "UNKNOWN";}
+        }
+    }
 }
