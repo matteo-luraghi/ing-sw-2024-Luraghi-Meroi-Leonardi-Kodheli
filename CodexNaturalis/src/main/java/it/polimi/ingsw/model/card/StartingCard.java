@@ -35,8 +35,10 @@ public class StartingCard extends GameCard{
     @Override
     public Resource getCorner(int corner) {
         if(this.getIsFront()) {
-            super.getCorner(corner);
+
+            return super.getCorner(corner);
         }
+
         return this.backCorners[corner];
     }
 

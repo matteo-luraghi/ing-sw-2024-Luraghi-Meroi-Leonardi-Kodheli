@@ -113,7 +113,7 @@ public class PlayerField implements Serializable {
      * @param card the card you want to play
      * @return the number of points that the card has gotten (-1 for unplaced card)
      */
-
+//Mostly, have still to check properly limit cases
     public int Play (Coordinates where, ResourceCard card) {
 
         //better if we check
@@ -123,6 +123,7 @@ public class PlayerField implements Serializable {
         }
 
         gameZone.put(where, card);
+        hand.remove(card);
         //Add the visible resources to the resourceMap
         if (!card.getIsFront()) {
             Resource permanentResource = getResource(card);
@@ -153,10 +154,10 @@ public class PlayerField implements Serializable {
 
             } else if (x == cardX + 1 && y == cardY - 1) { //BottomRight
 
-                if (!gameZone.get(coordinate).getCorner(0).equals(Resource.BLANK))
-                    resourceMap.put(gameZone.get(coordinate).getCorner(0), resourceMap.get(gameZone.get(coordinate).getCorner(0)) - 1);
+                if (!gameZone.get(coordinate).getCorner(3).equals(Resource.BLANK))
+                    resourceMap.put(gameZone.get(coordinate).getCorner(3), resourceMap.get(gameZone.get(coordinate).getCorner(3)) - 1);
 
-                gameZone.get(coordinate).coverCorner(0);
+                gameZone.get(coordinate).coverCorner(3);
 
             } else if (x == cardX - 1 && y == cardY - 1) { //BottomLeft
 
@@ -167,10 +168,10 @@ public class PlayerField implements Serializable {
 
             } else if (x == cardX - 1 && y == cardY + 1) { //TopLeft
 
-                if (!gameZone.get(coordinate).getCorner(3).equals(Resource.BLANK))
-                    resourceMap.put(gameZone.get(coordinate).getCorner(3), resourceMap.get(gameZone.get(coordinate).getCorner(3)) - 1);
+                if (!gameZone.get(coordinate).getCorner(0).equals(Resource.BLANK))
+                    resourceMap.put(gameZone.get(coordinate).getCorner(0), resourceMap.get(gameZone.get(coordinate).getCorner(0)) - 1);
 
-                gameZone.get(coordinate).coverCorner(3);
+                gameZone.get(coordinate).coverCorner(0);
 
             }
         }
@@ -210,14 +211,27 @@ public class PlayerField implements Serializable {
      * @return true if it's playable, false if it is not
      */
     public boolean IsPlayable (Coordinates where, ResourceCard card) {
-        if (gameZone.containsKey(where))
+        if(!hand.contains(card)) {
+
+            System.err.println("Card not in HAND");
             return false;
+        }
+        if (gameZone.containsKey(where)) {
+            System.err.println("coordinate already occupied");
+            return false;
+        }
         if (card.getIsGold() && card.getIsFront()) {
             if (!checkConditions((GoldCard) card))
+            {
+                System.err.println("condition check failed");
                 return false;
+            }
         }
         if (Math.abs(where.getY() + where.getX()) % 2 == 1) {
-            return false;
+
+                System.err.println("math check failed");
+                return false;
+
         }
         //booleans that describe whether a nearby card exists and whether the corresponding corner is hidden or not
         boolean canTR = true;
@@ -239,18 +253,23 @@ public class PlayerField implements Serializable {
 
             if (x == cardX+1 && y == cardY+1) {
                 existsTR = true;
-                canTR = !card.getCorner(1).equals(Resource.HIDDEN);
+                canTR = !gameZone.get(coordinate).getCorner(2).equals(Resource.HIDDEN);
+               // System.out.println("1 "+canTR+" "+existsTR);
             } else if (x == cardX+1 && y == cardY-1) {
                 existsBR = true;
-                canBR  =!card.getCorner(3).equals(Resource.HIDDEN);
+                canBR  =!gameZone.get(coordinate).getCorner(3).equals(Resource.HIDDEN);
+             //   System.out.println("2 "+canBR+" "+existsBR);
             } else if (x == cardX-1 && y == cardY+1) {
                 existsTL = true;
-                canTL  =!card.getCorner(0).equals(Resource.HIDDEN);
+                canTL  =!gameZone.get(coordinate).getCorner(0).equals(Resource.HIDDEN);
+               // System.out.println("3 "+canTL+" "+existsTL);
             } else if (x == cardX-1 && y == cardY-1) {
                 existsBL = true;
-                canBL  =!card.getCorner(2).equals(Resource.HIDDEN);
+                canBL  =!gameZone.get(coordinate).getCorner(1).equals(Resource.HIDDEN);
+                //System.out.println("4 "+canBL+" "+existsBL);
             }
         }
+
         return (canTR && canBR && canTL && canBL && (existsTR || existsBR || existsTL || existsBL));
     }
 
