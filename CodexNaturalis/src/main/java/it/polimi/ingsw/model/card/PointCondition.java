@@ -18,6 +18,7 @@ public enum PointCondition {
             case POTION -> {return "T";}
             case CORNER -> {return "C";}
             case FEATHER -> {return "R";}
+            case NORMAL -> {return "N";}
             default -> {return "UNKNOWN";}
         }
     }

@@ -555,7 +555,8 @@ public class CLI implements View {
                     ShowPlayerField(asking, asking, game);
                     System.out.println();
                     System.out.println("Which of your hand's cards?\n1|2|3");
-                    int card = scanner.nextInt();
+                    String cardString = scanner.nextLine();
+                    int card = Integer.parseInt(cardString);
                     if (card < 1 || card > 3)
                         System.out.println(AnsiColors.ANSI_RED + "Invalid number. Enter a new command." + AnsiColors.ANSI_RESET);
                     else {
