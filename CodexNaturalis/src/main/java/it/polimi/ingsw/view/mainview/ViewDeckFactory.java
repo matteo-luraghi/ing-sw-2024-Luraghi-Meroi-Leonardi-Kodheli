@@ -52,4 +52,6 @@ public abstract class ViewDeckFactory {
     public void setGameCardViewer(ViewGoalCardFactory goalCardViewer) {
         this.goalCardViewer = goalCardViewer;
     }
+
+    public abstract void showCommonGoals();
 }

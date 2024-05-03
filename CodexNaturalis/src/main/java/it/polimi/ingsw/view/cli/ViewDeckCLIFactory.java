@@ -21,13 +21,6 @@ public class ViewDeckCLIFactory extends ViewDeckFactory {
      */
     @Override
     public void show() {
-        System.out.println();
-        System.out.println("Common Goals:");
-        this.goalCardViewer.SetCard(this.commonGoals[0]);
-        this.goalCardViewer.Show();
-        this.goalCardViewer.SetCard(this.commonGoals[1]);
-        this.goalCardViewer.Show();
-        System.out.println();
 
         if (this.deck.getCards().isEmpty()) {
             if (this.deck.getCards().element() instanceof GoldCard) {
@@ -87,5 +80,19 @@ public class ViewDeckCLIFactory extends ViewDeckFactory {
             gameCardViewer.Show();
         }
 
+    }
+
+    /**
+     * method to display the game's common goals
+     */
+    @Override
+    public void showCommonGoals() {
+        System.out.println();
+        System.out.println("Common Goals:");
+        this.goalCardViewer.SetCard(this.commonGoals[0]);
+        this.goalCardViewer.Show();
+        this.goalCardViewer.SetCard(this.commonGoals[1]);
+        this.goalCardViewer.Show();
+        System.out.println();
     }
 }

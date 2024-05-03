@@ -15,4 +15,9 @@ public class ViewDeckGUIFactory extends ViewDeckFactory {
     public void show() {
 
     }
+
+    @Override
+    public void showCommonGoals() {
+
+    }
 }

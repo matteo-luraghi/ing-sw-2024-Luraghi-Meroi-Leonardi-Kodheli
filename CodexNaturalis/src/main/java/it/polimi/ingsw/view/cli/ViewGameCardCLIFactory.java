@@ -43,6 +43,8 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
                     case 2 -> {System.out.println("|    " + PermanentResources[0].toString() + AnsiColors.ANSI_WHITE + " " + PermanentResources[1].toString() + AnsiColors.ANSI_WHITE + "    |");}
                     case 3 -> {System.out.println("|    " + PermanentResources[0].toString() + AnsiColors.ANSI_WHITE + PermanentResources[1].toString() + AnsiColors.ANSI_WHITE + PermanentResources[2].toString() + AnsiColors.ANSI_WHITE + "    |");}
                 }
+            } else {
+                System.out.println("|           |");
             }
 
             System.out.println("|"+this.card.getCorner(2).toString()+ AnsiColors.ANSI_WHITE + "         " + this.card.getCorner(3).toString()+ AnsiColors.ANSI_WHITE+"|");
