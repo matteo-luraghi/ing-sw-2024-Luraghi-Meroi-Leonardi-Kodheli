@@ -31,7 +31,7 @@ public class Deck implements Serializable {
         JsonParser parser = new JsonParser();
         if(!isGold){
             for(int i=1; i<=40; i++) {
-                String cardPath = "./src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
+                String cardPath = "./CodexNaturalis/src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
                 // initialize the json file reader and save the card
                 try(Reader reader = new FileReader(cardPath)) {
                     JsonObject parsedResourceCard = parser.parse(reader).getAsJsonObject();
@@ -42,7 +42,7 @@ public class Deck implements Serializable {
             }
         } else {
             for(int i=1; i<=40; i++) {
-                String cardPath = "./src/main/resources/CardsJSON/goldCards/goldCard" + i + ".json";
+                String cardPath = "./CodexNaturalis/src/main/resources/CardsJSON/goldCards/goldCard" + i + ".json";
                 // initialize the json file reader and save the card
                 try(Reader reader = new FileReader(cardPath)) {
                     JsonObject parsedGoldCard = parser.parse(reader).getAsJsonObject();
@@ -98,8 +98,12 @@ public class Deck implements Serializable {
             if(cardToDraw!=null) {
                 setUncoveredCard(which); //no need to call this if the uncovered card is already absent!
             }
+
+
         }
-        cardToDraw.flip();
+        if(cardToDraw!=null) {
+            cardToDraw.flip();
+        }
         return cardToDraw;
     }
 

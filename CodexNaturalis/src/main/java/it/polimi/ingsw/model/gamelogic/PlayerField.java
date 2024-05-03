@@ -153,6 +153,14 @@ public class PlayerField implements Serializable {
         {
             return -1;
         }
+        for(ResourceCard cardInHand: hand)
+        {
+            if(cardInHand.equals(card))
+            {
+                card=cardInHand;
+                break;
+            }
+        }
 
         gameZone.put(where, card);
         hand.remove(card);
@@ -243,10 +251,18 @@ public class PlayerField implements Serializable {
      * @return true if it's playable, false if it is not
      */
     public boolean IsPlayable (Coordinates where, ResourceCard card) {
-        if(!hand.contains(card)) {
-
-            System.err.println("Card not in HAND");
-            return false;
+        boolean foundCard=false;
+        for(ResourceCard cardInHand: getHand())
+        {
+            if(cardInHand.equals(card)) {
+                foundCard = true;
+                break;
+            }
+        }
+        if(!foundCard)
+        {
+            System.out.println("CARD not in Hand");
+            return  false;
         }
         if (gameZone.containsKey(where)) {
             System.err.println("coordinate already occupied");
