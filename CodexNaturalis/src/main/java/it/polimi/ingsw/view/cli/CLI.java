@@ -190,7 +190,8 @@ public class CLI implements View {
             String side = scanner.nextLine();
             if (side.equalsIgnoreCase("front") || side.equalsIgnoreCase("back")) {
                 correct = true;
-                //TODO need a playStartingCardRequest with argument the card and the side(boolean)
+                boolean isFront = side.equalsIgnoreCase("front");
+                client.sendMessageServer(new PlayStartingCardResponse(card, isFront));
             } else {
                 System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." +AnsiColors.ANSI_RESET);
             }
