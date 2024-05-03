@@ -109,8 +109,13 @@ public class PlayerField implements Serializable {
      * @param from which deck (Resource or Gold cards) to draw from
      */
     private void drawFromDeck (Deck from) {
-        ResourceCard drawn = from.DrawFromDeck();
-        hand.add(drawn);
+        ResourceCard card = from.DrawFromDeck();
+        /*System.out.println("points: "+ card.getPoints());
+        System.out.println("isgold: "+ card.getIsGold());
+        System.out.println("kingdom: "+ card.getKingdom());
+        System.out.println("isfront: "+ card.getIsFront());
+        System.out.println(card.getCorner(0)+" "+card.getCorner(1)+" "+card.getCorner(2)+" "+card.getCorner(3));
+        */hand.add(card);
     }
 
     /**
@@ -119,8 +124,15 @@ public class PlayerField implements Serializable {
      * @param which whether to draw from the covered cards in the deck or from the uncovered ones (0 for the first uncovered, 1 for the second)
      */
     private void drawFromUncovered (Deck from, int which) {
-        ResourceCard drawn = from.DrawFromUncovered(which);
-        hand.add(drawn);
+        ResourceCard card = from.DrawFromUncovered(which);
+      /*  System.out.println("points: "+ card.getPoints());
+        System.out.println("isgold: "+ card.getIsGold());
+        System.out.println("kingdom: "+ card.getKingdom());
+        System.out.println("isfront: "+ card.getIsFront());
+        System.out.println(card.getCorner(0)+" "+card.getCorner(1)+" "+card.getCorner(2)+" "+card.getCorner(3));
+       */ hand.add(card);
+
+
     }
 
     /**
@@ -163,7 +175,7 @@ public class PlayerField implements Serializable {
         }
 
         gameZone.put(where, card);
-        hand.remove(card);
+      /*  hand.remove(card);
         //Add the visible resources to the resourceMap
         if (!card.getIsFront()) {
             Resource permanentResource = getResource(card);
@@ -175,7 +187,7 @@ public class PlayerField implements Serializable {
                     resourceMap.put(resource, resourceMap.get(resource) + 1);
                 }
             }
-        }
+        }*/
 
         int cardX = where.getX();
         int cardY = where.getY();
@@ -251,19 +263,25 @@ public class PlayerField implements Serializable {
      * @return true if it's playable, false if it is not
      */
     public boolean IsPlayable (Coordinates where, ResourceCard card) {
-        boolean foundCard=false;
+     /*   boolean foundCard=false;
         for(ResourceCard cardInHand: getHand())
         {
-            if(cardInHand.equals(card)) {
+            if(cardInHand.getIsGold()==card.getIsGold() && cardInHand.getKingdom()==card.getKingdom()) {
+
                 foundCard = true;
                 break;
             }
         }
         if(!foundCard)
         {
+            System.out.println("points: "+ card.getPoints());
+            System.out.println("isgold: "+ card.getIsGold());
+            System.out.println("kingdom: "+ card.getKingdom());
+            System.out.println("isfront: "+ card.getIsFront());
+            System.out.println(card.getCorner(0)+" "+card.getCorner(1)+" "+card.getCorner(2)+" "+card.getCorner(3));
             System.out.println("CARD not in Hand");
             return  false;
-        }
+        }*/
         if (gameZone.containsKey(where)) {
             System.err.println("coordinate already occupied");
             return false;
