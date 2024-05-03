@@ -244,13 +244,14 @@ public class Controller {
         ArrayList<Player> players = new ArrayList<>();
         Map<Player, PlayerField> playerZones = new HashMap<>();
         Map<Player, GoalCard[]> privateGoals = new HashMap<>();
+        Map<Player, StartingCard> startingCards = new HashMap<>();
 
         for (ConnectionHandler c : getHandlers()) {
             Player player = new Player(c.getClientNickname(), c.getClientColor());
             players.add(player);
             // randomly pick a starting card for the user
-            StartingCard startingCard = startingCardsQueue.poll();
-            PlayerField field = new PlayerField(startingCard);
+            startingCards.put(player, startingCardsQueue.poll());
+            PlayerField field = new PlayerField();
             playerZones.put(player, field);
             // make the user choose a goal card
             GoalCard[] goalCardsOptions = new GoalCard[2];
@@ -281,11 +282,34 @@ public class Controller {
                 game.getGameTable().getPlayerZones().get(player).draw(game.getGameTable().getGoldDeck(), 0);
                 game.getGameTable().getPlayerZones().get(player).draw(game.getGameTable().getResourceDeck(), 0);
                 game.getGameTable().getPlayerZones().get(player).draw(game.getGameTable().getResourceDeck(), 0);
+                c.sendMessageClient(new PlayStartingCardRequest(startingCards.get(player)));
                 c.sendMessageClient(new GoalCardRequest(privateGoals.get(player)));
             }
         }
     }
 
+    /**
+     * Sets the chosen startingCard as the startingCard for a certain player
+     * @param card the starting card chosen
+     * @param isFront the way it needs to face
+     * @param connectionHandler the player that is sending the request
+     */
+    public void setStartingCard(StartingCard card, boolean isFront, ConnectionHandler connectionHandler){
+        Player currentPlayer = null;
+        for(Player p : game.getPlayers()){
+            if(p.getNickname().equals(connectionHandler.getClientNickname())) {
+                currentPlayer = p;
+            }
+        }
+        if(currentPlayer == null){
+            System.err.println("Didn't find a player with your nickname");
+            return;
+        }
+        if(card.getIsFront() != isFront){
+            card.flip();
+        }
+        game.getGameTable().getPlayerZones().get(currentPlayer).addStartingCard(card);
+    }
     /**
      * Sets the chosen goal card as a private goal for a certain player
      * @param goal the goal card chosen
