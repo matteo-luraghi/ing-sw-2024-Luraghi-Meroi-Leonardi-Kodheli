@@ -334,6 +334,7 @@ public class CLI implements View {
                 case "show decks" -> {ShowDecks(game);}
                 case "show scoreboard" -> {ShowScoreBoard(game.getGameTable().getScoreBoard());}
                 case "show card" -> {commandShowCard(game, asking, lastPlayerField);}
+                case "show legend" -> {showLegend();}
                 case "help" -> {ShowCommands(false);}
                 default -> {System.out.println(AnsiColors.ANSI_RED + "Not a valid command, type 'help' to show all the commands available."  + AnsiColors.ANSI_RESET);}
             }
@@ -380,12 +381,12 @@ public class CLI implements View {
                         isFront = isFrontString.equalsIgnoreCase("front");
 
                         Coordinates where = getCardCoordinatesFromInput();
-                        //TODO add boolean isFront to playCardResponse
                         client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(asking).getHand().get(card-1), where, isFront));
                     } else {
                         System.out.println(AnsiColors.ANSI_RED + "Invalid input. Enter a new command." + AnsiColors.ANSI_RESET);
                     }
                 }
+                case "show legend" -> {showLegend();}
                 case "help" -> {ShowCommands(true);}
                 default -> {System.out.println(AnsiColors.ANSI_RED + "Not a valid command, type 'help' to show all the commands available."  + AnsiColors.ANSI_RESET);}
             }
@@ -430,6 +431,7 @@ public class CLI implements View {
                         System.out.println(AnsiColors.ANSI_RED + "Invalid input. Enter a new command." + AnsiColors.ANSI_RESET);
                     }
                 }
+                case "show legend" -> {showLegend();}
                 case "help" -> {ShowCommands(false);}
                 default -> {System.out.println(AnsiColors.ANSI_RED + "Not a valid command, type 'help' to show all the commands available."  + AnsiColors.ANSI_RESET);}
             }
@@ -448,6 +450,7 @@ public class CLI implements View {
         System.out.println("show decks        -> displays the decks, the uncovered cards you can draw from and the common goals");
         System.out.println("show scoreboard   -> displays the game's scoreboard");
         System.out.println("show card         -> displays a specific card");
+        System.out.println("show legend       -> displays the game's legend");
         if (isMyTurn) {
             if (playing) {
                 System.out.println("play card         -> allows you to play a card from your hand onto your field");
@@ -455,6 +458,42 @@ public class CLI implements View {
                 System.out.println("draw card         -> allows you to draw a card from the uncovered ones or from the decks");
             }
         }
+    }
+
+    /**
+     * method to show what all the symbols mean
+     */
+    private void showLegend() {
+        ClearScreen();
+        System.out.println("Resources' Legend: ");
+        System.out.println("- " + Resource.ANIMAL.toStringExt()+AnsiColors.ANSI_RESET);
+        System.out.println("- " + Resource.PLANT.toStringExt()+AnsiColors.ANSI_RESET);
+        System.out.println("- " + Resource.INSECT.toStringExt()+AnsiColors.ANSI_RESET);
+        System.out.println("- " + Resource.FUNGI.toStringExt()+AnsiColors.ANSI_RESET);
+        System.out.println("- " + Resource.POTION.toStringExt()+AnsiColors.ANSI_RESET);
+        System.out.println("- " + Resource.SCROLL.toStringExt()+AnsiColors.ANSI_RESET);
+        System.out.println("- " + Resource.FEATHER.toStringExt()+AnsiColors.ANSI_RESET);
+        System.out.println("- " + Resource.BLANK.toStringExt()+AnsiColors.ANSI_RESET);
+        System.out.println("- " + Resource.HIDDEN.toStringExt()+AnsiColors.ANSI_RESET);
+        System.out.println("- " + Resource.COVERED.toStringExt()+AnsiColors.ANSI_RESET);
+        System.out.println();
+        System.out.println("Card's Legend: ");
+        System.out.println("Every card has a resource on every corner and some have some in the center.");
+        System.out.println("The goal cards display the resources needed for gaining points.");
+        System.out.println("Some cards give points when played. The points are written on top of the card, adjacent to their point condition:");
+        System.out.println("- " + PointCondition.NORMAL.toStringExt());
+        System.out.println("- " + PointCondition.POTION.toStringExt());
+        System.out.println("- " + PointCondition.SCROLL.toStringExt());
+        System.out.println("- " + PointCondition.FEATHER.toStringExt());
+        System.out.println("- " + PointCondition.CORNER.toStringExt());
+        System.out.println();
+        System.out.println("In order to play gold cards, you need to satisfy the playing requirements. You can find thw resources needed to play the card in the bottom of it.");
+        System.out.println("You can play cards either on their front or on their back. The back of the cards has all blank corners and provides one permanent resource corresponding to it's kingdom.");
+        System.out.println();
+        System.out.println("Deck's Legend:");
+        System.out.println("There are two decks, one resource cards and one of gold cards.");
+        System.out.println("Every deck has also two uncovered cards you can draw from.");
+        System.out.println("Lastly, next to the decks there are the two common goals.");
     }
 
     /**
