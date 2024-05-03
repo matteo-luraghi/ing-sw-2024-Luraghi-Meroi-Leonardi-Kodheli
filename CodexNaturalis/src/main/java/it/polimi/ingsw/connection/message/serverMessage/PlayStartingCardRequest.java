@@ -1,8 +1,6 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
-import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.card.StartingCard;
-import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
