@@ -263,25 +263,11 @@ public class PlayerField implements Serializable {
      * @return true if it's playable, false if it is not
      */
     public boolean IsPlayable (Coordinates where, ResourceCard card) {
-     /*   boolean foundCard=false;
-        for(ResourceCard cardInHand: getHand())
+        if(!Util.checkIfResourceCardIsPresent(hand, card))
         {
-            if(cardInHand.getIsGold()==card.getIsGold() && cardInHand.getKingdom()==card.getKingdom()) {
-
-                foundCard = true;
-                break;
-            }
-        }
-        if(!foundCard)
-        {
-            System.out.println("points: "+ card.getPoints());
-            System.out.println("isgold: "+ card.getIsGold());
-            System.out.println("kingdom: "+ card.getKingdom());
-            System.out.println("isfront: "+ card.getIsFront());
-            System.out.println(card.getCorner(0)+" "+card.getCorner(1)+" "+card.getCorner(2)+" "+card.getCorner(3));
             System.out.println("CARD not in Hand");
             return  false;
-        }*/
+        }
         if (gameZone.containsKey(where)) {
             System.err.println("coordinate already occupied");
             return false;

@@ -285,4 +285,37 @@ public class Util {
         return new PositionGoalCard(points,direction,requirements);
 
     }
+
+    /**
+     * Utility method to check if a card is contained in a list of cards
+     * @param cards The list of cards
+     * @param cardToCheck The card that needs to be checked
+     * @return true if the card is found, false otherwise
+     */
+    public static boolean checkIfResourceCardIsPresent(ArrayList<ResourceCard> cards, ResourceCard cardToCheck){
+        for(ResourceCard current : cards){
+            boolean correct = true;
+            if(current.getKingdom() != cardToCheck.getKingdom() || current.getIsGold() != cardToCheck.getIsGold() || current.getPoints() != cardToCheck.getPoints())
+                correct = false;
+            for(int i = 0; i < 4  && correct; i++){
+                if(current.getCorner(i) != cardToCheck.getCorner(i))
+                    correct = false;
+            }
+            if(correct && cardToCheck.getIsGold()){
+                GoldCard c1, c2;
+                c1 = (GoldCard) cardToCheck;
+                c2 = (GoldCard) current;
+                if(c1.getPointCondition() != c2.getPointCondition() || c1.getPlayableCondition().size() != c2.getPlayableCondition().size())
+                    correct = false;
+
+                //Playable conditions have the same size
+                for(int i = 0; i < c1.getPlayableCondition().size() && correct; i++){
+                    if(c1.getPlayableCondition().get(i) != c2.getPlayableCondition().get(i))
+                        correct = false;
+                }
+            }
+            if(correct) return true;
+        }
+        return false;
+    }
 }
