@@ -185,7 +185,7 @@ public class CLI implements View {
             ShowCard(card);
         }
         boolean correct = false;
-        while (!correct)
+        while (!correct) {
             System.out.println("On which side do you want to play it?\nFRONT|BACK");
             String side = scanner.nextLine();
             if (side.equalsIgnoreCase("front") || side.equalsIgnoreCase("back")) {
@@ -194,6 +194,7 @@ public class CLI implements View {
             } else {
                 System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." +AnsiColors.ANSI_RESET);
             }
+        }
     }
 
     public void ShowCard(GameCard card) {
