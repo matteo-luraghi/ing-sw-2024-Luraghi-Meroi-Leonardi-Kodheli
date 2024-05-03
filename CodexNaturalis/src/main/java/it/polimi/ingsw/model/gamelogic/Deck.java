@@ -90,15 +90,17 @@ public class Deck implements Serializable {
      * @return ResourceCard chosen
      */
     private ResourceCard Draw (int which) throws NullPointerException{
+        ResourceCard cardToDraw;
         if (which == 0) {//drawing from deck
-            return cards.poll(); //returns null if the deck is empty
+            cardToDraw = cards.poll(); //returns null if the deck is empty
         } else { //drawing from uncovered cards
-            ResourceCard drawn = uncoveredCards[which-1];
-            if(drawn!=null) {
+            cardToDraw = uncoveredCards[which-1];
+            if(cardToDraw!=null) {
                 setUncoveredCard(which); //no need to call this if the uncovered card is already absent!
             }
-            return drawn;
         }
+        cardToDraw.flip();
+        return cardToDraw;
     }
 
     /**
