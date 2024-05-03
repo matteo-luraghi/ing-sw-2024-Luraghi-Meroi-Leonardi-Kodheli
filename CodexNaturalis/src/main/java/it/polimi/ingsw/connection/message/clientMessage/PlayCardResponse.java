@@ -17,14 +17,15 @@ public class PlayCardResponse extends ClientMessage {
     private static final long serialVersionUID = -7671795239367074793L;
     private final ResourceCard card;
     private final Coordinates where;
-
+    private boolean isFront;
     /**
      * Constructor
      * @param card the card to play
      */
-    public PlayCardResponse(ResourceCard card, Coordinates where) {
+    public PlayCardResponse(ResourceCard card, Coordinates where, boolean isFront) {
         this.card = card;
         this.where = where;
+        this.isFront = isFront;
     }
 
     /**
@@ -34,6 +35,6 @@ public class PlayCardResponse extends ClientMessage {
      */
     @Override
     public void execute(Server server, ConnectionHandler connectionHandler) {
-        connectionHandler.getController().playCard(connectionHandler, card, where);
+        connectionHandler.getController().playCard(connectionHandler, card, where, isFront);
     }
 }

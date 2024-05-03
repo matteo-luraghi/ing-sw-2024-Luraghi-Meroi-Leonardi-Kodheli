@@ -366,8 +366,11 @@ public class Controller {
      * @param where Where the card needs to be played
      * @param connectionHandler The player who is playing the card
      */
-    public void playCard(ConnectionHandler connectionHandler, ResourceCard card, Coordinates where) {
+    public void playCard(ConnectionHandler connectionHandler, ResourceCard card, Coordinates where, boolean isFront) {
         Player currentPlayer = game.getTurn();
+        if(card.getIsFront() != isFront){
+            card.flip();
+        }
         if(!currentPlayer.getNickname().equals(connectionHandler.getClientNickname())){
             System.err.println("Someone who isn't the current player is playing");
             return;

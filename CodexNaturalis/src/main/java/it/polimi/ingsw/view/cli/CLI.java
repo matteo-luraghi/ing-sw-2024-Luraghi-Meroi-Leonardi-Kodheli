@@ -381,7 +381,7 @@ public class CLI implements View {
 
                         Coordinates where = getCardCoordinatesFromInput();
                         //TODO add boolean isFront to playCardResponse
-                        client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(asking).getHand().get(card-1), where));
+                        client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(asking).getHand().get(card-1), where, isFront));
                     } else {
                         System.out.println(AnsiColors.ANSI_RED + "Invalid input. Enter a new command." + AnsiColors.ANSI_RESET);
                     }

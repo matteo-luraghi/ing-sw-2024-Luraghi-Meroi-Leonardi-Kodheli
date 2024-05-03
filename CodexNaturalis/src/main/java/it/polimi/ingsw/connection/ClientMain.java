@@ -15,10 +15,8 @@ public class ClientMain {
      * @param args command line arguments
      */
     public static void main(String[] args) {
-        if(args[0].equals("-cli")) {
+
             new CLI().start();
-        } else {
-            new GUI().start();
-        }
+
     }
 }
