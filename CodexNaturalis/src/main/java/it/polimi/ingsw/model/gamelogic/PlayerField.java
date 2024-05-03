@@ -25,6 +25,15 @@ public class PlayerField implements Serializable {
     private Map<Resource, Integer> resourceMap;
 
     /**
+     * PlayerField constructor without the startingCard
+     */
+    public PlayerField(){
+        hand = new ArrayList<ResourceCard>();
+        gameZone = new HashMap<Coordinates, GameCard>();
+        resourceMap = getInitializeResourceMap(); //resource map has to be initialized otherwise in resourceMap.get you get a null pointer
+    }
+
+    /**
      * PlayerField constructor
      * @param startingCard the first card to be ever placed in the game zone
      */
@@ -49,6 +58,29 @@ public class PlayerField implements Serializable {
             }
         }
 
+    }
+
+    /**
+     * Adds the startingCard to the player field
+     * @param startingCard the startingCard the player chose
+     */
+    public void addStartingCard(StartingCard startingCard){
+        gameZone.put(new Coordinates(0,0), startingCard);
+
+        if (startingCard.getIsFront()) {
+            for (Resource resource : startingCard.getPermanentResources()) {
+                if (resource != null) {
+                    resourceMap.put(resource, resourceMap.get(resource) + 1);
+                }
+            }
+        }
+        for (int i = 0; i <= 3; i++) {
+            Resource resource = startingCard.getCorner(i);
+            if (resource != null && !resource.equals(Resource.BLANK) && !resource.equals(Resource.HIDDEN)) {
+
+                resourceMap.put(resource, resourceMap.get(resource) + 1);
+            }
+        }
     }
 
     /**
