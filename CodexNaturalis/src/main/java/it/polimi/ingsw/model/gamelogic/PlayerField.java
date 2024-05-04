@@ -170,7 +170,18 @@ public class PlayerField implements Serializable {
         gameZone.put(where, card);
 
         hand.remove(Util.checkIfResourceCardIsPresent(hand, card));
-
+        //Add the visible resources to the resourceMap
+        if (!card.getIsFront()) {
+            Resource permanentResource = getResource(card);
+            resourceMap.put(permanentResource, resourceMap.get(permanentResource) + 1);
+        } else {
+            for (int i = 0; i < 4; i++) {
+                Resource resource = card.getCorner(i);
+                if (resource != null && !resource.equals(Resource.HIDDEN) && !resource.equals(Resource.BLANK) && !resource.equals(Resource.COVERED)) {
+                    resourceMap.put(resource, resourceMap.get(resource) + 1);
+                }
+            }
+        }
         int cardX = where.getX();
         int cardY = where.getY();
         //Loop over every card in the GameZone, if we find one adjacent to the card we are about to play
