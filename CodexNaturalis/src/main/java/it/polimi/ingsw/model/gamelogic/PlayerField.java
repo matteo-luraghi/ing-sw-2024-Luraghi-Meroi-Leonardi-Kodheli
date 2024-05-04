@@ -165,29 +165,11 @@ public class PlayerField implements Serializable {
         {
             return -1;
         }
-        for(ResourceCard cardInHand: hand)
-        {
-            if(cardInHand.equals(card))
-            {
-                card=cardInHand;
-                break;
-            }
-        }
+
 
         gameZone.put(where, card);
-      /*  hand.remove(card);
-        //Add the visible resources to the resourceMap
-        if (!card.getIsFront()) {
-            Resource permanentResource = getResource(card);
-            resourceMap.put(permanentResource, resourceMap.get(permanentResource) + 1);
-        } else {
-            for (int i = 0; i < 4; i++) {
-                Resource resource = card.getCorner(i);
-                if (resource != null && !resource.equals(Resource.HIDDEN) && !resource.equals(Resource.BLANK) && !resource.equals(Resource.COVERED)) {
-                    resourceMap.put(resource, resourceMap.get(resource) + 1);
-                }
-            }
-        }*/
+
+        hand.remove(Util.checkIfResourceCardIsPresent(hand, card));
 
         int cardX = where.getX();
         int cardY = where.getY();
@@ -263,7 +245,7 @@ public class PlayerField implements Serializable {
      * @return true if it's playable, false if it is not
      */
     public boolean IsPlayable (Coordinates where, ResourceCard card) {
-        if(!Util.checkIfResourceCardIsPresent(hand, card))
+        if(Util.checkIfResourceCardIsPresent(hand, card)==null)
         {
             System.out.println("CARD not in Hand");
             return  false;

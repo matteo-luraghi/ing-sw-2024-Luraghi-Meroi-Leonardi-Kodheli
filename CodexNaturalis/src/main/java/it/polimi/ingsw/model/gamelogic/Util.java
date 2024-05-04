@@ -290,32 +290,34 @@ public class Util {
      * Utility method to check if a card is contained in a list of cards
      * @param cards The list of cards
      * @param cardToCheck The card that needs to be checked
-     * @return true if the card is found, false otherwise
+     * @return the card obj the card is found, null otherwise
      */
-    public static boolean checkIfResourceCardIsPresent(ArrayList<ResourceCard> cards, ResourceCard cardToCheck){
+    public static ResourceCard checkIfResourceCardIsPresent(ArrayList<ResourceCard> cards, ResourceCard cardToCheck){
         for(ResourceCard current : cards){
-            boolean correct = true;
+            ResourceCard correct = current;
             if(current.getKingdom() != cardToCheck.getKingdom() || current.getIsGold() != cardToCheck.getIsGold() || current.getPoints() != cardToCheck.getPoints())
-                correct = false;
-            for(int i = 0; i < 4  && correct; i++){
+                correct = null;
+            for(int i = 0; i < 4  && correct!=null; i++){
                 if(current.getCorner(i) != cardToCheck.getCorner(i))
-                    correct = false;
+                    correct = null;
             }
-            if(correct && cardToCheck.getIsGold()){
+            if(correct!=null && cardToCheck.getIsGold()){
                 GoldCard c1, c2;
                 c1 = (GoldCard) cardToCheck;
                 c2 = (GoldCard) current;
                 if(c1.getPointCondition() != c2.getPointCondition() || c1.getPlayableCondition().size() != c2.getPlayableCondition().size())
-                    correct = false;
+                    correct = null;
 
                 //Playable conditions have the same size
-                for(int i = 0; i < c1.getPlayableCondition().size() && correct; i++){
+                for(int i = 0; i < c1.getPlayableCondition().size() && correct!=null; i++){
                     if(c1.getPlayableCondition().get(i) != c2.getPlayableCondition().get(i))
-                        correct = false;
+                        correct = null;
                 }
             }
-            if(correct) return true;
+            if (correct!=null) return correct;
         }
-        return false;
+        return null;
     }
+
+
 }
