@@ -12,7 +12,7 @@ import java.io.Serial;
  */
 public class PlayStartingCardRequest extends ServerMessage {
     @Serial
-    private static final long serialVersionUID = 6899284951355020884L;
+    private static final long serialVersionUID = -535519638608657463L;
     private final StartingCard card;
     /**
      * Constructor

@@ -13,7 +13,7 @@ import java.io.Serial;
  */
 public class PlayStartingCardResponse extends ClientMessage {
     @Serial
-    private static final long serialVersionUID = -7671795239367074793L;
+    private static final long serialVersionUID = -2792935142620727036L;
     private final StartingCard card;
 
     private final boolean isFront;
