@@ -84,13 +84,13 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
         sortedCoordinates = sortedCoordinates.stream()
                 .sorted((Coordinates c1, Coordinates c2) -> {
                     if (c1.getY() > c2.getY()) {
-                        return 1;
+                        return -1;
                     } else if (c1.getY() < c2.getY()) {
-                        return -1;
-                    } else if (c1.getX() < c2.getX()) {
                         return 1;
-                    } else if (c1.getX() > c2.getX()) {
+                    } else if (c1.getX() < c2.getX()) {
                         return -1;
+                    } else if (c1.getX() > c2.getX()) {
+                        return 1;
                     }
                     return 0;
                 })
@@ -120,6 +120,9 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
         int k = 0;
         for (int i=northernMost; i>=southernMost; i--) {
             for (int j=westernMost; j<=easternMost; j++) {
+                if (k>=sortedCoordinates.size()) {
+                    break;
+                }
                 if (sortedCoordinates.get(k).getX() == j && sortedCoordinates.get(k).getY() == i) {
                     System.out.print(CardToString(sortedCoordinates.get(k),this.playerField.getGameZone().get(sortedCoordinates.get(k))));
                     k++;
@@ -128,6 +131,7 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
                 }
             }
             System.out.println();
+
         }
 
         System.out.println(this.player.toString()+"'s Resources:");
