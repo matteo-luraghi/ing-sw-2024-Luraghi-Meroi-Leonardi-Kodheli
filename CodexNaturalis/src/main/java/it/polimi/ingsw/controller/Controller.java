@@ -425,6 +425,7 @@ public class Controller {
             playerZone.draw(deck, which);
 
             //Won't be called if the card isn't drawn thanks to NullPointerExceptions
+            connectionHandler.sendMessageClient(new TurnEnded(currentPlayer, game));
             changeTurnState();
         }catch (NullPointerException e){
             connectionHandler.sendMessageClient(new TextMessage("Unable to draw the card, try again"));
@@ -459,6 +460,7 @@ public class Controller {
                 c.sendMessageClient(new TextMessage("Someone has at least 20 points! Starting penultimate turn!"));
             }
         }
+        yourTurnState();
     }
 
     /**

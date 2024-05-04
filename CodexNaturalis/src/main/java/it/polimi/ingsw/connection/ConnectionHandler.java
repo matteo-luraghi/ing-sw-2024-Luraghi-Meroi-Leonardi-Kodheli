@@ -94,7 +94,7 @@ public class ConnectionHandler implements Runnable{
      */
     public void disconnect() {
         if (this.active.get()){
-            this.active .set(false);
+            this.active.set(false);
             this.server.removeClient(this);
             try {
                 this.inputStream.close();
