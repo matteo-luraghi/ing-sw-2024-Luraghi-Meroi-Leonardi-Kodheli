@@ -322,11 +322,12 @@ public class CLI implements View {
      * method to parse and get the user's input as commands when it's not the client's turn
      */
     public void GetCommandWhileNotYourTurn(GameState game, Player asking) {
+        Scanner scanner1 = new Scanner(System.in);
         String command = "";
         Player lastPlayerField = null;
         while (!this.isMyTurn) {
             System.out.print("Enter a command: ");
-            command = scanner.nextLine();
+            command = scanner1.nextLine();
 
             switch (command.toLowerCase()) {
                 case "show my goal card" -> {ShowPrivateGoal(asking, game);}
