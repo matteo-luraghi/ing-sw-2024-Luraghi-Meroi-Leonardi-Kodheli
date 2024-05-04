@@ -3,6 +3,7 @@ package it.polimi.ingsw.connection.message.clientMessage;
 import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.connection.Server;
 import it.polimi.ingsw.connection.message.serverMessage.LoginRequest;
+import it.polimi.ingsw.connection.message.serverMessage.TextMessage;
 
 import java.io.Serial;
 
@@ -32,7 +33,10 @@ public class LoginResponse extends ClientMessage {
     public void execute(Server server, ConnectionHandler connectionHandler) {
         if (this.nickname == null || this.nickname.isEmpty()) {
             connectionHandler.sendMessageClient(new LoginRequest());
-        } else {
+        } else if(!server.checkUniqueNickname(nickname)){
+            connectionHandler.sendMessageClient(new TextMessage("Username already present"));
+            connectionHandler.sendMessageClient(new LoginRequest());
+        }else {
             connectionHandler.setClientNickname(nickname);
             server.addToGame(connectionHandler);
         }

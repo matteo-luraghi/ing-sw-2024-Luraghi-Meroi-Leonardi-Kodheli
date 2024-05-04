@@ -106,6 +106,24 @@ public class Server {
         }
     }
 
+    public boolean checkUniqueNickname(String nickname){
+        Optional<Controller> optionalController = games.keySet().stream().filter(g -> !g.isGameStarted()).findFirst();
+        if (optionalController.isPresent()) {
+            //There is at least one player
+            Controller gameController = optionalController.get();
+            for(ConnectionHandler c : gameController.getHandlers()){
+                if(c.getClientNickname().equalsIgnoreCase(nickname)){
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            //There are no open games -> this is the first player to login
+            return true;
+        }
+
+    }
+
     /**
      * Get all the games
      * @return the game's controllers
