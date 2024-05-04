@@ -183,17 +183,19 @@ public class Controller {
     private Queue<GoalCard> getGoalCards() {
         List<GoalCard> cardsList = new ArrayList<>();
         JsonParser parser = new JsonParser();
-        for(int i=1; i<=8; i++) {
+        for(int i=1; i<=16; i++) {
             String cardPath = "./src/main/resources/CardsJSON/goalCards/goalCard" + i + ".json";
             try(Reader reader = new FileReader(cardPath)) {
                 JsonObject parsedGoalCard = parser.parse(reader).getAsJsonObject();
                 boolean isResourceGoal=parsedGoalCard.get("isResourceGoal").getAsBoolean();
                 if(isResourceGoal)
                 {
+
                     cardsList.add(Util.fromJSONtoResourceGoalCard(parsedGoalCard));
                 }
                 else
                 {
+
                     cardsList.add(Util.fromJSONtoPositionGoalCard(parsedGoalCard));
                 }
 
