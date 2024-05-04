@@ -139,5 +139,7 @@ public class GameState implements Serializable {
  * Gets the winner, to add exception for when the winner is not set or in the wrong game state
  * @return Player
  */
-    public Player getWinner()   { return winner; }
+    public Player getWinner()   {
+
+        return ComputeWinner(); }
 }
