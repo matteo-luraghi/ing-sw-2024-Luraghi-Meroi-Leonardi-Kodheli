@@ -43,7 +43,7 @@ public class Server {
         try {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                clientSocket.setSoTimeout(10000);
+                clientSocket.setSoTimeout(0);
                 ConnectionHandler clientConnection = new ConnectionHandler(this, clientSocket);
                 // start the clientConnection thread
                 executor.submit(clientConnection);

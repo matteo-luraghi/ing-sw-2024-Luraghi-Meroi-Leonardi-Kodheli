@@ -1,16 +1,22 @@
 package it.polimi.ingsw.model.card;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * PointCondition Enumeration
  * @author Gabriel Leonardi
  */
-public enum PointCondition {
+public enum PointCondition implements Serializable {
     NORMAL,
     CORNER,
     FEATHER,
     POTION,
     SCROLL,
     UNKNOWN;
+
+    @Serial
+    private static final long serialVersionUID = 2155997802452745419L;
 
     public String toString () {
         switch (this) {

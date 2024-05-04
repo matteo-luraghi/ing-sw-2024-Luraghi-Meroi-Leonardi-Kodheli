@@ -2,11 +2,14 @@ package it.polimi.ingsw.model.card;
 
 import it.polimi.ingsw.view.mainview.AnsiColors;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * Resource Enumeration
  * @author Matteo Leonardo Luraghi
  */
-public enum Resource {
+public enum Resource implements Serializable {
     PLANT,
     ANIMAL,
     INSECT,
@@ -19,6 +22,8 @@ public enum Resource {
     COVERED,
     UNKNOWN;
 
+    @Serial
+    private static final long serialVersionUID = 5524296934682817881L;
     public String toString() {
         switch (this) {
             case ANIMAL -> {return AnsiColors.ANSI_CYAN+"A";}

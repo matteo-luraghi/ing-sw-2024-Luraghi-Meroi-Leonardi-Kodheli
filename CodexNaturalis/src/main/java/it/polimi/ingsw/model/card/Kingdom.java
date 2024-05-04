@@ -2,18 +2,22 @@ package it.polimi.ingsw.model.card;
 
 import it.polimi.ingsw.view.mainview.AnsiColors;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * Kingdom Enumeration
  * @author Gabriel Leonardi
  */
-public enum Kingdom {
+public enum Kingdom implements Serializable {
     UNKNOWN,
     PLANT,
     ANIMAL,
     INSECT,
     FUNGI,
     STARTING;
-
+    @Serial
+    private static final long serialVersionUID = -4163434024888030176L;
     public String toString () {
         switch (this) {
             case INSECT -> {return AnsiColors.ANSI_PURPLE+"I";}
