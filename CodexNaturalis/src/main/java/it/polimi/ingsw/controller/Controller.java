@@ -443,9 +443,9 @@ public class Controller {
             if(isLastTurn){
                 for(ConnectionHandler c : getHandlers()){
                     c.sendMessageClient(new TextMessage("Counting goals..."));
-                    countGoals();
-                    return;
                 }
+                countGoals();
+                return;
             } else if (isPenultimateTurn) {
                 for(ConnectionHandler c : getHandlers()){
                     c.sendMessageClient(new TextMessage("Last turn!!"));
