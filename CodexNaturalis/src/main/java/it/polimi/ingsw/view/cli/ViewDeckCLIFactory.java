@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.cli;
 
+import it.polimi.ingsw.model.card.GameCard;
 import it.polimi.ingsw.model.card.GoldCard;
 import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.view.mainview.AnsiColors;
@@ -62,8 +63,11 @@ public class ViewDeckCLIFactory extends ViewDeckFactory {
             System.out.println("|    CARD   |");
             System.out.println("|___________|");
         } else {
-            gameCardViewer.SetCard(this.deck.getUncoveredCards()[0]);
+            GameCard card = this.deck.getUncoveredCards()[0];
+            card.flip();
+            gameCardViewer.SetCard(card);
             gameCardViewer.Show();
+            card.flip();
         }
 
         System.out.println();
@@ -76,8 +80,11 @@ public class ViewDeckCLIFactory extends ViewDeckFactory {
             System.out.println("|    CARD   |");
             System.out.println("|___________|");
         } else {
-            gameCardViewer.SetCard(this.deck.getUncoveredCards()[1]);
+            GameCard card = this.deck.getUncoveredCards()[1];
+            card.flip();
+            gameCardViewer.SetCard(card);
             gameCardViewer.Show();
+            card.flip();
         }
 
     }

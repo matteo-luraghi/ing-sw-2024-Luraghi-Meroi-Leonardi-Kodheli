@@ -443,19 +443,19 @@ public class CLI implements View {
      * @param playing is used to distinguish the playing phase of the turn from its drawing phase
      */
     private void ShowCommands(boolean playing) {
-        System.out.println("The available commands in this phase are:");
-        System.out.println("help              -> displays all the available commands");
-        System.out.println("show my goal card -> displays your private goal card");
-        System.out.println("show field        -> displays a player's field");
-        System.out.println("show decks        -> displays the decks, the uncovered cards you can draw from and the common goals");
-        System.out.println("show scoreboard   -> displays the game's scoreboard");
-        System.out.println("show card         -> displays a specific card");
-        System.out.println("show legend       -> displays the game's legend");
+        System.out.println(AnsiColors.ANSI_CYAN + "The available commands in this phase are:" + AnsiColors.ANSI_RESET);
+        System.out.println(AnsiColors.ANSI_GREEN + "help              ->" + AnsiColors.ANSI_RESET + " displays all the available commands");
+        System.out.println(AnsiColors.ANSI_GREEN + "show my goal card ->" + AnsiColors.ANSI_RESET + " displays your private goal card");
+        System.out.println(AnsiColors.ANSI_GREEN + "show field        ->" + AnsiColors.ANSI_RESET + " displays a player's field");
+        System.out.println(AnsiColors.ANSI_GREEN + "show decks        ->" + AnsiColors.ANSI_RESET + " displays the decks, the uncovered cards you can draw from and the common goals");
+        System.out.println(AnsiColors.ANSI_GREEN + "show scoreboard   ->" + AnsiColors.ANSI_RESET + " displays the game's scoreboard");
+        System.out.println(AnsiColors.ANSI_GREEN + "show card         ->" + AnsiColors.ANSI_RESET + " displays a specific card");
+        System.out.println(AnsiColors.ANSI_GREEN + "show legend       ->" + AnsiColors.ANSI_RESET + " displays the game's legend");
         if (isMyTurn) {
             if (playing) {
-                System.out.println("play card         -> allows you to play a card from your hand onto your field");
+                System.out.println(AnsiColors.ANSI_GREEN + "play card         ->" + AnsiColors.ANSI_RESET + " allows you to play a card from your hand onto your field");
             } else {
-                System.out.println("draw card         -> allows you to draw a card from the uncovered ones or from the decks");
+                System.out.println(AnsiColors.ANSI_GREEN + "draw card         ->" + AnsiColors.ANSI_RESET + " allows you to draw a card from the uncovered ones or from the decks");
             }
         }
     }
@@ -465,7 +465,7 @@ public class CLI implements View {
      */
     private void showLegend() {
         ClearScreen();
-        System.out.println("Resources' Legend: ");
+        System.out.println(AnsiColors.ANSI_CYAN + "Resources' Legend: " + AnsiColors.ANSI_RESET);
         System.out.println("- " + Resource.ANIMAL.toStringExt()+AnsiColors.ANSI_RESET);
         System.out.println("- " + Resource.PLANT.toStringExt()+AnsiColors.ANSI_RESET);
         System.out.println("- " + Resource.INSECT.toStringExt()+AnsiColors.ANSI_RESET);
@@ -477,20 +477,21 @@ public class CLI implements View {
         System.out.println("- " + Resource.HIDDEN.toStringExt()+AnsiColors.ANSI_RESET);
         System.out.println("- " + Resource.COVERED.toStringExt()+AnsiColors.ANSI_RESET);
         System.out.println();
-        System.out.println("Card's Legend: ");
+        System.out.println(AnsiColors.ANSI_CYAN + "Card's Legend: " + AnsiColors.ANSI_RESET);
         System.out.println("Every card has a resource on every corner and some have some in the center.");
         System.out.println("The goal cards display the resources needed for gaining points.");
         System.out.println("Some cards give points when played. The points are written on top of the card, adjacent to their point condition:");
+        System.out.print(AnsiColors.ANSI_GREEN);
         System.out.println("- " + PointCondition.NORMAL.toStringExt());
         System.out.println("- " + PointCondition.POTION.toStringExt());
         System.out.println("- " + PointCondition.SCROLL.toStringExt());
         System.out.println("- " + PointCondition.FEATHER.toStringExt());
         System.out.println("- " + PointCondition.CORNER.toStringExt());
-        System.out.println();
+        System.out.println(AnsiColors.ANSI_RESET);
         System.out.println("In order to play gold cards, you need to satisfy the playing requirements. You can find thw resources needed to play the card in the bottom of it.");
         System.out.println("You can play cards either on their front or on their back. The back of the cards has all blank corners and provides one permanent resource corresponding to it's kingdom.");
         System.out.println();
-        System.out.println("Deck's Legend:");
+        System.out.println(AnsiColors.ANSI_CYAN + "Deck's Legend:" + AnsiColors.ANSI_RESET);
         System.out.println("There are two decks, one resource cards and one of gold cards.");
         System.out.println("Every deck has also two uncovered cards you can draw from.");
         System.out.println("Lastly, next to the decks there are the two common goals.");
