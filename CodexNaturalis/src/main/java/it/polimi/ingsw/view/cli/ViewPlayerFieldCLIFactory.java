@@ -124,7 +124,11 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
                     break;
                 }
                 if (sortedCoordinates.get(k).getX() == j && sortedCoordinates.get(k).getY() == i) {
-                    System.out.print(CardToString(sortedCoordinates.get(k),this.playerField.getGameZone().get(sortedCoordinates.get(k))));
+                    if (this.playerField.getGameZone().get((sortedCoordinates.get(k))) instanceof GoldCard) {
+                        System.out.print(CardToString(sortedCoordinates.get(k), (GoldCard) this.playerField.getGameZone().get(sortedCoordinates.get(k))));
+                    } else {
+                        System.out.print(CardToString(sortedCoordinates.get(k), this.playerField.getGameZone().get(sortedCoordinates.get(k))));
+                    }
                     k++;
                 } else {
                     System.out.print("         ");
@@ -149,10 +153,10 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
      */
     private String CardToString (Coordinates coor, GameCard card) {
         String cardString = "";
-        if (card instanceof StartingCard)
-            cardString += AnsiColors.ANSI_WHITE;
-        else if (card instanceof GoldCard)
+        if (card instanceof GoldCard)
             cardString += AnsiColors.ANSI_YELLOW;
+        else
+            cardString += AnsiColors.ANSI_WHITE;
 
         cardString = "[";
 
@@ -164,7 +168,14 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
         if (coor.getY()>=0)
             cardString += "+";
 
-        cardString +=coor.getY() + ":" + card.getKingdom().toString() + "]";
+        cardString +=coor.getY() + ":" + card.getKingdom().toString();
+
+        if (card instanceof GoldCard)
+            cardString += AnsiColors.ANSI_YELLOW;
+        else
+            cardString += AnsiColors.ANSI_WHITE;
+
+        cardString += "]";
 
         cardString += AnsiColors.ANSI_RESET;
 
