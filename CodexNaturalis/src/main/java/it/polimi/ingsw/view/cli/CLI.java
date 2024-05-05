@@ -26,6 +26,7 @@ public class CLI implements View {
     private ViewDeckFactory deckViewer  = null;
     private ViewGoalCardFactory goalCardViewer = null;
     private boolean isMyTurn = false;
+    private boolean gameToUpdate = false;
 
     /**
      * CLI constructor
@@ -319,13 +320,30 @@ public class CLI implements View {
     }
 
     /**
+     * gameToUpdate getter
+     * @return whether the game is to be updated for the client or not
+     */
+    public boolean isGameToUpdate() {
+        return gameToUpdate;
+    }
+
+    /**
+     * gameToUpdate setter
+     * @param gameToUpdate tells whether the game is to be updated for the client or not
+     */
+    public void setGameToUpdate(boolean gameToUpdate) {
+        this.gameToUpdate = gameToUpdate;
+    }
+
+    /**
      * method to parse and get the user's input as commands when it's not the client's turn
      */
     public void GetCommandWhileNotYourTurn(GameState game, Player asking) {
+        gameToUpdate = false;
         Scanner scanner1 = new Scanner(System.in);
         String command = "";
         Player lastPlayerField = null;
-        while (!this.isMyTurn) {
+        while (!this.isMyTurn && !this.gameToUpdate) {
             System.out.print("Enter a command: ");
             command = scanner1.nextLine();
 
