@@ -147,6 +147,7 @@ public class Deck implements Serializable {
         if(Which!= 1 && Which!=2)
             throw new IndexOutOfBoundsException();
         this.uncoveredCards[Which-1] = this.Draw(0);
+        this.uncoveredCards[Which-1].flip();
     }
 
     public boolean isDeckEmpty () {
