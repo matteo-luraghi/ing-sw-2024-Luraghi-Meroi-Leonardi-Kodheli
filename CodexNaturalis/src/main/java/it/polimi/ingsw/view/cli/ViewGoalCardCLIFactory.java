@@ -54,11 +54,11 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
             ArrayList<Resource> requirements = ((ResourceGoalCard) this.card).getRequirements();
 
             System.out.print(AnsiColors.ANSI_WHITE);
-            System.out.println(" _____"+AnsiColors.ANSI_WHITE+this.card.getPoints()+AnsiColors.ANSI_RESET+"_____ ");
+            System.out.println(" _____"+AnsiColors.ANSI_WHITE+this.card.getPoints()+AnsiColors.ANSI_WHITE+"_____ ");
             System.out.println("|           |");
             switch (requirements.size()) {
-                case 2 -> {System.out.println("|    "+requirements.get(0).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(1).toString()+AnsiColors.ANSI_WHITE+"    |");}
-                case 3 -> {System.out.println("|   "+requirements.get(0).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(1).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(2).toString()+AnsiColors.ANSI_WHITE+"   |");}
+                case 2 -> {System.out.println("|    "+requirements.get(0).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(1).toString()+AnsiColors.ANSI_WHITE+"    | Satisfy the goal for every pair of this resources in your field");}
+                case 3 -> {System.out.println("|   "+requirements.get(0).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(1).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(2).toString()+AnsiColors.ANSI_WHITE+"   | Satisfy the goal for every three of this resources in your field");}
             }
             System.out.println("|           |");
             System.out.println("|___________|");
@@ -81,12 +81,12 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
                         //It is facing westward
                         System.out.println("|       " + resources.get(2).toString() + AnsiColors.ANSI_WHITE + "   |");
                     }
-                    System.out.println("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     |");
+                    System.out.println("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     | Have this specific L-shape in your field to satisfy the goal");
                     System.out.println("|     " + resources.get(0).toString() + AnsiColors.ANSI_WHITE + "     |");
                 } else {
                     //It is an L
                     System.out.println("|     " + resources.get(2).toString() + AnsiColors.ANSI_WHITE + "     |");
-                    System.out.println("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     |");
+                    System.out.println("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     | Have this specific L-shape in your field to satisfy the goal");
                     if (directions.get(0).equals(Direction.TOP_RIGHT)) {
                         //it is facing westward
                         System.out.println("|   " + resources.get(0).toString() + AnsiColors.ANSI_WHITE + "       |");
@@ -100,12 +100,12 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
                 if (directions.contains(Direction.TOP_RIGHT)) {
                     //it is a right stair
                     System.out.println("|       "+resources.get(2).toString()+AnsiColors.ANSI_WHITE+"   |");
-                    System.out.println("|     "+resources.get(1).toString()+AnsiColors.ANSI_WHITE+"     |");
+                    System.out.println("|     "+resources.get(1).toString()+AnsiColors.ANSI_WHITE+"     | Have this specific stair-shape in your field to satisfy the goal");
                     System.out.println("|   "+resources.get(0).toString()+AnsiColors.ANSI_WHITE+"       |");
                 } else {
                     //it is a left stair
                     System.out.println("|   "+resources.get(2).toString()+AnsiColors.ANSI_WHITE+"       |");
-                    System.out.println("|     "+resources.get(1).toString()+AnsiColors.ANSI_WHITE+"     |");
+                    System.out.println("|     "+resources.get(1).toString()+AnsiColors.ANSI_WHITE+"     | Have this specific stair-shape in your field to satisfy the goal");
                     System.out.println("|       "+resources.get(0).toString()+AnsiColors.ANSI_WHITE+"   |");
                 }
             }

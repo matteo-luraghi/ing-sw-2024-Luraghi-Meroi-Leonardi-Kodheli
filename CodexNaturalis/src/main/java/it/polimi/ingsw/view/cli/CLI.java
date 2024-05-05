@@ -375,17 +375,21 @@ public class CLI implements View {
                             System.out.println(AnsiColors.ANSI_RED+"Invalid input. Enter a number."+AnsiColors.ANSI_RESET);
                         }
                     } while (!correctInput);
-                    System.out.println("On which side do you want to play it?\nFRONT|BACK");
-                    boolean isFront;
-                    String isFrontString = scanner.nextLine();
-                    if (isFrontString.equalsIgnoreCase("front") || isFrontString.equalsIgnoreCase("back")) {
-                        isFront = isFrontString.equalsIgnoreCase("front");
+                    correctInput = false;
+                    do {
+                        System.out.println("On which side do you want to play it?\nFRONT|BACK");
+                        boolean isFront;
+                        String isFrontString = scanner.nextLine();
+                        if (isFrontString.equalsIgnoreCase("front") || isFrontString.equalsIgnoreCase("back")) {
+                            isFront = isFrontString.equalsIgnoreCase("front");
+                            correctInput = true;
 
-                        Coordinates where = getCardCoordinatesFromInput();
-                        client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(asking).getHand().get(card-1), where, isFront));
-                    } else {
-                        System.out.println(AnsiColors.ANSI_RED + "Invalid input. Enter a new command." + AnsiColors.ANSI_RESET);
-                    }
+                            Coordinates where = getCardCoordinatesFromInput();
+                            client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(asking).getHand().get(card - 1), where, isFront));
+                        } else {
+                            System.out.println(AnsiColors.ANSI_RED + "Incorrect input. Try again." + AnsiColors.ANSI_RESET);
+                        }
+                    } while (!correctInput);
                 }
                 case "show legend" -> {showLegend();}
                 case "help" -> {ShowCommands(true);}
@@ -411,26 +415,39 @@ public class CLI implements View {
                 case "show scoreboard" -> {ShowScoreBoard(game.getGameTable().getScoreBoard());}
                 case "show card" -> {commandShowCard(game, asking, lastPlayerField);}
                 case "draw card" -> {
+                    boolean correctInput = false;
                     ShowDecks(game);
                     System.out.println();
-                    System.out.println("From which deck do you want to draw from?\nResource|Gold");
-                    String deck = scanner.nextLine();
-                    if (deck.equalsIgnoreCase("resource") || deck.equalsIgnoreCase("gold")) {
-                        System.out.println("Where do you want to draw from?\nDeck|U1|U2");
-                        String where = scanner.nextLine();
-                        if (where.equalsIgnoreCase("deck") || where.equalsIgnoreCase("u1") || where.equalsIgnoreCase("u2")) {
-                            int which = 0;
-                            switch (where) {
-                                case "deck" -> {which = 0;}
-                                case "u1" -> {which = 1;}
-                                case "u2" -> {which = 2;}
-                            }
-
-                            client.sendMessageServer(new DrawCardResponse(which, (deck.equalsIgnoreCase("gold"))));
+                    do {
+                        System.out.println("From which deck do you want to draw from?\nResource|Gold");
+                        String deck = scanner.nextLine();
+                        if (deck.equalsIgnoreCase("resource") || deck.equalsIgnoreCase("gold")) {
+                            do {
+                                System.out.println("Where do you want to draw from?\nDeck|U1|U2");
+                                String where = scanner.nextLine();
+                                if (where.equalsIgnoreCase("deck") || where.equalsIgnoreCase("u1") || where.equalsIgnoreCase("u2")) {
+                                    int which = 0;
+                                    switch (where) {
+                                        case "deck" -> {
+                                            which = 0;
+                                        }
+                                        case "u1" -> {
+                                            which = 1;
+                                        }
+                                        case "u2" -> {
+                                            which = 2;
+                                        }
+                                    }
+                                    correctInput = true;
+                                    client.sendMessageServer(new DrawCardResponse(which, (deck.equalsIgnoreCase("gold"))));
+                                } else {
+                                    System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." + AnsiColors.ANSI_RESET);
+                                }
+                            } while (!correctInput);
+                        } else {
+                            System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." + AnsiColors.ANSI_RESET);
                         }
-                    } else {
-                        System.out.println(AnsiColors.ANSI_RED + "Invalid input. Enter a new command." + AnsiColors.ANSI_RESET);
-                    }
+                    } while (!correctInput);
                 }
                 case "show legend" -> {showLegend();}
                 case "help" -> {ShowCommands(false);}
