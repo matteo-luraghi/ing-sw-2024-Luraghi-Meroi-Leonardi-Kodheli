@@ -449,6 +449,14 @@ public class Controller {
      */
     public void changeTurnState(){
         game.nextTurn();
+
+        for (Player player : game.getPlayers()) {
+            if (!player.getNickname().equals(game.getTurn().getNickname())) {
+                ConnectionHandler c = getHandlerByNickname(player.getNickname());
+                c.sendMessageClient(new NotYourTurn(player, game, "Game Updated!"));
+            }
+        }
+
         //Here i'm assuming players[0] is the first player, which now is the case but it might not be in the future
         if(game.getTurn() == game.getPlayers().getFirst()){
             if(isLastTurn){
