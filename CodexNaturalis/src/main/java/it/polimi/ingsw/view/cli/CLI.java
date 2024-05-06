@@ -268,6 +268,7 @@ public class CLI implements View {
         this.deckViewer.showCommonGoals();
         this.deckViewer.setDeck(game.getGameTable().getGoldDeck());
         this.deckViewer.show();
+        System.out.println();
         this.deckViewer.setDeck(game.getGameTable().getResourceDeck());
         this.deckViewer.show();
     }

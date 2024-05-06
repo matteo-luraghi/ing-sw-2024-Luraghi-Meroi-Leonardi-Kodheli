@@ -166,7 +166,7 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
             }
         } else {
             System.out.print(AnsiColors.ANSI_RESET);
-            if (this.card.getIsFront()) {
+            if (!this.card.getIsFront()) {
                 System.out.print("|" + Resource.BLANK.toString()+AnsiColors.ANSI_RESET + "         " + Resource.BLANK.toString()+AnsiColors.ANSI_RESET + "|");
             } else {
                 System.out.print("|" + this.card.getCorner(0).toString()+AnsiColors.ANSI_RESET + "         " + this.card.getCorner(1).toString()+AnsiColors.ANSI_RESET + "|");
@@ -248,8 +248,11 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
         }
     }
 
-    public void printThreeCards (GameCard one, GameCard two, GameCard three) {
-        System.out.println("   Card N°1        Card N°2        Card N°3   ");
+    public void printThreeCards (GameCard one, GameCard two, GameCard three, boolean isForHand) {
+        if (isForHand)
+            System.out.println("   Card N°1        Card N°2        Card N°3   ");
+        else
+            System.out.println("     Deck             U1              U2      ");
         this.SetCard(one);
         printFirstCardLine();
         System.out.print("   ");

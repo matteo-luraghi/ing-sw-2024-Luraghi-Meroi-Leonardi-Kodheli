@@ -23,22 +23,7 @@ public class ViewDeckCLIFactory extends ViewDeckFactory {
     @Override
     public void show() {
 
-        if (this.deck.getCards().isEmpty()) {
-            if (this.deck.getCards().element() instanceof GoldCard) {
-                System.out.print(AnsiColors.ANSI_YELLOW);
-                System.out.println("Gold deck");
-                System.out.println("|-----------|");
-                System.out.println("|___empty___|");
-                System.out.print(AnsiColors.ANSI_RESET);
-            } else {
-                System.out.println("Resource Deck");
-                System.out.println("|-----------|");
-                System.out.println("|___empty___|");
-            }
-
-
-
-        } else {
+        if (!this.deck.getCards().isEmpty()) {
             ResourceCard card;
             if (this.deck.getCards().element() instanceof GoldCard) {
                 System.out.print(AnsiColors.ANSI_YELLOW);
@@ -50,43 +35,133 @@ public class ViewDeckCLIFactory extends ViewDeckFactory {
                 card = this.deck.getCards().element();
             }
 
-            gameCardViewer.SetCard(card);
-            gameCardViewer.Show();
-            System.out.println();
-        }
 
-        System.out.println("Uncovered Card N°1");
-        if (this.deck.getUncoveredCards()[0] == null) {
-            System.out.println(" ___________");
-            System.out.println("|           |");
-            System.out.println("|     NO    |");
-            System.out.println("|    CARD   |");
-            System.out.println("|___________|");
+            if (this.deck.getUncoveredCards()[0]!=null && this.deck.getUncoveredCards()[1]!=null) {
+                ((ViewGameCardCLIFactory) this.gameCardViewer).printThreeCards(card, this.deck.getUncoveredCards()[0], this.deck.getUncoveredCards()[1], false);
+            } else {
+
+                this.gameCardViewer.SetCard(this.deck.getCards().element());
+                ((ViewGameCardCLIFactory) this.gameCardViewer).printFirstCardLine();
+                System.out.print("   ");
+                if (this.deck.getUncoveredCards()[0]==null) {
+                    System.out.print("             ");
+                } else {
+                    this.gameCardViewer.SetCard(this.deck.getUncoveredCards()[0]);
+                    ((ViewGameCardCLIFactory) this.gameCardViewer).printFirstCardLine();
+                }
+                System.out.print("   ");
+                if (this.deck.getUncoveredCards()[1]==null) {
+                    System.out.print("             ");
+                } else {
+                    this.gameCardViewer.SetCard(this.deck.getUncoveredCards()[1]);
+                    ((ViewGameCardCLIFactory) this.gameCardViewer).printFirstCardLine();
+                }
+                System.out.println();
+
+                this.gameCardViewer.SetCard(this.deck.getCards().element());
+                ((ViewGameCardCLIFactory) this.gameCardViewer).printSecondCardLine();
+                System.out.print("   ");
+                if (this.deck.getUncoveredCards()[0]==null) {
+                    System.out.print(" ___________ ");
+                } else {
+                    this.gameCardViewer.SetCard(this.deck.getUncoveredCards()[0]);
+                    ((ViewGameCardCLIFactory) this.gameCardViewer).printSecondCardLine();
+                }
+                System.out.print("   ");
+                if (this.deck.getUncoveredCards()[1]==null) {
+                    System.out.print(" ___________ ");
+                } else {
+                    this.gameCardViewer.SetCard(this.deck.getUncoveredCards()[1]);
+                    ((ViewGameCardCLIFactory) this.gameCardViewer).printSecondCardLine();
+                }
+                System.out.println();
+
+                this.gameCardViewer.SetCard(this.deck.getCards().element());
+                ((ViewGameCardCLIFactory) this.gameCardViewer).printThirdCardLine();
+                System.out.print("   ");
+                if (this.deck.getUncoveredCards()[0]==null) {
+                    System.out.print("|           |");
+                } else {
+                    this.gameCardViewer.SetCard(this.deck.getUncoveredCards()[0]);
+                    ((ViewGameCardCLIFactory) this.gameCardViewer).printThirdCardLine();
+                }
+                System.out.print("   ");
+                if (this.deck.getUncoveredCards()[1]==null) {
+                    System.out.print("|           |");
+                } else {
+                    this.gameCardViewer.SetCard(this.deck.getUncoveredCards()[1]);
+                    ((ViewGameCardCLIFactory) this.gameCardViewer).printThirdCardLine();
+                }
+                System.out.println();
+
+                this.gameCardViewer.SetCard(this.deck.getCards().element());
+                ((ViewGameCardCLIFactory) this.gameCardViewer).printFourthCardLine();
+                System.out.print("   ");
+                if (this.deck.getUncoveredCards()[0]==null) {
+                    System.out.print("|     NO    |");
+                } else {
+                    this.gameCardViewer.SetCard(this.deck.getUncoveredCards()[0]);
+                    ((ViewGameCardCLIFactory) this.gameCardViewer).printFourthCardLine();
+                }
+                System.out.print("   ");
+                if (this.deck.getUncoveredCards()[1]==null) {
+                    System.out.print("|     NO    |");
+                } else {
+                    this.gameCardViewer.SetCard(this.deck.getUncoveredCards()[1]);
+                    ((ViewGameCardCLIFactory) this.gameCardViewer).printFourthCardLine();
+                }
+                System.out.println();
+
+                this.gameCardViewer.SetCard(this.deck.getCards().element());
+                ((ViewGameCardCLIFactory) this.gameCardViewer).printFifthCardLine();
+                System.out.print("   ");
+                if (this.deck.getUncoveredCards()[0]==null) {
+                    System.out.print("|    CARD   |");
+                } else {
+                    this.gameCardViewer.SetCard(this.deck.getUncoveredCards()[0]);
+                    ((ViewGameCardCLIFactory) this.gameCardViewer).printFifthCardLine();
+                }
+                System.out.print("   ");
+                if (this.deck.getUncoveredCards()[1]==null) {
+                    System.out.print("|    CARD   |");
+                } else {
+                    this.gameCardViewer.SetCard(this.deck.getUncoveredCards()[1]);
+                    ((ViewGameCardCLIFactory) this.gameCardViewer).printFifthCardLine();
+                }
+                System.out.println();
+
+                this.gameCardViewer.SetCard(this.deck.getCards().element());
+                ((ViewGameCardCLIFactory) this.gameCardViewer).printSixthCardLine();
+                System.out.print("   ");
+                if (this.deck.getUncoveredCards()[0]==null) {
+                    System.out.print("|___________|");
+                } else {
+                    this.gameCardViewer.SetCard(this.deck.getUncoveredCards()[0]);
+                    ((ViewGameCardCLIFactory) this.gameCardViewer).printSixthCardLine();
+                }
+                System.out.print("   ");
+                if (this.deck.getUncoveredCards()[1]==null) {
+                    System.out.print("|___________|");
+                } else {
+                    this.gameCardViewer.SetCard(this.deck.getUncoveredCards()[1]);
+                    ((ViewGameCardCLIFactory) this.gameCardViewer).printSixthCardLine();
+                }
+                System.out.println();
+
+            }
         } else {
-            GameCard card = this.deck.getUncoveredCards()[0];
-            card.flip();
-            gameCardViewer.SetCard(card);
-            gameCardViewer.Show();
-            card.flip();
+            if (this.deck.isGold()) {
+                System.out.print(AnsiColors.ANSI_YELLOW);
+                System.out.println("Gold deck");
+                System.out.println("|-----------|");
+                System.out.println("|___empty___|");
+                System.out.print(AnsiColors.ANSI_RESET);
+            } else {
+                System.out.println("Resource Deck");
+                System.out.println("|-----------|");
+                System.out.println("|___empty___|");
+            }
         }
-
-        System.out.println();
-
-        System.out.println("Uncovered Card N°2");
-        if (this.deck.getUncoveredCards()[1] == null) {
-            System.out.println(" ___________");
-            System.out.println("|           |");
-            System.out.println("|     NO    |");
-            System.out.println("|    CARD   |");
-            System.out.println("|___________|");
-        } else {
-            GameCard card = this.deck.getUncoveredCards()[1];
-            card.flip();
-            gameCardViewer.SetCard(card);
-            gameCardViewer.Show();
-            card.flip();
-        }
-
     }
 
     /**

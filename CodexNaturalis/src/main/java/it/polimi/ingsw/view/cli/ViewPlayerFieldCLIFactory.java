@@ -51,7 +51,7 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
             System.out.println();
         }*/
 
-        ((ViewGameCardCLIFactory) this.gameCardViewer).printThreeCards(this.playerField.getHand().get(0), this.playerField.getHand().get(1), this.playerField.getHand().get(2));
+        ((ViewGameCardCLIFactory) this.gameCardViewer).printThreeCards(this.playerField.getHand().get(0), this.playerField.getHand().get(1), this.playerField.getHand().get(2), true);
 
         System.out.println(this.player.toString()+"'s private goal:");
         goalCardViewer.SetCard(this.playerField.getPrivateGoal());
