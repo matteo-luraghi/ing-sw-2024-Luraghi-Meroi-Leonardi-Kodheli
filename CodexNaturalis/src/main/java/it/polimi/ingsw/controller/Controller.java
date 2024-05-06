@@ -333,7 +333,7 @@ public class Controller {
 
         // if it's not the player's turn notify them
         if(!currentPlayer.getNickname().equals(game.getTurn().getNickname())) {
-            connectionHandler.sendMessageClient(new TurnEnded(currentPlayer, game));
+            connectionHandler.sendMessageClient(new NotYourTurn(currentPlayer, game, "It's not your turn!"));
         }
 
         numOfGoalCardsChosen++;
@@ -380,8 +380,19 @@ public class Controller {
 
         PlayerField playerZone = game.getGameTable().getPlayerZones().get(currentPlayer);
         if(playerZone.IsPlayable(where, card)){
+            // play the card and update points
             int score = playerZone.Play(where, card);
             game.getGameTable().getScoreBoard().addPoints(currentPlayer, score);
+
+            // update game for the other players
+            for (Player player: game.getPlayers()) {
+                if (!player.getNickname().equals(connectionHandler.getClientNickname())) {
+                    ConnectionHandler c = getHandlerByNickname(player.getNickname());
+                    c.sendMessageClient(new NotYourTurn(player, game, "Game updated!"));
+                }
+            }
+
+            // next phase
             drawCardState();
         }else{
             connectionHandler.sendMessageClient(new TextMessage("Unable to play the card, try again"));
@@ -425,7 +436,7 @@ public class Controller {
             playerZone.draw(deck, which);
 
             //Won't be called if the card isn't drawn thanks to NullPointerExceptions
-            connectionHandler.sendMessageClient(new TurnEnded(currentPlayer, game));
+            connectionHandler.sendMessageClient(new NotYourTurn(currentPlayer, game, "Your turn has ended!"));
             changeTurnState();
         }catch (NullPointerException e){
             connectionHandler.sendMessageClient(new TextMessage("Unable to draw the card, try again"));

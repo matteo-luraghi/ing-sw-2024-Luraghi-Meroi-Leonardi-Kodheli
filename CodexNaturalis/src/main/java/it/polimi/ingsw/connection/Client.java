@@ -2,9 +2,8 @@ package it.polimi.ingsw.connection;
 
 import it.polimi.ingsw.connection.message.connectionMessage.Disconnection;
 import it.polimi.ingsw.connection.message.connectionMessage.Ping;
+import it.polimi.ingsw.connection.message.serverMessage.NotYourTurn;
 import it.polimi.ingsw.connection.message.serverMessage.ServerMessage;
-import it.polimi.ingsw.connection.message.serverMessage.TurnEnded;
-import it.polimi.ingsw.connection.message.serverMessage.YourTurn;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.IOException;
@@ -86,11 +85,11 @@ public class Client {
                 Object msg = this.inputStream.readObject();
                 if(msg instanceof ServerMessage) {
                     // view the message via the CLI or GUI
-                    if (msg instanceof TurnEnded) {
+                    if (msg instanceof NotYourTurn) {
                         if (this.getCommands != null && this.getCommands.isAlive()) {
                             this.getCommands.interrupt();
                         }
-                        this.getCommands = new Thread(() -> ((TurnEnded) msg).show(this.view));
+                        this.getCommands = new Thread(() -> ((NotYourTurn) msg).show(this.view));
                         this.getCommands.start();
                     } else {
                         if (this.getCommands != null && this.getCommands.isAlive()) {
