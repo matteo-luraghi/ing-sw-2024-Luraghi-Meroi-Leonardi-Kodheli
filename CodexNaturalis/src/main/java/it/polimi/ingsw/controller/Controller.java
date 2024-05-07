@@ -388,7 +388,7 @@ public class Controller {
             for (Player player: game.getPlayers()) {
                 if (!player.getNickname().equals(connectionHandler.getClientNickname())) {
                     ConnectionHandler c = getHandlerByNickname(player.getNickname());
-                    c.sendMessageClient(new NotYourTurn(player, game, "Game updated!"));
+                    //c.sendMessageClient(new NotYourTurn(player, game, "Game updated!"));
                 }
             }
 
@@ -453,7 +453,7 @@ public class Controller {
         for (Player player : game.getPlayers()) {
             if (!player.getNickname().equals(game.getTurn().getNickname())) {
                 ConnectionHandler c = getHandlerByNickname(player.getNickname());
-                c.sendMessageClient(new NotYourTurn(player, game, "Game Updated!"));
+                //c.sendMessageClient(new NotYourTurn(player, game, "Game Updated!"));
             }
         }
 
