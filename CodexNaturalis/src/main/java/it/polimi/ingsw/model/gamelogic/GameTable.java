@@ -94,16 +94,15 @@ public class GameTable implements Serializable {
             GoalCard commonGoal=getCommonGoal(i);
             if(commonGoal.isResourceGoal())
             {
-                ResourceGoalCard ResourceGoal=(ResourceGoalCard)commonGoal;
+                ResourceGoalCard ResourceGoal=(ResourceGoalCard) commonGoal;
                 min=Integer.MAX_VALUE;
-                int numberOfResources;
-                for(Resource resourceGoal: ResourceGoal.getRequirements())
-                {
-                    numberOfResources = Player.getResourceFromMap(resourceGoal); //number of occurrences of that resource
-                    if(numberOfResources<min)
-                    {
-                        min=numberOfResources;
-                    }
+                HashMap<Resource, Float> resourcesNeeded = new HashMap<>();
+                for(Resource resource: ResourceGoal.getRequirements()) {
+                    resourcesNeeded.put(resource, resourcesNeeded.getOrDefault(resource, 0f)+1);
+                }
+                for(Resource resource: resourcesNeeded.keySet()){
+                    float num = Player.getResourceFromMap(resource);
+                    min = Math.min((int)Math.floor(num/resourcesNeeded.get(resource)), min);
                 }
                 points+=commonGoal.getPoints()*min; //points times minimum occurrences of that goal
 
@@ -204,16 +203,16 @@ public class GameTable implements Serializable {
         {
             ResourceGoalCard ResourceGoal=(ResourceGoalCard)privateGoal;
             int min=Integer.MAX_VALUE;
-            int numberOfResources;
-            for(Resource resourceGoal: ResourceGoal.getRequirements())
-            {
-                numberOfResources = Player.getResourceFromMap(resourceGoal); //number of occurrences of that resource
-                if(numberOfResources<min)
-                {
-                    min=numberOfResources;
-                }
+            HashMap<Resource, Float> resourcesNeeded = new HashMap<>();
+            for(Resource resource: ResourceGoal.getRequirements()) {
+                resourcesNeeded.put(resource, resourcesNeeded.getOrDefault(resource, 0f)+1);
+            }
+            for(Resource resource: resourcesNeeded.keySet()){
+                float num = Player.getResourceFromMap(resource);
+                min = Math.min((int)Math.floor(num/resourcesNeeded.get(resource)), min);
             }
             points+=privateGoal.getPoints()*min; //points times minimum occurrences of that goal
+
 
         }
         else
