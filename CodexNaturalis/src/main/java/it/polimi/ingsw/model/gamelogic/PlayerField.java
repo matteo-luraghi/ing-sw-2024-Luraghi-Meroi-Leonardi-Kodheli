@@ -191,33 +191,34 @@ public class PlayerField implements Serializable {
             int x = coordinate.getX();
             int y = coordinate.getY();
             if (x == cardX + 1 && y == cardY + 1) { //TopRight
+                {
+                    if (!gameZone.get(coordinate).getCorner(2).equals(Resource.BLANK))
+                        resourceMap.put(gameZone.get(coordinate).getCorner(2), resourceMap.get(gameZone.get(coordinate).getCorner(2)) - 1);
 
-                if (!gameZone.get(coordinate).getCorner(2).equals(Resource.BLANK))
-                    resourceMap.put(gameZone.get(coordinate).getCorner(2), resourceMap.get(gameZone.get(coordinate).getCorner(2)) - 1);
-
-                gameZone.get(coordinate).coverCorner(2);
-
+                    gameZone.get(coordinate).coverCorner(2);
+                }
             } else if (x == cardX + 1 && y == cardY - 1) { //BottomRight
+                if(gameZone.get(coordinate).getIsFront()) {
+                    if (!gameZone.get(coordinate).getCorner(0).equals(Resource.BLANK))
+                        resourceMap.put(gameZone.get(coordinate).getCorner(0), resourceMap.get(gameZone.get(coordinate).getCorner(0)) - 1);
 
-                if (!gameZone.get(coordinate).getCorner(0).equals(Resource.BLANK))
-                    resourceMap.put(gameZone.get(coordinate).getCorner(0), resourceMap.get(gameZone.get(coordinate).getCorner(0)) - 1);
-
-                gameZone.get(coordinate).coverCorner(0);
-
+                    gameZone.get(coordinate).coverCorner(0);
+                }
             } else if (x == cardX - 1 && y == cardY - 1) { //BottomLeft
+                if(gameZone.get(coordinate).getIsFront()) {
+                    if (!gameZone.get(coordinate).getCorner(1).equals(Resource.BLANK))
+                        resourceMap.put(gameZone.get(coordinate).getCorner(1), resourceMap.get(gameZone.get(coordinate).getCorner(1)) - 1);
 
-                if (!gameZone.get(coordinate).getCorner(1).equals(Resource.BLANK))
-                    resourceMap.put(gameZone.get(coordinate).getCorner(1), resourceMap.get(gameZone.get(coordinate).getCorner(1)) - 1);
-
-                gameZone.get(coordinate).coverCorner(1);
-
+                    gameZone.get(coordinate).coverCorner(1);
+                }
             } else if (x == cardX - 1 && y == cardY + 1) { //TopLeft
-
+                if(gameZone.get(coordinate).getIsFront())
+                {
                 if (!gameZone.get(coordinate).getCorner(3).equals(Resource.BLANK))
                     resourceMap.put(gameZone.get(coordinate).getCorner(3), resourceMap.get(gameZone.get(coordinate).getCorner(3)) - 1);
 
                 gameZone.get(coordinate).coverCorner(3);
-
+}
             }
         }
         //Return the amount of points the card has scored
@@ -301,19 +302,19 @@ public class PlayerField implements Serializable {
 
             if (x == cardX+1 && y == cardY+1) { //cardx=-1 cardy=-1
                 existsTR = true;
-                canTR = !gameZone.get(coordinate).getCorner(2).equals(Resource.HIDDEN);
+                canTR = !gameZone.get(coordinate).getCorner(2).equals(Resource.HIDDEN) || !gameZone.get(coordinate).getIsFront() ;
                // System.out.println("1 "+canTR+" "+existsTR);
             } else if (x == cardX+1 && y == cardY-1) { //cardx=-1 cardy=+1
                 existsBR = true;
-                canBR  =!gameZone.get(coordinate).getCorner(0).equals(Resource.HIDDEN);
+                canBR  =!gameZone.get(coordinate).getCorner(0).equals(Resource.HIDDEN)|| !gameZone.get(coordinate).getIsFront();
              //   System.out.println("2 "+canBR+" "+existsBR);
             } else if (x == cardX-1 && y == cardY+1) { //cardx=1 cardy=-1
                 existsTL = true;
-                canTL  =!gameZone.get(coordinate).getCorner(3).equals(Resource.HIDDEN);
+                canTL  =!gameZone.get(coordinate).getCorner(3).equals(Resource.HIDDEN)|| !gameZone.get(coordinate).getIsFront();
                // System.out.println("3 "+canTL+" "+existsTL);
             } else if (x == cardX-1 && y == cardY-1) { //cardx=1 cardy=1
                 existsBL = true;
-                canBL  =!gameZone.get(coordinate).getCorner(1).equals(Resource.HIDDEN);
+                canBL  =!gameZone.get(coordinate).getCorner(1).equals(Resource.HIDDEN)|| !gameZone.get(coordinate).getIsFront();
                 //System.out.println("4 "+canBL+" "+existsBL);
             }
         }
@@ -374,7 +375,8 @@ public class PlayerField implements Serializable {
         int animal = 0;
         int plant = 0;
         int insect = 0;
-
+        if(!card.getIsFront())
+            return true;
         for (Resource resource : card.getPlayableCondition()) {
             if (resource.equals(Resource.FUNGI))
                 fungi++;
