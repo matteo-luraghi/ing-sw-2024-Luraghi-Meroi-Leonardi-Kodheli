@@ -43,7 +43,7 @@ public class Server {
         try {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                clientSocket.setSoTimeout(0);
+                clientSocket.setSoTimeout(10000);
                 ConnectionHandler clientConnection = new ConnectionHandler(this, clientSocket);
                 // start the clientConnection thread
                 executor.submit(clientConnection);
@@ -102,7 +102,7 @@ public class Server {
                     this.games.remove(controller);
                 else if (!controller.isGameEnded())
                     controller.broadcastMessage(new Disconnection(connectionHandler.getClientNickname()));
-                    this.games.remove(controller);
+                    //this.games.remove(controller);
             }
         }
     }
