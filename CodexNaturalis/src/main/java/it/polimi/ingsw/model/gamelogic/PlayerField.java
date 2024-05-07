@@ -191,28 +191,29 @@ public class PlayerField implements Serializable {
             int x = coordinate.getX();
             int y = coordinate.getY();
             if (x == cardX + 1 && y == cardY + 1) { //TopRight
-                {
+                { if(gameZone.get(coordinate).getIsFront() || (coordinate.getX()==0 && coordinate.getY()==0)) {
                     if (!gameZone.get(coordinate).getCorner(2).equals(Resource.BLANK))
                         resourceMap.put(gameZone.get(coordinate).getCorner(2), resourceMap.get(gameZone.get(coordinate).getCorner(2)) - 1);
 
                     gameZone.get(coordinate).coverCorner(2);
                 }
+                }
             } else if (x == cardX + 1 && y == cardY - 1) { //BottomRight
-                if(gameZone.get(coordinate).getIsFront()) {
+                if(gameZone.get(coordinate).getIsFront()|| (coordinate.getX()==0 && coordinate.getY()==0)) {
                     if (!gameZone.get(coordinate).getCorner(0).equals(Resource.BLANK))
                         resourceMap.put(gameZone.get(coordinate).getCorner(0), resourceMap.get(gameZone.get(coordinate).getCorner(0)) - 1);
 
                     gameZone.get(coordinate).coverCorner(0);
                 }
             } else if (x == cardX - 1 && y == cardY - 1) { //BottomLeft
-                if(gameZone.get(coordinate).getIsFront()) {
+                if(gameZone.get(coordinate).getIsFront() || (coordinate.getX()==0 && coordinate.getY()==0)) {
                     if (!gameZone.get(coordinate).getCorner(1).equals(Resource.BLANK))
                         resourceMap.put(gameZone.get(coordinate).getCorner(1), resourceMap.get(gameZone.get(coordinate).getCorner(1)) - 1);
 
                     gameZone.get(coordinate).coverCorner(1);
                 }
             } else if (x == cardX - 1 && y == cardY + 1) { //TopLeft
-                if(gameZone.get(coordinate).getIsFront())
+                if(gameZone.get(coordinate).getIsFront() || (coordinate.getX()==0 && coordinate.getY()==0))
                 {
                 if (!gameZone.get(coordinate).getCorner(3).equals(Resource.BLANK))
                     resourceMap.put(gameZone.get(coordinate).getCorner(3), resourceMap.get(gameZone.get(coordinate).getCorner(3)) - 1);
