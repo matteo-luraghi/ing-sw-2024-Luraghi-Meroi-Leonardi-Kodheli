@@ -382,7 +382,7 @@ public class CLI implements View {
                 case "play card" -> {
                     ShowPlayerField(asking, asking, game);
 
-                    boolean correctInput;
+                    boolean correctInput = false;
                     int card = 0;
                     System.out.println();
                     do {
@@ -390,9 +390,10 @@ public class CLI implements View {
                         try {
                             String cardString = scanner.nextLine();
                             card = Integer.parseInt(cardString);
-                            correctInput = true;
+                            if(card >= 1 && card <=3) {
+                                correctInput = true;
+                            }
                         } catch (NumberFormatException e) {
-                            correctInput = false;
                             System.out.println(AnsiColors.ANSI_RED+"Invalid input. Enter a number."+AnsiColors.ANSI_RESET);
                         }
                     } while (!correctInput);
