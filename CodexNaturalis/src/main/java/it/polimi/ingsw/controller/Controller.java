@@ -488,7 +488,7 @@ public class Controller {
     public void countGoals(){
         game.setState(State.COUNTGOALS);
         for(Player p: game.getPlayers()) {
-            game.getGameTable().countGoalPoints(game.getGameTable().getPlayerZones().get(p));
+            game.getGameTable().getScoreBoard().addPoints(p, game.getGameTable().countGoalPoints(game.getGameTable().getPlayerZones().get(p)));
         }
         showLeaderBoard();
     }

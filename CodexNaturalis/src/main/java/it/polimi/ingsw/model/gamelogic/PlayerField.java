@@ -220,7 +220,6 @@ public class PlayerField implements Serializable {
 
             }
         }
-        //TODO: Shouldn't we just update the scoreBoard?
         //Return the amount of points the card has scored
         if(!card.getIsFront())
             return 0;
