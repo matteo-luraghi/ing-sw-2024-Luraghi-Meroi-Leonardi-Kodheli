@@ -102,6 +102,7 @@ public class Server {
                     this.games.remove(controller);
                 else if (!controller.isGameEnded())
                     controller.broadcastMessage(new Disconnection(connectionHandler.getClientNickname()));
+                    this.games.remove(controller);
             }
         }
     }
