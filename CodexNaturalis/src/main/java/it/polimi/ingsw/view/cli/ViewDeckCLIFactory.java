@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.card.GoldCard;
 import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.view.mainview.AnsiColors;
 import it.polimi.ingsw.view.mainview.ViewDeckFactory;
+import it.polimi.ingsw.view.mainview.ViewGoalCardFactory;
 
 /**
  * ViewDeckCLIFactory class
@@ -171,10 +172,7 @@ public class ViewDeckCLIFactory extends ViewDeckFactory {
     public void showCommonGoals() {
         System.out.println();
         System.out.println("Common Goals:");
-        this.goalCardViewer.SetCard(this.commonGoals[0]);
-        this.goalCardViewer.Show();
-        this.goalCardViewer.SetCard(this.commonGoals[1]);
-        this.goalCardViewer.Show();
+        ((ViewGoalCardCLIFactory) this.goalCardViewer).printTwoCards(this.commonGoals[0], this.commonGoals[1]);
         System.out.println();
     }
 }

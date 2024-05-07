@@ -211,15 +211,17 @@ public class CLI implements View {
     @Override
     public void ShowChoosePrivateGoal(GoalCard[] goalCards) {
         ClearScreen();
+        System.out.println("Goal Card N°1");
         this.goalCardViewer.SetCard(goalCards[0]);
         this.goalCardViewer.Show();
+        System.out.println("Goal Card N°2");
         this.goalCardViewer.SetCard(goalCards[1]);
         this.goalCardViewer.Show();
 
         boolean correctInput = false;
         int result = 1;
         do {
-            System.out.println("Select a card:");
+            System.out.println("Select a card:\n1|2");
             try {
                 String choice = scanner.nextLine();
                 result = Integer.parseInt(choice);

@@ -116,39 +116,13 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
 
     }
 
-    /*if (this.card.isResourceGoal()) {
-
-    } else {
-        ArrayList<Direction> directions = ((PositionGoalCard) this.card).getPositionsFromBase();
-        ArrayList<Kingdom> resources = ((PositionGoalCard) this.card).getResourceFromBase();
-        if (directions.contains(Direction.TOP)) {
-                if (directions.get(0).equals(Direction.TOP)) {
-                    if (directions.get(1).equals(Direction.TOP_RIGHT)) {
-
-                    } else {
-
-                    }
-                } else {
-                    if (directions.get(0).equals(Direction.TOP_RIGHT)) {
-
-                    } else {
-
-                    }
-                }
-            } else {
-                if (directions.contains(Direction.TOP_RIGHT)) {
-
-                } else {
-
-                }
-            }
-    }*/
     public void printFirstCardLine() {
         System.out.print(AnsiColors.ANSI_WHITE);
         System.out.print(" _____"+this.card.getPoints()+"_____ ");
     }
 
     public void printSecondCardLine() {
+        System.out.print(AnsiColors.ANSI_WHITE);
         if (this.card.isResourceGoal()) {
             System.out.print("|           |");
         } else {
@@ -176,32 +150,34 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
     }
 
     public void printThirdCardLine() {
+        System.out.print(AnsiColors.ANSI_WHITE);
         if (this.card.isResourceGoal()) {
             ArrayList<Resource> requirements = ((ResourceGoalCard) this.card).getRequirements();
             switch (requirements.size()) {
-                case 2 -> {System.out.print("|    "+requirements.get(0).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(1).toString()+AnsiColors.ANSI_WHITE+"    | Satisfy the goal for every pair of this resources in your field");}
-                case 3 -> {System.out.print("|   "+requirements.get(0).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(1).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(2).toString()+AnsiColors.ANSI_WHITE+"   | Satisfy the goal for every three of this resources in your field");}
+                case 2 -> {System.out.print("|    "+requirements.get(0).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(1).toString()+AnsiColors.ANSI_WHITE+"    |");}
+                case 3 -> {System.out.print("|   "+requirements.get(0).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(1).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(2).toString()+AnsiColors.ANSI_WHITE+"   |");}
             }
         } else {
             ArrayList<Direction> directions = ((PositionGoalCard) this.card).getPositionsFromBase();
             ArrayList<Kingdom> resources = ((PositionGoalCard) this.card).getResourceFromBase();
             if (directions.contains(Direction.TOP)) {
                 if (directions.get(0).equals(Direction.TOP)) {
-                    System.out.print("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     | Have this specific L-shape in your field to satisfy the goal" + AnsiColors.ANSI_RESET);
+                    System.out.print("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     |" + AnsiColors.ANSI_RESET);
                 } else {
-                    System.out.print("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     | Have this specific L-shape in your field to satisfy the goal" + AnsiColors.ANSI_RESET);
+                    System.out.print("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     |" + AnsiColors.ANSI_RESET);
                 }
             } else {
                 if (directions.contains(Direction.TOP_RIGHT)) {
-                    System.out.print("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     | Have this specific stair-shape in your field to satisfy the goal" + AnsiColors.ANSI_RESET);
+                    System.out.print("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     |" + AnsiColors.ANSI_RESET);
                 } else {
-                    System.out.print("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     | Have this specific stair-shape in your field to satisfy the goal" + AnsiColors.ANSI_RESET);
+                    System.out.print("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     |" + AnsiColors.ANSI_RESET);
                 }
             }
         }
     }
 
     public void printFourthCardLine() {
+        System.out.print(AnsiColors.ANSI_WHITE);
         if (this.card.isResourceGoal()) {
             System.out.print("|           |");
         } else {
@@ -228,6 +204,44 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
     }
 
     public void printFifthCardLine() {
+        System.out.print(AnsiColors.ANSI_WHITE);
         System.out.print("|___________|" + AnsiColors.ANSI_RESET);
+    }
+
+    public void printTwoCards(GoalCard one, GoalCard two) {
+        SetCard(one);
+        printFirstCardLine();
+        System.out.print("   ");
+        SetCard(two);
+        printFirstCardLine();
+        System.out.println();
+
+        SetCard(one);
+        printSecondCardLine();
+        System.out.print("   ");
+        SetCard(two);
+        printSecondCardLine();
+        System.out.println();
+
+        SetCard(one);
+        printThirdCardLine();
+        System.out.print("   ");
+        SetCard(two);
+        printThirdCardLine();
+        System.out.println();
+
+        SetCard(one);
+        printFourthCardLine();
+        System.out.print("   ");
+        SetCard(two);
+        printFourthCardLine();
+        System.out.println();
+
+        SetCard(one);
+        printFifthCardLine();
+        System.out.print("   ");
+        SetCard(two);
+        printFifthCardLine();
+        System.out.println();
     }
 }
