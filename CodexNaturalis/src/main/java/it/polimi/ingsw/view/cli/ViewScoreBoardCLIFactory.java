@@ -25,7 +25,7 @@ public class ViewScoreBoardCLIFactory extends ViewScoreBoardFactory {
         Set<Player> playerSet = this.scoreBoard.getBoard().keySet();
         List<Player> playerList = playerSet.stream()
                 .parallel()
-                .sorted((Player p1, Player p2) -> (this.scoreBoard.getPoints(p1)>=this.scoreBoard.getPoints(p2)) ? 1 : -1)
+                .sorted((Player p1, Player p2) -> (this.scoreBoard.getPoints(p1)>=this.scoreBoard.getPoints(p2)) ? -1 : 1)
                 .toList();
         int i = 1;
         for (Player p : playerList) {
