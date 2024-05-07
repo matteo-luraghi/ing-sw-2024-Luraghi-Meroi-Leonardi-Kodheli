@@ -63,7 +63,9 @@ public class Deck implements Serializable {
         // set the first uncovered cards
         this.uncoveredCards = new ResourceCard[2];
         this.uncoveredCards[0] = cards.remove();
+        this.uncoveredCards[0].flip();
         this.uncoveredCards[1] = cards.remove();
+        this.uncoveredCards[1].flip();
         this.isGold = isGold;
     }
 
@@ -93,6 +95,9 @@ public class Deck implements Serializable {
         ResourceCard cardToDraw;
         if (which == 0) {//drawing from deck
             cardToDraw = cards.poll(); //returns null if the deck is empty
+            if(cardToDraw!=null) {
+                cardToDraw.flip();
+            }
         } else { //drawing from uncovered cards
             cardToDraw = uncoveredCards[which-1];
             if(cardToDraw!=null) {
@@ -101,9 +106,7 @@ public class Deck implements Serializable {
 
 
         }
-        if(cardToDraw!=null) {
-            cardToDraw.flip();
-        }
+
         return cardToDraw;
     }
 
@@ -147,7 +150,6 @@ public class Deck implements Serializable {
         if(Which!= 1 && Which!=2)
             throw new IndexOutOfBoundsException();
         this.uncoveredCards[Which-1] = this.Draw(0);
-        this.uncoveredCards[Which-1].flip();
     }
 
     public boolean isDeckEmpty () {
