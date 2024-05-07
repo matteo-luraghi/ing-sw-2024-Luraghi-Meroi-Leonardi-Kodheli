@@ -26,7 +26,9 @@ public class CLI implements View {
     private ViewDeckFactory deckViewer  = null;
     private ViewGoalCardFactory goalCardViewer = null;
     private boolean isMyTurn = false;
-    private boolean gameToUpdate = false;
+    private GameState game = null;
+    private Player user = null;
+    private boolean playPhase = false;
 
     /**
      * CLI constructor
@@ -361,156 +363,156 @@ public class CLI implements View {
         return isMyTurn;
     }
 
+    //game, user, playPhase
+
     /**
-     * gameToUpdate getter
-     * @return whether the game is to be updated for the client or not
+     * playPhase setter
+     * @param playPhase tells whether it's the client's turn or not
      */
-    public boolean isGameToUpdate() {
-        return gameToUpdate;
+    public void setPlayPhase (boolean playPhase) {
+        this.playPhase = playPhase;
     }
 
     /**
-     * gameToUpdate setter
-     * @param gameToUpdate tells whether the game is to be updated for the client or not
+     * playPhase getter
+     * @return whether it is the playing phase or not
      */
-    public void setGameToUpdate(boolean gameToUpdate) {
-        this.gameToUpdate = gameToUpdate;
+    public boolean getPlayPhase() {
+        return this.playPhase;
     }
 
     /**
-     * method to parse and get the user's input as commands when it's not the client's turn
+     * isMyTurn setter
+     * @param user is the user that is going to use this client
      */
-    public void GetCommandWhileNotYourTurn(GameState game, Player asking) {
-        gameToUpdate = false;
-        Scanner scanner1 = new Scanner(System.in);
+    public void setUser (Player user) {
+        this.user = user;
+    }
+
+    /**
+     * user getter
+     * @return the client's player
+     */
+    public Player getUser() {
+        return this.user;
+    }
+
+    /**
+     * isMyTurn setter
+     * @param isMyTurn tells whether it's the client's turn or not
+     */
+    public void setGame (GameState game) {
+        this.game = game;
+    }
+
+    /**
+     * isMyTurn getter
+     * @return whether it is my turn or not
+     */
+    public GameState getGame() {
+        return this.game;
+    }
+
+    /**
+     * method to get the user's inputs
+     */
+    public void getCommands() {
         String command = "";
         Player lastPlayerField = null;
-        while (!this.isMyTurn && !this.gameToUpdate) {
-            System.out.print("Enter a command: ");
-            command = scanner1.nextLine();
+        while (true) {
+            System.out.println("Enter a command: ");
+            command = this.scanner.nextLine();
 
             switch (command.toLowerCase()) {
-                case "show my goal card" -> {ShowPrivateGoal(asking, game);}
-                case "show field" -> {lastPlayerField = commandShowPlayerField(game, asking);}
+                case "show my goal card" -> {ShowPrivateGoal(user, game);}
+                case "show field" -> {lastPlayerField = commandShowPlayerField(game, user);}
                 case "show decks" -> {ShowDecks(game);}
                 case "show scoreboard" -> {ShowScoreBoard(game.getGameTable().getScoreBoard());}
-                case "show card" -> {commandShowCard(game, asking, lastPlayerField);}
+                case "show card" -> {commandShowCard(game, user, lastPlayerField);}
                 case "show legend" -> {showLegend();}
-                case "help" -> {ShowCommands(false);}
-                default -> {System.out.println(AnsiColors.ANSI_RED + "Not a valid command, type 'help' to show all the commands available."  + AnsiColors.ANSI_RESET);}
-            }
-        }
-    }
-
-    /**
-     * method to parse and get the user's input as commands when it's the playing phase of the client's turn
-     */
-    public void GetCommandInPlayState(GameState game, Player asking) {
-        String command = "";
-        Player lastPlayerField = null;
-        while (!command.equals("play card")) {
-            System.out.print("Enter a command: ");
-            command = scanner.nextLine();
-
-            switch (command.toLowerCase()) {
-                case "show my goal card" -> {ShowPrivateGoal(asking, game);}
-                case "show field" -> {lastPlayerField = commandShowPlayerField(game, asking);}
-                case "show decks" -> {ShowDecks(game);}
-                case "show scoreboard" -> {ShowScoreBoard(game.getGameTable().getScoreBoard());}
-                case "show card" -> {commandShowCard(game, asking, lastPlayerField);}
                 case "play card" -> {
-                    ShowPlayerField(asking, asking, game);
+                    if (isMyTurn && playPhase) {
+                        ShowPlayerField(user, user, game);
 
-                    boolean correctInput = false;
-                    int card = 0;
-                    System.out.println();
-                    do {
-                        System.out.println("Which of your hand's cards?\n1|2|3");
-                        try {
-                            String cardString = scanner.nextLine();
-                            card = Integer.parseInt(cardString);
-                            if(card >= 1 && card <=3) {
-                                correctInput = true;
-                            }
-                        } catch (NumberFormatException e) {
-                            System.out.println(AnsiColors.ANSI_RED+"Invalid input. Enter a number."+AnsiColors.ANSI_RESET);
-                        }
-                    } while (!correctInput);
-                    correctInput = false;
-                    do {
-                        System.out.println("On which side do you want to play it?\nFRONT|BACK");
-                        boolean isFront;
-                        String isFrontString = scanner.nextLine();
-                        if (isFrontString.equalsIgnoreCase("front") || isFrontString.equalsIgnoreCase("back")) {
-                            isFront = isFrontString.equalsIgnoreCase("front");
-                            correctInput = true;
-
-                            Coordinates where = getCardCoordinatesFromInput();
-                            client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(asking).getHand().get(card - 1), where, isFront));
-                        } else {
-                            System.out.println(AnsiColors.ANSI_RED + "Incorrect input. Try again." + AnsiColors.ANSI_RESET);
-                        }
-                    } while (!correctInput);
-                }
-                case "show legend" -> {showLegend();}
-                case "help" -> {ShowCommands(true);}
-                default -> {System.out.println(AnsiColors.ANSI_RED + "Not a valid command, type 'help' to show all the commands available."  + AnsiColors.ANSI_RESET);}
-            }
-        }
-    }
-
-    /**
-     * method to parse and get the user's input as commands when it's the drawing phase of the client's turn
-     */
-    public void GetCommandInDrawState(GameState game, Player asking) {
-        String command = "";
-        Player lastPlayerField = null;
-        while (!command.equals("draw card")) {
-            System.out.print("Enter a command: ");
-            command = scanner.nextLine();
-
-            switch (command.toLowerCase()) {
-                case "show my goal card" -> {ShowPrivateGoal(asking, game);}
-                case "show field" -> {lastPlayerField = commandShowPlayerField(game, asking);}
-                case "show decks" -> {ShowDecks(game);}
-                case "show scoreboard" -> {ShowScoreBoard(game.getGameTable().getScoreBoard());}
-                case "show card" -> {commandShowCard(game, asking, lastPlayerField);}
-                case "draw card" -> {
-                    boolean correctInput = false;
-                    ShowDecks(game);
-                    System.out.println();
-                    do {
-                        System.out.println("From which deck do you want to draw from?\nResource|Gold");
-                        String deck = scanner.nextLine();
-                        if (deck.equalsIgnoreCase("resource") || deck.equalsIgnoreCase("gold")) {
-                            do {
-                                System.out.println("Where do you want to draw from?\nDeck|U1|U2");
-                                String where = scanner.nextLine();
-                                if (where.equalsIgnoreCase("deck") || where.equalsIgnoreCase("u1") || where.equalsIgnoreCase("u2")) {
-                                    int which = 0;
-                                    switch (where) {
-                                        case "deck" -> {
-                                            which = 0;
-                                        }
-                                        case "u1" -> {
-                                            which = 1;
-                                        }
-                                        case "u2" -> {
-                                            which = 2;
-                                        }
-                                    }
+                        boolean correctInput = false;
+                        int card = 0;
+                        System.out.println();
+                        do {
+                            System.out.println("Which of your hand's cards?\n1|2|3");
+                            try {
+                                String cardString = scanner.nextLine();
+                                card = Integer.parseInt(cardString);
+                                if (card >= 1 && card <= 3) {
                                     correctInput = true;
-                                    client.sendMessageServer(new DrawCardResponse(which, (deck.equalsIgnoreCase("gold"))));
-                                } else {
-                                    System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." + AnsiColors.ANSI_RESET);
                                 }
-                            } while (!correctInput);
-                        } else {
-                            System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." + AnsiColors.ANSI_RESET);
-                        }
-                    } while (!correctInput);
+                            } catch (NumberFormatException e) {
+                                System.out.println(AnsiColors.ANSI_RED + "Invalid input. Enter a number." + AnsiColors.ANSI_RESET);
+                            }
+                        } while (!correctInput);
+                        correctInput = false;
+                        do {
+                            System.out.println("On which side do you want to play it?\nFRONT|BACK");
+                            boolean isFront;
+                            String isFrontString = scanner.nextLine();
+                            if (isFrontString.equalsIgnoreCase("front") || isFrontString.equalsIgnoreCase("back")) {
+                                isFront = isFrontString.equalsIgnoreCase("front");
+                                correctInput = true;
+
+                                Coordinates where = getCardCoordinatesFromInput();
+                                client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(user).getHand().get(card - 1), where, isFront));
+                            } else {
+                                System.out.println(AnsiColors.ANSI_RED + "Incorrect input. Try again." + AnsiColors.ANSI_RESET);
+                            }
+                        } while (!correctInput);
+                    } else {
+                        if (!isMyTurn)
+                            System.out.println(AnsiColors.ANSI_RED + "It's not your turn. You cannot play a card."  + AnsiColors.ANSI_RESET);
+                        else
+                            System.out.println(AnsiColors.ANSI_RED + "You already played a card, you need to draw now. Try the command 'draw card'"  + AnsiColors.ANSI_RESET);
+                    }
                 }
-                case "show legend" -> {showLegend();}
+                case "draw card" -> {
+                    if (isMyTurn && !playPhase) {
+                        boolean correctInput = false;
+                        ShowDecks(game);
+                        System.out.println();
+                        do {
+                            System.out.println("From which deck do you want to draw from?\nResource|Gold");
+                            String deck = scanner.nextLine();
+                            if (deck.equalsIgnoreCase("resource") || deck.equalsIgnoreCase("gold")) {
+                                do {
+                                    System.out.println("Where do you want to draw from?\nDeck|U1|U2");
+                                    String where = scanner.nextLine();
+                                    if (where.equalsIgnoreCase("deck") || where.equalsIgnoreCase("u1") || where.equalsIgnoreCase("u2")) {
+                                        int which = 0;
+                                        switch (where) {
+                                            case "deck" -> {
+                                                which = 0;
+                                            }
+                                            case "u1" -> {
+                                                which = 1;
+                                            }
+                                            case "u2" -> {
+                                                which = 2;
+                                            }
+                                        }
+                                        correctInput = true;
+                                        client.sendMessageServer(new DrawCardResponse(which, (deck.equalsIgnoreCase("gold"))));
+                                    } else {
+                                        System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." + AnsiColors.ANSI_RESET);
+                                    }
+                                } while (!correctInput);
+                            } else {
+                                System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." + AnsiColors.ANSI_RESET);
+                            }
+                        } while (!correctInput);
+                    } else {
+                        if (!isMyTurn)
+                            System.out.println(AnsiColors.ANSI_RED + "It's not your turn. You cannot play a card."  + AnsiColors.ANSI_RESET);
+                        else
+                            System.out.println(AnsiColors.ANSI_RED + "You need to play a card before drawing. Try the command 'play card'"  + AnsiColors.ANSI_RESET);
+                    }
+                }
                 case "help" -> {ShowCommands(false);}
                 default -> {System.out.println(AnsiColors.ANSI_RED + "Not a valid command, type 'help' to show all the commands available."  + AnsiColors.ANSI_RESET);}
             }
