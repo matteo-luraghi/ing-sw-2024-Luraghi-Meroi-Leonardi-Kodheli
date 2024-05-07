@@ -313,4 +313,50 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
         printSixthCardLine();
         System.out.println();
     }
+
+    public void printTwoCards(GameCard one, GameCard two) {
+        System.out.println("   Card N°1        Card N°2    ");
+
+        SetCard(one);
+        printFirstCardLine();
+        System.out.print("   ");
+        SetCard(two);
+        printFirstCardLine();
+        System.out.println();
+
+        SetCard(one);
+        printSecondCardLine();
+        System.out.print("   ");
+        SetCard(two);
+        printSecondCardLine();
+        System.out.println();
+
+        SetCard(one);
+        printThirdCardLine();
+        System.out.print("   ");
+        SetCard(two);
+        printThirdCardLine();
+        System.out.println();
+
+        SetCard(one);
+        printFourthCardLine();
+        System.out.print("   ");
+        SetCard(two);
+        printFourthCardLine();
+        System.out.println();
+
+        SetCard(one);
+        printFifthCardLine();
+        System.out.print("   ");
+        SetCard(two);
+        printFifthCardLine();
+        System.out.println();
+
+        SetCard(one);
+        printSixthCardLine();
+        System.out.print("   ");
+        SetCard(two);
+        printSixthCardLine();
+        System.out.println();
+    }
 }

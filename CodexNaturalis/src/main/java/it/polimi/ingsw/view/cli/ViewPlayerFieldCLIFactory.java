@@ -42,16 +42,15 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
 
         System.out.println();
         System.out.println(this.player.toString()+"'s hand:");
-        /*int counter = 1;
-        for (ResourceCard c : this.playerField.getHand()) {
-            gameCardViewer.SetCard(c);
-            System.out.println("Card N°" + counter);
-            counter++;
-            gameCardViewer.Show();
-            System.out.println();
-        }*/
 
-        ((ViewGameCardCLIFactory) this.gameCardViewer).printThreeCards(this.playerField.getHand().get(0), this.playerField.getHand().get(1), this.playerField.getHand().get(2), true);
+        if (this.playerField.getHand().size()==3) {
+            ((ViewGameCardCLIFactory) this.gameCardViewer).printThreeCards(this.playerField.getHand().get(0), this.playerField.getHand().get(1), this.playerField.getHand().get(2), true);
+        } else if (this.playerField.getHand().size()==2) {
+            ((ViewGameCardCLIFactory) this.gameCardViewer).printTwoCards(this.playerField.getHand().get(0), this.playerField.getHand().get(1));
+        } else {
+            this.gameCardViewer.SetCard(this.playerField.getHand().getFirst());
+            this.gameCardViewer.Show();
+        }
 
         System.out.println(this.player.toString()+"'s private goal:");
         goalCardViewer.SetCard(this.playerField.getPrivateGoal());
