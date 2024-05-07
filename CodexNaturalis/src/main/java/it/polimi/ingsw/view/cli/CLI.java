@@ -311,6 +311,37 @@ public class CLI implements View {
         System.out.println("The game has ended...");
     }
 
+    public void WelcomeMessage() {
+        System.out.println("WELCOME TO:");
+        System.out.println("\n" +
+                "\n" +
+                AnsiColors.ANSI_RED + "   _____"+AnsiColors.ANSI_GREEN+"            _"+AnsiColors.ANSI_RESET+"                                  \n" +
+                AnsiColors.ANSI_RED + "  / ____|"+AnsiColors.ANSI_GREEN+"          | |"+AnsiColors.ANSI_RESET+"                                 \n" +
+                AnsiColors.ANSI_RED + " | |"+AnsiColors.ANSI_PURPLE+"      ___"+AnsiColors.ANSI_GREEN+"    __| |"+AnsiColors.ANSI_CYAN+"  ___"+AnsiColors.ANSI_RED+" __  __" + AnsiColors.ANSI_RESET + "                     \n" +
+                AnsiColors.ANSI_RED + " | |"+AnsiColors.ANSI_PURPLE+"     / _ \\"+AnsiColors.ANSI_GREEN+"  / _` |"+AnsiColors.ANSI_CYAN+" / _ \\"+AnsiColors.ANSI_RED+"\\ \\/ /"+AnsiColors.ANSI_RESET+"                     \n" +
+                AnsiColors.ANSI_RED + " | |____"+AnsiColors.ANSI_PURPLE+"| (_) ||"+AnsiColors.ANSI_GREEN+" (_| ||"+AnsiColors.ANSI_CYAN+"  __/"+AnsiColors.ANSI_RED+" >  <"+AnsiColors.ANSI_RESET+"                      \n" +
+                AnsiColors.ANSI_RED + "  \\_____|"+AnsiColors.ANSI_PURPLE+"\\___/"+AnsiColors.ANSI_GREEN+"  \\__,_|"+AnsiColors.ANSI_CYAN+" \\___|"+AnsiColors.ANSI_RED+"/_/\\_\\"+AnsiColors.ANSI_RESET+"                     \n" +
+                "                                                       \n" +
+                "                                                       \n" +
+                AnsiColors.ANSI_PURPLE+"       _   _"+AnsiColors.ANSI_CYAN+"         _"+AnsiColors.ANSI_CYAN+"                       _"+AnsiColors.ANSI_RED+"  _      \n" +
+                AnsiColors.ANSI_PURPLE+"      | \\ | |"+AnsiColors.ANSI_CYAN+"       | |"+AnsiColors.ANSI_CYAN+"                     | |"+AnsiColors.ANSI_RED+"(_)     \n" +
+                AnsiColors.ANSI_PURPLE+"      |  \\| |"+AnsiColors.ANSI_GREEN+"  __ _"+AnsiColors.ANSI_CYAN+" | |_"+AnsiColors.ANSI_RED+"  _   _"+AnsiColors.ANSI_PURPLE+"  _ __"+AnsiColors.ANSI_GREEN+"  __ _"+AnsiColors.ANSI_CYAN+" | |"+AnsiColors.ANSI_RED+" _"+AnsiColors.ANSI_PURPLE+"  ___ \n" +
+                AnsiColors.ANSI_PURPLE+"      | . ` | "+AnsiColors.ANSI_GREEN+"/ _` |"+AnsiColors.ANSI_CYAN+"| __|"+AnsiColors.ANSI_RED+"| | | |"+AnsiColors.ANSI_PURPLE+"| '__|"+AnsiColors.ANSI_GREEN+"/ _` |"+AnsiColors.ANSI_CYAN+"| |"+AnsiColors.ANSI_RED+"| |"+AnsiColors.ANSI_PURPLE+"/ __|\n" +
+                AnsiColors.ANSI_PURPLE+"      | |\\  |"+AnsiColors.ANSI_GREEN+"| (_| |"+AnsiColors.ANSI_CYAN+"| |_"+AnsiColors.ANSI_RED+" | |_| |"+AnsiColors.ANSI_PURPLE+"| |"+AnsiColors.ANSI_GREEN+"  | (_| |"+AnsiColors.ANSI_CYAN+"| |"+AnsiColors.ANSI_RED+"| |"+AnsiColors.ANSI_PURPLE+"\\__ \\\n" +
+                AnsiColors.ANSI_PURPLE+"      |_| \\_|"+AnsiColors.ANSI_GREEN+" \\__,_|"+AnsiColors.ANSI_CYAN+" \\__|"+AnsiColors.ANSI_RED+" \\__,_|"+AnsiColors.ANSI_PURPLE+"|_|"+AnsiColors.ANSI_GREEN+"   \\__,_|"+AnsiColors.ANSI_CYAN+"|_|"+AnsiColors.ANSI_RED+"|_|"+AnsiColors.ANSI_PURPLE+"|___/\n"+AnsiColors.ANSI_RESET +
+                "                                                       \n" +
+                "                                                       \n" +
+                "                                                       \n" +
+                "                                                       \n" +
+                "                                                       \n" +
+                "                                                       \n" +
+                "                                                       \n" +
+                "                                                       \n" +
+                "                                                       \n" +
+                "                                                       \n" +
+                "\n");
+    }
+
     /**
      * isMyTurn setter
      * @param isMyTurn tells whether it's the client's turn or not
