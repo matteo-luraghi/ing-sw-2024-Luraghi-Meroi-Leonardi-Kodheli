@@ -116,11 +116,17 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
 
     }
 
+    /**
+     * method to print the first line of a card
+     */
     public void printFirstCardLine() {
         System.out.print(AnsiColors.ANSI_WHITE);
         System.out.print(" _____"+this.card.getPoints()+"_____ ");
     }
 
+    /**
+     * method to print the second line of a card
+     */
     public void printSecondCardLine() {
         System.out.print(AnsiColors.ANSI_WHITE);
         if (this.card.isResourceGoal()) {
@@ -149,6 +155,9 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
         }
     }
 
+    /**
+     * method to print the third line of a card
+     */
     public void printThirdCardLine() {
         System.out.print(AnsiColors.ANSI_WHITE);
         if (this.card.isResourceGoal()) {
@@ -176,6 +185,9 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
         }
     }
 
+    /**
+     * method to print the fourth line of a card
+     */
     public void printFourthCardLine() {
         System.out.print(AnsiColors.ANSI_WHITE);
         if (this.card.isResourceGoal()) {
@@ -203,11 +215,19 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
         }
     }
 
+    /**
+     * method to print the fifth line of a card
+     */
     public void printFifthCardLine() {
         System.out.print(AnsiColors.ANSI_WHITE);
         System.out.print("|___________|" + AnsiColors.ANSI_RESET);
     }
 
+    /**
+     * method to print two goal card next to one another
+     * @param one is the first card
+     * @param two is the second card
+     */
     public void printTwoCards(GoalCard one, GoalCard two) {
         SetCard(one);
         printFirstCardLine();

@@ -14,6 +14,9 @@ import java.util.List;
  */
 public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
 
+    /**
+     * ViewPlayerFieldCLIFactory constructor
+     */
     public ViewPlayerFieldCLIFactory() {
         this.gameCardViewer = new ViewGameCardCLIFactory();
         this.goalCardViewer = new ViewGoalCardCLIFactory();

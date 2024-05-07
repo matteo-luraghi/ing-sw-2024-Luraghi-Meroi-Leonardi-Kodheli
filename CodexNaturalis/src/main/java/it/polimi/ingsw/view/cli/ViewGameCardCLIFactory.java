@@ -98,6 +98,9 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
         }
     }
 
+    /**
+     * method to print the first line of a card
+     */
     public void printFirstCardLine() {
         if (this.card instanceof StartingCard) {
             System.out.print(AnsiColors.ANSI_WHITE);
@@ -111,24 +114,9 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
         }
     }
 
-    /*if (this.card instanceof StartingCard) {
-        System.out.print(AnsiColors.ANSI_WHITE);
-    } else if (this.card instanceof GoldCard) {
-        System.out.print(AnsiColors.ANSI_YELLOW);
-        if (!this.card.getIsFront()) {
-
-        } else {
-
-        }
-    } else {
-        System.out.print(AnsiColors.ANSI_RESET);
-        if (!this.card.getIsFront()) {
-
-        } else {
-
-        }
-    }*/
-
+    /**
+     * method to print the second line of a card
+     */
     public void printSecondCardLine() {
         if (this.card instanceof StartingCard) {
             System.out.print(AnsiColors.ANSI_WHITE);
@@ -153,6 +141,9 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
         }
     }
 
+    /**
+     * method to print the third line of a card
+     */
     public void printThirdCardLine() {
         if (this.card instanceof StartingCard) {
             System.out.print(AnsiColors.ANSI_WHITE);
@@ -174,6 +165,9 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
         }
     }
 
+    /**
+     * method to print the fourth line of a card
+     */
     public void printFourthCardLine () {
         if (this.card instanceof StartingCard) {
             System.out.print(AnsiColors.ANSI_WHITE);
@@ -204,6 +198,9 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
         }
     }
 
+    /**
+     * method to print the fifth line of a card
+     */
     public void printFifthCardLine() {
         if (this.card instanceof StartingCard) {
             System.out.print(AnsiColors.ANSI_WHITE);
@@ -225,6 +222,9 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
         }
     }
 
+    /**
+     * method to print the sixth line of a card
+     */
     public void printSixthCardLine() {
         if (this.card instanceof StartingCard) {
             System.out.print(AnsiColors.ANSI_WHITE);
@@ -248,6 +248,13 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
         }
     }
 
+    /**
+     * method to print three game card next to one another
+     * @param one the first card
+     * @param two the second card
+     * @param three the third card
+     * @param isForHand tells whether the calle is used for showing the hand or the deck
+     */
     public void printThreeCards (GameCard one, GameCard two, GameCard three, boolean isForHand) {
         if (isForHand)
             System.out.println("   Card N°1        Card N°2        Card N°3   ");
@@ -314,6 +321,11 @@ public class ViewGameCardCLIFactory extends ViewGameCardFactory {
         System.out.println();
     }
 
+    /**
+     * method to print three game card next to one another
+     * @param one the first card
+     * @param two the second card
+     */
     public void printTwoCards(GameCard one, GameCard two) {
         System.out.println("   Card N°1        Card N°2    ");
 

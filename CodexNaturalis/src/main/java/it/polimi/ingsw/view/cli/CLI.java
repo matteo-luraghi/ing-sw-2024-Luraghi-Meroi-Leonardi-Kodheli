@@ -168,6 +168,10 @@ public class CLI implements View {
         this.goalCardViewer.Show();
     }
 
+    /**
+     * method to make the player choose on which side to play a starting card
+     * @param card is the starting card
+     */
     @Override
     public void ChooseStartingCardSide(StartingCard card) {
         if (card.getIsFront()) {
@@ -199,6 +203,10 @@ public class CLI implements View {
         }
     }
 
+    /**
+     * method to show a gamecard
+     * @param card to be displayed
+     */
     public void ShowCard(GameCard card) {
         this.gameCardViewer.SetCard(card);
         this.gameCardViewer.Show();
