@@ -577,22 +577,27 @@ public class CLI implements View {
      */
     private void commandShowCard(GameState game, Player asking, Player lastPlayerField) {
         if (lastPlayerField == null) {
-            System.out.println("Enter the player you want to see the card of:");
-            for (Player p : game.getPlayers()) {
-                System.out.print(p.toString()+"| ");
-            }
-            System.out.println();
-            String nickname = scanner.nextLine();
-            Player player = null;
-            for (Player p : game.getPlayers()) {
-                if (p.getNickname().equals(nickname))
-                    player = p;
-            }
-            if (player == null)
-                System.out.println(AnsiColors.ANSI_RED + "Not a valid nickname. Enter a new command." + AnsiColors.ANSI_RESET);
-            else {
-                lastPlayerField = player;
-            }
+            boolean correctInput = false;
+            do {
+                System.out.println("Enter the player you want to see the card of:");
+                for (Player p : game.getPlayers()) {
+                    System.out.print(p.toString() + "| ");
+                }
+                System.out.println();
+                String nickname = scanner.nextLine();
+                Player player = null;
+                for (Player p : game.getPlayers()) {
+                    if (p.getNickname().equals(nickname))
+                        player = p;
+                }
+                if (player == null)
+                    System.out.println(AnsiColors.ANSI_RED + "Not a valid nickname. Try again." + AnsiColors.ANSI_RESET);
+                else {
+                    lastPlayerField = player;
+                    correctInput = true;
+                }
+            } while (!correctInput);
+
         }
         ShowPlayerField(lastPlayerField, asking, game);
         System.out.println();

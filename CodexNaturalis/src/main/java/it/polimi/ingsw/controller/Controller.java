@@ -472,7 +472,7 @@ public class Controller {
                 isLastTurn = true;
             }
         }
-        if (!isPenultimateTurn && game.getGameTable().getScoreBoard().getBoard().values().stream().anyMatch(value -> value > 20)){
+        if (!isPenultimateTurn && game.getGameTable().getScoreBoard().getBoard().values().stream().anyMatch(value -> value > 0)){
             //If someone has at least 20 points, we start the countdown
             isPenultimateTurn = true;
             for(ConnectionHandler c : getHandlers()){
