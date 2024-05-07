@@ -67,7 +67,7 @@ public class CLI implements View {
             }
 
         } while(!connected);
-
+        WelcomeMessage();
         this.client = client;
     }
 
