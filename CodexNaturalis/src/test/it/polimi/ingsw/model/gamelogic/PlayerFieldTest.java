@@ -3,6 +3,8 @@ package it.polimi.ingsw.model.gamelogic;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import it.polimi.ingsw.model.card.*;
+import it.polimi.ingsw.view.cli.ViewPlayerFieldCLIFactory;
+import it.polimi.ingsw.view.mainview.ViewPlayerFieldFactory;
 import org.junit.Before;
 import com.google.gson.Gson;
 import org.junit.Test;
@@ -92,57 +94,56 @@ public class PlayerFieldTest {
     public void IsPlayableTest() {
         //cases: already occupied coordinate,
 
-        playerField.draw(goldDeck, 0); //get a card in the hand
-        GoldCard card = (GoldCard) playerField.getHand().getFirst();
+        playerField.draw(resDeck, 0); //get a card in the hand
+        ResourceCard card = playerField.getHand().getFirst();
 
-        boolean playableIndexes[] = new boolean[4];
 
 
         Coordinates coordinates;
 int n=0;
         //4 cases
         while(true) {
-       //     System.out.println(card.getCorner(0)+" "+card.getCorner(1)+" "+card.getCorner(2)+" "+card.getCorner(3));
+            System.out.println(card.getCorner(0)+" "+card.getCorner(1)+" "+card.getCorner(2)+" "+card.getCorner(3));
             coordinates = new Coordinates(1, -1); //i=0 j=3
-            if (startingCard.getCorner(0)==Resource.HIDDEN ) {
-                assertFalse(playerField.IsPlayable(coordinates, (ResourceCard) card));
+            if (startingCard.getCorner(3)==Resource.HIDDEN ) {
+                assertFalse(playerField.IsPlayable(coordinates, card));
                 System.out.println("Not Playable!");
             }
             else {
-                assertTrue(playerField.IsPlayable(coordinates, (ResourceCard) card));
+                assertTrue(playerField.IsPlayable(coordinates, card));
                 System.out.println("Playable!");
             }
             coordinates = new Coordinates(1, 1);// i=1 j=2
             if (startingCard.getCorner(1)==Resource.HIDDEN ) {
-                assertFalse(playerField.IsPlayable(coordinates, (ResourceCard) card));
+                assertFalse(playerField.IsPlayable(coordinates,  card));
                 System.out.println("Not Playable!");
             }
             else {
-                assertTrue(playerField.IsPlayable(coordinates, (ResourceCard) card));
+                assertTrue(playerField.IsPlayable(coordinates, card));
                 System.out.println("Playable!");
             }
             coordinates = new Coordinates(-1, -1);// i=2 j=1
             if (startingCard.getCorner(2)==Resource.HIDDEN) {
 
-                assertFalse(playerField.IsPlayable(coordinates, (ResourceCard) card));
+                assertFalse(playerField.IsPlayable(coordinates,card));
                 System.out.println("Not Playable!");
             }
             else {
-                assertTrue(playerField.IsPlayable(coordinates, (ResourceCard) card));
+                assertTrue(playerField.IsPlayable(coordinates, card));
                 System.out.println("Playable!");
             }
             coordinates = new Coordinates(-1, 1);// i=3 j=0
-            if (startingCard.getCorner(3)==Resource.HIDDEN) {
-                assertFalse(playerField.IsPlayable(coordinates, (ResourceCard) card));
+            if (startingCard.getCorner(0)==Resource.HIDDEN) {
+                assertFalse(playerField.IsPlayable(coordinates, card));
                 System.out.println("Not Playable!");
             }
             else {
-                assertTrue(playerField.IsPlayable(coordinates, (ResourceCard) card));
+                assertTrue(playerField.IsPlayable(coordinates,card));
                 System.out.println("Playable!");
             }
-            playerField.draw(goldDeck,1);
+            playerField.draw(resDeck,1);
             n++;
-            card=(GoldCard) playerField.getHand().get(n);
+            card= playerField.getHand().get(n);
             if(card== null)
                 break;
         }
@@ -169,11 +170,19 @@ int n=0;
         Coordinates coordinates=new Coordinates(0,0);
 
         GameCard card=startingCard;
+int tries=0;
 
-        boolean lock=false;
         while(true) {
             boolean found=false;
+            try {
 
+                    playerField.draw(resDeck, 0);
+            }
+            catch (NullPointerException e)
+            {
+                System.out.println("Finished Cards");
+                return;
+            }
             for (Coordinates coordinate : playerField.getGameZone().keySet()) {
 
                 card=playerField.getGameZone().get(coordinate);
@@ -209,45 +218,37 @@ int n=0;
 
                     }
                 }
+                ResourceCard playcard=playerField.getHand().getFirst();
+                if (playerField.IsPlayable(coordinates, (ResourceCard) playcard)) {
 
-                if( (playerField.getGameZone().containsKey(coordinates))) {
-                    System.err.println("coordinate already occupied");
-                  continue;
+                    assertEquals( ((ResourceCard) playcard).getPoints(), playerField.Play(coordinates, (ResourceCard)playcard));
+                   // System.out.println("placed!");
+                    ViewPlayerFieldCLIFactory VIEW= new ViewPlayerFieldCLIFactory();
+                    VIEW.setPlayerField(playerField, new Player("Mario", Color.RED));
+                    VIEW.ShowGameZone();
+                    found=true;
+                    break;
+
+                } else {
+
+                    assertEquals(-1, playerField.Play(coordinates, (ResourceCard)playcard));
+                   // System.out.println("Can't be placed!"); //this should not be executed
+
+
                 }
-                found=true;
-                break;
+
+
+
             }
             if(!found)
             {
                 System.out.println("Couldn't find suitable card where to place");
                 return;
             }
-            try {
-                if(!lock)
-                    playerField.draw(resDeck, 0);
-            }
-            catch (NullPointerException e)
-            {
-                System.out.println("Finished Cards");
-                return;
-            }
 
-            System.out.println(card.getCorner(0)+" "+card.getCorner(1)+" "+card.getCorner(2)+" "+card.getCorner(3)+" "+Util.getKeyByValue(playerField.getGameZone(),card).getX()+" "+Util.getKeyByValue(playerField.getGameZone(),card).getY());
 
-            card=playerField.getHand().getFirst();
 
-            System.out.println(card.getCorner(0)+" "+card.getCorner(1)+" "+card.getCorner(2)+" "+card.getCorner(3)+" "+ coordinates.getX()+" "+coordinates.getY());
-            if (playerField.IsPlayable(coordinates, (ResourceCard) card)) {
-                assertEquals( ((ResourceCard) card).getPoints(), playerField.Play(coordinates, (ResourceCard)card));
-                System.out.println("placed!");
-                lock=false;
 
-            } else {
-                assertEquals(-1, playerField.Play(coordinates, (ResourceCard)card));
-                System.out.println("Can't be placed!");
-                lock=true;
-
-            }
 
         }
     }

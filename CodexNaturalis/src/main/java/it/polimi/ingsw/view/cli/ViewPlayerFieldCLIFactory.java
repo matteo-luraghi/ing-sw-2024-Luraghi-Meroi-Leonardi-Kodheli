@@ -79,7 +79,7 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
     /**
      * displays a player's game zone
      */
-    private void ShowGameZone() {
+    public void ShowGameZone() { //for only testing setted to public
         System.out.println(this.player.toString()+"'s field:");
 
         List<Coordinates> sortedCoordinates = new ArrayList<>(this.playerField.getGameZone().keySet());
