@@ -116,7 +116,118 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
 
     }
 
-    public void show2 (GoalCard[] Goals) {
-        //TODO make it show 2 goalcards next to one another
+    /*if (this.card.isResourceGoal()) {
+
+    } else {
+        ArrayList<Direction> directions = ((PositionGoalCard) this.card).getPositionsFromBase();
+        ArrayList<Kingdom> resources = ((PositionGoalCard) this.card).getResourceFromBase();
+        if (directions.contains(Direction.TOP)) {
+                if (directions.get(0).equals(Direction.TOP)) {
+                    if (directions.get(1).equals(Direction.TOP_RIGHT)) {
+
+                    } else {
+
+                    }
+                } else {
+                    if (directions.get(0).equals(Direction.TOP_RIGHT)) {
+
+                    } else {
+
+                    }
+                }
+            } else {
+                if (directions.contains(Direction.TOP_RIGHT)) {
+
+                } else {
+
+                }
+            }
+    }*/
+    public void printFirstCardLine() {
+        System.out.print(AnsiColors.ANSI_WHITE);
+        System.out.print(" _____"+this.card.getPoints()+"_____ ");
+    }
+
+    public void printSecondCardLine() {
+        if (this.card.isResourceGoal()) {
+            System.out.print("|           |");
+        } else {
+            ArrayList<Direction> directions = ((PositionGoalCard) this.card).getPositionsFromBase();
+            ArrayList<Kingdom> resources = ((PositionGoalCard) this.card).getResourceFromBase();
+
+            if (directions.contains(Direction.TOP)) {
+                if (directions.get(0).equals(Direction.TOP)) {
+                    if (directions.get(1).equals(Direction.TOP_RIGHT)) {
+                        System.out.print("|   " + resources.get(2).toString() + AnsiColors.ANSI_WHITE + "       |" + AnsiColors.ANSI_RESET);
+                    } else {
+                        System.out.print("|       " + resources.get(2).toString() + AnsiColors.ANSI_WHITE + "   |" + AnsiColors.ANSI_RESET);
+                    }
+                } else {
+                    System.out.print("|     " + resources.get(2).toString() + AnsiColors.ANSI_WHITE + "     |" + AnsiColors.ANSI_RESET);
+                }
+            } else {
+                if (directions.contains(Direction.TOP_RIGHT)) {
+                    System.out.print("|       "+resources.get(2).toString()+AnsiColors.ANSI_WHITE+"   |" + AnsiColors.ANSI_RESET);
+                } else {
+                    System.out.print("|   "+resources.get(2).toString()+AnsiColors.ANSI_WHITE+"       |" + AnsiColors.ANSI_RESET);
+                }
+            }
+        }
+    }
+
+    public void printThirdCardLine() {
+        if (this.card.isResourceGoal()) {
+            ArrayList<Resource> requirements = ((ResourceGoalCard) this.card).getRequirements();
+            switch (requirements.size()) {
+                case 2 -> {System.out.print("|    "+requirements.get(0).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(1).toString()+AnsiColors.ANSI_WHITE+"    | Satisfy the goal for every pair of this resources in your field");}
+                case 3 -> {System.out.print("|   "+requirements.get(0).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(1).toString()+AnsiColors.ANSI_WHITE+" "+requirements.get(2).toString()+AnsiColors.ANSI_WHITE+"   | Satisfy the goal for every three of this resources in your field");}
+            }
+        } else {
+            ArrayList<Direction> directions = ((PositionGoalCard) this.card).getPositionsFromBase();
+            ArrayList<Kingdom> resources = ((PositionGoalCard) this.card).getResourceFromBase();
+            if (directions.contains(Direction.TOP)) {
+                if (directions.get(0).equals(Direction.TOP)) {
+                    System.out.print("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     | Have this specific L-shape in your field to satisfy the goal" + AnsiColors.ANSI_RESET);
+                } else {
+                    System.out.print("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     | Have this specific L-shape in your field to satisfy the goal" + AnsiColors.ANSI_RESET);
+                }
+            } else {
+                if (directions.contains(Direction.TOP_RIGHT)) {
+                    System.out.print("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     | Have this specific stair-shape in your field to satisfy the goal" + AnsiColors.ANSI_RESET);
+                } else {
+                    System.out.print("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     | Have this specific stair-shape in your field to satisfy the goal" + AnsiColors.ANSI_RESET);
+                }
+            }
+        }
+    }
+
+    public void printFourthCardLine() {
+        if (this.card.isResourceGoal()) {
+            System.out.print("|           |");
+        } else {
+            ArrayList<Direction> directions = ((PositionGoalCard) this.card).getPositionsFromBase();
+            ArrayList<Kingdom> resources = ((PositionGoalCard) this.card).getResourceFromBase();
+            if (directions.contains(Direction.TOP)) {
+                if (directions.get(0).equals(Direction.TOP)) {
+                    System.out.print("|     " + resources.get(0).toString() + AnsiColors.ANSI_WHITE + "     |" + AnsiColors.ANSI_RESET);
+                } else {
+                    if (directions.get(0).equals(Direction.TOP_RIGHT)) {
+                        System.out.print("|   " + resources.get(0).toString() + AnsiColors.ANSI_WHITE + "       |" + AnsiColors.ANSI_RESET);
+                    } else {
+                        System.out.print("|       " + resources.get(0).toString() + AnsiColors.ANSI_WHITE + "   |" + AnsiColors.ANSI_RESET);
+                    }
+                }
+            } else {
+                if (directions.contains(Direction.TOP_RIGHT)) {
+                    System.out.print("|   "+resources.get(0).toString()+AnsiColors.ANSI_WHITE+"       |" + AnsiColors.ANSI_RESET);
+                } else {
+                    System.out.print("|       "+resources.get(0).toString()+AnsiColors.ANSI_WHITE+"   |" + AnsiColors.ANSI_RESET);
+                }
+            }
+        }
+    }
+
+    public void printFifthCardLine() {
+        System.out.print("|___________|" + AnsiColors.ANSI_RESET);
     }
 }
