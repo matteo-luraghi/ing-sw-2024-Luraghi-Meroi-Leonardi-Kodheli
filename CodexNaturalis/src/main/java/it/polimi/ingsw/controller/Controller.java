@@ -501,6 +501,7 @@ public class Controller {
         isGameEnded = true;
         for(ConnectionHandler c : getHandlers()){
             c.sendMessageClient(new Winner(game));
+            c.sendMessageClient(new ScoreBoardMessage(game.getGameTable().getScoreBoard()));
         }
         //Do i have to do something for when the game ends?
     }
