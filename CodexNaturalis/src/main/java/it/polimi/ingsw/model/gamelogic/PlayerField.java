@@ -266,7 +266,7 @@ public class PlayerField implements Serializable {
         for(Coordinates coordinate: gameZone.keySet())
         {
             if(coordinate.getX()== where.getX() && coordinate.getY()== where.getY()) {
-                System.err.println("Place already occupied");
+         //       System.err.println("Place already occupied");
                 return false;
             }}
         if (card.getIsGold() && card.getIsFront()) {
