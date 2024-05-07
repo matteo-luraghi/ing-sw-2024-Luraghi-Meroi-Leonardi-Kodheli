@@ -100,6 +100,7 @@ public class Client {
                 }
                 else if (msg instanceof Disconnection) {
                     ((Disconnection) msg).show(view);
+                    this.getCommands.interrupt();
                     disconnect();
                 }
             }
