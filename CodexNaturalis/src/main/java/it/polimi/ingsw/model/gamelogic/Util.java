@@ -6,8 +6,6 @@ import com.google.gson.JsonObject;
 import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.view.mainview.AnsiColors;
 
-import javax.swing.text.Position;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
