@@ -1,6 +1,6 @@
 package it.polimi.ingsw.connection.message.clientMessage;
 
-import it.polimi.ingsw.connection.ConnectionHandler;
+import it.polimi.ingsw.connection.SocketConnectionHandler;
 import it.polimi.ingsw.connection.Server;
 import it.polimi.ingsw.connection.message.serverMessage.LoginRequest;
 import it.polimi.ingsw.connection.message.serverMessage.TextMessage;
@@ -30,7 +30,7 @@ public class LoginResponse extends ClientMessage {
      * @param connectionHandler client handler
      */
     @Override
-    public void execute(Server server, ConnectionHandler connectionHandler) {
+    public void execute(Server server, SocketConnectionHandler connectionHandler) {
         if (this.nickname == null || this.nickname.isEmpty()) {
             connectionHandler.sendMessageClient(new LoginRequest());
         } else if(!server.checkUniqueNickname(nickname)){

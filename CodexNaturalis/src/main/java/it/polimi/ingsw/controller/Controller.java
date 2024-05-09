@@ -4,7 +4,6 @@ package it.polimi.ingsw.controller;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import it.polimi.ingsw.connection.ConnectionHandler;
-import it.polimi.ingsw.connection.message.serverMessage.*;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.card.StartingCard;
@@ -86,7 +85,7 @@ public class Controller {
      * Client Handler getter by nickname
      *
      * @param nickname the nickname of a Player
-     * @return the corresponding ConnectionHandler
+     * @return the corresponding SocketConnectionHandler
      */
     public ConnectionHandler getHandlerByNickname(String nickname) {
         connectionLock.lock();
@@ -111,7 +110,7 @@ public class Controller {
         connectionLock.lock();
         try {
             for (ConnectionHandler c : this.connectionHandlers) {
-                c.sendMessageClient(msg);
+                c.sendMessage(msg);
             }
         } finally {
             connectionLock.unlock();
@@ -188,14 +187,10 @@ public class Controller {
             try(Reader reader = new FileReader(cardPath)) {
                 JsonObject parsedGoalCard = parser.parse(reader).getAsJsonObject();
                 boolean isResourceGoal=parsedGoalCard.get("isResourceGoal").getAsBoolean();
-                if(isResourceGoal)
-                {
-
+                if(isResourceGoal) {
                     cardsList.add(Util.fromJSONtoResourceGoalCard(parsedGoalCard));
                 }
-                else
-                {
-
+                else {
                     cardsList.add(Util.fromJSONtoPositionGoalCard(parsedGoalCard));
                 }
 
@@ -212,13 +207,13 @@ public class Controller {
         for(ConnectionHandler c : getHandlers()){
             availableColors.remove(c.getClientColor());
         }
-        connectionHandler.sendMessageClient(new ColorRequest(availableColors));
+        connectionHandler.colorRequest(availableColors);
     }
 
     public void setColor(ConnectionHandler connectionHandler, Color color){
         for(ConnectionHandler c: getHandlers()){
             if(c.getClientColor() != null && c.getClientColor() == color){
-                connectionHandler.sendMessageClient(new TextMessage("That color is unavailable, try again!"));
+                connectionHandler.sendTextMessage("That color is unavailable, try again!");
                 chooseColorState(connectionHandler);
                 return;
             }
@@ -226,7 +221,7 @@ public class Controller {
         //if the program arrives here, the color is available
         connectionHandler.setClientColor(color);
         if(!this.isGameStarted()) {
-            connectionHandler.sendMessageClient(new WaitingForPlayers());
+            connectionHandler.waitingForPlayers();
             checkGame();
         }
     }
@@ -251,7 +246,7 @@ public class Controller {
         for (ConnectionHandler c : getHandlers()) {
             Player player = new Player(c.getClientNickname(), c.getClientColor());
             players.add(player);
-            c.sendMessageClient(new SetPlayerMessage(player));
+            c.setPlayer(player);
 
             // randomly pick a starting card for the user
             startingCards.put(player, startingCardsQueue.poll());
@@ -289,8 +284,8 @@ public class Controller {
                 game.getGameTable().getPlayerZones().get(player).draw(game.getGameTable().getResourceDeck(), 0);
                 game.getGameTable().getPlayerZones().get(player).draw(game.getGameTable().getResourceDeck(), 0);
 
-                c.sendMessageClient(new PlayStartingCardRequest(startingCards.get(player)));
-                c.sendMessageClient(new GoalCardRequest(privateGoals.get(player)));
+                c.playStartingCardRequest(startingCards.get(player));
+                c.goalCardRequest(privateGoals.get(player));
             }
         }
     }
@@ -338,7 +333,7 @@ public class Controller {
 
         numOfGoalCardsChosen++;
         if(numOfGoalCardsChosen != getHandlers().size()) {
-            connectionHandler.sendMessageClient(new TextMessage("Other players are still choosing"));
+            connectionHandler.sendTextMessage("Other players are still choosing");
         } else { //When all the players have chosen their goal cards
             for(ConnectionHandler c : getHandlers()) {
                 Player player = null;
@@ -347,11 +342,11 @@ public class Controller {
                         player = p;
                     }
                 }
-                c.sendMessageClient(new UpdateGameMessage(game));
+                c.updateGame(game);
                 if(!c.getClientNickname().equals(game.getTurn().getNickname())){
-                    c.sendMessageClient(new NotYourTurn(player, "It's not your turn"));
+                    c.notYourTurn(player, "It's not your turn");
                 }
-                c.sendMessageClient(new ListenForCommands());
+                c.listenForCommands();
             }
             this.game.setState(State.GAMEFLOW);
             yourTurnState();
@@ -364,7 +359,7 @@ public class Controller {
     public void yourTurnState() {
         Player currentPlayer = game.getTurn();
         ConnectionHandler c = getHandlerByNickname(currentPlayer.getNickname());
-        c.sendMessageClient(new YourTurn());
+        c.yourTurn();
     }
 
     /**
@@ -374,7 +369,7 @@ public class Controller {
         Player currentPlayer = game.getTurn();
         ConnectionHandler c = getHandlerByNickname(currentPlayer.getNickname());
         game.setTurnState(TurnState.PLAY);
-        c.sendMessageClient(new PlayCardRequest(currentPlayer));
+        c.playCardRequest(currentPlayer);
     }
 
     /**
@@ -402,13 +397,13 @@ public class Controller {
             // update game for all the players
             for (Player player: game.getPlayers()) {
                 ConnectionHandler c = getHandlerByNickname(player.getNickname());
-                c.sendMessageClient(new UpdateGameMessage(game));
+                c.updateGame(game);
             }
 
             // next phase
             drawCardState();
         }else{
-            connectionHandler.sendMessageClient(new TextMessage("Unable to play the card, try again"));
+            connectionHandler.sendTextMessage("Unable to play the card, try again");
             playCardState();
         }
     }
@@ -420,7 +415,7 @@ public class Controller {
         Player currentPlayer = game.getTurn();
         ConnectionHandler c = getHandlerByNickname(currentPlayer.getNickname());
         game.setTurnState(TurnState.DRAW);
-        c.sendMessageClient(new DrawCardRequest(currentPlayer));
+        c.drawCardRequest(currentPlayer);
     }
 
     /**
@@ -451,14 +446,14 @@ public class Controller {
             playerZone.draw(deck, which);
 
             //Won't be called if the card isn't drawn thanks to NullPointerExceptions
-            connectionHandler.sendMessageClient(new NotYourTurn(currentPlayer, "Your turn has ended!"));
+            connectionHandler.notYourTurn(currentPlayer, "Your turn has ended!");
             //Update the game for everyone
             for(ConnectionHandler c : getHandlers()) {
-                c.sendMessageClient(new UpdateGameMessage(game));
+                c.updateGame(game);
             }
             changeTurnState();
         }catch (NullPointerException e){
-            connectionHandler.sendMessageClient(new TextMessage("Unable to draw the card, try again"));
+            connectionHandler.sendTextMessage("Unable to draw the card, try again");
             drawCardState();
         }
     }
@@ -473,7 +468,6 @@ public class Controller {
         for (Player player : game.getPlayers()) {
             if (!player.getNickname().equals(game.getTurn().getNickname())) {
                 ConnectionHandler c = getHandlerByNickname(player.getNickname());
-                //c.sendMessageClient(new NotYourTurn(player, game, "Game Updated!"));
             }
         }
 
@@ -481,13 +475,13 @@ public class Controller {
         if(game.getTurn() == game.getPlayers().getFirst()){
             if(isLastTurn){
                 for(ConnectionHandler c : getHandlers()){
-                    c.sendMessageClient(new TextMessage("Counting goals..."));
+                    c.sendTextMessage("Counting goals...");
                 }
                 countGoals();
                 return;
             } else if (isPenultimateTurn) {
                 for(ConnectionHandler c : getHandlers()){
-                    c.sendMessageClient(new TextMessage("Last turn!!"));
+                    c.sendTextMessage("Last turn!!");
                 }
                 isLastTurn = true;
             }
@@ -496,7 +490,7 @@ public class Controller {
             //If someone has at least 20 points, we start the countdown
             isPenultimateTurn = true;
             for(ConnectionHandler c : getHandlers()){
-                c.sendMessageClient(new TextMessage("Someone has at least 20 points! Starting penultimate turn!"));
+                c.sendTextMessage("Someone has at least 20 points! Starting penultimate turn!");
             }
         }
         yourTurnState();
@@ -520,8 +514,8 @@ public class Controller {
         game.setState(State.FINAL);
         isGameEnded = true;
         for(ConnectionHandler c : getHandlers()){
-            c.sendMessageClient(new Winner(game));
-            c.sendMessageClient(new ScoreBoardMessage(game.getGameTable().getScoreBoard()));
+            c.showWinner(game);
+            c.showScoreBoard(game.getGameTable().getScoreBoard());
         }
         //Do i have to do something for when the game ends?
     }

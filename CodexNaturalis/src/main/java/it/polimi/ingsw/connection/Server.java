@@ -44,7 +44,7 @@ public class Server {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 clientSocket.setSoTimeout(10000);
-                ConnectionHandler clientConnection = new ConnectionHandler(this, clientSocket);
+                SocketConnectionHandler clientConnection = new SocketConnectionHandler(this, clientSocket);
                 // start the clientConnection thread
                 executor.submit(clientConnection);
             }
@@ -57,7 +57,7 @@ public class Server {
      * Add a client to a game via its connectionHandler
      * @param connectionHandler the connectionHandler to save in a game
      */
-    public void addToGame(ConnectionHandler connectionHandler) {
+    public void addToGame(SocketConnectionHandler connectionHandler) {
         synchronized (this.gameLock) {
             // find the first free game and try to add the player
             Optional<Controller> optionalController = games.keySet().stream().filter(g -> !g.isGameStarted()).findFirst();
@@ -78,7 +78,7 @@ public class Server {
      * @param connectionHandler the client handler
      * @param numberOfPlayers the number of players for the new game
      */
-    public void addToGame(ConnectionHandler connectionHandler, int numberOfPlayers) {
+    public void addToGame(SocketConnectionHandler connectionHandler, int numberOfPlayers) {
         Controller controller = new Controller(numberOfPlayers);
         synchronized (this.gameLock) {
             this.games.put(controller, numberOfPlayers);
@@ -92,7 +92,7 @@ public class Server {
      * Remove and disconnect a client
      * @param connectionHandler the connectionHandler relative to the client
      */
-    public void removeClient(ConnectionHandler connectionHandler) {
+    public void removeClient(SocketConnectionHandler connectionHandler) {
         Optional<Controller> optionalController = this.games.keySet().stream().filter(c -> c.getHandlers().contains(connectionHandler)).findFirst();
         if (optionalController.isPresent()) {
             synchronized (this.gameLock) {

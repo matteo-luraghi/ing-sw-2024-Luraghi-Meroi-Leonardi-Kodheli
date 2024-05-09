@@ -1,112 +1,25 @@
 package it.polimi.ingsw.connection;
 
-import it.polimi.ingsw.connection.message.serverMessage.LoginRequest;
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.connection.message.clientMessage.ClientMessage;
-import it.polimi.ingsw.connection.message.connectionMessage.Ping;
+import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.Color;
+import it.polimi.ingsw.model.gamelogic.GameState;
+import it.polimi.ingsw.model.gamelogic.Player;
+import it.polimi.ingsw.model.gamelogic.ScoreBoard;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.net.Socket;
-import java.net.SocketTimeoutException;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.ArrayList;
 
 /**
  * ConnectionHandler class
+ * used to handle the different types of connection
  * @author Matteo Leonardo Luraghi
  */
-public class ConnectionHandler implements Runnable{
-    private final Server server;
-    private final Socket socket;
-    private final Thread pingThread;
-    private final AtomicBoolean active = new AtomicBoolean(false);
-    private ObjectInputStream inputStream;
-    private ObjectOutputStream outputStream;
+public abstract class ConnectionHandler {
     private String clientNickname = null;
     private Color clientColor = null;
     private Controller controller;
-
-    /**
-     * Constructor that initializes a ping thread
-     * @param server a server
-     * @param socket a socket
-     */
-    public ConnectionHandler(Server server, Socket socket) {
-        this.server = server;
-        this.socket = socket;
-        this.pingThread = new Thread(() -> {
-            while(active.get()) {
-                try {
-                    Thread.sleep(5000);
-                    sendMessageClient(new Ping());
-                } catch (InterruptedException e) {
-                    break;
-                }
-            }
-        });
-    }
-
-    @Override
-    public void run() {
-        try {
-            this.outputStream = new ObjectOutputStream(socket.getOutputStream());
-            this.inputStream = new ObjectInputStream(socket.getInputStream());
-            this.active.set(true);
-
-            this.pingThread.start();
-            sendMessageClient(new LoginRequest());
-
-            while(this.active.get()) {
-                try {
-                    Object object = this.inputStream.readObject();
-                    if(!(object instanceof Ping)) {
-                        ClientMessage msg = (ClientMessage) object;
-                        msg.execute(this.server, this);
-                    }
-                } catch (ClassNotFoundException | SocketTimeoutException e) {
-                    disconnect();
-                }
-            }
-        } catch(IOException e) {
-            disconnect();
-        }
-    }
-
-    /**
-     * Send a message to the client
-     * @param msg message to be sent
-     */
-    public void sendMessageClient(Serializable msg){
-        try {
-            this.outputStream.writeObject(msg);
-            this.outputStream.flush();
-            this.outputStream.reset();
-        } catch (IOException e) {
-            disconnect();
-        }
-    }
-
-    /**
-     * Disconnects the server closing input and output stream and socket
-     */
-    public void disconnect() {
-        if (this.active.get()){
-            this.active.set(false);
-            this.server.removeClient(this);
-            try {
-                this.inputStream.close();
-            } catch (IOException ignored){}
-            try {
-                this.outputStream.close();
-            } catch (IOException ignored){}
-            try {
-                this.socket.close();
-            } catch (IOException ignored){}
-        }
-    }
 
     /**
      * Get the client's nickname
@@ -155,4 +68,93 @@ public class ConnectionHandler implements Runnable{
     public void setController(Controller controller) {
         this.controller = controller;
     }
+
+    /**
+     * Ask the player for their color
+     * @param availableColors the possible colors
+     */
+    public void colorRequest(ArrayList<Color> availableColors) {}
+
+    /**
+     * Send the player a message
+     * @param message the message
+     */
+    public void sendTextMessage(String message) {}
+
+    /**
+     * Tell the player that the game will start when there are enough players
+     */
+    public void waitingForPlayers() {}
+
+    /**
+     * Set the player on the client
+     * @param player the player
+     */
+    public void setPlayer(Player player) {}
+
+    /**
+     * Ask the player to place the starting card (front or back)
+     * @param startingCard the starting card
+     */
+    public void playStartingCardRequest(StartingCard startingCard) {}
+
+    /**
+     * Ask the player to choose one goal card
+     * @param goalCards the goal cards
+     */
+    public void goalCardRequest(GoalCard[] goalCards) {}
+
+    /**
+     * Update the game when a card is played or drawn
+     * @param game the current game
+     */
+    public void updateGame(GameState game) {}
+
+    /**
+     * Tell the player that it's not their turn
+     * @param player the player
+     * @param message the message
+     */
+    public void notYourTurn(Player player, String message) {}
+
+    /**
+     * Tell the player that it's their turn to play
+     */
+    public void yourTurn() {}
+
+    /**
+     * Wait for user commands
+     */
+    public void listenForCommands() {}
+
+    /**
+     * Ask the player to play a card
+     * @param player the player
+     */
+    public void playCardRequest(Player player) {}
+
+    /**
+     * Ask the player to draw a card
+     * @param player the player
+     */
+    public void drawCardRequest(Player player) {}
+
+    /**
+     * Show the winner
+     * @param game the current game
+     */
+    public void showWinner(GameState game) {};
+
+    /**
+     * Show the scoreboard of the game
+     * @param scoreBoard the scoreboard
+     */
+    public void showScoreBoard(ScoreBoard scoreBoard) {}
+
+    /**
+     * Send a message to the client
+     * @param msg the message
+     */
+    public void sendMessage(Serializable msg) {}
+
 }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.connection.message.clientMessage;
 
-import it.polimi.ingsw.connection.ConnectionHandler;
+import it.polimi.ingsw.connection.SocketConnectionHandler;
 import it.polimi.ingsw.connection.Server;
 
 import java.io.Serial;
@@ -25,5 +25,5 @@ public abstract class ClientMessage implements Serializable {
      * @param server server to use
      * @param connectionHandler client handler
      */
-    public abstract void execute(Server server, ConnectionHandler connectionHandler);
+    public abstract void execute(Server server, SocketConnectionHandler connectionHandler);
 }

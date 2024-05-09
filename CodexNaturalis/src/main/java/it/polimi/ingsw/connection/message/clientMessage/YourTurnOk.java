@@ -1,6 +1,6 @@
 package it.polimi.ingsw.connection.message.clientMessage;
 
-import it.polimi.ingsw.connection.ConnectionHandler;
+import it.polimi.ingsw.connection.SocketConnectionHandler;
 import it.polimi.ingsw.connection.Server;
 
 import java.io.Serial;
@@ -12,7 +12,7 @@ public class YourTurnOk extends ClientMessage {
     public YourTurnOk() {}
 
     @Override
-    public void execute(Server server, ConnectionHandler connectionHandler) {
+    public void execute(Server server, SocketConnectionHandler connectionHandler) {
         connectionHandler.getController().playCardState();
     }
 }
