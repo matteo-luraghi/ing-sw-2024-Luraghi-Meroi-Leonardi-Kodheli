@@ -21,23 +21,24 @@ public class GameTable implements Serializable {
 
     /**
      * GameTable Constructor
+     *
      * @param ResourceDeck Deck with the initial resource cards
-     * @param GoldDeck Deck with the initial gold cards
-     * @param PlayerZones Map that saves player and its player field
-     * @param CommonGoals Array which contains the common goals GoalCard
-     * @param scoreboard The scoreboard that contains all the player scores
+     * @param GoldDeck     Deck with the initial gold cards
+     * @param PlayerZones  Map that saves player and its player field
+     * @param CommonGoals  Array which contains the common goals GoalCard
+     * @param scoreboard   The scoreboard that contains all the player scores
      */
-    public GameTable(Deck ResourceDeck, Deck GoldDeck, Map<Player, PlayerField> PlayerZones, GoalCard[] CommonGoals, ScoreBoard scoreboard)
-    {
-        this.ResourceDeck=ResourceDeck;
-        this.GoldDeck=GoldDeck;
-        this.PlayerZones= PlayerZones;
-        this.CommonGoals=CommonGoals.clone();
-        this.Scoreboard=scoreboard;
+    public GameTable(Deck ResourceDeck, Deck GoldDeck, Map<Player, PlayerField> PlayerZones, GoalCard[] CommonGoals, ScoreBoard scoreboard) {
+        this.ResourceDeck = ResourceDeck;
+        this.GoldDeck = GoldDeck;
+        this.PlayerZones = PlayerZones;
+        this.CommonGoals = CommonGoals.clone();
+        this.Scoreboard = scoreboard;
     }
 
     /**
      * ResourceDeck getter
+     *
      * @return Deck
      */
     public Deck getResourceDeck() {
@@ -46,6 +47,7 @@ public class GameTable implements Serializable {
 
     /**
      * GoldDeck getter
+     *
      * @return Deck
      */
     public Deck getGoldDeck() {
@@ -54,10 +56,10 @@ public class GameTable implements Serializable {
 
     /**
      * PlayerZones getter
+     *
      * @return PlayerZones
      */
-    public Map<Player, PlayerField> getPlayerZones()
-    {
+    public Map<Player, PlayerField> getPlayerZones() {
         return this.PlayerZones;
     }
 
@@ -73,167 +75,88 @@ public class GameTable implements Serializable {
 
     /**
      * ScoreBoard getter
+     *
      * @return ScoreBoard
      */
     public ScoreBoard getScoreBoard() {
         return Scoreboard;
     }
 
-    /**
-     * Count of common goals points for a given playerfield
-     * @param Player PlayerField
-     * @return points of common goals int
-     */
-    private int countCommonGoalPoints(PlayerField Player)
-    {
-        int points=0;
-        int min=0;
-
-        for(int i=0; i<2;i++)
-        {
-            GoalCard commonGoal=getCommonGoal(i);
-            if(commonGoal.isResourceGoal())
-            {
-                ResourceGoalCard ResourceGoal=(ResourceGoalCard) commonGoal;
-                min=Integer.MAX_VALUE;
-                HashMap<Resource, Float> resourcesNeeded = new HashMap<>();
-                for(Resource resource: ResourceGoal.getRequirements()) {
-                    resourcesNeeded.put(resource, resourcesNeeded.getOrDefault(resource, 0f)+1);
-                }
-                for(Resource resource: resourcesNeeded.keySet()){
-                    float num = Player.getResourceFromMap(resource);
-                    min = Math.min((int)Math.floor(num/resourcesNeeded.get(resource)), min);
-                }
-                points+=commonGoal.getPoints()*min; //points times minimum occurrences of that goal
-
+    private ArrayList<ArrayList<GameCard>> getNotOverlappingCombo(ArrayList<ArrayList<GameCard>> combos, ArrayList<GameCard> combo) {
+        ArrayList<ArrayList<GameCard>> nonOverlapping = new ArrayList<ArrayList<GameCard>>();
+        for (ArrayList<GameCard> currentCombo : combos) {
+            for (GameCard card : combo) {
+                if (!currentCombo.contains(card))
+                    nonOverlapping.add(currentCombo);
+                else
+                    break;
             }
-            else
-            {
-                //arraylist of counted cards contains already counted cards for a given positional goal
-                //the search will always start at the lowest card in the field, trying to follow the goal requirement (going up or at sides). Priority on right.
-            /*    int x=0,y=0, xtemp=x,ytemp=y;
-                Coordinates currentCoordinates=new Coordinates(x,y);
-
-                GameCard currentCard=Player.getGameZone().get(currentCoordinates);
-                GameCard tempCard=currentCard;
-                while(true)
-                {
-
-
-                    tempCard=Player.getDownRight(currentCard);
-                    if(tempCard!=null)
-                        currentCard = tempCard;
-
-                    else //try to search on the left side
-                    {
-                        tempCard=Player.getDownLeft(currentCard);
-                        if(tempCard!=null)
-                            currentCard = tempCard;
-
-                        else  //no cards neither left nor right, so reached the lowest point by only trying to go down on right side.
-                            break;
-
-                    }
-                }*/
-         //       GameCard currentPointer=currentCard;
-                ArrayList<GameCard> usedCardsForGoal=new ArrayList<>(); //contains all the cards already used for an objective;
-
-
-                PositionGoalCard positionalGoal=(PositionGoalCard) commonGoal;
-                ArrayList<Direction> Directions=positionalGoal.getPositionsFromBase();
-
-
-                //logic: will try to match the objective until it visited all the cards;
-                for(GameCard currentCard : Player.getGameZone().values())
-                {
-                    GameCard currentPointer=currentCard;
-
-                    if(positionalGoal.getResourceFromBase().get(0)!=currentCard.getKingdom())
-                        continue;
-                    ArrayList<GameCard> possibleCards = new ArrayList<>();
-                    if (!usedCardsForGoal.contains(currentPointer))
-                        for (int j = 0; j < Directions.size(); j++)  //also have to do this for each card that has not been used for the goal
-                        {
-
-
-                            Direction currentDir = Directions.get(j);
-                            Kingdom currentResource = positionalGoal.getResourceFromBase().get(j + 1);
-                            if (currentDir == Direction.TOP) {
-                                currentPointer = Player.getUp(currentPointer);
-
-
-                            } else if (currentDir == Direction.TOP_LEFT) {
-                                currentPointer = Player.getUpLeft(currentPointer);
-
-
-                            } else if (currentDir == Direction.TOP_RIGHT) {
-                                currentPointer = Player.getUpRight(currentPointer);
-
-
-                            }
-
-                            if (currentPointer == null || currentPointer.getKingdom() != currentResource || usedCardsForGoal.contains(currentPointer))
-                                break;
-                            possibleCards.add(currentPointer);
-                            if (j == Directions.size() - 1) {
-                                points += commonGoal.getPoints();
-                                usedCardsForGoal.addAll(possibleCards);
-                            }
-                        }
-                }
-                //to finish
-
-                //TODO for positional ruling
-            }
-           // commonGoal.
         }
-        return points;
+        return nonOverlapping;
+    }
+
+    private int countOfNotOverlappingCombos(ArrayList<ArrayList<GameCard>> hisNotOverlappingCombos, ArrayList<GameCard> chosenCombo) {
+        int currentCount = 1;
+        for (ArrayList<GameCard> combo : hisNotOverlappingCombos) {
+            ArrayList<ArrayList<GameCard>> nonOverlapping = new ArrayList<ArrayList<GameCard>>();
+            nonOverlapping.addAll(getNotOverlappingCombo(hisNotOverlappingCombos, combo));
+            currentCount = currentCount + countOfNotOverlappingCombos(nonOverlapping, combo);
+        }
+        return currentCount;
+    }
+
+    private int findMaxCombosInOverlappingCombos(ArrayList<ArrayList<GameCard>> overlappingCombos) {
+        int maxCombos = Integer.MIN_VALUE;
+
+        for (ArrayList<GameCard> combo : overlappingCombos) {
+            ArrayList<ArrayList<GameCard>> nonOverlapping = new ArrayList<ArrayList<GameCard>>();
+            nonOverlapping.addAll(getNotOverlappingCombo(overlappingCombos, combo));
+            maxCombos = Math.max(maxCombos, countOfNotOverlappingCombos(nonOverlapping, combo));
+        }
+
+        return maxCombos;
     }
 
     /**
-     * CountGoalPoints counts the goal points of a player given the PlayerField
-     * @param Player
+     * Count of common goals points for a given playerfield
+     *
+     * @param Player PlayerField
+     * @return points of common goals int
      */
-    public int countGoalPoints (PlayerField Player)
-    {
-        int points=countCommonGoalPoints(Player);
+    private int countCommonGoalPoints(PlayerField Player) {
+        int points = 0;
+        int min = 0;
 
-        GoalCard privateGoal=Player.getPrivateGoal();
-        if(privateGoal.isResourceGoal())
-        {
-            ResourceGoalCard ResourceGoal=(ResourceGoalCard)privateGoal;
-            int min=Integer.MAX_VALUE;
-            HashMap<Resource, Float> resourcesNeeded = new HashMap<>();
-            for(Resource resource: ResourceGoal.getRequirements()) {
-                resourcesNeeded.put(resource, resourcesNeeded.getOrDefault(resource, 0f)+1);
-            }
-            for(Resource resource: resourcesNeeded.keySet()){
-                float num = Player.getResourceFromMap(resource);
-                min = Math.min((int)Math.floor(num/resourcesNeeded.get(resource)), min);
-            }
-            points+=privateGoal.getPoints()*min; //points times minimum occurrences of that goal
+        for (int i = 0; i < 2; i++) {
+            GoalCard commonGoal = getCommonGoal(i);
+            if (commonGoal.isResourceGoal()) {
+                ResourceGoalCard ResourceGoal = (ResourceGoalCard) commonGoal;
+                min = Integer.MAX_VALUE;
+                HashMap<Resource, Float> resourcesNeeded = new HashMap<>();
+                for (Resource resource : ResourceGoal.getRequirements()) {
+                    resourcesNeeded.put(resource, resourcesNeeded.getOrDefault(resource, 0f) + 1);
+                }
+                for (Resource resource : resourcesNeeded.keySet()) {
+                    float num = Player.getResourceFromMap(resource);
+                    min = Math.min((int) Math.floor(num / resourcesNeeded.get(resource)), min);
+                }
+                points += commonGoal.getPoints() * min; //points times minimum occurrences of that goal
 
-
-        }
-        else
-        {
-
-            ArrayList<GameCard> usedCardsForGoal=new ArrayList<>(); //contains all the cards already used for an objective;
+            } else {
 
 
-            PositionGoalCard positionalGoal=(PositionGoalCard) privateGoal;
-            ArrayList<Direction> Directions=positionalGoal.getPositionsFromBase();
+                PositionGoalCard positionalGoal = (PositionGoalCard) commonGoal;
+                ArrayList<Direction> Directions = positionalGoal.getPositionsFromBase();
+                ArrayList<ArrayList<GameCard>> PossibleCombos = new ArrayList<ArrayList<GameCard>>();
 
+                //logic: will try to match the objective until it visited all the cards;
+                for (GameCard currentCard : Player.getGameZone().values()) {
+                    GameCard currentPointer = currentCard;
 
-            //logic: will try to match the objective until it visited all the cards;
-            for(GameCard currentCard : Player.getGameZone().values())
-            {
-                GameCard currentPointer=currentCard;
+                    if (positionalGoal.getResourceFromBase().get(0) != currentCard.getKingdom())
+                        continue;
+                    ArrayList<GameCard> possibleCards = new ArrayList<>();
 
-                if(positionalGoal.getResourceFromBase().getFirst()!=currentCard.getKingdom())
-                    continue;
-                ArrayList<GameCard> possibleCards = new ArrayList<>();
-                if (!usedCardsForGoal.contains(currentPointer))
                     for (int j = 0; j < Directions.size(); j++)  //also have to do this for each card that has not been used for the goal
                     {
 
@@ -254,21 +177,150 @@ public class GameTable implements Serializable {
 
                         }
 
-                        if (currentPointer == null || currentPointer.getKingdom() != currentResource || usedCardsForGoal.contains(currentPointer))
+                        if (currentPointer == null || currentPointer.getKingdom() != currentResource)
                             break;
                         possibleCards.add(currentPointer);
                         if (j == Directions.size() - 1) {
-                            points += privateGoal.getPoints();
-                            usedCardsForGoal.addAll(possibleCards);
+                            PossibleCombos.add(possibleCards);
                         }
                     }
+                }
+
+                ArrayList<ArrayList<GameCard>> ChosenCombos = new ArrayList<ArrayList<GameCard>>();
+                ArrayList<ArrayList<GameCard>> OverLappingCombos = new ArrayList<ArrayList<GameCard>>();
+                boolean OverlappingCard = false;
+                for (ArrayList<GameCard> Combo : PossibleCombos) {
+                    OverlappingCard = false;
+                    for (GameCard card : Combo) {
+
+                        for (ArrayList<GameCard> Combo1 : PossibleCombos) {
+                            if (Combo1.contains(card)) {
+                                OverlappingCard = true;
+                                break;
+                            }
+
+                        }
+                        if (OverlappingCard)
+                            break;
+
+                    }
+                    if (!OverlappingCard)
+                        ChosenCombos.add(Combo);
+                    else
+                        OverLappingCombos.add(Combo);
+
+                }
+                int totalCombos = findMaxCombosInOverlappingCombos(OverLappingCombos) + ChosenCombos.size();
+                points += totalCombos * commonGoal.getPoints();
             }
 
         }
-        Player player=Util.getKeyByValue(PlayerZones,Player);
-        Scoreboard.addPoints(player,points);
+        return points;
+    }
+
+    /**
+     * CountGoalPoints counts the goal points of a player given the PlayerField
+     *
+     * @param Player
+     */
+    public int countGoalPoints(PlayerField Player) {
+        int points = countCommonGoalPoints(Player);
+
+        GoalCard privateGoal = Player.getPrivateGoal();
+        if (privateGoal.isResourceGoal()) {
+            ResourceGoalCard ResourceGoal = (ResourceGoalCard) privateGoal;
+            int min = Integer.MAX_VALUE;
+            HashMap<Resource, Float> resourcesNeeded = new HashMap<>();
+            for (Resource resource : ResourceGoal.getRequirements()) {
+                resourcesNeeded.put(resource, resourcesNeeded.getOrDefault(resource, 0f) + 1);
+            }
+            for (Resource resource : resourcesNeeded.keySet()) {
+                float num = Player.getResourceFromMap(resource);
+                min = Math.min((int) Math.floor(num / resourcesNeeded.get(resource)), min);
+            }
+            points += privateGoal.getPoints() * min; //points times minimum occurrences of that goal
+
+
+        } else {
+
+
+            PositionGoalCard positionalGoal = (PositionGoalCard) privateGoal;
+            ArrayList<Direction> Directions = positionalGoal.getPositionsFromBase();
+            ArrayList<ArrayList<GameCard>> PossibleCombos = new ArrayList<ArrayList<GameCard>>();
+
+            //logic: will try to match the objective until it visited all the cards;
+            for (GameCard currentCard : Player.getGameZone().values()) {
+                GameCard currentPointer = currentCard;
+
+                if (positionalGoal.getResourceFromBase().getFirst() != currentCard.getKingdom())
+                    continue;
+                ArrayList<GameCard> possibleCards = new ArrayList<>();
+
+                for (int j = 0; j < Directions.size(); j++)  //also have to do this for each card that has not been used for the goal
+                {
+
+
+                    Direction currentDir = Directions.get(j);
+                    Kingdom currentResource = positionalGoal.getResourceFromBase().get(j + 1);
+                    if (currentDir == Direction.TOP) {
+                        currentPointer = Player.getUp(currentPointer);
+
+
+                    } else if (currentDir == Direction.TOP_LEFT) {
+                        currentPointer = Player.getUpLeft(currentPointer);
+
+
+                    } else if (currentDir == Direction.TOP_RIGHT) {
+                        currentPointer = Player.getUpRight(currentPointer);
+
+
+                    }
+
+                    if (currentPointer == null || currentPointer.getKingdom() != currentResource)
+                        break;
+                    possibleCards.add(currentPointer);
+                    if (j == Directions.size() - 1) {
+
+                        PossibleCombos.add(possibleCards);
+                    }
+
+                }
+                ArrayList<ArrayList<GameCard>> ChosenCombos = new ArrayList<ArrayList<GameCard>>();
+                ArrayList<ArrayList<GameCard>> OverLappingCombos = new ArrayList<ArrayList<GameCard>>();
+                boolean OverlappingCard = false;
+                for (ArrayList<GameCard> Combo : PossibleCombos) {
+                    OverlappingCard = false;
+                    for (GameCard card : Combo) {
+
+                        for (ArrayList<GameCard> Combo1 : PossibleCombos) {
+                            if (Combo1.contains(card)) {
+                                OverlappingCard = true;
+                                break;
+                            }
+
+                        }
+                        if (OverlappingCard)
+                            break;
+
+                    }
+                    if (!OverlappingCard)
+                        ChosenCombos.add(Combo);
+                    else
+                        OverLappingCombos.add(Combo);
+
+                }
+                int totalCombos = findMaxCombosInOverlappingCombos(OverLappingCombos) + ChosenCombos.size();
+                points += totalCombos * privateGoal.getPoints();
+            }
+
+
+            Player player = Util.getKeyByValue(PlayerZones, Player);
+            Scoreboard.addPoints(player, points);
+
+
+        }
+
         return points;
 
     }
-
 }
