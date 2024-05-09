@@ -36,7 +36,7 @@ public class PlayCardRequest extends ServerMessage {
     public void show(View view) {
         view.ShowPlayerField(player, player, game);
         if (view.getClass() == CLI.class) {
-            ((CLI) view).GetCommandInPlayState(game, player);
+            new Thread(() -> ((CLI) view).setPlayPhase(true)).start();
         }
     }
 }

@@ -26,7 +26,10 @@ public class YourTurn extends ServerMessage {
     @Override
     public void show(View view) {
         if(view.getClass() == CLI.class) {
-            ((CLI) view).setMyTurn(true);
+            new Thread(() -> {
+                ((CLI) view).setMyTurn(true);
+                ((CLI) view).setPlayPhase(true);
+            }).start();
         }
     }
 }

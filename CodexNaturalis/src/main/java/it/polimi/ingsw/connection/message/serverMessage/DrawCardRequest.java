@@ -31,7 +31,7 @@ public class DrawCardRequest extends ServerMessage {
     public void show(View view) {
         view.ShowDecks(this.game);
         if (view.getClass() == CLI.class) {
-            ((CLI) view).GetCommandInDrawState(game, player);
+            new Thread(() -> ((CLI) view).setPlayPhase(false)).start();
         }
     }
 }

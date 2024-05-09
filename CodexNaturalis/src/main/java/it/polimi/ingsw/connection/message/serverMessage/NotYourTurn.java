@@ -36,9 +36,7 @@ public class NotYourTurn extends ServerMessage {
     public void show(View view) {
         view.showMessage(this.message);
         if (view.getClass() == CLI.class) {
-            ((CLI) view).setMyTurn(false);
-            ((CLI) view).setGameToUpdate(true);
-            ((CLI) view).GetCommandWhileNotYourTurn(this.game ,this.player);
+            new Thread(() -> ((CLI) view).setMyTurn(false)).start();
         }
     }
 }
