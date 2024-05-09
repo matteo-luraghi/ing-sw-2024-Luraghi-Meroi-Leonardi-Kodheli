@@ -71,4 +71,11 @@ public class Player implements Serializable {
         }
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) return true;
+        if(this.getClass() != obj.getClass()) return false;
+        if(this.getNickname().equals(((Player) obj).getNickname())) return true;
+        return false;
+    }
 }

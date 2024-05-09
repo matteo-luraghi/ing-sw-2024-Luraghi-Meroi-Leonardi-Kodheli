@@ -12,14 +12,12 @@ import it.polimi.ingsw.view.mainview.View;
  */
 public class DrawCardRequest extends ServerMessage {
     private static final long serialVersionUID = 4055891453804268070L;
-    private final GameState game;
     private final Player player;
 
     /**
      * Constructor, sets the message type as PICK_A_CARD
      */
-    public DrawCardRequest(GameState game, Player player) {
-        this.game = game;
+    public DrawCardRequest(Player player) {
         this.player = player;
     }
 
@@ -29,7 +27,7 @@ public class DrawCardRequest extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.ShowDecks(this.game);
+        view.showMessage("You now have to draw a card!");
         if (view.getClass() == CLI.class) {
             new Thread(() -> ((CLI) view).setPlayPhase(false)).start();
         }

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.connection.message.serverMessage;
 
-import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.view.cli.CLI;
 import it.polimi.ingsw.view.mainview.View;
@@ -16,15 +15,13 @@ public class NotYourTurn extends ServerMessage {
     @Serial
     private static final long serialVersionUID = 2741292733883597798L;
     private final Player player;
-    private final GameState game;
     private final String message;
 
     /**
      * Constructor
      */
-    public NotYourTurn(Player player, GameState game, String message) {
+    public NotYourTurn(Player player, String message) {
         this.player = player;
-        this.game = game;
         this.message = message;
     }
 

@@ -14,7 +14,7 @@ public class ListenForCommands extends ServerMessage {
     @Override
     public void show(View view) {
         if (view.getClass() == CLI.class) {
-            ((CLI) view).getCommands();
+            new Thread(() -> ((CLI) view).getCommands()).start();
         }
     }
 }

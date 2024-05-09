@@ -251,10 +251,13 @@ public class Controller {
         for (ConnectionHandler c : getHandlers()) {
             Player player = new Player(c.getClientNickname(), c.getClientColor());
             players.add(player);
+            c.sendMessageClient(new SetPlayerMessage(player));
+
             // randomly pick a starting card for the user
             startingCards.put(player, startingCardsQueue.poll());
             PlayerField field = new PlayerField();
             playerZones.put(player, field);
+
             // make the user choose a goal card
             GoalCard[] goalCardsOptions = new GoalCard[2];
             goalCardsOptions[0] = goalCardsQueue.poll();
@@ -281,9 +284,11 @@ public class Controller {
                 }
             }
             if (player != null) {
+                //Make the player draw their initial hand
                 game.getGameTable().getPlayerZones().get(player).draw(game.getGameTable().getGoldDeck(), 0);
                 game.getGameTable().getPlayerZones().get(player).draw(game.getGameTable().getResourceDeck(), 0);
                 game.getGameTable().getPlayerZones().get(player).draw(game.getGameTable().getResourceDeck(), 0);
+
                 c.sendMessageClient(new PlayStartingCardRequest(startingCards.get(player)));
                 c.sendMessageClient(new GoalCardRequest(privateGoals.get(player)));
             }
@@ -331,13 +336,23 @@ public class Controller {
 
         game.getGameTable().getPlayerZones().get(currentPlayer).setPrivateGoal(goal);
 
-        // if it's not the player's turn notify them
-        if(!currentPlayer.getNickname().equals(game.getTurn().getNickname())) {
-            connectionHandler.sendMessageClient(new NotYourTurn(currentPlayer, game, "It's not your turn!"));
-        }
-
         numOfGoalCardsChosen++;
-        if(numOfGoalCardsChosen == getHandlers().size()){ //When all the players have chosen their goal cards
+        if(numOfGoalCardsChosen != getHandlers().size()) {
+            connectionHandler.sendMessageClient(new TextMessage("Other players are still choosing"));
+        } else { //When all the players have chosen their goal cards
+            for(ConnectionHandler c : getHandlers()) {
+                Player player = null;
+                for (Player p : game.getPlayers()) {
+                    if (c.getClientNickname().equals(p.getNickname())) {
+                        player = p;
+                    }
+                }
+                c.sendMessageClient(new UpdateGameMessage(game));
+                if(!c.getClientNickname().equals(game.getTurn().getNickname())){
+                    c.sendMessageClient(new NotYourTurn(player, "It's not your turn"));
+                }
+                c.sendMessageClient(new ListenForCommands());
+            }
             this.game.setState(State.GAMEFLOW);
             yourTurnState();
         }
@@ -359,7 +374,7 @@ public class Controller {
         Player currentPlayer = game.getTurn();
         ConnectionHandler c = getHandlerByNickname(currentPlayer.getNickname());
         game.setTurnState(TurnState.PLAY);
-        c.sendMessageClient(new PlayCardRequest(currentPlayer, game));
+        c.sendMessageClient(new PlayCardRequest(currentPlayer));
     }
 
     /**
@@ -384,12 +399,10 @@ public class Controller {
             int score = playerZone.Play(where, card);
             game.getGameTable().getScoreBoard().addPoints(currentPlayer, score);
 
-            // update game for the other players
+            // update game for all the players
             for (Player player: game.getPlayers()) {
-                if (!player.getNickname().equals(connectionHandler.getClientNickname())) {
-                    ConnectionHandler c = getHandlerByNickname(player.getNickname());
-                    //c.sendMessageClient(new NotYourTurn(player, game, "Game updated!"));
-                }
+                ConnectionHandler c = getHandlerByNickname(player.getNickname());
+                c.sendMessageClient(new UpdateGameMessage(game));
             }
 
             // next phase
@@ -407,7 +420,7 @@ public class Controller {
         Player currentPlayer = game.getTurn();
         ConnectionHandler c = getHandlerByNickname(currentPlayer.getNickname());
         game.setTurnState(TurnState.DRAW);
-        c.sendMessageClient(new DrawCardRequest(game, currentPlayer));
+        c.sendMessageClient(new DrawCardRequest(currentPlayer));
     }
 
     /**
@@ -427,16 +440,22 @@ public class Controller {
         Deck deck;
 
         //choose the appropriate deck
-        if(isGold)  deck = game.getGameTable().getGoldDeck();
-        else        deck = game.getGameTable().getResourceDeck();
+        if(isGold)  {
+            deck = game.getGameTable().getGoldDeck();
+        } else {
+            deck = game.getGameTable().getResourceDeck();
+        }
 
         //Draw the card
         try{
-            ResourceCard drawnCard;
             playerZone.draw(deck, which);
 
             //Won't be called if the card isn't drawn thanks to NullPointerExceptions
-            connectionHandler.sendMessageClient(new NotYourTurn(currentPlayer, game, "Your turn has ended!"));
+            connectionHandler.sendMessageClient(new NotYourTurn(currentPlayer, "Your turn has ended!"));
+            //Update the game for everyone
+            for(ConnectionHandler c : getHandlers()) {
+                c.sendMessageClient(new UpdateGameMessage(game));
+            }
             changeTurnState();
         }catch (NullPointerException e){
             connectionHandler.sendMessageClient(new TextMessage("Unable to draw the card, try again"));
@@ -448,6 +467,7 @@ public class Controller {
      * Passes the turn to the next player, while checking if it's the penultimate or the last turn
      */
     public void changeTurnState(){
+        //TODO: Sometimes it takes one more turn, look up old git from Lorenzo Mevoi
         game.nextTurn();
 
         for (Player player : game.getPlayers()) {

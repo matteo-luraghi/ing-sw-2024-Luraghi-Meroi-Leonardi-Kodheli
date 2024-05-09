@@ -16,16 +16,13 @@ public class PlayCardRequest extends ServerMessage {
     @Serial
     private static final long serialVersionUID = 4132994003320223706L;
     private final Player player;
-    private final GameState game;
 
     /**
      * Constructor
      * @param player player that has to play a card
-     * @param game game of the player
      */
-    public PlayCardRequest(Player player, GameState game) {
+    public PlayCardRequest(Player player) {
         this.player = player;
-        this.game = game;
     }
 
     /**
@@ -34,9 +31,11 @@ public class PlayCardRequest extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.ShowPlayerField(player, player, game);
         if (view.getClass() == CLI.class) {
-            new Thread(() -> ((CLI) view).setPlayPhase(true)).start();
+            new Thread(() -> {
+                view.showMessage("Play a card!");
+                ((CLI) view).setPlayPhase(true);
+            }).start();
         }
     }
 }

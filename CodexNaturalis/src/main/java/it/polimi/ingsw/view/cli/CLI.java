@@ -166,7 +166,7 @@ public class CLI implements View {
     @Override
     public void ShowPrivateGoal(Player player, GameState game) {
         ClearScreen();
-        this.goalCardViewer.SetCard(game.getGameTable().getPlayerZones().get(player).getPrivateGoal());
+        this.goalCardViewer.SetCard(game.getGameTable().getPlayerZones().get(user).getPrivateGoal());
         this.goalCardViewer.Show();
     }
 
@@ -331,17 +331,7 @@ public class CLI implements View {
                 AnsiColors.ANSI_PURPLE+"      | . ` | "+AnsiColors.ANSI_GREEN+"/ _` |"+AnsiColors.ANSI_CYAN+"| __|"+AnsiColors.ANSI_RED+"| | | |"+AnsiColors.ANSI_PURPLE+"| '__|"+AnsiColors.ANSI_GREEN+"/ _` |"+AnsiColors.ANSI_CYAN+"| |"+AnsiColors.ANSI_RED+"| |"+AnsiColors.ANSI_PURPLE+"/ __|\n" +
                 AnsiColors.ANSI_PURPLE+"      | |\\  |"+AnsiColors.ANSI_GREEN+"| (_| |"+AnsiColors.ANSI_CYAN+"| |_"+AnsiColors.ANSI_RED+" | |_| |"+AnsiColors.ANSI_PURPLE+"| |"+AnsiColors.ANSI_GREEN+"  | (_| |"+AnsiColors.ANSI_CYAN+"| |"+AnsiColors.ANSI_RED+"| |"+AnsiColors.ANSI_PURPLE+"\\__ \\\n" +
                 AnsiColors.ANSI_PURPLE+"      |_| \\_|"+AnsiColors.ANSI_GREEN+" \\__,_|"+AnsiColors.ANSI_CYAN+" \\__|"+AnsiColors.ANSI_RED+" \\__,_|"+AnsiColors.ANSI_PURPLE+"|_|"+AnsiColors.ANSI_GREEN+"   \\__,_|"+AnsiColors.ANSI_CYAN+"|_|"+AnsiColors.ANSI_RED+"|_|"+AnsiColors.ANSI_PURPLE+"|___/\n"+AnsiColors.ANSI_RESET +
-                "                                                       \n" +
-                "                                                       \n" +
-                "                                                       \n" +
-                "                                                       \n" +
-                "                                                       \n" +
-                "                                                       \n" +
-                "                                                       \n" +
-                "                                                       \n" +
-                "                                                       \n" +
-                "                                                       \n" +
-                "\n");
+                "                                                       \n");
     }
 
     /**
@@ -398,11 +388,17 @@ public class CLI implements View {
     }
 
     /**
-     * isMyTurn setter
-     * @param isMyTurn tells whether it's the client's turn or not
+     * game setter
+     * @param game the game we need to set!
      */
     public void setGame (GameState game) {
         this.game = game;
+        for (Player p : game.getPlayers()) {
+            if (p.equals(this.user)) {
+                this.user = p;
+                break;
+            }
+        }
     }
 
     /**
@@ -513,7 +509,7 @@ public class CLI implements View {
                             System.out.println(AnsiColors.ANSI_RED + "You need to play a card before drawing. Try the command 'play card'"  + AnsiColors.ANSI_RESET);
                     }
                 }
-                case "help" -> {ShowCommands(false);}
+                case "help" -> {ShowCommands();}
                 default -> {System.out.println(AnsiColors.ANSI_RED + "Not a valid command, type 'help' to show all the commands available."  + AnsiColors.ANSI_RESET);}
             }
         }
@@ -521,9 +517,8 @@ public class CLI implements View {
 
     /**
      * method to show all the available commands the user can ask for
-     * @param playing is used to distinguish the playing phase of the turn from its drawing phase
      */
-    private void ShowCommands(boolean playing) {
+    private void ShowCommands() {
         System.out.println(AnsiColors.ANSI_CYAN + "The available commands in this phase are:" + AnsiColors.ANSI_RESET);
         System.out.println(AnsiColors.ANSI_GREEN + "help              ->" + AnsiColors.ANSI_RESET + " displays all the available commands");
         System.out.println(AnsiColors.ANSI_GREEN + "show my goal card ->" + AnsiColors.ANSI_RESET + " displays your private goal card");
@@ -533,7 +528,7 @@ public class CLI implements View {
         System.out.println(AnsiColors.ANSI_GREEN + "show card         ->" + AnsiColors.ANSI_RESET + " displays a specific card");
         System.out.println(AnsiColors.ANSI_GREEN + "show legend       ->" + AnsiColors.ANSI_RESET + " displays the game's legend");
         if (isMyTurn) {
-            if (playing) {
+            if (playPhase) {
                 System.out.println(AnsiColors.ANSI_GREEN + "play card         ->" + AnsiColors.ANSI_RESET + " allows you to play a card from your hand onto your field");
             } else {
                 System.out.println(AnsiColors.ANSI_GREEN + "draw card         ->" + AnsiColors.ANSI_RESET + " allows you to draw a card from the uncovered ones or from the decks");
