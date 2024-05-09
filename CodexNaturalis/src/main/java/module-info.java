@@ -8,4 +8,6 @@ module it.polimi.ingsw.psp17 {
 
     opens it.polimi.ingsw.psp17 to javafx.fxml;
     exports it.polimi.ingsw.psp17;
+
+    exports it.polimi.ingsw.connection.rmi to java.rmi;
 }
