@@ -69,8 +69,11 @@ public class GameTable implements Serializable {
      * @param index d
      * @return GoalCard
      */
-    public GoalCard getCommonGoal(int index) {
-        return CommonGoals[index];
+    public GoalCard getCommonGoal(int index) throws IndexOutOfBoundsException {
+        if(index!=0 && index!=1)
+            throw new IndexOutOfBoundsException();
+        else
+         return CommonGoals[index];
     }
 
     /**
@@ -82,6 +85,12 @@ public class GameTable implements Serializable {
         return Scoreboard;
     }
 
+    /**
+     * Given a combos arraylist and a combo it finds all the non overlapping (compared to combo) combos (the overlapping check is made only for the starting combo)
+     * @param combos ArrayList of combos to check
+     * @param combo starting combo
+     * @return ArrayList<ArrayList<GameCard>> empty if all overlaps combo, otherwise the non overlapping ones
+     */
     private ArrayList<ArrayList<GameCard>> getNotOverlappingCombo(ArrayList<ArrayList<GameCard>> combos, ArrayList<GameCard> combo) {
         ArrayList<ArrayList<GameCard>> nonOverlapping = new ArrayList<ArrayList<GameCard>>();
         for (ArrayList<GameCard> currentCombo : combos) {
@@ -95,23 +104,37 @@ public class GameTable implements Serializable {
         return nonOverlapping;
     }
 
-    private int countOfNotOverlappingCombos(ArrayList<ArrayList<GameCard>> hisNotOverlappingCombos, ArrayList<GameCard> chosenCombo) {
+    /**
+     * Recursive Method to get the count of non overlapping combos starting by each one and trying all the choices
+     * @param hisNotOverlappingCombos the not overlapping combos of a given starting combo
+     * @return increments by one each time the method is called and it returns when all the branches get an empty nonOverlapping ArrayList
+     */
+    private int countOfNotOverlappingCombos(ArrayList<ArrayList<GameCard>> hisNotOverlappingCombos) {
         int currentCount = 1;
         for (ArrayList<GameCard> combo : hisNotOverlappingCombos) {
             ArrayList<ArrayList<GameCard>> nonOverlapping = new ArrayList<ArrayList<GameCard>>();
             nonOverlapping.addAll(getNotOverlappingCombo(hisNotOverlappingCombos, combo));
-            currentCount = currentCount + countOfNotOverlappingCombos(nonOverlapping, combo);
+            if(nonOverlapping.isEmpty())
+                currentCount = currentCount + countOfNotOverlappingCombos(nonOverlapping);
+
         }
         return currentCount;
     }
 
+    /**
+     * method to find the maximum numbers of Non overlapping card combos in an Overlapping arrayList
+     * Calls recursive method with each combo as starting combo
+     * @param overlappingCombos overlapping combos
+     * @return int number of maximum non overlapping combos
+     */
     private int findMaxCombosInOverlappingCombos(ArrayList<ArrayList<GameCard>> overlappingCombos) {
-        int maxCombos = Integer.MIN_VALUE;
+        int maxCombos = 0;
 
         for (ArrayList<GameCard> combo : overlappingCombos) {
             ArrayList<ArrayList<GameCard>> nonOverlapping = new ArrayList<ArrayList<GameCard>>();
             nonOverlapping.addAll(getNotOverlappingCombo(overlappingCombos, combo));
-            maxCombos = Math.max(maxCombos, countOfNotOverlappingCombos(nonOverlapping, combo));
+            if(!nonOverlapping.isEmpty())
+            maxCombos = Math.max(maxCombos, countOfNotOverlappingCombos(nonOverlapping));
         }
 
         return maxCombos;
@@ -141,7 +164,6 @@ public class GameTable implements Serializable {
                     min = Math.min((int) Math.floor(num / resourcesNeeded.get(resource)), min);
                 }
                 points += commonGoal.getPoints() * min; //points times minimum occurrences of that goal
-
             } else {
 
 
@@ -181,6 +203,10 @@ public class GameTable implements Serializable {
                             break;
                         possibleCards.add(currentPointer);
                         if (j == Directions.size() - 1) {
+
+                            for(GameCard card: possibleCards)
+                                System.out.println(Player.getGameZone().get(card));
+
                             PossibleCombos.add(possibleCards);
                         }
                     }
@@ -210,8 +236,11 @@ public class GameTable implements Serializable {
                         OverLappingCombos.add(Combo);
 
                 }
-                int totalCombos = findMaxCombosInOverlappingCombos(OverLappingCombos) + ChosenCombos.size();
-                points += totalCombos * commonGoal.getPoints();
+                int totalCombos=0;
+                if(!OverLappingCombos.isEmpty()) {
+                    totalCombos = findMaxCombosInOverlappingCombos(OverLappingCombos) + ChosenCombos.size();
+                    points += totalCombos * commonGoal.getPoints();
+                }
             }
 
         }
@@ -247,7 +276,8 @@ public class GameTable implements Serializable {
             PositionGoalCard positionalGoal = (PositionGoalCard) privateGoal;
             ArrayList<Direction> Directions = positionalGoal.getPositionsFromBase();
             ArrayList<ArrayList<GameCard>> PossibleCombos = new ArrayList<ArrayList<GameCard>>();
-
+            ArrayList<ArrayList<GameCard>> ChosenCombos = new ArrayList<ArrayList<GameCard>>();
+            ArrayList<ArrayList<GameCard>> OverLappingCombos = new ArrayList<ArrayList<GameCard>>();
             //logic: will try to match the objective until it visited all the cards;
             for (GameCard currentCard : Player.getGameZone().values()) {
                 GameCard currentPointer = currentCard;
@@ -285,8 +315,7 @@ public class GameTable implements Serializable {
                     }
 
                 }
-                ArrayList<ArrayList<GameCard>> ChosenCombos = new ArrayList<ArrayList<GameCard>>();
-                ArrayList<ArrayList<GameCard>> OverLappingCombos = new ArrayList<ArrayList<GameCard>>();
+
                 boolean OverlappingCard = false;
                 for (ArrayList<GameCard> Combo : PossibleCombos) {
                     OverlappingCard = false;
@@ -309,18 +338,24 @@ public class GameTable implements Serializable {
                         OverLappingCombos.add(Combo);
 
                 }
-                int totalCombos = findMaxCombosInOverlappingCombos(OverLappingCombos) + ChosenCombos.size();
+
+            }
+            int totalCombos=0;
+            if(!OverLappingCombos.isEmpty()) {
+                totalCombos = findMaxCombosInOverlappingCombos(OverLappingCombos) + ChosenCombos.size();
                 points += totalCombos * privateGoal.getPoints();
             }
 
 
-            Player player = Util.getKeyByValue(PlayerZones, Player);
-            Scoreboard.addPoints(player, points);
+
+
 
 
         }
-
+        Player player = Util.getKeyByValue(PlayerZones, Player);
+        Scoreboard.addPoints(player, points);
         return points;
+
 
     }
 }
