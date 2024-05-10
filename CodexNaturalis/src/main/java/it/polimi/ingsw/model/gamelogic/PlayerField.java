@@ -165,7 +165,12 @@ public class PlayerField implements Serializable {
         {
             return -1;
         }
-
+        int points=0;
+        if (!card.getIsGold()) {
+            points=card.getPoints();
+        } else {
+            points=calculateCardPoints(where, (GoldCard) card);
+        }
 
         gameZone.put(where, card);
 
@@ -225,11 +230,7 @@ public class PlayerField implements Serializable {
         //Return the amount of points the card has scored
         if(!card.getIsFront())
             return 0;
-        if (!card.getIsGold()) {
-            return card.getPoints();
-        } else {
-            return calculateCardPoints(where, (GoldCard) card);
-        }
+        return points;
     }
 
     /**
@@ -261,7 +262,7 @@ public class PlayerField implements Serializable {
     public boolean IsPlayable (Coordinates where, ResourceCard card) {
         if(Util.checkIfResourceCardIsPresent(hand, card)==null)
         {
-            System.err.println("CARD not in Hand");
+        //    System.err.println("CARD not in Hand");
             return  false;
         }
         for(Coordinates coordinate: gameZone.keySet())
@@ -273,13 +274,13 @@ public class PlayerField implements Serializable {
         if (card.getIsGold() && card.getIsFront()) {
             if (!checkConditions((GoldCard) card))
             {
-                System.err.println("condition check failed");
+              //  System.err.println("condition check failed");
                 return false;
             }
         }
         if (Math.abs(where.getY() + where.getX()) % 2 == 1) {
 
-                System.err.println("math check failed");
+               // System.err.println("math check failed");
                 return false;
 
         }
@@ -329,7 +330,7 @@ public class PlayerField implements Serializable {
      * @param card the card you want to play
      * @return the points you get from playing it
      */
-    private int calculateCardPoints (Coordinates where, GoldCard card) {
+    public int calculateCardPoints (Coordinates where, GoldCard card) {
         switch (card.getPointCondition()) {
             case NORMAL -> {return card.getPoints();}
 
