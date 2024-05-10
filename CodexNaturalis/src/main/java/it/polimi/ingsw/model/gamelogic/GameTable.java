@@ -204,9 +204,6 @@ public class GameTable implements Serializable {
                         possibleCards.add(currentPointer);
                         if (j == Directions.size() - 1) {
 
-                            for(GameCard card: possibleCards)
-
-
                             PossibleCombos.add(possibleCards);
                         }
                     }
