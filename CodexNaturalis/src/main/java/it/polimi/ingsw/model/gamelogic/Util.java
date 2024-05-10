@@ -317,5 +317,35 @@ public class Util {
         return null;
     }
 
+    /**
+     * Given an GameCard returns the first index that is not BLANK or COVERED
+     * @param card GameCard
+     * @return first index that is not blank, if not found -1
+     */
+    static public int getFirstNotHiddenIndex(GameCard card)
+    {
+        for(int i=0; i<4;  i++)
+        {
+            if(card.getCorner(i)!= Resource.HIDDEN && card.getCorner(i)!=Resource.COVERED)
+                return i;
+        }
+        return -1;
+    }
+
+    /**
+     * Given an GameCard returns the first index that contains BLANK or COVERED
+     * @param card GameCard
+     * @return first index that contains blank, if not found -1
+     */
+    static public int getFirstHiddenIndex(GameCard card)
+    {
+        for(int i=0; i<4;  i++)
+        {
+            if(card.getCorner(i)==Resource.HIDDEN && card.getCorner(i)!=Resource.COVERED )
+                return i;
+        }
+        return -1;
+    }
+
 
 }
