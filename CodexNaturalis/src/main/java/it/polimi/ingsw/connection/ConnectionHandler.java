@@ -76,6 +76,11 @@ public abstract class ConnectionHandler {
     public void colorRequest(ArrayList<Color> availableColors) {}
 
     /**
+     * Ask the player for the number of players in the new game
+     */
+    public void playersNumberRequest() {}
+
+    /**
      * Send the player a message
      * @param message the message
      */

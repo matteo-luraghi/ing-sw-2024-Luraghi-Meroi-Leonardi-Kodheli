@@ -1,7 +1,8 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.connection.Client;
-import it.polimi.ingsw.connection.message.clientMessage.*;
+import it.polimi.ingsw.connection.socket.SocketClient;
+import it.polimi.ingsw.connection.socket.message.clientMessage.*;
 import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.model.gamelogic.*;
 import it.polimi.ingsw.view.mainview.View;
@@ -10,7 +11,6 @@ import it.polimi.ingsw.view.mainview.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -49,8 +49,8 @@ public class CLI implements View {
         boolean connected = false;
         String ip = null;
         int port = 0;
-        Client client = null;
-
+        SocketClient client = null;
+        // TODO: new client creation if RMI is selected (also allow user to choose)
         do {
             System.out.println("Insert a valid ip address:");
             ip = scanner.nextLine();
@@ -59,7 +59,7 @@ public class CLI implements View {
             try {
                 port = Integer.parseInt(portStr);
                 try {
-                    client = new Client(ip, port, this);
+                    client = new SocketClient(ip, port, this);
                     connected = true;
                 } catch (IOException | IllegalArgumentException e) {
                     System.out.println("Error connecting to the server, try again");
@@ -97,7 +97,7 @@ public class CLI implements View {
     public void insertNickname() {
         System.out.println("Choose a nickname");
         String nickname = scanner.nextLine();
-        client.sendMessageServer(new LoginResponse(nickname));
+        client.loginResponse(nickname);
     }
 
     /**
@@ -125,7 +125,7 @@ public class CLI implements View {
             }
         };
 
-        client.sendMessageServer(new ColorResponse(color));
+        client.colorResponse(color);
     }
 
     /**
@@ -146,7 +146,7 @@ public class CLI implements View {
                 System.out.println("Insert a valid number! (2-4)");
             }
         } while (number<=1 || number > 4);
-        client.sendMessageServer(new PlayersNumberResponse(number));
+        client.playersNumberResponse(number);
     }
 
     /**
@@ -198,7 +198,7 @@ public class CLI implements View {
             if (side.equalsIgnoreCase("front") || side.equalsIgnoreCase("back")) {
                 correct = true;
                 boolean isFront = side.equalsIgnoreCase("front");
-                client.sendMessageServer(new PlayStartingCardResponse(card, isFront));
+                client.playStartingCardResponse(card, isFront);
             } else {
                 System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." +AnsiColors.ANSI_RESET);
             }
@@ -243,9 +243,9 @@ public class CLI implements View {
         } while (!correctInput);
 
         if (result == 1) {
-            client.sendMessageServer(new GoalCardResponse(goalCards[0]));
+            client.goalCardResponse(goalCards[0]);
         } else if (result == 2) {
-            client.sendMessageServer(new GoalCardResponse(goalCards[1]));
+            client.goalCardResponse(goalCards[1]);
         }
 
     }
@@ -341,7 +341,7 @@ public class CLI implements View {
     public void setMyTurn (boolean isMyTurn) {
         this.isMyTurn = isMyTurn;
         if (isMyTurn) {
-            this.client.sendMessageServer(new YourTurnOk());
+            client.yourTurnOk();
         }
     }
 
@@ -455,7 +455,7 @@ public class CLI implements View {
                                 correctInput = true;
 
                                 Coordinates where = getCardCoordinatesFromInput();
-                                client.sendMessageServer(new PlayCardResponse(game.getGameTable().getPlayerZones().get(user).getHand().get(card - 1), where, isFront));
+                                client.playCardResponse(game.getGameTable().getPlayerZones().get(user).getHand().get(card - 1), where, isFront);
                             } else {
                                 System.out.println(AnsiColors.ANSI_RED + "Incorrect input. Try again." + AnsiColors.ANSI_RESET);
                             }
@@ -493,7 +493,7 @@ public class CLI implements View {
                                             }
                                         }
                                         correctInput = true;
-                                        client.sendMessageServer(new DrawCardResponse(which, (deck.equalsIgnoreCase("gold"))));
+                                        client.drawCardResponse(which, (deck.equalsIgnoreCase("gold")));
                                     } else {
                                         System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." + AnsiColors.ANSI_RESET);
                                     }

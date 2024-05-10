@@ -1,17 +1,11 @@
 package it.polimi.ingsw.connection;
 
-import it.polimi.ingsw.connection.message.connectionMessage.Disconnection;
-import it.polimi.ingsw.connection.message.connectionMessage.Ping;
-import it.polimi.ingsw.connection.message.serverMessage.NotYourTurn;
-import it.polimi.ingsw.connection.message.serverMessage.ServerMessage;
+import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.card.ResourceCard;
+import it.polimi.ingsw.model.card.StartingCard;
+import it.polimi.ingsw.model.gamelogic.Color;
+import it.polimi.ingsw.model.gamelogic.Coordinates;
 import it.polimi.ingsw.view.mainview.View;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -19,111 +13,91 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * used to manage the connection and communication of a client
  * @author Matteo Leonardo Luraghi
  */
-public class Client {
+public abstract class Client {
     private final View view;
     private final AtomicBoolean connected = new AtomicBoolean();
-    private final Socket clientSocket;
-    private final ObjectInputStream inputStream;
-    private final ObjectOutputStream outputStream;
-    private final Thread messageReceiver;
-    private Thread getCommands = null;
 
     /**
-     * Constructor, builds the threads needed for messages
-     * @param ip the ip address
-     * @param port the port of the connection
+     * Constructor, sets the view interface and sets the connected value as true
      * @param view View interface
-     * @throws IOException if the connection with the server fails
      */
-    public Client(String ip, int port, View view) throws IOException {
+    public Client(View view) {
         this.view = view;
-        this.messageReceiver = new Thread(this::readMessages);
-        this.clientSocket = new Socket();
-        this.clientSocket.connect(new InetSocketAddress(ip, port));
-        this.outputStream = new ObjectOutputStream(this.clientSocket.getOutputStream());
-        this.inputStream = new ObjectInputStream(this.clientSocket.getInputStream());
         this.connected.set(true);
-        messageReceiver.start();
-
-        // if the server is not online, disconnect the client
-        Thread pingThread = new Thread(() -> {
-            while (this.connected.get()) {
-                try {
-                    Thread.sleep(5000);
-                    sendMessageServer(new Ping());
-                } catch (InterruptedException e) {
-                    // if the server is not online, disconnect the client
-                    disconnect();
-                }
-            }
-        });
-        pingThread.start();
     }
 
     /**
-     * Send a message to the server
-     * @param message the message to be sent
+     * connected getter
+     * @return the value of connected
      */
-    public void sendMessageServer(Serializable message) {
-        if(this.connected.get()) {
-            try {
-                outputStream.writeObject(message);
-                outputStream.flush();
-                outputStream.reset();
-            } catch (IOException e) {
-                disconnect();
-            }
-        }
+    public boolean getConnected() {
+        return connected.get();
     }
 
     /**
-     * Read the messages and add them in the queue
+     * connected setter
+     * @param value the new value of connected
      */
-    public void readMessages() {
-        try {
-            while(this.connected.get()) {
-                Object msg = this.inputStream.readObject();
-                if(msg instanceof ServerMessage) {
-                    // view the message via the CLI or GUI
-                    if (msg instanceof NotYourTurn) {
-                        if (this.getCommands != null && this.getCommands.isAlive()) {
-                            this.getCommands.interrupt();
-                        }
-                        this.getCommands = new Thread(() -> ((NotYourTurn) msg).show(this.view));
-                        this.getCommands.start();
-                    } else {
-                        if (this.getCommands != null && this.getCommands.isAlive()) {
-                            this.getCommands.interrupt();
-                        }
-                        ((ServerMessage) msg).show(this.view);
-                    }
-                }
-                else if (msg instanceof Disconnection) {
-                    ((Disconnection) msg).show(view);
-                    this.getCommands.interrupt();
-                    disconnect();
-                }
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error reading message:" + e);
-            disconnect();
-        }
+    public void setConnected(boolean value) {
+        this.connected.set(value);
     }
 
     /**
-     * Disconnect the client
+     * view getter
+     * @return the view interface
      */
-    public void disconnect() {
-        if(this.connected.get()) {
-            this.connected.set(false);
-            if(this.messageReceiver.isAlive()) this.messageReceiver.interrupt();
-
-            try {
-                this.inputStream.close();
-                this.outputStream.close();
-                this.clientSocket.close();
-            } catch (IOException ignored) {}
-        }
+    public View getView() {
+        return this.view;
     }
 
+    /**
+     * Send the selected nickname to the server
+     * @param nickname the nickname
+     */
+    public void loginResponse(String nickname) {}
+
+    /**
+     * Send the selected color to the server
+     * @param color the color
+     */
+    public void colorResponse(Color color) {}
+
+    /**
+     * Send the number of players to the server
+     * @param number the number of players
+     */
+    public void playersNumberResponse(int number) {}
+
+    /**
+     * Send the starting card on the correct side
+     * @param card the starting card
+     * @param isFront the side
+     */
+    public void playStartingCardResponse(StartingCard card, boolean isFront) {}
+
+    /**
+     * Send the selected goal card to the server
+     * @param card the goal card
+     */
+    public void goalCardResponse(GoalCard card) {}
+
+    /**
+     * Send the server a message to ensure the client is aware it's its player's turn
+     */
+    public void yourTurnOk() {}
+
+    /**
+     * Send the selected card to be played, the coordinates and the side
+     * @param card the card
+     * @param where the coordinates
+     * @param isFront the side
+     */
+    public void playCardResponse(ResourceCard card, Coordinates where, boolean isFront) {}
+
+    /**
+     * Send the reference of which card to draw
+     * @param which the card
+     * @param isGold which deck to draw from
+     */
+    public void drawCardResponse(int which, boolean isGold) {}
 }

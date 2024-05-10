@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.connection.Server;
+import it.polimi.ingsw.connection.socket.SocketClient;
 import it.polimi.ingsw.view.cli.CLI;
 import org.junit.After;
 import org.junit.Before;
@@ -38,7 +39,7 @@ public class ConnectToServerTest {
     @Test
     public void CheckConnection () throws IOException {
         serverThread.start();
-        client = new Client(InetAddress.getLocalHost().getHostAddress(), 5004, cli); //to get your
+        client = new SocketClient(InetAddress.getLocalHost().getHostAddress(), 5004, cli); //to get your
         // private ip
         try {
             Thread.sleep(3000);

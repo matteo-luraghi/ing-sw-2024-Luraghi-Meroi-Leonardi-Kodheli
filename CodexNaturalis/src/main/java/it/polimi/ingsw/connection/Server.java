@@ -1,7 +1,8 @@
 package it.polimi.ingsw.connection;
 
-import it.polimi.ingsw.connection.message.connectionMessage.Disconnection;
-import it.polimi.ingsw.connection.message.serverMessage.*;
+import it.polimi.ingsw.connection.socket.message.connectionMessage.Disconnection;
+import it.polimi.ingsw.connection.socket.SocketConnectionHandler;
+import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.controller.Controller;
 
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class Server {
      * Add a client to a game via its connectionHandler
      * @param connectionHandler the connectionHandler to save in a game
      */
-    public void addToGame(SocketConnectionHandler connectionHandler) {
+    public void addToGame(ConnectionHandler connectionHandler) {
         synchronized (this.gameLock) {
             // find the first free game and try to add the player
             Optional<Controller> optionalController = games.keySet().stream().filter(g -> !g.isGameStarted()).findFirst();
@@ -70,7 +71,7 @@ public class Server {
             }
         }
         // no free games available -> wait for user input of number of players
-        connectionHandler.sendMessageClient(new PlayersNumberRequest());
+        connectionHandler.playersNumberRequest();
     }
 
     /**
@@ -78,7 +79,7 @@ public class Server {
      * @param connectionHandler the client handler
      * @param numberOfPlayers the number of players for the new game
      */
-    public void addToGame(SocketConnectionHandler connectionHandler, int numberOfPlayers) {
+    public void addToGame(ConnectionHandler connectionHandler, int numberOfPlayers) {
         Controller controller = new Controller(numberOfPlayers);
         synchronized (this.gameLock) {
             this.games.put(controller, numberOfPlayers);
@@ -92,7 +93,7 @@ public class Server {
      * Remove and disconnect a client
      * @param connectionHandler the connectionHandler relative to the client
      */
-    public void removeClient(SocketConnectionHandler connectionHandler) {
+    public void removeClient(ConnectionHandler connectionHandler) {
         Optional<Controller> optionalController = this.games.keySet().stream().filter(c -> c.getHandlers().contains(connectionHandler)).findFirst();
         if (optionalController.isPresent()) {
             synchronized (this.gameLock) {
