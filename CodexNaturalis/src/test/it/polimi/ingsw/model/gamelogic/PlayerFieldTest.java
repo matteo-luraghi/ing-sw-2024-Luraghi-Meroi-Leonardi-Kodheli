@@ -18,8 +18,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * PlayerFieldTest
+ * @author Françesko
  */
-//TODO find edge cases, and gold cards, refactor
+
 public class PlayerFieldTest {
 
     PlayerField playerField;
@@ -28,6 +29,7 @@ public class PlayerFieldTest {
 
     /**
      * setup method for creating and parsing starting card
+     *
      */
     @Before
     public void setup()
@@ -58,37 +60,11 @@ public class PlayerFieldTest {
 
     }
 
-    /**
-     * Given an GameCard returns the first index that contains BLANK or COVERED
-     * @param card GameCard
-     * @return first index that contains blank, if not found -1
-     */
-    private int getFirstHiddenIndex(GameCard card)
-    {
-        for(int i=0; i<4;  i++)
-        {
-            if(card.getCorner(i)==Resource.HIDDEN && card.getCorner(i)!=Resource.COVERED )
-                return i;
-        }
-        return -1;
-    }
-    /**
-     * Given an GameCard returns the first index that is not BLANK or COVERED
-     * @param card GameCard
-     * @return first index that is not blank, if not found -1
-     */
-    private int getFirstNotHiddenIndex(GameCard card)
-    {
-        for(int i=0; i<4;  i++)
-        {
-            if(card.getCorner(i)!=Resource.HIDDEN && card.getCorner(i)!=Resource.COVERED)
-                return i;
-        }
-        return -1;
-    }
+
 
     /**
      * testing that Playability is correct for any card
+     * @result if a base corner is hidden the card cannot be played
      */
     @Test
     public void IsPlayableTest() {
@@ -155,14 +131,11 @@ int n=0;
 
     /**
      * Casually trying to place all cards in the deck, asserting that checks are correct and congruent with Play output.
+     * @result If playability condition are met cards are played otherwise not
      */
     @Test
     public void Playtest()
     {
-
-
-      //  System.out.println(playerField.getHand().getFirst().getPoints()+" "+playerField.getHand().getFirst().getCorner(3));
-
 
 
 
@@ -180,14 +153,16 @@ int tries=0;
             }
             catch (NullPointerException e)
             {
-                System.out.println("Finished Cards");
+                ViewPlayerFieldCLIFactory VIEW= new ViewPlayerFieldCLIFactory();
+                VIEW.setPlayerField(playerField, new Player("Mario", Color.RED));
+                VIEW.ShowGameZone();
                 return;
             }
             for (Coordinates coordinate : playerField.getGameZone().keySet()) {
 
                 card=playerField.getGameZone().get(coordinate);
 
-                switch (getFirstNotHiddenIndex(card)) {
+                switch (Util.getFirstNotHiddenIndex(card)) {
                     case 0: {
 
                         coordinates = new Coordinates(Util.getKeyByValue(playerField.getGameZone(), card).getX() - 1, Util.getKeyByValue(playerField.getGameZone(), card).getY() + 1);
@@ -223,9 +198,7 @@ int tries=0;
 
                     assertEquals( ((ResourceCard) playcard).getPoints(), playerField.Play(coordinates, (ResourceCard)playcard));
                    // System.out.println("placed!");
-                    ViewPlayerFieldCLIFactory VIEW= new ViewPlayerFieldCLIFactory();
-                    VIEW.setPlayerField(playerField, new Player("Mario", Color.RED));
-                    VIEW.ShowGameZone();
+
                     found=true;
                     break;
 
@@ -242,9 +215,14 @@ int tries=0;
             }
             if(!found)
             {
-                System.out.println("Couldn't find suitable card where to place");
+                ViewPlayerFieldCLIFactory VIEW= new ViewPlayerFieldCLIFactory();
+                VIEW.setPlayerField(playerField, new Player("Mario", Color.RED));
+                VIEW.ShowGameZone();
+
                 return;
             }
+
+
 
 
 
