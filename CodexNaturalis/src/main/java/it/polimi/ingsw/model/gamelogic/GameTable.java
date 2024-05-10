@@ -205,7 +205,7 @@ public class GameTable implements Serializable {
                         if (j == Directions.size() - 1) {
 
                             for(GameCard card: possibleCards)
-                                System.out.println(Player.getGameZone().get(card));
+
 
                             PossibleCombos.add(possibleCards);
                         }
