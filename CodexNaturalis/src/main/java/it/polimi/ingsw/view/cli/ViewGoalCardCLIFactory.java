@@ -224,6 +224,33 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
     }
 
     /**
+     * method to print a signle goal card
+     * @param one is the first card
+     *
+     */
+    public void printGoalCard(GoalCard one) {
+        SetCard(one);
+        printFirstCardLine();
+        System.out.print("   ");
+
+        SetCard(one);
+        printSecondCardLine();
+        System.out.println();
+
+        SetCard(one);
+        printThirdCardLine();
+
+        System.out.println();
+
+        SetCard(one);
+        printFourthCardLine();
+        System.out.println();
+
+        SetCard(one);
+        printFifthCardLine();
+        System.out.println();
+    }
+    /**
      * method to print two goal card next to one another
      * @param one is the first card
      * @param two is the second card
