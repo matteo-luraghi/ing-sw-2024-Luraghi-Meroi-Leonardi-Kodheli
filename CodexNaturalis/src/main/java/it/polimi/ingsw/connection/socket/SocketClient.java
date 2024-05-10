@@ -4,7 +4,6 @@ import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.connection.socket.message.clientMessage.*;
 import it.polimi.ingsw.connection.socket.message.connectionMessage.Disconnection;
 import it.polimi.ingsw.connection.socket.message.connectionMessage.Ping;
-import it.polimi.ingsw.connection.socket.message.serverMessage.NotYourTurn;
 import it.polimi.ingsw.connection.socket.message.serverMessage.ServerMessage;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.ResourceCard;
@@ -29,7 +28,6 @@ public class SocketClient extends Client {
     private final ObjectInputStream inputStream;
     private final ObjectOutputStream outputStream;
     private final Thread messageReceiver;
-    private Thread getCommands = null;
 
     /**
      * Constructor, builds the threads needed for messages
@@ -87,22 +85,10 @@ public class SocketClient extends Client {
                 Object msg = this.inputStream.readObject();
                 if(msg instanceof ServerMessage) {
                     // view the message via the CLI or GUI
-                    if (msg instanceof NotYourTurn) {
-                        if (this.getCommands != null && this.getCommands.isAlive()) {
-                            this.getCommands.interrupt();
-                        }
-                        this.getCommands = new Thread(() -> ((NotYourTurn) msg).show(this.getView()));
-                        this.getCommands.start();
-                    } else {
-                        if (this.getCommands != null && this.getCommands.isAlive()) {
-                            this.getCommands.interrupt();
-                        }
-                        ((ServerMessage) msg).show(this.getView());
-                    }
+                    ((ServerMessage) msg).show(this.getView());
                 }
                 else if (msg instanceof Disconnection) {
                     ((Disconnection) msg).show(this.getView());
-                    this.getCommands.interrupt();
                     disconnect();
                 }
             }

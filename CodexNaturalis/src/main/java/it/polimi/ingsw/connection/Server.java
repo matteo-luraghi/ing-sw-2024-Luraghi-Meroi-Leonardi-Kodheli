@@ -2,7 +2,6 @@ package it.polimi.ingsw.connection;
 
 import it.polimi.ingsw.connection.socket.message.connectionMessage.Disconnection;
 import it.polimi.ingsw.connection.socket.SocketConnectionHandler;
-import it.polimi.ingsw.connection.ConnectionHandler;
 import it.polimi.ingsw.controller.Controller;
 
 import java.io.IOException;

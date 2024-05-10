@@ -86,7 +86,6 @@ public class CLI implements View {
      */
     @Override
     public void showMessage(String s) {
-        ClearScreen();
         System.out.println(s);
     }
 
