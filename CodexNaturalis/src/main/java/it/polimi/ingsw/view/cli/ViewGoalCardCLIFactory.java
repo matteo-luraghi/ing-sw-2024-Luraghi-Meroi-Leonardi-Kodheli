@@ -231,7 +231,7 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
     public void printGoalCard(GoalCard one) {
         SetCard(one);
         printFirstCardLine();
-        System.out.print("   ");
+        System.out.println();
 
         SetCard(one);
         printSecondCardLine();
