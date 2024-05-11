@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.ScoreBoard;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -16,7 +17,9 @@ import java.util.ArrayList;
  * used to handle the different types of connection
  * @author Matteo Leonardo Luraghi
  */
-public abstract class ConnectionHandler {
+public abstract class ConnectionHandler implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 4169861712628723407L;
     private String clientNickname = null;
     private Color clientColor = null;
     private Controller controller;
@@ -117,10 +120,9 @@ public abstract class ConnectionHandler {
 
     /**
      * Tell the player that it's not their turn
-     * @param player the player
      * @param message the message
      */
-    public void notYourTurn(Player player, String message) {}
+    public void notYourTurn(String message) {}
 
     /**
      * Tell the player that it's their turn to play
@@ -161,5 +163,12 @@ public abstract class ConnectionHandler {
      * @param msg the message
      */
     public void sendMessage(Serializable msg) {}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (this.getClass() != o.getClass()) return false;
+        return getClientNickname().equals(((ConnectionHandler) o).getClientNickname());
+    }
 
 }

@@ -4,6 +4,8 @@ import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.view.cli.CLI;
 import it.polimi.ingsw.view.mainview.View;
 
+import java.rmi.RemoteException;
+
 /**
  * DrawCardRequest class
  * used to notify the player that they need to draw
@@ -26,7 +28,11 @@ public class DrawCardRequest extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.showMessage("You now have to draw a card!");
+        try {
+            view.showMessage("You now have to draw a card!");
+        } catch (RemoteException e) {
+            System.err.println("Error sending message");
+        }
         if (view.getClass() == CLI.class) {
             new Thread(() -> ((CLI) view).setPlayPhase(false)).start();
         }

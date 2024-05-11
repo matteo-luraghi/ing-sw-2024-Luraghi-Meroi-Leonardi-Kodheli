@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.connection.Client;
+import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.connection.socket.SocketClient;
 import it.polimi.ingsw.connection.socket.message.clientMessage.*;
 import it.polimi.ingsw.model.card.*;
@@ -10,6 +11,8 @@ import it.polimi.ingsw.view.mainview.View;
 import it.polimi.ingsw.view.mainview.*;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -49,34 +52,60 @@ public class CLI implements View {
         boolean connected = false;
         String ip = null;
         int port = 0;
-        SocketClient client = null;
-        // TODO: new client creation if RMI is selected (also allow user to choose)
+        Client client = null;
+        String nickname = null;
         do {
-            System.out.println("Insert a valid ip address:");
-            ip = scanner.nextLine();
-            System.out.println("Insert a valid port to connect:");
-            String portStr = scanner.nextLine();
-            try {
-                port = Integer.parseInt(portStr);
+            System.out.println("Which connection type would you like to use? (rmi or socket)");
+            String connection = scanner.nextLine();
+            if (connection.equalsIgnoreCase("socket")) {
+                System.out.println("Insert a valid ip address:");
+                ip = scanner.nextLine();
+                System.out.println("Insert a valid port to connect:");
+                String portStr = scanner.nextLine();
                 try {
-                    client = new SocketClient(ip, port, this);
-                    connected = true;
-                } catch (IOException | IllegalArgumentException e) {
-                    System.out.println("Error connecting to the server, try again");
+                    port = Integer.parseInt(portStr);
+                    try {
+                        client = new SocketClient(ip, port, this);
+                        connected = true;
+                    } catch (IOException | IllegalArgumentException e) {
+                        System.out.println("Error connecting to the server, try again");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Insert a valid port number!");
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("Insert a valid port number!");
-            }
+            } else if(connection.equalsIgnoreCase("rmi")) {
+                System.out.println("Insert a valid ip address:");
+                ip = scanner.nextLine();
+                System.out.println("Insert a valid port to connect:");
+                String portStr = scanner.nextLine();
+                try {
+                    port = Integer.parseInt(portStr);
+                    try {
+                        client = new RMIClient(ip, port, this);
+                        connected = true;
+                    } catch (RemoteException | NotBoundException | IllegalArgumentException e) {
+                        System.out.println("Error connecting to the server, try again");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Insert a valid port number!");
+                }
 
+            } else {
+                System.out.println("Invalid option");
+            }
         } while(!connected);
         WelcomeMessage();
         this.client = client;
+
+        if (client.getClass() == RMIClient.class) {
+            insertNickname();
+        }
     }
 
     /**
      * method to clear the console if the program is being run in the windows console
      */
-    private void ClearScreen () {
+    private void ClearScreen() {
         System.out.print("\033c");
     }
 
@@ -337,6 +366,7 @@ public class CLI implements View {
      * isMyTurn setter
      * @param isMyTurn tells whether it's the client's turn or not
      */
+    @Override
     public void setMyTurn (boolean isMyTurn) {
         this.isMyTurn = isMyTurn;
         if (isMyTurn) {
@@ -358,6 +388,7 @@ public class CLI implements View {
      * playPhase setter
      * @param playPhase tells whether it's the client's turn or not
      */
+    @Override
     public void setPlayPhase (boolean playPhase) {
         this.playPhase = playPhase;
     }
@@ -374,6 +405,7 @@ public class CLI implements View {
      * isMyTurn setter
      * @param user is the user that is going to use this client
      */
+    @Override
     public void setUser (Player user) {
         this.user = user;
     }
@@ -390,6 +422,7 @@ public class CLI implements View {
      * game setter
      * @param game the game we need to set!
      */
+    @Override
     public void setGame (GameState game) {
         this.game = game;
         for (Player p : game.getPlayers()) {
@@ -411,6 +444,7 @@ public class CLI implements View {
     /**
      * method to get the user's inputs
      */
+    @Override
     public void getCommands() {
         String command = "";
         Player lastPlayerField = null;

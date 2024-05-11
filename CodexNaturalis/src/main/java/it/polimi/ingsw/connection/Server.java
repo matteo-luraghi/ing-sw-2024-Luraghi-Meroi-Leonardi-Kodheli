@@ -3,10 +3,14 @@ package it.polimi.ingsw.connection;
 import it.polimi.ingsw.connection.socket.message.connectionMessage.Disconnection;
 import it.polimi.ingsw.connection.socket.SocketConnectionHandler;
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.RemoteController;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -19,9 +23,10 @@ import java.util.concurrent.Executors;
  * used to manage the games and the clients
  * @author Matteo Leonardo Luraghi
  */
-public class Server {
+public class Server implements RemoteServer {
     private final int port;
     private ServerSocket serverSocket;
+    private Registry registry;
     private final ExecutorService executor;
     private final Map<Controller, Integer> games;
     private final Object gameLock = new Object();
@@ -38,12 +43,22 @@ public class Server {
 
     public void start() throws IOException {
         // throws if the socket init fails
+        this.registry = LocateRegistry.createRegistry(1099);
+
+        try {
+            RemoteServer serverStub = (RemoteServer) UnicastRemoteObject.exportObject(this, 0);
+            registry.rebind("server", serverStub);
+        } catch (Exception e) {
+            System.err.println("Error exposing the server");
+            throw new IOException();
+        }
+
         this.serverSocket = new ServerSocket(this.port);
         System.out.println("Server running...");
         try {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                clientSocket.setSoTimeout(10000);
+                clientSocket.setSoTimeout(0);
                 SocketConnectionHandler clientConnection = new SocketConnectionHandler(this, clientSocket);
                 // start the clientConnection thread
                 executor.submit(clientConnection);
@@ -57,6 +72,7 @@ public class Server {
      * Add a client to a game via its connectionHandler
      * @param connectionHandler the connectionHandler to save in a game
      */
+    @Override
     public void addToGame(ConnectionHandler connectionHandler) {
         synchronized (this.gameLock) {
             // find the first free game and try to add the player
@@ -78,6 +94,7 @@ public class Server {
      * @param connectionHandler the client handler
      * @param numberOfPlayers the number of players for the new game
      */
+    @Override
     public void addToGame(ConnectionHandler connectionHandler, int numberOfPlayers) {
         Controller controller = new Controller(numberOfPlayers);
         synchronized (this.gameLock) {
@@ -86,6 +103,14 @@ public class Server {
             controller.addHandler(connectionHandler);
             connectionHandler.setController(controller);
             connectionHandler.getController().chooseColorState(connectionHandler);
+            try {
+                RemoteController stub = (RemoteController) UnicastRemoteObject.exportObject(controller, 0);
+                this.registry.rebind("controller", stub);
+            } catch (Exception e) {
+                System.err.println("Error exposing the controller");
+                System.out.println(e);
+            }
+
     }
 
     /**

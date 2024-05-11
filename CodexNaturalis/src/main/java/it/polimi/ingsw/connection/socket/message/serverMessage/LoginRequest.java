@@ -3,6 +3,7 @@ package it.polimi.ingsw.connection.socket.message.serverMessage;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
+import java.rmi.RemoteException;
 
 /**
  * LoginRequest class
@@ -25,6 +26,10 @@ public class LoginRequest extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.insertNickname();
+        try {
+            view.insertNickname();
+        } catch (RemoteException e) {
+            System.err.println("Error asking for nickname");
+        }
     }
 }

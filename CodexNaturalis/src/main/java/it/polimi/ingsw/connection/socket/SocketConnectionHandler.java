@@ -185,12 +185,11 @@ public class SocketConnectionHandler extends ConnectionHandler implements Runnab
 
     /**
      * Tell the player that it's not their turn using a NotYourTurn server message
-     * @param player the player
      * @param message the message
      */
     @Override
-    public void notYourTurn(Player player, String message) {
-        sendMessageClient(new NotYourTurn(player, message));
+    public void notYourTurn(String message) {
+        sendMessageClient(new NotYourTurn(message));
     }
 
     /**

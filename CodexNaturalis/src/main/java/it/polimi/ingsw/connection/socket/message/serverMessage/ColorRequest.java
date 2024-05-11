@@ -3,6 +3,7 @@ package it.polimi.ingsw.connection.socket.message.serverMessage;
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.view.mainview.View;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
@@ -27,6 +28,10 @@ public class ColorRequest extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.insertColor(colors);
+        try {
+            view.insertColor(colors);
+        } catch (RemoteException e) {
+            System.err.println("Error asking for color");
+        }
     }
 }

@@ -5,12 +5,17 @@ import it.polimi.ingsw.model.gamelogic.PlayerField;
 import it.polimi.ingsw.view.cli.ViewGameCardCLIFactory;
 import it.polimi.ingsw.view.cli.ViewGoalCardCLIFactory;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * viewPlayerFieldFactory abstract class
  * @author Lorenzo Meroi
  */
-public abstract class ViewPlayerFieldFactory {
+public abstract class ViewPlayerFieldFactory implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 1780416040676399725L;
     protected PlayerField playerField;
 
     protected Player player;

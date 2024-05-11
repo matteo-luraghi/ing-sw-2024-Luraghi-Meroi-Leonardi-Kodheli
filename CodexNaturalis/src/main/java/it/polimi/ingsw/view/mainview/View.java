@@ -9,13 +9,15 @@ import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.ScoreBoard;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
  * Megaview interface, will be implemented for GUI and CLI
  * @author Lorenzo Meroi
  */
-public interface View {
+public interface View extends Remote {
     Client client = null;
     Controller controller = null;
     ViewGameCardFactory gameCardViewer = null;
@@ -27,49 +29,49 @@ public interface View {
     /**
      * method to initialize the CLI for a specific Client
      */
-    void start();
+    void start() throws RemoteException;
 
     /**
      * method to show any type of String
      * @param s is the string you want to be displayed
      */
-    void showMessage (String s);
+    void showMessage(String s) throws RemoteException;
 
     /**
      * method to make the player insert its nickname
      */
-    void insertNickname();
+    void insertNickname() throws RemoteException;
 
     /**
      * method to make the player choose its color
      * @param colors available
      */
-    void insertColor(ArrayList<Color> colors);
+    void insertColor(ArrayList<Color> colors) throws RemoteException;
 
     /**
      * asks the client how many players there has to be in the game
      */
-    void askForPlayersNumber();
+    void askForPlayersNumber() throws RemoteException;
 
     /**
      * method to display the waiting for players page
      */
-    void ShowWaitingForPlayers();
+    void ShowWaitingForPlayers() throws RemoteException;
 
     /**
      * method to show the private goal of a specific player
      * @param player of which to display the goal
      * @param game in which the player is partecipating
      */
-    void ShowPrivateGoal(Player player, GameState game);
+    void ShowPrivateGoal(Player player, GameState game) throws RemoteException;
 
-    void ChooseStartingCardSide(StartingCard card);
+    void ChooseStartingCardSide(StartingCard card) throws RemoteException;
 
     /**
      * displays the two private goals the client has to choose between
      * @param goalCards is an array of two goal cards
      */
-    void ShowChoosePrivateGoal(GoalCard[] goalCards);
+    void ShowChoosePrivateGoal(GoalCard[] goalCards) throws RemoteException;
 
     /**
      * displays the player field of a specific player
@@ -77,27 +79,56 @@ public interface View {
      * @param playerAsking tells which player is asking to see it
      * @param game we are referring to
      */
-    void ShowPlayerField(Player playerToSee, Player playerAsking, GameState game);
+    void ShowPlayerField(Player playerToSee, Player playerAsking, GameState game) throws RemoteException;
 
     /**
      * displays the two decks and the uncovered cards
      * @param game we are referring to
      */
-    void ShowDecks(GameState game);
+    void ShowDecks(GameState game) throws RemoteException;
 
     /**
      * displays the scoreboard
      */
-    void ShowScoreBoard(ScoreBoard scoreBoard);
+    void ShowScoreBoard(ScoreBoard scoreBoard) throws RemoteException;
 
     /**
      * shows who has won the game
      * @param game we are referring to
      */
-    void ShowWinner(GameState game);
+    void ShowWinner(GameState game) throws RemoteException;
 
     /**
      * shows the end of game text
      */
-    void ShowEndOfGame();
+    void ShowEndOfGame() throws RemoteException;
+
+    /**
+     * method to get the user's inputs
+     */
+    void getCommands() throws RemoteException;
+
+    /**
+     * isMyTurn setter
+     * @param isMyTurn tells whether it's the client's turn or not
+     */
+    void setMyTurn(boolean isMyTurn) throws RemoteException;
+
+    /**
+     * playPhase setter
+     * @param playPhase tells whether it's the client's turn or not
+     */
+    void setPlayPhase(boolean playPhase) throws RemoteException;
+
+    /**
+     * isMyTurn setter
+     * @param user is the user that is going to use this client
+     */
+    void setUser(Player user) throws RemoteException;
+
+    /**
+     * game setter
+     * @param game the game we need to set!
+     */
+    void setGame(GameState game) throws RemoteException;
 }

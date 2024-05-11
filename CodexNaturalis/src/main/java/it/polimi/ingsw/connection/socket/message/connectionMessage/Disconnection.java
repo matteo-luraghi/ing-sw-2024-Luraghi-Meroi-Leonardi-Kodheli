@@ -4,6 +4,7 @@ import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.rmi.RemoteException;
 
 /**
  * Disconnection class
@@ -27,6 +28,10 @@ public class Disconnection implements Serializable {
      * @param view view interface
      */
     public void show(View view) {
-        view.showMessage(clientNickname + " was disconnected, ending game.");
+        try {
+            view.showMessage(clientNickname + " was disconnected, ending game.");
+        } catch (RemoteException e) {
+            System.err.println("Error sending message");
+        }
     }
 }

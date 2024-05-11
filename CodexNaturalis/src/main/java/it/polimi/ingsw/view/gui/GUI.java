@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.ScoreBoard;
 import it.polimi.ingsw.view.mainview.*;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
@@ -142,6 +143,54 @@ public class GUI implements View {
      */
     @Override
     public void ShowEndOfGame() {
+
+    }
+
+    /**
+     * method to get the user's inputs
+     */
+    @Override
+    public void getCommands() throws RemoteException {
+
+    }
+
+    /**
+     * isMyTurn setter
+     *
+     * @param isMyTurn tells whether it's the client's turn or not
+     */
+    @Override
+    public void setMyTurn(boolean isMyTurn) throws RemoteException {
+
+    }
+
+    /**
+     * playPhase setter
+     *
+     * @param playPhase tells whether it's the client's turn or not
+     */
+    @Override
+    public void setPlayPhase(boolean playPhase) throws RemoteException {
+
+    }
+
+    /**
+     * isMyTurn setter
+     *
+     * @param user is the user that is going to use this client
+     */
+    @Override
+    public void setUser(Player user) throws RemoteException {
+
+    }
+
+    /**
+     * game setter
+     *
+     * @param game the game we need to set!
+     */
+    @Override
+    public void setGame(GameState game) throws RemoteException {
 
     }
 }
