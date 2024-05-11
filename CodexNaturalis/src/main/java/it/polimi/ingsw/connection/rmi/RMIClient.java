@@ -14,6 +14,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.ExportException;
 import java.rmi.server.UnicastRemoteObject;
 
 /**
@@ -22,7 +23,7 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class RMIClient extends Client {
     private final Registry registry;
-    private RemoteController controller;
+    private RemoteController controller = null;
     private RMIConnectionHandler connectionHandler;
 
     public RMIClient(String ip, int port, View view) throws RemoteException, NotBoundException {
@@ -34,11 +35,13 @@ public class RMIClient extends Client {
      * Send the selected nickname to the server
      * @param nickname the nickname
      */
-    public void loginResponse(String nickname) {
+    public void loginResponse(String nickname) throws Exception {
 
         try {
             View stubView = (View) UnicastRemoteObject.exportObject(getView(), 0);
             this.registry.rebind("view", stubView);
+        } catch (ExportException ignored) {
+
         } catch (Exception e) {
             System.out.println("Error exporting view");
             e.printStackTrace();
@@ -51,23 +54,27 @@ public class RMIClient extends Client {
             // connect to the server
             RemoteServer server = (RemoteServer) registry.lookup("server");
 
+            // check if the nickname is unique
+            if(!server.checkUniqueNickname(nickname)) {
+                throw new NicknameAlreadyPresentException("User already present");
+            }
+
             new Thread(() -> {
                 try {
                     server.addToGame(this.connectionHandler);
                 } catch (RemoteException e) {
-                    throw new RuntimeException(e);
+                    System.err.println("Error adding player to game");
                 }
             }).start();
 
             try {
                 this.controller = (RemoteController) registry.lookup("controller");
-            } catch (RemoteException ignored) {
-                System.err.println("Unable to find controller");
+            } catch (NotBoundException ignored) {
             }
 
-        } catch (Exception e) {
-            System.err.println("Error connecting to the server");
-            e.printStackTrace();
+        } catch (NicknameAlreadyPresentException e) {
+            throw new NicknameAlreadyPresentException(e.getMessage());
+        } catch (Exception ignored) {
         }
     }
 
@@ -76,6 +83,15 @@ public class RMIClient extends Client {
      * @param color the color
      */
     public void colorResponse(Color color) {
+
+        if (this.controller == null) {
+            try {
+                this.controller = (RemoteController) registry.lookup("controller");
+            } catch (Exception e) {
+                System.err.println("Controller not found");
+            }
+        }
+
         this.connectionHandler.setClientColor(color);
         try {
             this.controller.setColor(this.connectionHandler, color);
@@ -101,7 +117,6 @@ public class RMIClient extends Client {
                 }
             }).start();
 
-            this.controller = (RemoteController) registry.lookup("controller");
         } catch (Exception e) {
             System.err.println("Error connecting to the server");
             e.printStackTrace();

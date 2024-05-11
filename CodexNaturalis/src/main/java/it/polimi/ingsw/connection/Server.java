@@ -100,17 +100,16 @@ public class Server implements RemoteServer {
         synchronized (this.gameLock) {
             this.games.put(controller, numberOfPlayers);
         }
-            controller.addHandler(connectionHandler);
-            connectionHandler.setController(controller);
-            connectionHandler.getController().chooseColorState(connectionHandler);
-            try {
-                RemoteController stub = (RemoteController) UnicastRemoteObject.exportObject(controller, 0);
-                this.registry.rebind("controller", stub);
-            } catch (Exception e) {
-                System.err.println("Error exposing the controller");
-                System.out.println(e);
-            }
-
+        controller.addHandler(connectionHandler);
+        connectionHandler.setController(controller);
+        try {
+            RemoteController stub = (RemoteController) UnicastRemoteObject.exportObject(controller, 0);
+            this.registry.rebind("controller", stub);
+        } catch (Exception e) {
+            System.err.println("Error exposing the controller");
+            System.out.println(e);
+        }
+        connectionHandler.getController().chooseColorState(connectionHandler);
     }
 
     /**
@@ -132,6 +131,12 @@ public class Server implements RemoteServer {
         }
     }
 
+    /**
+     * Check if the nickname is unique in the group
+     * @param nickname the nickname
+     * @return true if no other player with the same nickname
+     */
+    @Override
     public boolean checkUniqueNickname(String nickname){
         Optional<Controller> optionalController = games.keySet().stream().filter(g -> !g.isGameStarted()).findFirst();
         if (optionalController.isPresent()) {

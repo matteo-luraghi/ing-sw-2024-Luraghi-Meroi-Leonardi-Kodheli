@@ -22,4 +22,11 @@ public interface RemoteServer extends Remote {
      * @param numberOfPlayers the number of players for the new game
      */
     void addToGame(ConnectionHandler connectionHandler, int numberOfPlayers) throws RemoteException;
+
+    /**
+     * Check if the nickname is unique in the group
+     * @param nickname the nickname
+     * @return true if no other player with the same nickname
+     */
+    boolean checkUniqueNickname(String nickname) throws RemoteException;
 }

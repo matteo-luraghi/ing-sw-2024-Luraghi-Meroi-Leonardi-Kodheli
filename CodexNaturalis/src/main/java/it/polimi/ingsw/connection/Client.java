@@ -54,7 +54,7 @@ public abstract class Client {
      * Send the selected nickname to the server
      * @param nickname the nickname
      */
-    public void loginResponse(String nickname) {}
+    public void loginResponse(String nickname) throws Exception {}
 
     /**
      * Send the selected color to the server

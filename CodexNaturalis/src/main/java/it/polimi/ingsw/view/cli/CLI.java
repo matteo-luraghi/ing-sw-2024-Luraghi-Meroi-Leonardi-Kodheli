@@ -123,9 +123,18 @@ public class CLI implements View {
      */
     @Override
     public void insertNickname() {
-        System.out.println("Choose a nickname");
-        String nickname = scanner.nextLine();
-        client.loginResponse(nickname);
+        boolean valid = false;
+        while (!valid) {
+            System.out.println("Choose a nickname");
+            String nickname = scanner.nextLine();
+            try {
+                client.loginResponse(nickname);
+                valid = true;
+            } catch (Exception e) {
+                // if RMI client exception if the nickname is already present
+                System.out.println("Nickname already existent, choose another one");
+            }
+        }
     }
 
     /**
