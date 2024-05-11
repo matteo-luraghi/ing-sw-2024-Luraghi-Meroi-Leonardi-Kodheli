@@ -11,6 +11,11 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.*;
 
+/**
+ * RemoteController interface
+ * used to expose the controller's methods
+ * @author Matteo Leonardo Luraghi
+ */
  public interface RemoteController extends Remote {
 
     /**

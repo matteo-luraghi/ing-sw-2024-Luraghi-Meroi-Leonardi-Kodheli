@@ -16,6 +16,10 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+/**
+ * RMIClient class
+ * @author Matteo Leonardo Luraghi
+ */
 public class RMIClient extends Client {
     private final Registry registry;
     private RemoteController controller;

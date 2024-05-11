@@ -17,6 +17,10 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+/**
+ * RMIConnectionHandler class
+ * @author Matteo Leonardo Luraghi
+ */
 public class RMIConnectionHandler extends ConnectionHandler {
     @Serial
     private static final long serialVersionUID = 9202804208069477313L;

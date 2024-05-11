@@ -90,7 +90,7 @@ public class Server implements RemoteServer {
     }
 
     /**
-     * Overloading of addToGame with number of players, used in PlayerNumberResponse
+     * Overloading of addToGame with number of players
      * @param connectionHandler the client handler
      * @param numberOfPlayers the number of players for the new game
      */
