@@ -109,16 +109,19 @@ public class GameTable implements Serializable {
      * @param hisNotOverlappingCombos the not overlapping combos of a given starting combo
      * @return increments by one each time the method is called and it returns when all the branches get an empty nonOverlapping ArrayList
      */
-    private int countOfNotOverlappingCombos(ArrayList<ArrayList<GameCard>> hisNotOverlappingCombos) {
-        int currentCount = 1;
+    private int countOfNotOverlappingCombos(ArrayList<ArrayList<GameCard>> hisNotOverlappingCombos,int currentCount) {
+        int maxCount=currentCount;
         for (ArrayList<GameCard> combo : hisNotOverlappingCombos) {
             ArrayList<ArrayList<GameCard>> nonOverlapping = new ArrayList<ArrayList<GameCard>>();
             nonOverlapping.addAll(getNotOverlappingCombo(hisNotOverlappingCombos, combo));
-            if(nonOverlapping.isEmpty())
-                currentCount = currentCount + countOfNotOverlappingCombos(nonOverlapping);
+            if(nonOverlapping.isEmpty()) {
+
+                maxCount=Math.max(countOfNotOverlappingCombos(nonOverlapping,currentCount+1),maxCount+1);
+
+            }
 
         }
-        return currentCount;
+        return maxCount;
     }
 
     /**
@@ -128,13 +131,15 @@ public class GameTable implements Serializable {
      * @return int number of maximum non overlapping combos
      */
     private int findMaxCombosInOverlappingCombos(ArrayList<ArrayList<GameCard>> overlappingCombos) {
-        int maxCombos = 0;
+
+        int maxCombos = overlappingCombos.isEmpty() ? 0 : 1;
+
 
         for (ArrayList<GameCard> combo : overlappingCombos) {
             ArrayList<ArrayList<GameCard>> nonOverlapping = new ArrayList<ArrayList<GameCard>>();
             nonOverlapping.addAll(getNotOverlappingCombo(overlappingCombos, combo));
             if(!nonOverlapping.isEmpty())
-            maxCombos = Math.max(maxCombos, countOfNotOverlappingCombos(nonOverlapping));
+            maxCombos = Math.max(maxCombos, countOfNotOverlappingCombos(nonOverlapping,1));
         }
 
         return maxCombos;
