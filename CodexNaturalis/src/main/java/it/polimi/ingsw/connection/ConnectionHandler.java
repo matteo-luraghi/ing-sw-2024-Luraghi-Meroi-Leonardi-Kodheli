@@ -1,6 +1,7 @@
 package it.polimi.ingsw.connection;
 
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.RemoteController;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.Color;
@@ -22,7 +23,7 @@ public abstract class ConnectionHandler implements Serializable {
     private static final long serialVersionUID = 4169861712628723407L;
     private String clientNickname = null;
     private Color clientColor = null;
-    private Controller controller;
+    private RemoteController controller;
 
     /**
      * Get the client's nickname
@@ -61,7 +62,7 @@ public abstract class ConnectionHandler implements Serializable {
      * @return the client's controller
      */
     public Controller getController() {
-        return this.controller;
+        return (Controller) this.controller;
     }
 
     /**

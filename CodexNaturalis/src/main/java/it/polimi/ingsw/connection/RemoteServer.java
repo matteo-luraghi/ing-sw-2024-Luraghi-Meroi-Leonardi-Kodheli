@@ -29,4 +29,10 @@ public interface RemoteServer extends Remote {
      * @return true if no other player with the same nickname
      */
     boolean checkUniqueNickname(String nickname) throws RemoteException;
+
+    /**
+     * Remove and disconnect a client
+     * @param connectionHandler the connectionHandler relative to the client
+     */
+    void removeClient(ConnectionHandler connectionHandler) throws RemoteException;
 }

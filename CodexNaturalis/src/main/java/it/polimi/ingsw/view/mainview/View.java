@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.mainview;
 
 import it.polimi.ingsw.connection.Client;
+import it.polimi.ingsw.connection.ConnectionClosedException;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.StartingCard;
@@ -29,7 +30,7 @@ public interface View extends Remote {
     /**
      * method to initialize the CLI for a specific Client
      */
-    void start() throws RemoteException;
+    void start() throws RemoteException, ConnectionClosedException;
 
     /**
      * method to show any type of String

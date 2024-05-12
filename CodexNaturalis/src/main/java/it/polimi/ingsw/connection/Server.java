@@ -75,6 +75,12 @@ public class Server implements RemoteServer {
     @Override
     public void addToGame(ConnectionHandler connectionHandler) {
         synchronized (this.gameLock) {
+
+            System.out.println("Active Games:");
+            for (Controller c : games.keySet()) {
+                System.out.println(c.getHandlers().size());
+            }
+
             // find the first free game and try to add the player
             Optional<Controller> optionalController = games.keySet().stream().filter(g -> !g.isGameStarted()).findFirst();
             if (optionalController.isPresent()) {
@@ -116,7 +122,9 @@ public class Server implements RemoteServer {
      * Remove and disconnect a client
      * @param connectionHandler the connectionHandler relative to the client
      */
+    @Override
     public void removeClient(ConnectionHandler connectionHandler) {
+        // TODO: filter based on game's name
         Optional<Controller> optionalController = this.games.keySet().stream().filter(c -> c.getHandlers().contains(connectionHandler)).findFirst();
         if (optionalController.isPresent()) {
             synchronized (this.gameLock) {
@@ -124,9 +132,10 @@ public class Server implements RemoteServer {
                 this.games.replace(controller, this.games.get(controller) - 1);
                 if (this.games.get(controller) <= 0 || !controller.isGameStarted())
                     this.games.remove(controller);
-                else if (!controller.isGameEnded())
+                else if (!controller.isGameEnded()) {
                     controller.broadcastMessage(new Disconnection(connectionHandler.getClientNickname()));
-                    //this.games.remove(controller);
+                    this.games.remove(controller);
+                }
             }
         }
     }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.connection.rmi;
 
 import it.polimi.ingsw.connection.ConnectionHandler;
+import it.polimi.ingsw.connection.RemoteServer;
 import it.polimi.ingsw.connection.socket.message.connectionMessage.Disconnection;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.StartingCard;
@@ -47,6 +48,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
             this.view.insertColor(availableColors);
         } catch (RemoteException e) {
             System.err.println("Error asking for color");
+            disconnect();
         }
     }
 
@@ -59,6 +61,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
             this.view.askForPlayersNumber();
         } catch (RemoteException e) {
             System.err.println("Error asking for players number");
+            disconnect();
         }
     }
 
@@ -72,6 +75,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
             this.view.showMessage(message);
         } catch (RemoteException e) {
             System.err.println("Error showing message");
+            disconnect();
         }
     }
 
@@ -84,6 +88,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
             this.view.ShowWaitingForPlayers();
         } catch (RemoteException e) {
             System.err.println("Error waiting for players");
+            disconnect();
         }
     }
 
@@ -97,6 +102,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
             this.view.setUser(player);
         } catch (RemoteException e) {
             System.err.println("Error setting player");
+            disconnect();
         }
     }
 
@@ -110,6 +116,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
             this.view.ChooseStartingCardSide(startingCard);
         } catch (RemoteException e) {
             System.err.println("Error selecting starting card");
+            disconnect();
         }
     }
 
@@ -123,6 +130,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
             this.view.ShowChoosePrivateGoal(goalCards);
         } catch (RemoteException e) {
             System.err.println("Error asking for goal card");
+            disconnect();
         }
     }
 
@@ -137,6 +145,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
                 this.view.setGame(game);
             } catch (RemoteException e) {
                 System.err.println("Error updating game");
+                disconnect();
             }
         }).start();
     }
@@ -151,12 +160,14 @@ public class RMIConnectionHandler extends ConnectionHandler {
             this.view.showMessage(message);
         } catch (RemoteException e) {
             System.err.println("Error sending message");
+            disconnect();
         }
         new Thread(() -> {
             try {
                 this.view.setMyTurn(false);
             } catch (RemoteException e) {
                 System.err.println("Error setting my turn");
+                disconnect();
             }
         }).start();
     }
@@ -171,16 +182,19 @@ public class RMIConnectionHandler extends ConnectionHandler {
                 this.view.showMessage("It's your turn!");
             } catch (RemoteException e) {
                 System.err.println("Error sending message");
+                disconnect();
             }
             try {
                 this.view.setMyTurn(true);
             } catch (RemoteException e) {
                 System.err.println("Error setting my turn");
+                disconnect();
             }
             try {
                 this.view.setPlayPhase(true);
             } catch (RemoteException e) {
                 System.err.println("Error setting play phase");
+                disconnect();
             }
         }).start();
     }
@@ -195,6 +209,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
                 this.view.getCommands();
             } catch (RemoteException e) {
                 System.err.println("Error listening for commands");
+                disconnect();
             }
         }).start();
     }
@@ -210,11 +225,13 @@ public class RMIConnectionHandler extends ConnectionHandler {
                 this.view.showMessage("Play a card!");
             } catch (RemoteException e) {
                 System.err.println("Error sending message");
+                disconnect();
             }
             try {
                 this.view.setPlayPhase(true);
             } catch (RemoteException e) {
                 System.err.println("Error setting play phase");
+                disconnect();
             }
         }).start();
     }
@@ -229,12 +246,14 @@ public class RMIConnectionHandler extends ConnectionHandler {
             this.view.showMessage("You now have to draw a card!");
         } catch (RemoteException e) {
             System.err.println("Error sending message");
+            disconnect();
         }
         new Thread(() -> {
             try {
                 this.view.setPlayPhase(false);
             } catch (RemoteException e) {
                 System.err.println("Error setting play phase");
+                disconnect();
             }
         }).start();
     }
@@ -249,6 +268,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
             this.view.ShowWinner(game);
         } catch (RemoteException e) {
             System.err.println("Error showing winner");
+            disconnect();
         }
     }
 
@@ -262,6 +282,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
             this.view.ShowScoreBoard(scoreBoard);
         } catch (RemoteException e) {
             System.err.println("Error showing scoreboard");
+            disconnect();
         }
     }
 
@@ -273,6 +294,17 @@ public class RMIConnectionHandler extends ConnectionHandler {
     public void sendMessage(Serializable msg) {
         if (msg instanceof Disconnection) {
             ((Disconnection) msg).show(this.view);
+            disconnect();
+        }
+    }
+
+    private void disconnect() {
+        try {
+            Registry registry = LocateRegistry.getRegistry();
+            RemoteServer server = (RemoteServer) registry.lookup("server");
+            server.removeClient(this);
+        } catch (Exception e) {
+            System.err.println("Error disconnecting");
         }
     }
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.connection.Client;
+import it.polimi.ingsw.connection.ConnectionClosedException;
 import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.connection.socket.SocketClient;
 import it.polimi.ingsw.connection.socket.message.clientMessage.*;
@@ -48,7 +49,7 @@ public class CLI implements View {
      * method to connect a client to the server
      */
     @Override
-    public void start() {
+    public void start() throws ConnectionClosedException{
         boolean connected = false;
         String ip = null;
         int port = 0;
@@ -98,7 +99,13 @@ public class CLI implements View {
         this.client = client;
 
         if (client.getClass() == RMIClient.class) {
-            insertNickname();
+            new Thread(this::insertNickname).start();
+        }
+
+        while(true) {
+            if(!client.getConnected()) {
+                throw new ConnectionClosedException("Connection closed");
+            }
         }
     }
 
@@ -457,7 +464,7 @@ public class CLI implements View {
     public void getCommands() {
         String command = "";
         Player lastPlayerField = null;
-        while (true) {
+        while (this.client.getConnected()) {
             System.out.println("Enter a command: ");
             command = this.scanner.nextLine();
 
