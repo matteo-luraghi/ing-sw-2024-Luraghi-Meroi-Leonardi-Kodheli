@@ -16,6 +16,7 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 /**
@@ -27,15 +28,21 @@ public class RMIConnectionHandler extends ConnectionHandler {
     private static final long serialVersionUID = 9202804208069477313L;
     private View view;
 
-    public RMIConnectionHandler() {
+    public RMIConnectionHandler(String nickname) {
+        setClientNickname(nickname);
+    }
+
+    /**
+     * View setter
+     */
+    public void setView() {
         try {
             Registry registry = LocateRegistry.getRegistry();
-            this.view = (View) registry.lookup("view");
+            this.view = (View) registry.lookup("view" + getClientNickname());
         } catch (Exception e) {
             System.out.println("Error connecting to client");
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -298,13 +305,42 @@ public class RMIConnectionHandler extends ConnectionHandler {
         }
     }
 
-    private void disconnect() {
+    /**
+     * Disconnects the connection handler removing the user
+     */
+    @Override
+    public void disconnect() {
         try {
-            Registry registry = LocateRegistry.getRegistry();
-            RemoteServer server = (RemoteServer) registry.lookup("server");
-            server.removeClient(this);
+            this.view.disconnectClient();
+        } catch (Exception ignored) {
+        }
+
+        Registry registry = null;
+        try {
+            registry = LocateRegistry.getRegistry();
+        } catch (RemoteException ignored) {}
+
+        try {
+            if (registry != null)  {
+                View stubView = (View) registry.lookup("view" + getClientNickname());
+                UnicastRemoteObject.unexportObject(stubView, true);
+            }
+        } catch (Exception ignored) {}
+
+        try {
+            if (registry != null) {
+                registry.unbind("view" + getClientNickname());
+            }
+        } catch (Exception ignored) {}
+
+        try {
+            if (registry != null) {
+                RemoteServer server = (RemoteServer) registry.lookup("server");
+                server.removeClient(this);
+            }
         } catch (Exception e) {
             System.err.println("Error disconnecting");
+            e.printStackTrace();
         }
     }
 }

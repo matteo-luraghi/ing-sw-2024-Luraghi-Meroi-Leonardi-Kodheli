@@ -57,9 +57,10 @@ import java.util.*;
     /**
      * Send a message to all the clients
      *
-     * @param msg the message to be sent
+     * @param msg      the message to be sent
+     * @param handlers all the handlers to send the message to
      */
-     void broadcastMessage(Serializable msg) throws RemoteException;
+     void broadcastMessage(Serializable msg, ArrayList<ConnectionHandler> handlers) throws RemoteException;
 
     /**
      * isGamEnded setter

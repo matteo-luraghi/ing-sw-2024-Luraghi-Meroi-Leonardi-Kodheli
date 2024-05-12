@@ -31,7 +31,8 @@ public class Disconnection implements Serializable {
         try {
             view.showMessage(clientNickname + " was disconnected, ending game.");
         } catch (RemoteException e) {
-            System.err.println("Error sending message");
+            System.err.println("Error showing disconnection message");
+            e.printStackTrace();
         }
     }
 }

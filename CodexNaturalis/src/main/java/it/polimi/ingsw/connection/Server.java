@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -76,10 +77,7 @@ public class Server implements RemoteServer {
     public void addToGame(ConnectionHandler connectionHandler) {
         synchronized (this.gameLock) {
 
-            System.out.println("Active Games:");
-            for (Controller c : games.keySet()) {
-                System.out.println(c.getHandlers().size());
-            }
+            System.out.println("Active Games:" + games.keySet().size());
 
             // find the first free game and try to add the player
             Optional<Controller> optionalController = games.keySet().stream().filter(g -> !g.isGameStarted()).findFirst();
@@ -127,16 +125,14 @@ public class Server implements RemoteServer {
         // TODO: filter based on game's name
         Optional<Controller> optionalController = this.games.keySet().stream().filter(c -> c.getHandlers().contains(connectionHandler)).findFirst();
         if (optionalController.isPresent()) {
+            Controller controller = optionalController.get();
+            controller.getHandlers().remove(connectionHandler);
+            ArrayList<ConnectionHandler> handlers = controller.getHandlers();
             synchronized (this.gameLock) {
-                Controller controller = optionalController.get();
-                this.games.replace(controller, this.games.get(controller) - 1);
-                if (this.games.get(controller) <= 0 || !controller.isGameStarted())
-                    this.games.remove(controller);
-                else if (!controller.isGameEnded()) {
-                    controller.broadcastMessage(new Disconnection(connectionHandler.getClientNickname()));
-                    this.games.remove(controller);
-                }
+                this.games.remove(controller);
             }
+            controller.broadcastMessage(new Disconnection(connectionHandler.getClientNickname()), handlers);
+
         }
     }
 

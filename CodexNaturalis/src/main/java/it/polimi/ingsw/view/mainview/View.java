@@ -15,7 +15,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
- * Megaview interface, will be implemented for GUI and CLI
+ * View interface, will be implemented for GUI and CLI
  * @author Lorenzo Meroi
  */
 public interface View extends Remote {
@@ -132,4 +132,9 @@ public interface View extends Remote {
      * @param game the game we need to set!
      */
     void setGame(GameState game) throws RemoteException;
+
+    /**
+     * Disconnect the client
+     */
+    void disconnectClient() throws RemoteException;
 }

@@ -4,7 +4,6 @@ package it.polimi.ingsw.controller;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import it.polimi.ingsw.connection.ConnectionHandler;
-import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.card.StartingCard;
@@ -110,13 +109,14 @@ public class Controller implements RemoteController {
     /**
      * Send a message to all the clients
      *
-     * @param msg the message to be sent
+     * @param msg      the message to be sent
+     * @param handlers all the handlers to send the message to
      */
     @Override
-    public void broadcastMessage(Serializable msg) {
+    public void broadcastMessage(Serializable msg, ArrayList<ConnectionHandler> handlers) {
         connectionLock.lock();
         try {
-            for (ConnectionHandler c : this.connectionHandlers) {
+            for (ConnectionHandler c : handlers) {
                 c.sendMessage(msg);
             }
         } finally {
@@ -225,7 +225,7 @@ public class Controller implements RemoteController {
     @Override
     public void setColor(ConnectionHandler connectionHandler, Color color){
         for(ConnectionHandler c: getHandlers()){
-            if(c.getClientColor() != null && c.getClientColor() == color){
+            if(c.getClientColor() != null && c.getClientColor() == color && !c.getClientNickname().equals(connectionHandler.getClientNickname())){
                 connectionHandler.sendTextMessage("That color is unavailable, try again!");
                 chooseColorState(connectionHandler);
                 return;
@@ -290,6 +290,7 @@ public class Controller implements RemoteController {
         GameTable table = new GameTable(new Deck(false), new Deck(true), playerZones, goalCards, scoreBoard);
         // the first player is the starting one
         this.game = new GameState(players, players.get(0), table);
+
         this.isGameStarted = true;
 
         for (ConnectionHandler c: getHandlers()) {
@@ -359,12 +360,7 @@ public class Controller implements RemoteController {
             connectionHandler.sendTextMessage("Other players are still choosing");
         } else { //When all the players have chosen their goal cards
             for(ConnectionHandler c : getHandlers()) {
-                Player player = null;
-                for (Player p : game.getPlayers()) {
-                    if (c.getClientNickname().equals(p.getNickname())) {
-                        player = p;
-                    }
-                }
+
                 c.updateGame(game);
                 if(!c.getClientNickname().equals(game.getTurn().getNickname())){
                     c.notYourTurn("It's not your turn");

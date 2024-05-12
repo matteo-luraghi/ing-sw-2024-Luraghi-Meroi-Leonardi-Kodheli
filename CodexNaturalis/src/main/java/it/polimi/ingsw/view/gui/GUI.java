@@ -193,4 +193,12 @@ public class GUI implements View {
     public void setGame(GameState game) throws RemoteException {
 
     }
+
+    /**
+     * Disconnect the client
+     */
+    @Override
+    public void disconnectClient() throws RemoteException {
+
+    }
 }

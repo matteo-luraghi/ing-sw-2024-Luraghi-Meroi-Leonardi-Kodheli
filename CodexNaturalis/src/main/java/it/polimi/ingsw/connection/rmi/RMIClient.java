@@ -35,20 +35,10 @@ public class RMIClient extends Client {
      * Send the selected nickname to the server
      * @param nickname the nickname
      */
+    @Override
     public void loginResponse(String nickname) throws Exception {
 
-        try {
-            View stubView = (View) UnicastRemoteObject.exportObject(getView(), 0);
-            this.registry.rebind("view", stubView);
-        } catch (ExportException ignored) {
-
-        } catch (Exception e) {
-            System.out.println("Error exporting view");
-            e.printStackTrace();
-        }
-
-        this.connectionHandler = new RMIConnectionHandler();
-        this.connectionHandler.setClientNickname(nickname);
+        this.connectionHandler = new RMIConnectionHandler(nickname);
 
         try {
             // connect to the server
@@ -59,11 +49,23 @@ public class RMIClient extends Client {
                 throw new NicknameAlreadyPresentException("User already present");
             }
 
+            try {
+                // export view
+                View stubView = (View) UnicastRemoteObject.exportObject(getView(), 0);
+                this.registry.rebind("view" + nickname, stubView);
+            } catch (ExportException ignored) {
+            } catch (Exception e) {
+                System.out.println("Error exporting view");
+            }
+
+            this.connectionHandler.setView();
+
             new Thread(() -> {
                 try {
                     server.addToGame(this.connectionHandler);
                 } catch (RemoteException e) {
                     System.err.println("Error adding player to game");
+                    disconnect();
                 }
             }).start();
 
@@ -82,21 +84,23 @@ public class RMIClient extends Client {
      * Send the selected color to the server
      * @param color the color
      */
+    @Override
     public void colorResponse(Color color) {
-
         if (this.controller == null) {
             try {
                 this.controller = (RemoteController) registry.lookup("controller");
             } catch (Exception e) {
                 System.err.println("Controller not found");
+                disconnect();
             }
         }
 
         this.connectionHandler.setClientColor(color);
         try {
             this.controller.setColor(this.connectionHandler, color);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             System.err.println("Unable to set the color");
+            disconnect();
         }
     }
 
@@ -104,6 +108,7 @@ public class RMIClient extends Client {
      * Send the number of players to the server
      * @param number the number of players
      */
+    @Override
     public void playersNumberResponse(int number) {
         try {
             // connect to the server
@@ -114,12 +119,13 @@ public class RMIClient extends Client {
                     server.addToGame(this.connectionHandler, number);
                 } catch (RemoteException e) {
                     System.err.println("No controller found");
+                    disconnect();
                 }
             }).start();
 
         } catch (Exception e) {
             System.err.println("Error connecting to the server");
-            e.printStackTrace();
+            disconnect();
         }
     }
 
@@ -128,11 +134,13 @@ public class RMIClient extends Client {
      * @param card the starting card
      * @param isFront the side
      */
+    @Override
     public void playStartingCardResponse(StartingCard card, boolean isFront) {
         try {
             this.controller.setStartingCard(card, isFront, this.connectionHandler);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             System.err.println("Error playing the starting card");
+            disconnect();
         }
     }
 
@@ -140,22 +148,26 @@ public class RMIClient extends Client {
      * Send the selected goal card to the server
      * @param card the goal card
      */
+    @Override
     public void goalCardResponse(GoalCard card) {
         try {
             this.controller.setPrivateGoalCard(card, this.connectionHandler);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             System.err.println("Error choosing the goal card");
+            disconnect();
         }
     }
 
     /**
      * Send the server a message to ensure the client is aware it's its player's turn
      */
+    @Override
     public void yourTurnOk() {
         try {
             this.controller.playCardState();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             System.err.println("Error setting the play card state");
+            disconnect();
         }
     }
 
@@ -165,11 +177,13 @@ public class RMIClient extends Client {
      * @param where the coordinates
      * @param isFront the side
      */
+    @Override
     public void playCardResponse(ResourceCard card, Coordinates where, boolean isFront) {
         try {
             this.controller.playCard(this.connectionHandler, card, where, isFront);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             System.err.println("Error playing a card");
+            disconnect();
         }
     }
 
@@ -178,12 +192,22 @@ public class RMIClient extends Client {
      * @param which the card
      * @param isGold which deck to draw from
      */
+    @Override
     public void drawCardResponse(int which, boolean isGold) {
         try {
             this.controller.drawCard(this.connectionHandler, which, isGold);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             System.err.println("Error drawing a card");
+            disconnect();
         }
+    }
+
+    /**
+     * Disconnect the client
+     */
+    @Override
+    public void disconnect() {
+        this.setConnected(false);
     }
 
 }

@@ -165,6 +165,11 @@ public abstract class ConnectionHandler implements Serializable {
      */
     public void sendMessage(Serializable msg) {}
 
+    /**
+     * Disconnects the connection handler
+     */
+    public void disconnect() {}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -94,8 +94,9 @@ public class SocketConnectionHandler extends ConnectionHandler implements Runnab
     }
 
     /**
-     * Disconnects the server closing input and output stream and socket
+     * Disconnects the handler closing input and output stream and socket
      */
+    @Override
     public void disconnect() {
         if (this.active.get()){
             this.active.set(false);
@@ -125,6 +126,7 @@ public class SocketConnectionHandler extends ConnectionHandler implements Runnab
      * Ask the player for the number of players in the new game
      * using a PlayersNumberRequest server message
      */
+    @Override
     public void playersNumberRequest() {
         sendMessageClient(new PlayersNumberRequest());
     }

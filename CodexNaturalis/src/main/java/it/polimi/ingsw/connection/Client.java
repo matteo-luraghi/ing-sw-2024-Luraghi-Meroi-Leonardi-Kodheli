@@ -100,4 +100,9 @@ public abstract class Client {
      * @param isGold which deck to draw from
      */
     public void drawCardResponse(int which, boolean isGold) {}
+
+    /**
+     * Disconnect the client
+     */
+    public void disconnect() {}
 }

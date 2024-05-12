@@ -4,7 +4,6 @@ import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.connection.ConnectionClosedException;
 import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.connection.socket.SocketClient;
-import it.polimi.ingsw.connection.socket.message.clientMessage.*;
 import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.model.gamelogic.*;
 import it.polimi.ingsw.view.mainview.View;
@@ -33,6 +32,7 @@ public class CLI implements View {
     private GameState game = null;
     private Player user = null;
     private boolean playPhase = false;
+    private boolean connected = true;
 
     /**
      * CLI constructor
@@ -103,10 +103,19 @@ public class CLI implements View {
         }
 
         while(true) {
-            if(!client.getConnected()) {
+            if(!client.getConnected() || !this.connected) {
+                System.out.println("Disconnected");
                 throw new ConnectionClosedException("Connection closed");
             }
         }
+    }
+
+    /**
+     * Disconnect the client
+     */
+    @Override
+    public void disconnectClient() {
+        this.connected = false;
     }
 
     /**
@@ -464,7 +473,7 @@ public class CLI implements View {
     public void getCommands() {
         String command = "";
         Player lastPlayerField = null;
-        while (this.client.getConnected()) {
+        while (this.client.getConnected() && this.connected) {
             System.out.println("Enter a command: ");
             command = this.scanner.nextLine();
 
