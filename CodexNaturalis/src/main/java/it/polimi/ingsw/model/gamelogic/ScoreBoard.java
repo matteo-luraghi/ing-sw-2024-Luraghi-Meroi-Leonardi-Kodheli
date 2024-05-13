@@ -31,7 +31,9 @@ public class ScoreBoard implements Serializable {
      * @return the Game's Board
      */
     public Map<Player, Integer> getBoard() {
-        return board;
+        Map<Player, Integer> cloneBoard= (new HashMap<Player, Integer>());
+        cloneBoard.putAll(board);
+        return cloneBoard;
     }
 
     /**
@@ -47,8 +49,12 @@ public class ScoreBoard implements Serializable {
      * Points adder
      * @param player to which you want to add points to
      * @param points how many points you want to add
+     * @throws IllegalArgumentException if points less than 0
      */
-    public void addPoints (Player player, Integer points) {
+    public void addPoints (Player player, Integer points) throws IllegalArgumentException {
+        if(points<0)
+            throw new IllegalArgumentException();
+        else
         board.put(player, board.get(player)+points);
     }
 }
