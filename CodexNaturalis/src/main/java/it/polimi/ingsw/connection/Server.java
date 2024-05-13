@@ -18,7 +18,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.SubmissionPublisher;
 
 /**
  * Server class
@@ -76,19 +75,18 @@ public class Server implements RemoteServer {
      */
     @Override
     public void addToGame(ConnectionHandler connectionHandler) {
+        Optional<Controller> optionalController;
         synchronized (this.gameLock) {
-
             System.out.println("Active Games:" + games.keySet().size());
-
             // find the first free game and try to add the player
-            Optional<Controller> optionalController = games.keySet().stream().filter(g -> !g.isGameStarted()).findFirst();
-            if (optionalController.isPresent()) {
-                Controller gameController = optionalController.get();
-                gameController.addHandler(connectionHandler);
-                connectionHandler.setController(gameController);
-                connectionHandler.getController().chooseColorState(connectionHandler);
-                return;
-            }
+            optionalController = games.keySet().stream().filter(g -> !g.isGameStarted()).findFirst();
+        }
+        if (optionalController.isPresent()) {
+            Controller gameController = optionalController.get();
+            gameController.addHandler(connectionHandler);
+            connectionHandler.setController(gameController);
+            connectionHandler.getController().chooseColorState(connectionHandler);
+            return;
         }
         // no free games available -> wait for user input of number of players
         connectionHandler.playersNumberRequest();
