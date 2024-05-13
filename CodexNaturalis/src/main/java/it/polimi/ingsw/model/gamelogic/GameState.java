@@ -79,7 +79,7 @@ public class GameState implements Serializable {
      * @param player Player to add
      * @throws IndexOutOfBoundsException when there are already 4 players
      */
-    public void addPlayer(Player player){
+    public void addPlayer(Player player) throws IndexOutOfBoundsException{
         if(players.size() < 4){
             players.add(player);
         } else {
