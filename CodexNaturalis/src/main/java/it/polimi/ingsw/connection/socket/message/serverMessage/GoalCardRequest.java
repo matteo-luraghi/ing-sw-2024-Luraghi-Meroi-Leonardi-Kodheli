@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
+import java.rmi.RemoteException;
 
 /**
  * GoalCardRequest class
@@ -29,6 +30,10 @@ public class GoalCardRequest extends ServerMessage  {
      */
     @Override
     public void show(View view) {
-        view.ShowChoosePrivateGoal(goalCards);
+        try {
+            view.ShowChoosePrivateGoal(goalCards);
+        } catch (RemoteException e) {
+            System.err.println("Error choosing private goal");
+        }
     }
 }

@@ -5,6 +5,7 @@ import it.polimi.ingsw.view.cli.CLI;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
+import java.rmi.RemoteException;
 
 /**
  * NotYourTurn class
@@ -14,14 +15,12 @@ import java.io.Serial;
 public class NotYourTurn extends ServerMessage {
     @Serial
     private static final long serialVersionUID = 2741292733883597798L;
-    private final Player player;
     private final String message;
 
     /**
      * Constructor
      */
-    public NotYourTurn(Player player, String message) {
-        this.player = player;
+    public NotYourTurn(String message) {
         this.message = message;
     }
 
@@ -31,7 +30,11 @@ public class NotYourTurn extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.showMessage(this.message);
+        try {
+            view.showMessage(this.message);
+        } catch (RemoteException e) {
+            System.err.println("Error sending mesage");
+        }
         if (view.getClass() == CLI.class) {
             new Thread(() -> ((CLI) view).setMyTurn(false)).start();
         }

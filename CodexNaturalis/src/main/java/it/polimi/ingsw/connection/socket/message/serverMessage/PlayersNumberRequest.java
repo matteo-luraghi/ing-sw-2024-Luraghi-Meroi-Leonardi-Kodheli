@@ -3,6 +3,7 @@ package it.polimi.ingsw.connection.socket.message.serverMessage;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
+import java.rmi.RemoteException;
 
 /**
  * PlayerNumberRequest class
@@ -25,6 +26,10 @@ public class PlayersNumberRequest extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.askForPlayersNumber();
+        try {
+            view.askForPlayersNumber();
+        } catch (RemoteException e) {
+            System.err.println("Error asking for players number");
+        }
     }
 }

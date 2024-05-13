@@ -2,12 +2,17 @@ package it.polimi.ingsw.view.mainview;
 
 import it.polimi.ingsw.model.card.GameCard;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * viewGameCardFactory abstract class
  * @author Lorenzo Meroi
  */
-public abstract class ViewGameCardFactory {
+public abstract class ViewGameCardFactory implements Serializable {
 
+    @Serial
+    private static final long rerialVersionUID = -8649120532345782946L;
     protected GameCard card;
 
     /**

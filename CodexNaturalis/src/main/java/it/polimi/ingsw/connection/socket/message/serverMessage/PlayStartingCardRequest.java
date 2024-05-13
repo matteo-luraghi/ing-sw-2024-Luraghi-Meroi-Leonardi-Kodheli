@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
+import java.rmi.RemoteException;
 
 /**
  * PlayStartingCardRequest class
@@ -28,6 +29,10 @@ public class PlayStartingCardRequest extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.ChooseStartingCardSide(card);
+        try {
+            view.ChooseStartingCardSide(card);
+        } catch (RemoteException e) {
+            System.err.println("Error choosing starting card side");
+        }
     }
 }

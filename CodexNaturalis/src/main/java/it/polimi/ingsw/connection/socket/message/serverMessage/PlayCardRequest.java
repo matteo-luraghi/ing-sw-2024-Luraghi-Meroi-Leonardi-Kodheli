@@ -5,6 +5,7 @@ import it.polimi.ingsw.view.cli.CLI;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
+import java.rmi.RemoteException;
 
 /**
  * PlayCardRequest class
@@ -32,7 +33,11 @@ public class PlayCardRequest extends ServerMessage {
     public void show(View view) {
         if (view.getClass() == CLI.class) {
             new Thread(() -> {
-                view.showMessage("Play a card!");
+                try {
+                    view.showMessage("Play a card!");
+                } catch (RemoteException e) {
+                    System.err.println("Error sending message");
+                }
                 ((CLI) view).setPlayPhase(true);
             }).start();
         }

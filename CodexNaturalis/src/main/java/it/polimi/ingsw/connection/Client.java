@@ -54,7 +54,7 @@ public abstract class Client {
      * Send the selected nickname to the server
      * @param nickname the nickname
      */
-    public void loginResponse(String nickname) {}
+    public void loginResponse(String nickname) throws Exception {}
 
     /**
      * Send the selected color to the server
@@ -100,4 +100,9 @@ public abstract class Client {
      * @param isGold which deck to draw from
      */
     public void drawCardResponse(int which, boolean isGold) {}
+
+    /**
+     * Disconnect the client
+     */
+    public void disconnect() {}
 }

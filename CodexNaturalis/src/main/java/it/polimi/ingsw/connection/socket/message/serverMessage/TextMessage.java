@@ -3,6 +3,7 @@ package it.polimi.ingsw.connection.socket.message.serverMessage;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
+import java.rmi.RemoteException;
 
 /**
  * TextMessage class
@@ -28,6 +29,10 @@ public class TextMessage extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.showMessage(this.message);
+        try {
+            view.showMessage(this.message);
+        } catch (RemoteException e) {
+            System.err.println("Error sending message");
+        }
     }
 }

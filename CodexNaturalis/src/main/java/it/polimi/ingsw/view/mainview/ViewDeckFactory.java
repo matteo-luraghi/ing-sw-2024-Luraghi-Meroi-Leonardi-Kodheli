@@ -6,12 +6,17 @@ import it.polimi.ingsw.model.gamelogic.GameTable;
 import it.polimi.ingsw.view.cli.ViewGameCardCLIFactory;
 import it.polimi.ingsw.view.cli.ViewGoalCardCLIFactory;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * viewDeckFactory abstract class
  * @author Lorenzo Meroi
  */
-public abstract class ViewDeckFactory {
+public abstract class ViewDeckFactory implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -3109862720277657303L;
     protected Deck deck;
     protected ViewGameCardFactory gameCardViewer;
     protected ViewGoalCardFactory goalCardViewer;

@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.gamelogic.ScoreBoard;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
+import java.rmi.RemoteException;
 
 /**
  * ScoreBoardMessage class
@@ -28,6 +29,10 @@ public class ScoreBoardMessage extends ServerMessage{
      */
     @Override
     public void show(View view) {
-        view.ShowScoreBoard(this.scoreBoard);
+        try {
+            view.ShowScoreBoard(this.scoreBoard);
+        } catch (RemoteException e) {
+            System.err.println("Error showing scoreboard");
+        }
     }
 }

@@ -28,6 +28,7 @@ public class SocketClient extends Client {
     private final ObjectInputStream inputStream;
     private final ObjectOutputStream outputStream;
     private final Thread messageReceiver;
+    private final Thread pingThread;
 
     /**
      * Constructor, builds the threads needed for messages
@@ -46,7 +47,7 @@ public class SocketClient extends Client {
         messageReceiver.start();
 
         // if the server is not online, disconnect the client
-        Thread pingThread = new Thread(() -> {
+        this.pingThread = new Thread(() -> {
             while (this.getConnected()) {
                 try {
                     Thread.sleep(5000);
@@ -105,7 +106,7 @@ public class SocketClient extends Client {
         if(this.getConnected()) {
             this.setConnected(false);
             if(this.messageReceiver.isAlive()) this.messageReceiver.interrupt();
-
+            if(this.pingThread.isAlive()) this.pingThread.interrupt();
             try {
                 this.inputStream.close();
                 this.outputStream.close();

@@ -3,10 +3,15 @@ package it.polimi.ingsw.connection;
 import it.polimi.ingsw.connection.socket.message.connectionMessage.Disconnection;
 import it.polimi.ingsw.connection.socket.SocketConnectionHandler;
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.RemoteController;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -19,9 +24,10 @@ import java.util.concurrent.Executors;
  * used to manage the games and the clients
  * @author Matteo Leonardo Luraghi
  */
-public class Server {
+public class Server implements RemoteServer {
     private final int port;
     private ServerSocket serverSocket;
+    private Registry registry;
     private final ExecutorService executor;
     private final Map<Controller, Integer> games;
     private final Object gameLock = new Object();
@@ -38,12 +44,22 @@ public class Server {
 
     public void start() throws IOException {
         // throws if the socket init fails
+        this.registry = LocateRegistry.createRegistry(1099);
+
+        try {
+            RemoteServer serverStub = (RemoteServer) UnicastRemoteObject.exportObject(this, 0);
+            registry.rebind("server", serverStub);
+        } catch (Exception e) {
+            System.err.println("Error exposing the server");
+            throw new IOException();
+        }
+
         this.serverSocket = new ServerSocket(this.port);
         System.out.println("Server running...");
         try {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                clientSocket.setSoTimeout(10000);
+                clientSocket.setSoTimeout(0);
                 SocketConnectionHandler clientConnection = new SocketConnectionHandler(this, clientSocket);
                 // start the clientConnection thread
                 executor.submit(clientConnection);
@@ -57,56 +73,85 @@ public class Server {
      * Add a client to a game via its connectionHandler
      * @param connectionHandler the connectionHandler to save in a game
      */
+    @Override
     public void addToGame(ConnectionHandler connectionHandler) {
+        Optional<Controller> optionalController;
         synchronized (this.gameLock) {
+            System.out.println("Active Games:" + games.keySet().size());
             // find the first free game and try to add the player
-            Optional<Controller> optionalController = games.keySet().stream().filter(g -> !g.isGameStarted()).findFirst();
-            if (optionalController.isPresent()) {
-                Controller gameController = optionalController.get();
-                gameController.addHandler(connectionHandler);
-                connectionHandler.setController(gameController);
-                connectionHandler.getController().chooseColorState(connectionHandler);
-                return;
-            }
+            optionalController = games.keySet().stream().filter(g -> !g.isGameStarted()).findFirst();
+        }
+        if (optionalController.isPresent()) {
+            Controller gameController = optionalController.get();
+            gameController.addHandler(connectionHandler);
+            connectionHandler.setController(gameController);
+            connectionHandler.getController().chooseColorState(connectionHandler);
+            return;
         }
         // no free games available -> wait for user input of number of players
         connectionHandler.playersNumberRequest();
     }
 
     /**
-     * Overloading of addToGame with number of players, used in PlayerNumberResponse
+     * Overloading of addToGame with number of players
      * @param connectionHandler the client handler
      * @param numberOfPlayers the number of players for the new game
      */
+    @Override
     public void addToGame(ConnectionHandler connectionHandler, int numberOfPlayers) {
         Controller controller = new Controller(numberOfPlayers);
         synchronized (this.gameLock) {
             this.games.put(controller, numberOfPlayers);
         }
-            controller.addHandler(connectionHandler);
-            connectionHandler.setController(controller);
-            connectionHandler.getController().chooseColorState(connectionHandler);
+        controller.addHandler(connectionHandler);
+        connectionHandler.setController(controller);
+        try {
+            // TODO: expose based on game's name
+            RemoteController stub = (RemoteController) UnicastRemoteObject.exportObject(controller, 0);
+            this.registry.rebind("controller", stub);
+        } catch (Exception e) {
+            System.err.println("Error exposing the controller");
+            System.out.println(e);
+        }
+        connectionHandler.getController().chooseColorState(connectionHandler);
     }
 
     /**
      * Remove and disconnect a client
      * @param connectionHandler the connectionHandler relative to the client
      */
+    @Override
     public void removeClient(ConnectionHandler connectionHandler) {
+        // TODO: filter based on game's name
         Optional<Controller> optionalController = this.games.keySet().stream().filter(c -> c.getHandlers().contains(connectionHandler)).findFirst();
         if (optionalController.isPresent()) {
+            Controller controller = optionalController.get();
+            controller.getHandlers().remove(connectionHandler);
+            ArrayList<ConnectionHandler> handlers = controller.getHandlers();
             synchronized (this.gameLock) {
-                Controller controller = optionalController.get();
-                this.games.replace(controller, this.games.get(controller) - 1);
-                if (this.games.get(controller) <= 0 || !controller.isGameStarted())
-                    this.games.remove(controller);
-                else if (!controller.isGameEnded())
-                    controller.broadcastMessage(new Disconnection(connectionHandler.getClientNickname()));
-                    //this.games.remove(controller);
+                this.games.remove(controller);
             }
+            // remove controller from registry
+            // TODO: remove based on game name
+            try {
+                RemoteController stub = (RemoteController) this.registry.lookup("controller");
+                UnicastRemoteObject.unexportObject(stub, true);
+            } catch (Exception ignored) {}
+            try {
+                this.registry.unbind("controller");
+            } catch (Exception ignored) {}
+
+            controller.broadcastMessage(new Disconnection(connectionHandler.getClientNickname()), handlers);
+
         }
     }
 
+    /**
+     * Check if the nickname is unique in the group
+     * @param nickname the nickname
+     * @return true if no other player with the same nickname
+     */
+    @Override
     public boolean checkUniqueNickname(String nickname){
         Optional<Controller> optionalController = games.keySet().stream().filter(g -> !g.isGameStarted()).findFirst();
         if (optionalController.isPresent()) {

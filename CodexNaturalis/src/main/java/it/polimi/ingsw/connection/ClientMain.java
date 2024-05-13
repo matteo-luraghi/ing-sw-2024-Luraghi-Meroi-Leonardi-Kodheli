@@ -6,7 +6,7 @@ import it.polimi.ingsw.view.gui.GUI;
 /**
  * ClientMain class
  * used to launch the game for the client
- * * @author Matteo Leonardo Luraghi
+ * @author Matteo Leonardo Luraghi
  */
 public class ClientMain {
 
@@ -16,7 +16,11 @@ public class ClientMain {
      */
     public static void main(String[] args) {
 
+        try {
             new CLI().start();
+        } catch (ConnectionClosedException e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 }

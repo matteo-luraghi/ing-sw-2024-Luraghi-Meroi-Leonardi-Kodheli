@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
+import java.rmi.RemoteException;
 
 /**
  * Winner class
@@ -28,6 +29,10 @@ public class Winner extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        view.ShowWinner(this.game);
+        try {
+            view.ShowWinner(this.game);
+        } catch (RemoteException e) {
+            System.err.println("Error showing winner");
+        }
     }
 }
