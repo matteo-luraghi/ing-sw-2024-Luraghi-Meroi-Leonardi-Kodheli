@@ -28,7 +28,6 @@
             <MenuBar BorderPane.alignment="CENTER">
               <menus>
                   <Menu mnemonicParsing="false" text="Show your field" />
-                <Menu mnemonicParsing="false" text="Show Decks" />
                 <Menu mnemonicParsing="false" text="Quit" />
               </menus>
             </MenuBar>
@@ -210,9 +209,9 @@
                <children>
                   <ScrollPane hvalue="1.0" prefHeight="200.0" prefWidth="656.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="1068.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="2097.0">
                            <children>
-                              <Pane prefHeight="130.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="508.0" AnchorPane.topAnchor="0.0">
+                              <Pane prefHeight="130.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <ImageView fitHeight="120.0" fitWidth="150.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -250,7 +249,7 @@
                                     </ImageView>
                                  </children>
                               </Pane>
-                              <Pane layoutX="826.0" layoutY="-35.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="720.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <Pane layoutX="826.0" layoutY="-35.0" prefHeight="130.0" prefWidth="369.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="720.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="14.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -265,6 +264,54 @@
                                     <Label layoutX="113.0" layoutY="3.0" text="Common Goals">
                                        <font>
                                           <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Pane layoutX="10.0" layoutY="10.0" prefHeight="130.0" prefWidth="500.0" AnchorPane.leftAnchor="1100.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/CODEX_cards_gold_back/037.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="170.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/CODEX_cards_gold_front/004.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="330.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/CODEX_cards_gold_front/017.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="182.0" layoutY="-1.0" text="Resource Deck" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="21.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Pane layoutX="20.0" layoutY="20.0" prefHeight="130.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1600.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/CODEX_cards_gold_back/058.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="170.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/CODEX_cards_gold_front/068.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="330.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/CODEX_cards_gold_front/079.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="197.0" layoutY="-2.0" text="Gold Deck" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="21.0" />
                                        </font>
                                     </Label>
                                  </children>
