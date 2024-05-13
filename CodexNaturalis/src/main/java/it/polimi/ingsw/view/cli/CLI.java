@@ -293,6 +293,10 @@ public class CLI implements View {
                 correctInput = false;
                 System.out.println(AnsiColors.ANSI_RED+"Invalid input. Insert a number."+AnsiColors.ANSI_RESET);
             }
+            if (result!=1 && result!=2) {
+                correctInput = false;
+                System.out.println(AnsiColors.ANSI_RED+"Invalid input. Insert a number."+AnsiColors.ANSI_RESET);
+            }
         } while (!correctInput);
 
         if (result == 1) {
