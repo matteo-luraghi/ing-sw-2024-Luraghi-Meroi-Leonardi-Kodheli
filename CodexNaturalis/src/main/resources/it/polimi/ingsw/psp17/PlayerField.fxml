@@ -6,16 +6,19 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
@@ -24,24 +27,14 @@
          <top>
             <MenuBar BorderPane.alignment="CENTER">
               <menus>
-                <Menu mnemonicParsing="false" text="Show a Player Field">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Player1" />
-                        <MenuItem mnemonicParsing="false" text="Player2" />
-                        <MenuItem mnemonicParsing="false" text="Player3" />
-                        <MenuItem mnemonicParsing="false" text="Player4" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Exit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Are you sure you want to exit?" />
-                  </items>
-                </Menu>
+                  <Menu mnemonicParsing="false" text="Show your field" />
+                <Menu mnemonicParsing="false" text="Show Decks" />
+                <Menu mnemonicParsing="false" text="Quit" />
               </menus>
             </MenuBar>
          </top>
          <left>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="374.0" prefWidth="187.0" BorderPane.alignment="CENTER">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="318.0" prefWidth="234.0" BorderPane.alignment="CENTER">
                <children>
                   <Label alignment="CENTER" layoutY="-4.0" prefHeight="36.0" prefWidth="175.0" text="System Chat" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
@@ -49,7 +42,7 @@
                      </font>
                   </Label>
                   <TextField layoutY="344.0" prefHeight="50.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
-                  <ListView layoutY="42.0" prefHeight="284.0" prefWidth="163.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+                  <ListView layoutY="42.0" prefHeight="227.0" prefWidth="214.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
                   <Button layoutX="129.0" layoutY="348.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Enter" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                </children>
             </AnchorPane>
@@ -59,15 +52,15 @@
                <children>
                   <ScrollPane hvalue="0.5" prefHeight="200.0" prefWidth="200.0" vvalue="0.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="394.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1200.0" prefWidth="1200.0">
                            <children>
-                              <StackPane prefHeight="398.4" prefWidth="417.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <StackPane layoutX="-505.6" layoutY="-208.0" prefHeight="786.0" prefWidth="1300.0" AnchorPane.bottomAnchor="-500.0" AnchorPane.leftAnchor="-700.0" AnchorPane.rightAnchor="-700.0" AnchorPane.topAnchor="-500.0">
                                  <children>
                                     <Group>
                                        <children>
-                                          <ImageView fitHeight="124.0" fitWidth="169.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fitHeight="124.0" fitWidth="169.0" pickOnBounds="true" preserveRatio="true" translateX="200.0" translateY="200.0">
                                              <image>
-                                                <Image url="@School/PROVA%20FINALE%20(INGEGNERIA%20DEL%20SOFTWARE)/Introduzione/Regolamenti%20e%20materiale%20grafico/fronte%20oro%20in%20jpg/1709659025650-fa69fadb-c647-4aa4-a049-05e38017b96d_1.jpg" />
+                                                <Image url="@../../../../assets/CODEX_cards_gold_front/081.png" />
                                              </image>
                                           </ImageView>
                                        </children>
@@ -82,24 +75,204 @@
             </AnchorPane>
          </center>
          <right>
-            <AnchorPane prefHeight="438.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="318.0" prefWidth="223.0" BorderPane.alignment="CENTER">
                <children>
-                  <TableView layoutY="-1.0" prefHeight="200.0" prefWidth="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <columns>
-                      <TableColumn prefWidth="100.0" text="Resource" />
-                      <TableColumn prefWidth="50.0" text="Num" />
-                    </columns>
-                  </TableView>
-                  <ImageView fitHeight="239.0" fitWidth="150.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <ScrollPane prefHeight="400.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="540.0" prefWidth="200.0">
+                           <children>
+                              <Pane prefHeight="120.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Circle centerX="15.0" centerY="15.0" radius="10.0" stroke="BLACK" strokeType="INSIDE">
+                                       <fill>
+                                          <LinearGradient endX="1.0" endY="1.0">
+                                             <stops>
+                                                <Stop>
+                                                   <color>
+                                                      <Color red="0.8526315689086914" green="0.3221052587032318" blue="0.3221052587032318" />
+                                                   </color>
+                                                </Stop>
+                                                <Stop offset="1.0">
+                                                   <color>
+                                                      <Color red="1.0" />
+                                                   </color>
+                                                </Stop>
+                                             </stops>
+                                          </LinearGradient>
+                                       </fill></Circle>
+                                    <Label layoutX="33.0" layoutY="4.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="139.0" layoutY="25.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="13.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/Icons/Animal.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="105.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/Icons/Animal.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="59.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/Icons/Animal.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="13.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/Icons/Animal.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="151.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/Icons/Animal.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="105.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/Icons/Animal.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="59.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/Icons/Animal.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="35.0" layoutY="50.0" text="0">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="81.0" layoutY="50.0" text="0">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="127.0" layoutY="50.0" text="0">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="173.0" layoutY="50.0" text="0">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="35.0" layoutY="85.0" text="0">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="81.0" layoutY="85.0" text="0">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="127.0" layoutY="85.0" text="0">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="164.0" layoutY="80.0" text="#1">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="120.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="140.0">
+                                 <children>
+                                    <ProgressBar prefWidth="200.0" progress="0.0" />
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="120.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="280.0">
+                                 <children>
+                                    <ProgressBar prefWidth="200.0" progress="0.0" />
+                                 </children>
+                              </Pane>
+                              <Pane layoutX="10.0" layoutY="10.0" prefHeight="120.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="420.0">
+                                 <children>
+                                    <ProgressBar prefWidth="200.0" progress="0.0" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
                </children>
             </AnchorPane>
          </right>
          <bottom>
-            <AnchorPane prefHeight="111.0" prefWidth="656.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="140.0" prefWidth="656.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="0.0" />
-                  <ImageView fitHeight="120.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
-                  <ImageView fitHeight="120.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="0.0" />
+                  <ScrollPane hvalue="1.0" prefHeight="200.0" prefWidth="656.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="1068.0">
+                           <children>
+                              <Pane prefHeight="130.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="508.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ImageView fitHeight="120.0" fitWidth="150.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/CODEX_cards_gold_front/007.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="174.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/CODEX_cards_gold_front/004.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="340.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/CODEX_cards_gold_front/069.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="224.0" layoutY="-1.0" text="Hand" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="21.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Pane layoutX="503.0" prefHeight="130.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="510.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label layoutX="52.0" layoutY="1.0" text="Private Goal">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="25.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/CODEX_cards_gold_front/099.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </Pane>
+                              <Pane layoutX="826.0" layoutY="-35.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="720.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="14.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/CODEX_cards_gold_front/094.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="184.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../assets/CODEX_cards_gold_front/097.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="113.0" layoutY="3.0" text="Common Goals">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
                </children>
             </AnchorPane>
          </bottom>
