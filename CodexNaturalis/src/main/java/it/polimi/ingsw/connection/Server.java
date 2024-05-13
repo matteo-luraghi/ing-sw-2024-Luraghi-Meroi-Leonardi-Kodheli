@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.SubmissionPublisher;
 
 /**
  * Server class
@@ -107,6 +108,7 @@ public class Server implements RemoteServer {
         controller.addHandler(connectionHandler);
         connectionHandler.setController(controller);
         try {
+            // TODO: expose based on game's name
             RemoteController stub = (RemoteController) UnicastRemoteObject.exportObject(controller, 0);
             this.registry.rebind("controller", stub);
         } catch (Exception e) {
@@ -131,6 +133,16 @@ public class Server implements RemoteServer {
             synchronized (this.gameLock) {
                 this.games.remove(controller);
             }
+            // remove controller from registry
+            // TODO: remove based on game name
+            try {
+                RemoteController stub = (RemoteController) this.registry.lookup("controller");
+                UnicastRemoteObject.unexportObject(stub, true);
+            } catch (Exception ignored) {}
+            try {
+                this.registry.unbind("controller");
+            } catch (Exception ignored) {}
+
             controller.broadcastMessage(new Disconnection(connectionHandler.getClientNickname()), handlers);
 
         }
