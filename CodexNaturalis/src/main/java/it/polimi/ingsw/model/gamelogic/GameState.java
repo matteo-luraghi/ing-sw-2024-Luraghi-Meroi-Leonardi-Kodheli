@@ -74,11 +74,16 @@ public class GameState implements Serializable {
         return (ArrayList<Player>) this.players.clone();
     }
 
-    public void addPlayer(Player player){
+    /**
+     * add Player method
+     * @param player Player to add
+     * @throws IndexOutOfBoundsException when there are already 4 players
+     */
+    public void addPlayer(Player player) throws IndexOutOfBoundsException{
         if(players.size() < 4){
             players.add(player);
         } else {
-            System.err.println("More than 4 players in a game");
+            throw new IndexOutOfBoundsException();
         }
     }
 
