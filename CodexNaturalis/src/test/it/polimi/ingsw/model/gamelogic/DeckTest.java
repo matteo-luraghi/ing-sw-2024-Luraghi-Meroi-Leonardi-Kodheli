@@ -10,6 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+/**
+ * Deck Test
+ * @author Françesko
+ */
 public class DeckTest {
    Deck deck, goldDeck;
 
@@ -26,6 +31,7 @@ public class DeckTest {
 
     /**
      * Type test for checking correct initialization
+     * @result= all the initializations are of the correct type
      */
     @Test
     public void TypeTest(){
@@ -39,10 +45,8 @@ public class DeckTest {
 
     /**
      * Drawtest: Draws first two cards from deck and goldDeck, checks if they are not null and not present
-     * in the remaining cards. Draws all the remaining cards from the uncovered, asserting that they
-     * are removed from the remaining cards. Asserts that the drawed cards are 40 for normal and 40 for
-     * gold deck, assert that the decks are empty and the exception is thrown.
-     *
+     * in the remaining cards.
+     * @result= if tries to draw more than the available cards it fails
      */
     @Test
     public void DrawTest()
