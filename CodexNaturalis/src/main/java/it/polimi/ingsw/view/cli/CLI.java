@@ -134,6 +134,66 @@ public class CLI implements View {
         System.out.println(s);
     }
 
+    public void showJoinOrCreate (ArrayList<String> gameNames) {
+        boolean isJoin = false;
+        if (gameNames.isEmpty()) {
+            System.out.println("There are no games available, you have to create a new one.");
+        } else {
+            boolean correctInput = false;
+
+            do {
+                System.out.println("Do you want to join an existing game or create a new one?\nJoin|Create");
+                String gameChoice = this.scanner.nextLine();
+
+                if (!gameChoice.equalsIgnoreCase("join") && !gameChoice.equalsIgnoreCase("create")) {
+                    System.out.println(AnsiColors.ANSI_RED + "Invalid input, try again" + AnsiColors.ANSI_RESET);
+                } else {
+                    correctInput = true;
+                    if (gameChoice.equalsIgnoreCase("join")) {
+                        isJoin = true;
+                    }
+                }
+            } while (!correctInput);
+        }
+        String gameName = null;
+        if (isJoin) {
+            System.out.println("Here there are all the available games:");
+
+            for (String name : gameNames) {
+                System.out.println("- " + name);
+            }
+            System.out.println();
+
+            boolean correctInput = false;
+            do {
+                System.out.println("which one do you want to join?");
+                gameName = scanner.nextLine();
+
+                if (!gameNames.contains(gameName)) {
+                    System.out.println(AnsiColors.ANSI_RED+"Name not present. Try again."+AnsiColors.ANSI_RESET);
+                } else {
+                    correctInput = true;
+                }
+            } while (!correctInput);
+        } else {
+            //creating a new game
+            boolean correctInput = false;
+            do {
+                System.out.println("Choose a name for your game:");
+                gameName = scanner.nextLine();
+
+                if (gameNames.contains(gameName)) {
+                    System.out.println(AnsiColors.ANSI_RED + "Name already present, choose another one." + AnsiColors.ANSI_RESET);
+                } else {
+                    correctInput = true;
+                }
+            } while (!correctInput);
+
+            client.gameChoice(isJoin, gameName);
+        }
+    }
+
+
     /**
      * method to make the player insert its nickname
      */

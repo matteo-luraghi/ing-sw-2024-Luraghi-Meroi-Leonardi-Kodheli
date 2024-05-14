@@ -31,6 +31,8 @@ public class Controller implements RemoteController {
     private boolean isPenultimateTurn;
     private boolean isLastTurn;
     private int numOfGoalCardsChosen;
+
+    private String gameName;
     /**
      * Constructor without parameters
      */
@@ -43,6 +45,22 @@ public class Controller implements RemoteController {
         isPenultimateTurn = false;
         isLastTurn = false;
         numOfGoalCardsChosen = 0;
+    }
+
+    /**
+     * gameName getter
+     * @return the name of the game
+     */
+    public String getGameName() {
+        return gameName;
+    }
+
+    /**
+     * gameName setter
+     * @param name is the name of the game
+     */
+    public void setGameName(String name) {
+        this.gameName = name;
     }
 
     /**
