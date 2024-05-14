@@ -27,9 +27,11 @@ public class RMIConnectionHandler extends ConnectionHandler {
     @Serial
     private static final long serialVersionUID = 9202804208069477313L;
     private View view;
+    private final Registry registry;
 
-    public RMIConnectionHandler(String nickname) {
+    public RMIConnectionHandler(String nickname, Registry registry) {
         setClientNickname(nickname);
+        this.registry = registry;
     }
 
     /**
@@ -37,8 +39,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
      */
     public void setView() {
         try {
-            Registry registry = LocateRegistry.getRegistry();
-            this.view = (View) registry.lookup("view" + getClientNickname());
+            this.view = (View) this.registry.lookup("view" + getClientNickname());
         } catch (Exception e) {
             System.out.println("Error connecting to client");
             e.printStackTrace();
@@ -315,29 +316,18 @@ public class RMIConnectionHandler extends ConnectionHandler {
         } catch (Exception ignored) {
         }
 
-        Registry registry = null;
         try {
-            registry = LocateRegistry.getRegistry();
-        } catch (RemoteException ignored) {}
-
-        try {
-            if (registry != null)  {
-                View stubView = (View) registry.lookup("view" + getClientNickname());
-                UnicastRemoteObject.unexportObject(stubView, true);
-            }
+            View stubView = (View) registry.lookup("view" + getClientNickname());
+            UnicastRemoteObject.unexportObject(stubView, true);
         } catch (Exception ignored) {}
 
         try {
-            if (registry != null) {
-                registry.unbind("view" + getClientNickname());
-            }
+            registry.unbind("view" + getClientNickname());
         } catch (Exception ignored) {}
 
         try {
-            if (registry != null) {
-                RemoteServer server = (RemoteServer) registry.lookup("server");
-                server.removeClient(this);
-            }
+            RemoteServer server = (RemoteServer) registry.lookup("server");
+            server.removeClient(this);
         } catch (Exception e) {
             System.err.println("Error disconnecting");
             e.printStackTrace();

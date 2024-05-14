@@ -38,7 +38,7 @@ public class RMIClient extends Client {
     @Override
     public void loginResponse(String nickname) throws Exception {
 
-        this.connectionHandler = new RMIConnectionHandler(nickname);
+        this.connectionHandler = new RMIConnectionHandler(nickname, registry);
 
         try {
             // connect to the server
