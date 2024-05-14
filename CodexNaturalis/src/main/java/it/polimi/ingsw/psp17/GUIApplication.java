@@ -28,7 +28,6 @@ public class GUIApplication extends Application {
 
     public static void loadApplication(String scene) {
         sceneName = scene;
-        System.out.println(sceneName);
         launch();
     }
 }

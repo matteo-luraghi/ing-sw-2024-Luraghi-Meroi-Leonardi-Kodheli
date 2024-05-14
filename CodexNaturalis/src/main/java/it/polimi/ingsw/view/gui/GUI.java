@@ -8,25 +8,30 @@ import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.ScoreBoard;
+import it.polimi.ingsw.psp17.ConnectToServerController;
 import it.polimi.ingsw.psp17.GUIApplication;
-import it.polimi.ingsw.view.cli.*;
 import it.polimi.ingsw.view.mainview.*;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
  * GUI class to show the game using graphic interface
  */
-public class GUI implements View {
-    Client client = null;
-    Controller controller = null;
-    ViewGameCardFactory gameCardViewer;
-    ViewScoreBoardFactory scoreBoardViewer;
-    ViewPlayerFieldFactory playerFieldViewer;
-    ViewDeckFactory deckViewer;
-    ViewGoalCardFactory goalCardViewer;
+public class GUI extends Application implements View{
+    private Client client = null;
+    private Controller controller = null;
+    private ViewGameCardFactory gameCardViewer;
+    private ViewScoreBoardFactory scoreBoardViewer;
+    private ViewPlayerFieldFactory playerFieldViewer;
+    private ViewDeckFactory deckViewer;
+    private ViewGoalCardFactory goalCardViewer;
+    private String sceneName;
     /**
      * GUI constructor
      */
@@ -36,13 +41,34 @@ public class GUI implements View {
         this.playerFieldViewer = new ViewPlayerFieldGUIFactory();
         this.scoreBoardViewer = new ViewScoreBoardGUIFactory();
         this.goalCardViewer = new ViewGoalCardGUIFactory();
+        this.sceneName = "ConnectToServer.fxml";
     }
+
     /**
-     * method to initialize the GUI for a specific Client
+     * Method that starts the GUI for a player
+     */
+    public void start(){
+        GUIApplication.loadApplication(sceneName);
+    }
+
+    /**
+     * Method to open a specific stage for a player
+     * @param stage the stage that needs to be loaded
      */
     @Override
-    public void start() {
-        GUIApplication.loadApplication("ConnectToServer.fxml");
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(ConnectToServerController.class.getResource(sceneName));
+        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        stage.setTitle("Hello!");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /**
+     * Method that tries to connect to a specified server (boolean return?)
+     */
+    public void connectToServer(){
+
     }
 
     /**

@@ -113,7 +113,7 @@
                             <!-- Default configuration for running with: mvn clean javafx:run -->
                             <id>default-cli</id>
                             <configuration>
-                                <mainClass>it.polimi.ingsw.psp17/it.polimi.ingsw.psp17.HelloApplication</mainClass>
+                                <mainClass>it.polimi.ingsw.psp17/it.polimi.ingsw.psp17.GUIApplication</mainClass>
                                 <launcher>app</launcher>
                                 <jlinkZipName>app</jlinkZipName>
                                 <jlinkImageName>app</jlinkImageName>
