@@ -8,7 +8,10 @@ import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.ScoreBoard;
+import it.polimi.ingsw.psp17.GUIApplication;
+import it.polimi.ingsw.view.cli.*;
 import it.polimi.ingsw.view.mainview.*;
+import javafx.application.Application;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -19,18 +22,27 @@ import java.util.ArrayList;
 public class GUI implements View {
     Client client = null;
     Controller controller = null;
-    ViewGameCardFactory gameCardViewer = null;
-    ViewScoreBoardFactory scoreBoardViewer  = null;
-    ViewPlayerFieldFactory playerFieldViewer  = null;
-    ViewDeckFactory deckViewer  = null;
-    ViewGoalCardFactory goalCardViewer = null;
-
+    ViewGameCardFactory gameCardViewer;
+    ViewScoreBoardFactory scoreBoardViewer;
+    ViewPlayerFieldFactory playerFieldViewer;
+    ViewDeckFactory deckViewer;
+    ViewGoalCardFactory goalCardViewer;
     /**
-     * method to initialize the CLI for a specific Client
+     * GUI constructor
+     */
+    public GUI(){
+        this.deckViewer = new ViewDeckGUIFactory();
+        this.gameCardViewer = new ViewGameCardGUIFactory();
+        this.playerFieldViewer = new ViewPlayerFieldGUIFactory();
+        this.scoreBoardViewer = new ViewScoreBoardGUIFactory();
+        this.goalCardViewer = new ViewGoalCardGUIFactory();
+    }
+    /**
+     * method to initialize the GUI for a specific Client
      */
     @Override
     public void start() {
-
+        GUIApplication.loadApplication("ConnectToServer.fxml");
     }
 
     /**
