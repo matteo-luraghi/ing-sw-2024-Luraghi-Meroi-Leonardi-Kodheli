@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.gui;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,13 +17,17 @@ public class ConnectToServerController {
     public TextField serverIP;
     @FXML
     public TextField serverPort;
+    private GUI view;
+
     public void initialize() {
+
         ArrayList<String> connections = new ArrayList<>();
         connections.add("Socket");
         connections.add("RMI");
         ObservableList<String> list = FXCollections.observableArrayList(connections);
         connectionChoice.setItems(list);
         connectionChoice.setValue("Socket");
+
     }
     @FXML
     protected void ConnectToServer() {
@@ -31,7 +36,8 @@ public class ConnectToServerController {
         alert.setHeaderText("Invalid input data");
         String ip = serverIP.getText();
         String portText = serverPort.getText();
-        String connection = connectionChoice.toString();
+        String connection = connectionChoice.getValue().toString();
+        System.out.println(connection);
         int port;
         //Check ip validity
         if(ip == null || ip.isEmpty()){
@@ -51,12 +57,24 @@ public class ConnectToServerController {
             return;
         }
         //Check connection validity (Should always be true)
-        if(connection == null || connection.isEmpty() || (connection.equalsIgnoreCase("Socket") || connection.equalsIgnoreCase("RMI"))){
+        if(connection == null || connection.isEmpty() || !(connection.equalsIgnoreCase("Socket") || connection.equalsIgnoreCase("RMI"))){
             alert.setContentText("Connection is not set or is an invalid value");
             alert.showAndWait();
             return;
         }
 
-        System.out.println("IP: " + serverIP.getText() + " Port:" + serverPort.getText() + " connection: " + connectionChoice.getValue().toString());
+        //System.out.println("IP: " + serverIP.getText() + " Port:" + serverPort.getText() + " connection: " + connectionChoice.getValue().toString());
+
+        if(!view.connectToServer(ip, port, connection)){
+            alert.setContentText("Error connecting to the server, try again");
+            alert.showAndWait();
+            return;
+        } else {
+            System.out.println("Connected!");
+        }
+    }
+
+    public void setView(GUI view){
+        this.view = view;
     }
 }

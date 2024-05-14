@@ -1,6 +1,8 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.connection.Client;
+import it.polimi.ingsw.connection.rmi.RMIClient;
+import it.polimi.ingsw.connection.socket.SocketClient;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.StartingCard;
@@ -15,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -47,7 +50,6 @@ public class GUI extends Application implements View{
      */
     public void start(){
         launch();
-        //GUIApplication.loadApplication(sceneName);
     }
 
     /**
@@ -57,18 +59,49 @@ public class GUI extends Application implements View{
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ConnectToServerController.class.getResource(sceneName));
-        System.out.println(GUI.class.getResource(sceneName));
+        System.out.println(sceneName);
         Scene scene = new Scene(fxmlLoader.load(), 600, 500);
         stage.setTitle(sceneName.split("\\.")[0]);
         stage.setScene(scene);
         stage.show();
+        switch (sceneName){
+            case "ConnectToServer.fxml":
+                ConnectToServerController controller = fxmlLoader.getController();
+                controller.setView(this);
+                break;
+            case null, default:
+                System.err.println("SceneName doesn't have a controller");
+                break;
+        }
     }
 
     /**
-     * Method that tries to connect to a specified server (boolean return?)
+     * Method to connect a client to a server
+     * @param ip the ip of the server
+     * @param port the port of the server
+     * @param connectionProtocol The connection protocol that the client wants to use (either Socket or RMI)
+     * @return true if the connection was successful, false otherwise
      */
-    public void connectToServer(){
+    public boolean connectToServer(String ip, int port, String connectionProtocol){
+        boolean connected = false;
+        if (connectionProtocol.equalsIgnoreCase("socket")){
+            try {
+                client = new SocketClient(ip, port, this);
+                connected = true;
+            } catch (IOException | IllegalArgumentException e) {
+                connected = false;
+            }
 
+        }else if (connectionProtocol.equalsIgnoreCase("rmi")){
+            try {
+                client = new RMIClient(ip, port, this);
+                connected = true;
+            } catch (RemoteException | NotBoundException | IllegalArgumentException e) {
+                connected = false;
+            }
+        }
+
+        return connected;
     }
 
     /**
