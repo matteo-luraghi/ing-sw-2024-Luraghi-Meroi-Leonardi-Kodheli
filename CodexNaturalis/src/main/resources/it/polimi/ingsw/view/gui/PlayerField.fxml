@@ -59,7 +59,7 @@
                                        <children>
                                           <ImageView fitHeight="124.0" fitWidth="169.0" pickOnBounds="true" preserveRatio="true" translateX="200.0" translateY="200.0">
                                              <image>
-                                                <Image url="@../../../../assets/CODEX_cards_gold_front/081.png" />
+                                                <Image url="@../../../../../assets/CODEX_cards_gold_front/081.png" />
                                              </image>
                                           </ImageView>
                                        </children>
@@ -107,37 +107,37 @@
                                     <Label layoutX="139.0" layoutY="25.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
                                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="13.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/Icons/Animal.jpg" />
+                                          <Image url="@../../../../../assets/Icons/Animal.jpg" />
                                        </image>
                                     </ImageView>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="105.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/Icons/Animal.jpg" />
+                                          <Image url="@../../../../../assets/Icons/Animal.jpg" />
                                        </image>
                                     </ImageView>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="59.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/Icons/Animal.jpg" />
+                                          <Image url="@../../../../../assets/Icons/Animal.jpg" />
                                        </image>
                                     </ImageView>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="13.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/Icons/Animal.jpg" />
+                                          <Image url="@../../../../../assets/Icons/Animal.jpg" />
                                        </image>
                                     </ImageView>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="151.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/Icons/Animal.jpg" />
+                                          <Image url="@../../../../../assets/Icons/Animal.jpg" />
                                        </image>
                                     </ImageView>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="105.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/Icons/Animal.jpg" />
+                                          <Image url="@../../../../../assets/Icons/Animal.jpg" />
                                        </image>
                                     </ImageView>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="59.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/Icons/Animal.jpg" />
+                                          <Image url="@../../../../../assets/Icons/Animal.jpg" />
                                        </image>
                                     </ImageView>
                                     <Label layoutX="35.0" layoutY="50.0" text="0">

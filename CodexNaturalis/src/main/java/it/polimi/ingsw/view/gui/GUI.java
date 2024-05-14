@@ -8,8 +8,6 @@ import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.ScoreBoard;
-import it.polimi.ingsw.psp17.ConnectToServerController;
-import it.polimi.ingsw.psp17.GUIApplication;
 import it.polimi.ingsw.view.mainview.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -48,7 +46,8 @@ public class GUI extends Application implements View{
      * Method that starts the GUI for a player
      */
     public void start(){
-        GUIApplication.loadApplication(sceneName);
+        launch();
+        //GUIApplication.loadApplication(sceneName);
     }
 
     /**
@@ -58,8 +57,9 @@ public class GUI extends Application implements View{
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ConnectToServerController.class.getResource(sceneName));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        System.out.println(GUI.class.getResource(sceneName));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 500);
+        stage.setTitle(sceneName.split("\\.")[0]);
         stage.setScene(scene);
         stage.show();
     }

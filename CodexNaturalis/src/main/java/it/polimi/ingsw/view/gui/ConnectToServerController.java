@@ -1,4 +1,4 @@
-package it.polimi.ingsw.psp17;
+package it.polimi.ingsw.view.gui;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
