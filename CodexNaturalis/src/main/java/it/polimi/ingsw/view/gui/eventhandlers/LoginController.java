@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui.eventhandlers;
 
 import it.polimi.ingsw.model.gamelogic.Color;
+import it.polimi.ingsw.model.gamelogic.Util;
 import it.polimi.ingsw.view.gui.GUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,6 +54,23 @@ public class LoginController extends EventHandler{
     }
 
     public void chooseColor(MouseEvent mouseEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Invalid input data");
+        alert.setHeaderText("Invalid input data");
 
+        Color chosenColor;
+        if(Color == null){
+            alert.setContentText("Color is null");
+            alert.showAndWait();
+            return;
+        }
+
+        chosenColor = (Color) (Color.getValue());
+        if(chosenColor == null){
+            alert.setContentText("Color is not valid");
+            alert.showAndWait();
+        }
+
+        view.getClient().colorResponse(chosenColor);
     }
 }
