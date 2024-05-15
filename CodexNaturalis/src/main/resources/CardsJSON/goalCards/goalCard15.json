@@ -1,5 +1,6 @@
 {
+    "id": "101",
     "points":2,
     "isResourceGoal":true,
     "requirements": ["POTION", "POTION"]
-  }
+}

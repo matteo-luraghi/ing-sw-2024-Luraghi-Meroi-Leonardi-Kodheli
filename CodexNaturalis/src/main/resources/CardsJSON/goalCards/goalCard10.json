@@ -1,4 +1,5 @@
 {
+    "id": "096",
     "points":2,
     "isResourceGoal":true,
     "requirements": ["PLANT", "PLANT", "PLANT"]

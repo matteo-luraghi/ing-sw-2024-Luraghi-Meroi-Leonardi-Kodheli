@@ -1,5 +1,6 @@
 {
+    "id": "100",
     "points":2,
     "isResourceGoal":true,
     "requirements": ["SCROLL", "SCROLL"]
-  }
+}
