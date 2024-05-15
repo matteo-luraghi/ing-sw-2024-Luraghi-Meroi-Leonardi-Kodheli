@@ -72,8 +72,6 @@ public class ConnectToServerController {
             return;
         } else {
             System.out.println("Connected!");
-            view.changeScene("JoinGame.fxml");
-            //view.listenDisconnection()
         }
     }
 
