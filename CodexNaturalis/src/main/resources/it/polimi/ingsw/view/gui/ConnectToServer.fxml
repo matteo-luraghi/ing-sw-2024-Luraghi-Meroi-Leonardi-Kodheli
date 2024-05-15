@@ -11,13 +11,13 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.eventhandlers.ConnectToServerController">
    <!-- Controller needs to be changed to the correct one -->
    <children>
-      <Pane layoutX="300.0" layoutY="84.0" prefHeight="231.0" prefWidth="278.0">
+      <Pane layoutX="161.0" layoutY="53.0" prefHeight="304.0" prefWidth="278.0">
          <children>
-            <Label layoutX="13.0" layoutY="43.0" text="Server IP" />
-            <Label layoutX="13.0" layoutY="97.0" text="Server Port" />
-            <TextField fx:id="serverIP" layoutX="42.0" layoutY="60.0" />
-            <TextField fx:id="serverPort" layoutX="42.0" layoutY="114.0" />
-            <Button fx:id="connectButton" layoutX="201.0" layoutY="193.0" mnemonicParsing="false" onMouseClicked="#ConnectToServer" text="Connect">
+            <Label layoutX="65.0" layoutY="41.0" text="Server IP" />
+            <Label layoutX="66.0" layoutY="93.0" text="Server Port" />
+            <TextField fx:id="serverIP" layoutX="65.0" layoutY="60.0" />
+            <TextField fx:id="serverPort" layoutX="66.0" layoutY="111.0" />
+            <Button fx:id="connectButton" layoutX="102.0" layoutY="229.0" mnemonicParsing="false" onMouseClicked="#ConnectToServer" text="Connect">
                <font>
                   <Font size="14.0" />
                </font>
@@ -27,8 +27,8 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="8.0" layoutY="139.0" text="Connection Protocol" />
-            <ChoiceBox fx:id="connectionChoice" layoutX="41.0" layoutY="162.0" prefWidth="150.0" />
+            <Label layoutX="66.0" layoutY="143.0" text="Connection Protocol" />
+            <ChoiceBox fx:id="connectionChoice" layoutX="65.0" layoutY="162.0" prefWidth="150.0" />
          </children>
       </Pane>
    </children>
