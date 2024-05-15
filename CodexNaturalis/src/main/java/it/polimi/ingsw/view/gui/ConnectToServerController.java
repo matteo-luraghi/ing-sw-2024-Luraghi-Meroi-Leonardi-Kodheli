@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.connection.ConnectionClosedException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,7 +31,7 @@ public class ConnectToServerController {
 
     }
     @FXML
-    protected void ConnectToServer() {
+    protected void ConnectToServer() throws ConnectionClosedException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Invalid input data!!!");
         alert.setHeaderText("Invalid input data");
@@ -71,6 +72,8 @@ public class ConnectToServerController {
             return;
         } else {
             System.out.println("Connected!");
+            view.changeScene("JoinGame.fxml");
+            //view.listenDisconnection()
         }
     }
 
