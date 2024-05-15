@@ -1,13 +1,9 @@
-package it.polimi.ingsw.view.gui;
+package it.polimi.ingsw.view.gui.eventhandlers;
 
+import it.polimi.ingsw.view.gui.GUI;
 import javafx.scene.input.MouseEvent;
 
-public class JoinGameController {
-    private GUI view;
-
-    public void setView(GUI view){
-        this.view = view;
-    }
+public class JoinGameController  extends EventHandler{
 
     //THIS WILL NEED TO BE CHANGED TO BE ON EVERY SINGLE LIST
     public void joinGame(MouseEvent mouseEvent) {

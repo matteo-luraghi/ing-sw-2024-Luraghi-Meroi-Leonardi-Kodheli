@@ -1,7 +1,7 @@
-package it.polimi.ingsw.view.gui;
+package it.polimi.ingsw.view.gui.eventhandlers;
 
 import it.polimi.ingsw.connection.ConnectionClosedException;
-import javafx.application.Platform;
+import it.polimi.ingsw.view.gui.GUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,14 +11,13 @@ import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 
-public class ConnectToServerController {
+public class ConnectToServerController extends EventHandler{
     @FXML
     public ChoiceBox connectionChoice;
     @FXML
     public TextField serverIP;
     @FXML
     public TextField serverPort;
-    private GUI view;
 
     public void initialize() {
 
@@ -33,7 +32,7 @@ public class ConnectToServerController {
     @FXML
     protected void ConnectToServer() throws ConnectionClosedException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Invalid input data!!!");
+        alert.setTitle("Invalid input data");
         alert.setHeaderText("Invalid input data");
         String ip = serverIP.getText();
         String portText = serverPort.getText();
@@ -67,15 +66,10 @@ public class ConnectToServerController {
         //System.out.println("IP: " + serverIP.getText() + " Port:" + serverPort.getText() + " connection: " + connectionChoice.getValue().toString());
 
         if(!view.connectToServer(ip, port, connection)){
+            alert.setTitle("Error");
+            alert.setHeaderText("Server error");
             alert.setContentText("Error connecting to the server, try again");
             alert.showAndWait();
-            return;
-        } else {
-            System.out.println("Connected!");
         }
-    }
-
-    public void setView(GUI view){
-        this.view = view;
     }
 }
