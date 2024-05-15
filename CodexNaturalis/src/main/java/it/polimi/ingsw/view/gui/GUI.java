@@ -11,6 +11,10 @@ import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.ScoreBoard;
+import it.polimi.ingsw.view.gui.eventhandlers.ConnectToServerController;
+import it.polimi.ingsw.view.gui.eventhandlers.EventHandler;
+import it.polimi.ingsw.view.gui.eventhandlers.JoinGameController;
+import it.polimi.ingsw.view.gui.eventhandlers.LoginController;
 import it.polimi.ingsw.view.mainview.*;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -37,6 +41,8 @@ public class GUI extends Application implements View{
     private ViewGoalCardFactory goalCardViewer;
     private String sceneName;
     private Stage stage;
+    private boolean connectedToServer;
+    private EventHandler currentEventHandler;
     /**
      * GUI constructor
      */
@@ -47,12 +53,13 @@ public class GUI extends Application implements View{
         this.scoreBoardViewer = new ViewScoreBoardGUIFactory();
         this.goalCardViewer = new ViewGoalCardGUIFactory();
         this.sceneName = "ConnectToServer.fxml";
+        connectedToServer = false;
     }
 
     /**
      * Method that starts the GUI for a player
      */
-    public void start(){
+    public void start() throws ConnectionClosedException {
         launch();
     }
 
@@ -63,14 +70,14 @@ public class GUI extends Application implements View{
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;
-        FXMLLoader fxmlLoader = new FXMLLoader(ConnectToServerController.class.getResource(sceneName));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(sceneName));
         Scene scene = new Scene(fxmlLoader.load(), 600, 500);
         stage.setTitle(sceneName.split("\\.")[0]);
         stage.setScene(scene);
         stage.show();
 
-        ConnectToServerController controller = fxmlLoader.getController();
-        controller.setView(this);
+        currentEventHandler = fxmlLoader.getController();
+        currentEventHandler.setView(this);
     }
 
     /**
@@ -80,29 +87,12 @@ public class GUI extends Application implements View{
     public void changeScene(String sceneName){
         Platform.setImplicitExit(false);
         Platform.runLater(() -> {
-            System.out.println("runlater started");
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(sceneName));
             Parent root;
             try{
                 root = (Parent) fxmlLoader.load();
-                switch (sceneName){
-                    case "ConnectToServer.fxml":
-                        ConnectToServerController controller1 = fxmlLoader.getController();
-                        controller1.setView(this);
-                        break;
-                    case "JoinGame.fxml":
-                        JoinGameController controller2 = fxmlLoader.getController();
-                        controller2.setView(this);
-                        break;
-                    case "Login.fxml":
-                        LoginController controller3 = fxmlLoader.getController();
-                        controller3.setView(this);
-                        break;
-                    case null, default:
-                        System.err.println(sceneName +  "doesn't have a controller");
-                        break;
-                }
-
+                currentEventHandler = fxmlLoader.getController();
+                currentEventHandler.setView(this);
                 this.stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException e){
@@ -119,36 +109,48 @@ public class GUI extends Application implements View{
      * @return true if the connection was successful, false otherwise
      */
     public boolean connectToServer(String ip, int port, String connectionProtocol) {
-        boolean connected = false;
+
         if (connectionProtocol.equalsIgnoreCase("socket")){
             try {
                 client = new SocketClient(ip, port, this);
-                connected = true;
+                connectedToServer = true;
             } catch (IOException | IllegalArgumentException e) {
-                connected = false;
+                connectedToServer = false;
             }
 
         }else if (connectionProtocol.equalsIgnoreCase("rmi")){
             try {
                 client = new RMIClient(ip, port, this);
-                connected = true;
+                connectedToServer = true;
             } catch (RemoteException | NotBoundException | IllegalArgumentException e) {
-                connected = false;
+                connectedToServer = false;
             }
         }
 
-        return connected;
-    }
-
-    public void listenForDisconnection() throws ConnectionClosedException {
-        if (client.getClass() == RMIClient.class) {
+        if (connectedToServer && client.getClass() == RMIClient.class) {
             new Thread(this::insertNickname).start();
         }
 
+        if(connectedToServer){
+            new Thread(this::listenForDisconnection).start();
+        }
+
+        return connectedToServer;
+    }
+
+    public void listenForDisconnection() {
+        boolean isDisconnecting = false;
         while(true) {
-            if(!client.getConnected()) {
-                System.out.println("Disconnected");
-                throw new ConnectionClosedException("Connection closed");
+            client = getClient();
+            if(client != null && !client.getConnected() && !isDisconnecting) {
+                isDisconnecting = true;
+                Platform.runLater(() -> {
+                    System.out.println("Disconnected");
+                    currentEventHandler.disconnection();
+                    Platform.runLater(() -> {
+                        stage.close();
+                    });
+                } );
             }
         }
     }
@@ -322,4 +324,10 @@ public class GUI extends Application implements View{
     public void disconnectClient() throws RemoteException {
 
     }
+
+    /**
+     * Client getter
+     * @return this client
+     */
+    public Client getClient(){ return client; }
 }
