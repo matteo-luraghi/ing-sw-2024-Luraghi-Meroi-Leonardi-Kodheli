@@ -74,12 +74,13 @@ public class Server implements RemoteServer {
      * @param connectionHandler the connectionHandler to save in a game
      */
     @Override
-    public void addToGame(ConnectionHandler connectionHandler) {
+    public void joinGame(ConnectionHandler connectionHandler, String gameName) {
         Optional<Controller> optionalController;
         synchronized (this.gameLock) {
             System.out.println("Active Games:" + games.keySet().size());
             // find the first free game and try to add the player
-            optionalController = games.keySet().stream().filter(g -> !g.isGameStarted()).findFirst();
+            optionalController = games.keySet().stream().
+                    filter(g -> !g.isGameStarted() && g.getGameName().equals(gameName)).findFirst();
         }
         if (optionalController.isPresent()) {
             Controller gameController = optionalController.get();
@@ -98,8 +99,8 @@ public class Server implements RemoteServer {
      * @param numberOfPlayers the number of players for the new game
      */
     @Override
-    public void addToGame(ConnectionHandler connectionHandler, int numberOfPlayers) {
-        Controller controller = new Controller(numberOfPlayers);
+    public void createGame(ConnectionHandler connectionHandler, int numberOfPlayers, String gameName) {
+        Controller controller = new Controller(gameName, numberOfPlayers);
         synchronized (this.gameLock) {
             this.games.put(controller, numberOfPlayers);
         }

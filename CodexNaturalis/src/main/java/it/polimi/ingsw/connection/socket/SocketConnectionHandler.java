@@ -5,6 +5,7 @@ import it.polimi.ingsw.connection.Server;
 import it.polimi.ingsw.connection.socket.message.clientMessage.ClientMessage;
 import it.polimi.ingsw.connection.socket.message.connectionMessage.Ping;
 import it.polimi.ingsw.connection.socket.message.serverMessage.*;
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.Color;
@@ -20,6 +21,7 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 /**
  * SocketConnectionHandler class
@@ -61,7 +63,13 @@ public class SocketConnectionHandler extends ConnectionHandler implements Runnab
             this.active.set(true);
 
             this.pingThread.start();
-            sendMessageClient(new LoginRequest());
+
+            ArrayList<String> gameNames = (ArrayList<String>) this.server.getGames().stream()
+                    .filter(c -> !c.isGameStarted())
+                    .map(Controller::getGameName)
+                    .collect(Collectors.toList());
+
+            sendMessageClient(new JoinGameRequest(gameNames));
 
             while(this.active.get()) {
                 try {
@@ -111,6 +119,11 @@ public class SocketConnectionHandler extends ConnectionHandler implements Runnab
                 this.socket.close();
             } catch (IOException ignored){}
         }
+    }
+
+    @Override
+    public void nicknameRequest(boolean isJoin, String gameName) {
+        sendMessageClient(new LoginRequest(isJoin, gameName));
     }
 
     /**

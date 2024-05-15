@@ -33,6 +33,7 @@ public class CLI implements View {
     private Player user = null;
     private boolean playPhase = false;
     private boolean connected = true;
+    private String gameName;
 
     /**
      * CLI constructor
@@ -99,7 +100,8 @@ public class CLI implements View {
         this.client = client;
 
         if (client.getClass() == RMIClient.class) {
-            new Thread(this::insertNickname).start();
+            // TOOD: start showJoinOrCreate in RMI
+            //new Thread(this::insertNickname).start();
         }
 
         while(true) {
@@ -134,7 +136,8 @@ public class CLI implements View {
         System.out.println(s);
     }
 
-    public void showJoinOrCreate (ArrayList<String> gameNames) {
+    @Override
+    public void showJoinOrCreate(ArrayList<String> gameNames) {
         boolean isJoin = false;
         if (gameNames.isEmpty()) {
             System.out.println("There are no games available, you have to create a new one.");
@@ -188,9 +191,10 @@ public class CLI implements View {
                     correctInput = true;
                 }
             } while (!correctInput);
-
-            client.gameChoice(isJoin, gameName);
         }
+
+        this.gameName = gameName;
+        client.gameChoice(isJoin, gameName);
     }
 
 
@@ -198,13 +202,13 @@ public class CLI implements View {
      * method to make the player insert its nickname
      */
     @Override
-    public void insertNickname() {
+    public void insertNickname(boolean isJoin, String gameName) {
         boolean valid = false;
         while (!valid) {
             System.out.println("Choose a nickname");
             String nickname = scanner.nextLine();
             try {
-                client.loginResponse(nickname);
+                client.loginResponse(isJoin, gameName, nickname);
                 valid = true;
             } catch (Exception e) {
                 // if RMI client exception if the nickname is already present
@@ -259,7 +263,7 @@ public class CLI implements View {
                 System.out.println("Insert a valid number! (2-4)");
             }
         } while (number<=1 || number > 4);
-        client.playersNumberResponse(number);
+        client.playersNumberResponse(number, this.gameName);
     }
 
     /**

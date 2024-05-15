@@ -14,7 +14,6 @@ import it.polimi.ingsw.view.mainview.View;
 import java.io.Serial;
 import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -44,6 +43,11 @@ public class RMIConnectionHandler extends ConnectionHandler {
             System.out.println("Error connecting to client");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void nicknameRequest(boolean isGold, String gameName) {
+
     }
 
     /**

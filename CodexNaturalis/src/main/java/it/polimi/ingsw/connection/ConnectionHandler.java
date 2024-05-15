@@ -73,6 +73,8 @@ public abstract class ConnectionHandler implements Serializable {
         this.controller = controller;
     }
 
+    public abstract void nicknameRequest(boolean isGold, String gameName);
+
     /**
      * Ask the player for their color
      * @param availableColors the possible colors

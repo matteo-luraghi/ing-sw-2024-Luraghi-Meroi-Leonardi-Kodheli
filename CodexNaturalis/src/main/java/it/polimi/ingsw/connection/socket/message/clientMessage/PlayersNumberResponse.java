@@ -14,13 +14,15 @@ public class PlayersNumberResponse extends ClientMessage{
     @Serial
     private static final long serialVersionUID = -4677442179211411089L;
     private final int numPlayers;
+    private final String gameName;
 
     /**
      * Constructor
      * @param numPlayers number of players
      */
-    public PlayersNumberResponse(int numPlayers) {
+    public PlayersNumberResponse(int numPlayers, String gameName) {
         this.numPlayers = numPlayers;
+        this.gameName = gameName;
     }
 
     /**
@@ -31,6 +33,6 @@ public class PlayersNumberResponse extends ClientMessage{
      */
     @Override
     public void execute(Server server, SocketConnectionHandler connectionHandler) {
-        server.addToGame(connectionHandler, this.numPlayers);
+        server.createGame(connectionHandler, this.numPlayers, this.gameName);
     }
 }

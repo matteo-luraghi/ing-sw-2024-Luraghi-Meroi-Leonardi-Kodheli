@@ -114,11 +114,16 @@ public class GUI extends Application implements View{
 
     }
 
+    @Override
+    public void showJoinOrCreate(ArrayList<String> gameNames) {
+
+    }
+
     /**
      * method to make the player insert its nickname
      */
     @Override
-    public void insertNickname() {
+    public void insertNickname(boolean isJoin, String gameName) {
     }
 
     /**

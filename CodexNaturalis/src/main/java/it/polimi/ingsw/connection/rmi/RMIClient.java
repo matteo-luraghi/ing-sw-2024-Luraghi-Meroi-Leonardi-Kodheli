@@ -36,7 +36,7 @@ public class RMIClient extends Client {
      * @param nickname the nickname
      */
     @Override
-    public void loginResponse(String nickname) throws Exception {
+    public void loginResponse(boolean isJoin, String gameName, String nickname) throws Exception {
 
         this.connectionHandler = new RMIConnectionHandler(nickname, registry);
 
@@ -62,7 +62,11 @@ public class RMIClient extends Client {
 
             new Thread(() -> {
                 try {
-                    server.addToGame(this.connectionHandler);
+                    if (isJoin) {
+                        server.joinGame(this.connectionHandler, gameName);
+                    } else {
+                        connectionHandler.playersNumberRequest();
+                    }
                 } catch (RemoteException e) {
                     System.err.println("Error adding player to game");
                     disconnect();
@@ -109,14 +113,14 @@ public class RMIClient extends Client {
      * @param number the number of players
      */
     @Override
-    public void playersNumberResponse(int number) {
+    public void playersNumberResponse(int number, String gameName) {
         try {
             // connect to the server
             RemoteServer server = (RemoteServer) registry.lookup("server");
 
             new Thread(() -> {
                 try {
-                    server.addToGame(this.connectionHandler, number);
+                    server.createGame(this.connectionHandler, number, gameName);
                 } catch (RemoteException e) {
                     System.err.println("No controller found");
                     disconnect();

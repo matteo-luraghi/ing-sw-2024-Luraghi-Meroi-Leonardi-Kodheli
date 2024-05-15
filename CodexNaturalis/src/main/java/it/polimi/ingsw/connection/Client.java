@@ -51,10 +51,17 @@ public abstract class Client {
     }
 
     /**
+     * Make the user choose to join or create a game
+     * @param isJoin true if the user wants to join a game
+     * @param gameName game name
+     */
+    public void gameChoice(boolean isJoin, String gameName) {};
+
+    /**
      * Send the selected nickname to the server
      * @param nickname the nickname
      */
-    public void loginResponse(String nickname) throws Exception {}
+    public void loginResponse(boolean isJoin, String gameName, String nickname) throws Exception {}
 
     /**
      * Send the selected color to the server
@@ -66,7 +73,7 @@ public abstract class Client {
      * Send the number of players to the server
      * @param number the number of players
      */
-    public void playersNumberResponse(int number) {}
+    public void playersNumberResponse(int number, String gameName) {}
 
     /**
      * Send the starting card on the correct side

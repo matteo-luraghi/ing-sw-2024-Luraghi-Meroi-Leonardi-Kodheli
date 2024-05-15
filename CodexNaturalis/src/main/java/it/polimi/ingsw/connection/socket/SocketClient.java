@@ -4,6 +4,7 @@ import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.connection.socket.message.clientMessage.*;
 import it.polimi.ingsw.connection.socket.message.connectionMessage.Disconnection;
 import it.polimi.ingsw.connection.socket.message.connectionMessage.Ping;
+import it.polimi.ingsw.connection.socket.message.serverMessage.JoinGameRequest;
 import it.polimi.ingsw.connection.socket.message.serverMessage.ServerMessage;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.ResourceCard;
@@ -115,13 +116,18 @@ public class SocketClient extends Client {
         }
     }
 
+    @Override
+    public void gameChoice(boolean isJoin, String gameName) {
+        sendMessageServer(new JoinGameResponse(isJoin, gameName));
+    }
+
     /**
      * Send the selected nickname to the server using a LoginResponse client message
      * @param nickname the nickname
      */
     @Override
-    public void loginResponse(String nickname) {
-        sendMessageServer(new LoginResponse(nickname));
+    public void loginResponse(boolean isJoin, String gameName, String nickname) {
+        sendMessageServer(new LoginResponse(isJoin, gameName, nickname));
     }
 
     /**
@@ -138,8 +144,8 @@ public class SocketClient extends Client {
      * @param number the number of players
      */
     @Override
-    public void playersNumberResponse(int number) {
-        sendMessageServer(new PlayersNumberResponse(number));
+    public void playersNumberResponse(int number, String gameName) {
+        sendMessageServer(new PlayersNumberResponse(number, gameName));
     }
 
     /**

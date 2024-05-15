@@ -15,12 +15,16 @@ public class LoginResponse extends ClientMessage {
     @Serial
     private static final long serialVersionUID = 6913153965860413805L;
     private final String nickname;
+    private final boolean isJoin;
+    private final String gameName;
 
     /**
      * Constructor
      * @param nickname the user's input for a nickname
      */
-    public LoginResponse(String nickname) {
+    public LoginResponse(boolean isJoin, String gameName, String nickname) {
+        this.isJoin = isJoin;
+        this.gameName = gameName;
         this.nickname = nickname;
     }
 
@@ -31,14 +35,16 @@ public class LoginResponse extends ClientMessage {
      */
     @Override
     public void execute(Server server, SocketConnectionHandler connectionHandler) {
-        if (this.nickname == null || this.nickname.isEmpty()) {
-            connectionHandler.sendMessageClient(new LoginRequest());
-        } else if(!server.checkUniqueNickname(nickname)){
+        if(!server.checkUniqueNickname(this.nickname)){
             connectionHandler.sendMessageClient(new TextMessage("Username already present"));
-            connectionHandler.sendMessageClient(new LoginRequest());
+            connectionHandler.sendMessageClient(new LoginRequest(this.isJoin, this.gameName));
         }else {
             connectionHandler.setClientNickname(nickname);
-            server.addToGame(connectionHandler);
+        if (this.isJoin) {
+                server.joinGame(connectionHandler, this.gameName);
+            } else {
+                connectionHandler.playersNumberRequest();
+            }
         }
     }
 }

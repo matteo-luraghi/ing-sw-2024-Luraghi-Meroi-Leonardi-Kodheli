@@ -13,11 +13,15 @@ import java.rmi.RemoteException;
 public class LoginRequest extends ServerMessage {
     @Serial
     private static final long serialVersionUID = -4505766063795951757L;
+    private final boolean isJoin;
+    private final String gameName;
 
     /**
      * Constructor
      */
-    public LoginRequest() {
+    public LoginRequest(boolean isJoin, String gameName) {
+        this.isJoin = isJoin;
+        this.gameName = gameName;
     }
 
     /**
@@ -27,7 +31,7 @@ public class LoginRequest extends ServerMessage {
     @Override
     public void show(View view) {
         try {
-            view.insertNickname();
+            view.insertNickname(this.isJoin, this.gameName);
         } catch (RemoteException e) {
             System.err.println("Error asking for nickname");
         }

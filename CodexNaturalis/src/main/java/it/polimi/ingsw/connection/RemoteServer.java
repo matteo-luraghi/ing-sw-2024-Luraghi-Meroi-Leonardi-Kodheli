@@ -14,14 +14,14 @@ public interface RemoteServer extends Remote {
      * Add a client to a game via its connectionHandler
      * @param connectionHandler the connectionHandler to save in a game
      */
-    void addToGame(ConnectionHandler connectionHandler) throws RemoteException;
+    void joinGame(ConnectionHandler connectionHandler, String gameName) throws RemoteException;
 
     /**
      * Overloading of addToGame with number of players
      * @param connectionHandler the client handler
      * @param numberOfPlayers the number of players for the new game
      */
-    void addToGame(ConnectionHandler connectionHandler, int numberOfPlayers) throws RemoteException;
+    void createGame(ConnectionHandler connectionHandler, int numberOfPlayers, String gameName) throws RemoteException;
 
     /**
      * Check if the nickname is unique in the group
