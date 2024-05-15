@@ -28,8 +28,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
     private View view;
     private final Registry registry;
 
-    public RMIConnectionHandler(String nickname, Registry registry) {
-        setClientNickname(nickname);
+    public RMIConnectionHandler(Registry registry) {
         this.registry = registry;
     }
 
@@ -43,11 +42,6 @@ public class RMIConnectionHandler extends ConnectionHandler {
             System.out.println("Error connecting to client");
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void nicknameRequest(boolean isGold, String gameName) {
-
     }
 
     /**

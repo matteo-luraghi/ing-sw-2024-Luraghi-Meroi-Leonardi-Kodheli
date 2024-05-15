@@ -1,7 +1,10 @@
 package it.polimi.ingsw.connection;
 
+import it.polimi.ingsw.controller.Controller;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.Set;
 
 /**
  * RemoteServer interface
@@ -35,4 +38,10 @@ public interface RemoteServer extends Remote {
      * @param connectionHandler the connectionHandler relative to the client
      */
     void removeClient(ConnectionHandler connectionHandler) throws RemoteException;
+
+    /**
+     * Get all the games
+     * @return the game's controllers
+     */
+    Set<Controller> getGames() throws RemoteException;
 }

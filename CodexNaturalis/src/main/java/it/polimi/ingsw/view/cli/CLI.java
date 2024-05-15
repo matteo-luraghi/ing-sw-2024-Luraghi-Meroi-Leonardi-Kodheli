@@ -2,8 +2,10 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.connection.ConnectionClosedException;
+import it.polimi.ingsw.connection.RemoteServer;
 import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.connection.socket.SocketClient;
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.model.gamelogic.*;
 import it.polimi.ingsw.view.mainview.View;
@@ -13,8 +15,10 @@ import it.polimi.ingsw.view.mainview.*;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  * CLI class to show everything using text interface
@@ -100,8 +104,20 @@ public class CLI implements View {
         this.client = client;
 
         if (client.getClass() == RMIClient.class) {
-            // TOOD: start showJoinOrCreate in RMI
-            //new Thread(this::insertNickname).start();
+            Registry registry = ((RMIClient) client).getRegistry();
+            try {
+                RemoteServer server = (RemoteServer) registry.lookup("server");
+                ArrayList<String> gameNames = (ArrayList<String>) server.getGames().stream()
+                    .filter(c -> !c.isGameStarted())
+                    .map(Controller::getGameName)
+                    .collect(Collectors.toList());
+
+                showJoinOrCreate(gameNames);
+            } catch (Exception e) {
+                System.err.println("Error connecting to server");
+                e.printStackTrace();
+                throw new ConnectionClosedException("Connection closed");
+            }
         }
 
         while(true) {
@@ -194,7 +210,7 @@ public class CLI implements View {
         }
 
         this.gameName = gameName;
-        client.gameChoice(isJoin, gameName);
+        insertNickname(isJoin, gameName);
     }
 
 
@@ -208,7 +224,7 @@ public class CLI implements View {
             System.out.println("Choose a nickname");
             String nickname = scanner.nextLine();
             try {
-                client.loginResponse(isJoin, gameName, nickname);
+                client.gameChoice(isJoin, gameName, nickname);
                 valid = true;
             } catch (Exception e) {
                 // if RMI client exception if the nickname is already present

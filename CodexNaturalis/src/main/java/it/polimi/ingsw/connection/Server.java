@@ -2,6 +2,7 @@ package it.polimi.ingsw.connection;
 
 import it.polimi.ingsw.connection.socket.message.connectionMessage.Disconnection;
 import it.polimi.ingsw.connection.socket.SocketConnectionHandler;
+import it.polimi.ingsw.connection.socket.message.serverMessage.JoinGameRequest;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.RemoteController;
 
@@ -18,6 +19,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 /**
  * Server class
@@ -89,8 +91,13 @@ public class Server implements RemoteServer {
             connectionHandler.getController().chooseColorState(connectionHandler);
             return;
         }
-        // no free games available -> wait for user input of number of players
-        connectionHandler.playersNumberRequest();
+
+        ArrayList<String> gameNames = (ArrayList<String>) getGames().stream()
+                .filter(c -> !c.isGameStarted())
+                .map(Controller::getGameName)
+                .toList();
+        // no game found -> game already started or game deleted
+        connectionHandler.sendMessage(new JoinGameRequest(gameNames));
     }
 
     /**
@@ -175,6 +182,7 @@ public class Server implements RemoteServer {
      * Get all the games
      * @return the game's controllers
      */
+    @Override
     public Set<Controller> getGames() {
         return games.keySet();
     }

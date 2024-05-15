@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.Coordinates;
+import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.rmi.NotBoundException;
@@ -31,14 +32,19 @@ public class RMIClient extends Client {
         this.registry = LocateRegistry.getRegistry(ip, port);
     }
 
+    public Registry getRegistry() {
+        return this.registry;
+    }
+
     /**
-     * Send the selected nickname to the server
-     * @param nickname the nickname
+     * Make the user choose to join or create a game
+     * @param isJoin true if the user wants to join a game
+     * @param gameName game name
      */
     @Override
-    public void loginResponse(boolean isJoin, String gameName, String nickname) throws Exception {
-
-        this.connectionHandler = new RMIConnectionHandler(nickname, registry);
+    public void gameChoice(boolean isJoin, String gameName, String nickname) throws Exception {
+        this.connectionHandler = new RMIConnectionHandler(registry);
+        this.connectionHandler.setClientNickname(nickname);
 
         try {
             // connect to the server

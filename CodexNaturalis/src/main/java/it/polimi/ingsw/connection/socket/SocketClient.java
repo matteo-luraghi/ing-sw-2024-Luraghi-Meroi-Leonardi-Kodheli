@@ -117,17 +117,8 @@ public class SocketClient extends Client {
     }
 
     @Override
-    public void gameChoice(boolean isJoin, String gameName) {
-        sendMessageServer(new JoinGameResponse(isJoin, gameName));
-    }
-
-    /**
-     * Send the selected nickname to the server using a LoginResponse client message
-     * @param nickname the nickname
-     */
-    @Override
-    public void loginResponse(boolean isJoin, String gameName, String nickname) {
-        sendMessageServer(new LoginResponse(isJoin, gameName, nickname));
+    public void gameChoice(boolean isJoin, String gameName, String nickname) {
+        sendMessageServer(new JoinGameResponse(isJoin, gameName, nickname));
     }
 
     /**

@@ -121,11 +121,6 @@ public class SocketConnectionHandler extends ConnectionHandler implements Runnab
         }
     }
 
-    @Override
-    public void nicknameRequest(boolean isJoin, String gameName) {
-        sendMessageClient(new LoginRequest(isJoin, gameName));
-    }
-
     /**
      * Ask the player for their color using a ColorRequest server message
      * @param availableColors the possible colors
