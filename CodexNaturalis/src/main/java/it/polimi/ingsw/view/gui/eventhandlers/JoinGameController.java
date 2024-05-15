@@ -7,6 +7,7 @@ public class JoinGameController  extends EventHandler{
 
     //THIS WILL NEED TO BE CHANGED TO BE ON EVERY SINGLE LIST
     public void joinGame(MouseEvent mouseEvent) {
+
     }
 
     public void createGame(MouseEvent mouseEvent) {

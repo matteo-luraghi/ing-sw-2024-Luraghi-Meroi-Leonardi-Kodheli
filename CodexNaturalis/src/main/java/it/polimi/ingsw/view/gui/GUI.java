@@ -33,7 +33,6 @@ import java.util.ArrayList;
  */
 public class GUI extends Application implements View{
     private Client client = null;
-    private Controller controller = null;
     private ViewGameCardFactory gameCardViewer;
     private ViewScoreBoardFactory scoreBoardViewer;
     private ViewPlayerFieldFactory playerFieldViewer;
@@ -169,7 +168,7 @@ public class GUI extends Application implements View{
      */
     @Override
     public void insertNickname() {
-        sceneName = "JoinGame.fxml";
+        sceneName = "Login.fxml";
         changeScene(sceneName);
     }
 
@@ -178,7 +177,10 @@ public class GUI extends Application implements View{
      * @param colors available
      */
     @Override
-    public void insertColor(ArrayList<Color> colors) {}
+    public void insertColor(ArrayList<Color> colors) {
+        LoginController loginController = (LoginController) currentEventHandler;
+        loginController.setAvailableColors(colors);
+    }
 
     /**
      * asks the client how many players there has to be in the game
