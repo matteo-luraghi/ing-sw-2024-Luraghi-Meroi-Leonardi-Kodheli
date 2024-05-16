@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.Coordinates;
 import it.polimi.ingsw.view.mainview.View;
 
+import java.net.InetAddress;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -23,6 +24,7 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class RMIClient extends Client {
     private final Registry registry;
+    private Registry viewRegistry;
     private RemoteController controller = null;
     private RMIConnectionHandler connectionHandler;
     private String gameName = null;
@@ -30,6 +32,21 @@ public class RMIClient extends Client {
     public RMIClient(String ip, int port, View view) throws RemoteException, NotBoundException {
         super(view);
         this.registry = LocateRegistry.getRegistry(ip, port);
+        try {
+            System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        boolean valid = false;
+        int viewPort = 1100;
+        while(!valid) {
+            try {
+                this.viewRegistry = LocateRegistry.createRegistry(viewPort);
+                valid = true;
+            } catch (RemoteException e) {
+                viewPort++;
+            }
+        }
     }
 
     public Registry getRegistry() {
@@ -46,7 +63,7 @@ public class RMIClient extends Client {
 
         this.gameName = gameName;
 
-        this.connectionHandler = new RMIConnectionHandler(registry);
+        this.connectionHandler = new RMIConnectionHandler(registry, viewRegistry);
         this.connectionHandler.setClientNickname(nickname);
 
         try {
@@ -61,7 +78,7 @@ public class RMIClient extends Client {
             try {
                 // export view
                 View stubView = (View) UnicastRemoteObject.exportObject(getView(), 0);
-                this.registry.rebind("view" + nickname, stubView);
+                this.viewRegistry.rebind("view" + nickname, stubView);
             } catch (ExportException ignored) {
             } catch (Exception e) {
                 System.out.println("Error exporting view");

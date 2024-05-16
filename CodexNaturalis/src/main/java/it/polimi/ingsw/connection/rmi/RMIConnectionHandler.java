@@ -13,6 +13,7 @@ import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.net.InetAddress;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -27,9 +28,11 @@ public class RMIConnectionHandler extends ConnectionHandler {
     private static final long serialVersionUID = 9202804208069477313L;
     private View view;
     private final Registry registry;
+    private final Registry viewRegistry;
 
-    public RMIConnectionHandler(Registry registry) {
+    public RMIConnectionHandler(Registry registry, Registry viewRegistry) {
         this.registry = registry;
+        this.viewRegistry = viewRegistry;
     }
 
     /**
@@ -37,7 +40,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
      */
     public void setView() {
         try {
-            this.view = (View) this.registry.lookup("view" + getClientNickname());
+            this.view = (View) this.viewRegistry.lookup("view" + getClientNickname());
         } catch (Exception e) {
             System.out.println("Error connecting to client");
             e.printStackTrace();
@@ -315,12 +318,12 @@ public class RMIConnectionHandler extends ConnectionHandler {
         }
 
         try {
-            View stubView = (View) registry.lookup("view" + getClientNickname());
+            View stubView = (View) viewRegistry.lookup("view" + getClientNickname());
             UnicastRemoteObject.unexportObject(stubView, true);
         } catch (Exception ignored) {}
 
         try {
-            registry.unbind("view" + getClientNickname());
+            viewRegistry.unbind("view" + getClientNickname());
         } catch (Exception ignored) {}
 
         try {
