@@ -11,6 +11,9 @@ import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 
+/**
+ * ConnectToServer.fxml event handler, used to make the player connect ot a server
+ */
 public class ConnectToServerController extends EventHandler{
     @FXML
     public ChoiceBox connectionChoice;
@@ -19,6 +22,9 @@ public class ConnectToServerController extends EventHandler{
     @FXML
     public TextField serverPort;
 
+    /**
+     * Function that gets called when the page loads, sets the choices for the connections ChoiceBox
+     */
     public void initialize() {
 
         ArrayList<String> connections = new ArrayList<>();
@@ -29,22 +35,31 @@ public class ConnectToServerController extends EventHandler{
         connectionChoice.setValue("Socket");
 
     }
+
+    /**
+     * Function that gets called when you click the correlated button
+     * Checks input data and tries to connect to the server
+     * @throws ConnectionClosedException If a client can no longer connect to the server
+     */
     @FXML
     protected void ConnectToServer() throws ConnectionClosedException {
+        //Initialize alert
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Invalid input data");
         alert.setHeaderText("Invalid input data");
+
         String ip = serverIP.getText();
         String portText = serverPort.getText();
         String connection = connectionChoice.getValue().toString();
-        System.out.println(connection);
         int port;
+
         //Check ip validity
         if(ip == null || ip.isEmpty()){
             alert.setContentText("IP is empty");
             alert.showAndWait();
             return;
         }
+
         //Check port validity
         try{
             if(portText == null || portText.isEmpty()){
@@ -56,6 +71,7 @@ public class ConnectToServerController extends EventHandler{
             alert.showAndWait();
             return;
         }
+
         //Check connection validity (Should always be true)
         if(connection == null || connection.isEmpty() || !(connection.equalsIgnoreCase("Socket") || connection.equalsIgnoreCase("RMI"))){
             alert.setContentText("Connection is not set or is an invalid value");
@@ -63,8 +79,7 @@ public class ConnectToServerController extends EventHandler{
             return;
         }
 
-        //System.out.println("IP: " + serverIP.getText() + " Port:" + serverPort.getText() + " connection: " + connectionChoice.getValue().toString());
-
+        //Tries to connect to the server (if it returns true, messages will be sent automatically)
         if(!view.connectToServer(ip, port, connection)){
             alert.setTitle("Error");
             alert.setHeaderText("Server error");

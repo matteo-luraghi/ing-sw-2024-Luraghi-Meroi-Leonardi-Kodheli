@@ -11,18 +11,26 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 
+/**
+ * JoinGame.fxml event handler, used to make the player join a game or create a new one
+ */
 public class JoinGameController  extends EventHandler{
 
     public ListView gamesList;
     public TextField gameName;
     public ChoiceBox numOfPlayers;
-    private ArrayList<String> gameNames;
+    /**
+     * Sets the names of the currently available games and adds it to the listView
+     * @param gameNames the name of the games
+     */
     public void setGameNames(ArrayList<String> gameNames){
-        this.gameNames = gameNames;
         ObservableList<String> items = FXCollections.observableArrayList(gameNames);
         gamesList.setItems(items);
     }
 
+    /**
+     * Function that gets called when the page loads, sets the choices for the numberOfPlayers ChoiceBox
+     */
     public void initialize(){
         ArrayList<Integer> nums = new ArrayList<>();
         nums.add(2);
@@ -33,11 +41,25 @@ public class JoinGameController  extends EventHandler{
         numOfPlayers.setValue(nums.getFirst());
     }
 
-    public void joinGame(MouseEvent mouseEvent) {
-        System.out.println("clicked on " + gamesList.getSelectionModel().getSelectedItem());
+    /**
+     * Function that gets called when you click the correlated button
+     * Joins the selected game
+     */
+    public void joinGame() {
+        String selectedGameName = gamesList.getSelectionModel().getSelectedItem().toString();
+
+        //Send data to the view
+        view.setIsJoining(false);
+        view.setGameName(selectedGameName);
+        view.changeScene("Login.fxml");
     }
 
-    public void createGame(MouseEvent mouseEvent) {
+    /**
+     * Function that gets called when you click the correlated button
+     * Tries to create a new game with the given name and capacity
+     */
+    public void createGame() {
+        //Initialize alert
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Invalid input data");
         alert.setHeaderText("Invalid input data");
@@ -45,11 +67,14 @@ public class JoinGameController  extends EventHandler{
         String game = gameName.getText();
         String numOfPlayersText = numOfPlayers.getValue().toString();
         int numberOfPlayers;
+        //checks game name validity
         if(game == null || game.isEmpty()){
             alert.setContentText("Game name is null");
             alert.showAndWait();
             return;
         }
+
+        //checks numberOfPlayers validity
         try{
             numberOfPlayers = Integer.parseInt(numOfPlayersText);
         }catch(NumberFormatException e){
@@ -65,7 +90,11 @@ public class JoinGameController  extends EventHandler{
         view.changeScene("Login.fxml");
     }
 
-    public void refreshGame(MouseEvent mouseEvent) {
+    /**
+     * Function that gets called when you click the correlated button
+     * Refreshed the list of currently available games
+     */
+    public void refreshGame() {
         //TODO:Implement after controller method
     }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.gui.eventhandlers;
 
+import it.polimi.ingsw.connection.ConnectionClosedException;
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.Util;
 import javafx.collections.FXCollections;
@@ -9,6 +10,9 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 
+/**
+ * Login.fxml event handler, used to make the player login (chose a nickname and color)
+ */
 public class LoginController extends EventHandler{
 
     public TextField Username;
@@ -21,7 +25,12 @@ public class LoginController extends EventHandler{
     private boolean isJoin;
     private String gameNameString;
 
+    /**
+     * Sets the currently available colors to the ChoiceBox and shows the color choosing part of the form
+     * @param availableColors the colors that are currently available
+     */
     public void setAvailableColors(ArrayList<Color> availableColors){
+        //Convert the Colors to Strings
         ArrayList<String> colors = new ArrayList<>();
         for(Color color : availableColors){
             colors.add(color.toStringGUI());
@@ -29,23 +38,36 @@ public class LoginController extends EventHandler{
         ObservableList<String> list = FXCollections.observableArrayList(colors);
         Color.setItems(list);
         Color.setValue(list.getFirst());
+        //Makes the color part of the form visible
         Color.setVisible(true);
         ColorLabel.setVisible(true);
         ColorButton.setVisible(true);
     }
 
+    /**
+     * Sets certain parameters passed from JoinGameController
+     * @param isJoin true if the player is joining a game, false if they're creating one
+     * @param gameNameString the game that the player is joining/creating
+     */
     public void setParameters(boolean isJoin, String gameNameString){
         this.isJoin = isJoin;
         this.gameNameString = gameNameString;
         gameName.setText(gameNameString);
     }
 
+    /**
+     * Function that gets called when the page loads, hides the color part of the form
+     */
     public void initialize(){
         ColorLabel.setVisible(false);
         ColorButton.setVisible(false);
         Color.setVisible(false);
     }
 
+    /**
+     * Function that gets called when you click the correlated button
+     * Checks input data and tries to insert the client into the chosen game with the chosen nickname
+     */
     public void loginPlayer(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Invalid input data");
@@ -70,6 +92,10 @@ public class LoginController extends EventHandler{
 
     }
 
+    /**
+     * Function that gets called when you click the correlated button
+     * Checks input data and tries to set the color chosen by the player
+     */
     public void chooseColor(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Invalid input data");
@@ -93,5 +119,9 @@ public class LoginController extends EventHandler{
         ColorButton.setDisable(true);
     }
 
+    /**
+     * Function that gets called when you click the correlated button
+     * Makes the label "waiting for players" visible
+     */
     public void showWaitingForPlayers(){ waitingLabel.setVisible(true); }
 }

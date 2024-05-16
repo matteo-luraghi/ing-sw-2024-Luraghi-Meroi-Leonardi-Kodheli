@@ -3,6 +3,11 @@ package it.polimi.ingsw.view.gui.eventhandlers;
 import it.polimi.ingsw.view.gui.GUI;
 import javafx.scene.control.Alert;
 
+/**
+ * Abstact class that gets extended by all of the event handlers for the GUI
+ * Useful to store common methods for all event handlers
+ * @author Gabriel Leonardi
+ */
 public abstract class EventHandler {
     protected GUI view;
 
