@@ -52,7 +52,7 @@ public class LoginController extends EventHandler{
     public void setParameters(boolean isJoin, String gameNameString){
         this.isJoin = isJoin;
         this.gameNameString = gameNameString;
-        gameName.setText(gameNameString);
+        gameName.setText(gameNameString+"!");
     }
 
     /**

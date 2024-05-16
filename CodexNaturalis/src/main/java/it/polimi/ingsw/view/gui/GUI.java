@@ -192,6 +192,7 @@ public class GUI extends Application implements View{
     }
 
     public void setLoginParameters(){
+        System.out.println("Set Login parameters");
         Platform.runLater(() -> {
             LoginController loginHandler = (LoginController) currentEventHandler;
             loginHandler.setParameters(isJoining, gameName);
@@ -205,6 +206,7 @@ public class GUI extends Application implements View{
     public void insertNickname(boolean isJoin, String gameName) {
         sceneName = "Login.fxml";
         changeScene(sceneName);
+        setLoginParameters();
     }
 
     /**

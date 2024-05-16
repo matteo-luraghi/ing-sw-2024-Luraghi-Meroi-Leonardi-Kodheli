@@ -52,6 +52,7 @@ public class JoinGameController  extends EventHandler{
         view.setIsJoining(false);
         view.setGameName(selectedGameName);
         view.changeScene("Login.fxml");
+        view.setLoginParameters();
     }
 
     /**
@@ -88,6 +89,7 @@ public class JoinGameController  extends EventHandler{
         view.setGameName(game);
         view.setNumOfPlayersChosen(numberOfPlayers);
         view.changeScene("Login.fxml");
+        view.setLoginParameters();
     }
 
     /**
