@@ -21,8 +21,8 @@ public class PositionGoalCard extends GoalCard{
      * @param ResourceFromBase kingdom of the cards required, corresponding to the PositionFromBase ArrayList
      * isResourceGoalCard is always false for this class
      */
-    public PositionGoalCard (int Points, ArrayList<Direction> PositionsFromBase, ArrayList<Kingdom> ResourceFromBase) {
-        super(Points, false);
+    public PositionGoalCard (int Points, ArrayList<Direction> PositionsFromBase, ArrayList<Kingdom> ResourceFromBase, int id) {
+        super(Points, false, id);
         positionsFromBase = new ArrayList<>();
         this.positionsFromBase.addAll(PositionsFromBase);
         resourceFromBase = new ArrayList<>();

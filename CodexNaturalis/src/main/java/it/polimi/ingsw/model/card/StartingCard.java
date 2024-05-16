@@ -21,8 +21,8 @@ public class StartingCard extends GameCard{
      * @param permanentResources resources on the back of the card that can't be covered
      */
     public StartingCard(Kingdom kingdom, boolean isFront,
-                        Resource[] frontCorners, Resource[] backCorners, Resource[] permanentResources) {
-        super(kingdom, isFront, frontCorners);
+                        Resource[] frontCorners, Resource[] backCorners, Resource[] permanentResources, int id) {
+        super(kingdom, isFront, frontCorners, id);
         this.backCorners = backCorners.clone();
         this.permanentResources = permanentResources.clone();
     }

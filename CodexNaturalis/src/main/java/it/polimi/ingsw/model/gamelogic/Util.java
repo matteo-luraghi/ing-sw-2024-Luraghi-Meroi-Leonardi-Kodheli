@@ -146,7 +146,8 @@ public class Util {
         }
         int points=Json.get("points").getAsInt();
         boolean isGoldJ=Json.get("isGold").getAsBoolean();
-        return new ResourceCard(kingdom,isFront,corners, points,isGoldJ);
+        int id=Json.get("id").getAsInt();
+        return new ResourceCard(kingdom,isFront,corners, points,isGoldJ, id);
 
     }
     /**
@@ -180,8 +181,8 @@ public class Util {
             playableCondition.add(fromStringToResource(o.getAsString()));
 
         }
-
-        return new GoldCard(kingdom,isFront,corners, points,pointCondition,playableCondition);
+        int id=Json.get("id").getAsInt();
+        return new GoldCard(kingdom,isFront,corners, points,pointCondition,playableCondition, id);
 
     }
 
@@ -227,9 +228,9 @@ public class Util {
 
 
 
+        int id=Json.get("id").getAsInt();
 
-
-        return new StartingCard(kingdom,isFront,corners,backCorners,permanentResources);
+        return new StartingCard(kingdom,isFront,corners,backCorners,permanentResources, id);
 
     }
 
@@ -251,8 +252,8 @@ public class Util {
             requirements.add(Util.fromStringToResource(o.getAsString()));
 
         }
-
-        return new ResourceGoalCard(points,requirements);
+        int id=Json.get("id").getAsInt();
+        return new ResourceGoalCard(points,requirements, id);
 
     }
 
@@ -280,7 +281,8 @@ public class Util {
         {
             direction.add(Util.fromStringToDirection(o.getAsString()));
         }
-        return new PositionGoalCard(points,direction,requirements);
+        int id=Json.get("id").getAsInt();
+        return new PositionGoalCard(points,direction,requirements, id);
 
     }
 

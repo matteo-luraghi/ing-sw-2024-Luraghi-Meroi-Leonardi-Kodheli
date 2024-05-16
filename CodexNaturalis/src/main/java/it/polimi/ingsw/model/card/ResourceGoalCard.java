@@ -18,8 +18,8 @@ public class ResourceGoalCard extends GoalCard{
      * @param requirements ArrayList of the Resources required to satisfy the goal
      * IsResourceGoal is always true for this class
      */
-    public ResourceGoalCard (int Points, ArrayList<Resource> requirements) {
-        super(Points, true);
+    public ResourceGoalCard (int Points, ArrayList<Resource> requirements, int id) {
+        super(Points, true, id);
         this.requirements = new ArrayList<>();
         this.requirements.addAll(requirements);
     }

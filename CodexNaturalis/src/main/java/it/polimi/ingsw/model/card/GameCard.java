@@ -14,16 +14,27 @@ abstract public class GameCard implements Serializable {
     private final Kingdom kingdom;
     private boolean isFront;
 
+    private final int id;
+
     /**
      * Constructor
      * @param kingdom type of the card
      * @param isFront which side of the card is currently visible
      * @param corners content of the front corners of the card
      */
-    public GameCard(Kingdom kingdom, boolean isFront, Resource[] corners) {
+    public GameCard(Kingdom kingdom, boolean isFront, Resource[] corners, int id) {
         this.kingdom = kingdom;
         this.isFront = isFront;
         this.corners = corners.clone();
+        this.id=id;
+    }
+
+    /**
+     * Card id getter for graphical resources
+     * @return int id of the card
+     */
+    public int getId() {
+        return id;
     }
 
     /**
