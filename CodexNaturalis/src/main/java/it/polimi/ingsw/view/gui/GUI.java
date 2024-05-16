@@ -12,10 +12,7 @@ import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.ScoreBoard;
-import it.polimi.ingsw.view.gui.eventhandlers.ConnectToServerController;
-import it.polimi.ingsw.view.gui.eventhandlers.EventHandler;
-import it.polimi.ingsw.view.gui.eventhandlers.JoinGameController;
-import it.polimi.ingsw.view.gui.eventhandlers.LoginController;
+import it.polimi.ingsw.view.gui.eventhandlers.*;
 import it.polimi.ingsw.view.mainview.*;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -249,12 +246,21 @@ public class GUI extends Application implements View{
      */
     @Override
     public void ShowPrivateGoal(Player player, GameState game) {
-
+        System.err.println("Not yet implemented, should only be called in player field and even then in GUI it shouldn't really be called");
     }
 
+    /**
+     * Shows the setup page and makes the client chose a side of their starting card
+     * @param card the starting card that has been randomly assigned to the client
+     */
     @Override
     public void ChooseStartingCardSide(StartingCard card) {
-
+        sceneName = "Setup.fxml";
+        changeScene(sceneName);
+        Platform.runLater(() -> {
+            SetupController setupHandler = (SetupController) currentEventHandler;
+            setupHandler.setStartingCard(card);
+        });
     }
 
     /**
