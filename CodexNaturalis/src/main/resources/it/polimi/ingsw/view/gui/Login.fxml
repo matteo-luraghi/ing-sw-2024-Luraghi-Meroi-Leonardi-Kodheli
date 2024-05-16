@@ -21,7 +21,7 @@
                <children>
                   <Label layoutX="14.0" layoutY="14.0" text="Select your username" />
                   <TextField fx:id="Username" layoutX="59.0" layoutY="31.0" />
-                  <Button layoutX="397.0" layoutY="31.0" mnemonicParsing="false" onAction="#loginPlayer" prefHeight="25.0" prefWidth="132.0" text="Check nickname" />
+                  <Button layoutX="397.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#loginPlayer" prefHeight="25.0" prefWidth="132.0" text="Check nickname" />
                </children>
             </Pane>
             <Pane layoutX="20.0" layoutY="99.0" prefHeight="95.0" prefWidth="416.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
@@ -30,7 +30,7 @@
                      <children>
                         <Label layoutX="14.0" layoutY="14.0" text="Select your color" />
                         <ChoiceBox fx:id="Color" layoutX="58.0" layoutY="31.0" prefWidth="150.0" />
-                        <Button layoutX="399.0" layoutY="31.0" mnemonicParsing="false" onAction="#chooseColor" prefHeight="25.0" prefWidth="132.0" text="Check color" />
+                        <Button layoutX="399.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#chooseColor" prefHeight="25.0" prefWidth="132.0" text="Check color" />
                      </children>
                   </Pane>
                </children></Pane>
