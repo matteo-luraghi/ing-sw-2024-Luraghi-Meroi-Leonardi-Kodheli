@@ -7,7 +7,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.eventhandlers.JoinGameController">
@@ -15,40 +16,66 @@
       <ColorAdjust />
    </effect>
    <children>
-      <Label layoutX="85.0" layoutY="14.0" text="Join a game:">
-         <font>
-            <Font size="26.0" />
-         </font>
-      </Label>
-      <Label layoutX="362.0" layoutY="33.0" text="Create a game:">
-         <font>
-            <Font size="26.0" />
-         </font>
-      </Label>
-      <ListView layoutY="88.0" onMouseClicked="#joinGame" prefHeight="312.0" prefWidth="300.0" />
-      <Button layoutX="111.0" layoutY="58.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="93.0" text="Refresh" />
-      <Label layoutX="363.0" layoutY="96.0" text="Enter the game name">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="338.0" layoutY="179.0" text="Enter the number of players">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Button fx:id="createButton" layoutX="342.0" layoutY="275.0" mnemonicParsing="false" onMouseClicked="#createGame" prefHeight="59.0" prefWidth="214.0" text="Create">
-         <font>
-            <Font size="27.0" />
-         </font>
-      </Button>
-      <TextField fx:id="gameName" alignment="CENTER_RIGHT" layoutX="363.0" layoutY="131.0" prefHeight="30.0" prefWidth="171.0">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </TextField>
-      <ChoiceBox fx:id="numOfPlayers" layoutX="374.0" layoutY="219.0" prefWidth="150.0" />
-      <Line endX="-30.0" endY="326.29290771484375" layoutX="330.0" layoutY="84.0" startX="-30.0" startY="-95.0" />
-      <Line endX="570.5" layoutX="57.0" layoutY="88.0" startX="-100.0" />
+      <HBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="400.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <VBox alignment="CENTER" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="92.66666666666667" AnchorPane.topAnchor="290.0">
+                     <children>
+                        <Button fx:id="createButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#createGame" prefWidth="200.0" text="Create">
+                           <font>
+                              <Font size="27.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefWidth="200.0" AnchorPane.bottomAnchor="221.33333333333334" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="119.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Enter the game name">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="gameName" alignment="CENTER" maxWidth="400.0" prefWidth="200.0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" AnchorPane.bottomAnchor="145.33333333333331" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="199.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="240.0" text="Enter the number of players">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="numOfPlayers" prefWidth="150.0" />
+                     </children>
+                  </VBox>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="56.0" layoutY="14.0" prefHeight="38.0" prefWidth="189.0" text="Create a game:" textAlignment="CENTER" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="56.66666666666666">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane HBox.hgrow="ALWAYS">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="72.0" layoutY="14.0" prefHeight="38.0" prefWidth="149.0" text="Join a game:" AnchorPane.leftAnchor="72.0" AnchorPane.rightAnchor="72.0">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="gamesList" layoutX="-10.666666666666666" onMouseClicked="#joinGame" prefHeight="299.0" prefWidth="278.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0" />
+                  <Button mnemonicParsing="false" onMouseClicked="#refreshGame" prefHeight="40.0" prefWidth="289.0" text="Refresh" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
