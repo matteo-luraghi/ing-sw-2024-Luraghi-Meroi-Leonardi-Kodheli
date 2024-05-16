@@ -1,1 +1,1 @@
-{"kingdom": "ANIMAL", "isFront": false, "corners": ["BLANK", "SCROLL", "HIDDEN", "HIDDEN"], "points": 3, "isGold": true, "pointCondition": "NORMAL", "playableCondition": ["ANIMAL", "ANIMAL", "ANIMAL"]}
+{"id": "078", "kingdom": "ANIMAL", "isFront": false, "corners": ["BLANK", "SCROLL", "HIDDEN", "HIDDEN"], "points": 3, "isGold": true, "pointCondition": "NORMAL", "playableCondition": ["ANIMAL", "ANIMAL", "ANIMAL"]}

@@ -8,29 +8,37 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.eventhandlers.LoginController">
    <children>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0">
          <children>
-            <Label layoutX="194.0" layoutY="14.0" text="Welcome!">
+            <Label layoutX="172.0" layoutY="14.0" text="Welcome to">
                <font>
                   <Font size="48.0" />
                </font>
             </Label>
-            <Pane layoutY="79.0" prefHeight="95.0" prefWidth="416.0" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+            <Pane layoutY="151.0" prefHeight="95.0" prefWidth="416.0" AnchorPane.bottomAnchor="169.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="151.0">
                <children>
                   <Label layoutX="14.0" layoutY="14.0" text="Select your username" />
                   <TextField fx:id="Username" layoutX="59.0" layoutY="31.0" />
+                  <Button layoutX="397.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#loginPlayer" prefHeight="25.0" prefWidth="132.0" text="Check nickname" />
                </children>
             </Pane>
-            <Pane layoutX="10.0" layoutY="89.0" prefHeight="95.0" prefWidth="416.0" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="160.0">
+            <Pane layoutX="20.0" layoutY="99.0" prefHeight="95.0" prefWidth="416.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
                <children>
-                  <Label layoutX="14.0" layoutY="14.0" text="Select your color" />
-                  <ChoiceBox fx:id="Color" layoutX="58.0" layoutY="31.0" prefWidth="150.0" />
-               </children>
-            </Pane>
-            <Pane layoutX="20.0" layoutY="99.0" prefHeight="95.0" prefWidth="416.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0" />
-            <Button layoutX="454.0" layoutY="360.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" text="Login!" />
+                  <Pane layoutY="-10.0" prefHeight="134.0" prefWidth="600.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="14.0" text="Select your color" />
+                        <ChoiceBox fx:id="Color" layoutX="58.0" layoutY="31.0" prefWidth="150.0" />
+                        <Button layoutX="399.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#chooseColor" prefHeight="25.0" prefWidth="132.0" text="Check color" />
+                     </children>
+                  </Pane>
+               </children></Pane>
+            <Label layoutX="174.0" layoutY="84.0" prefHeight="70.0" prefWidth="256.0" text="Game!" textAlignment="CENTER">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

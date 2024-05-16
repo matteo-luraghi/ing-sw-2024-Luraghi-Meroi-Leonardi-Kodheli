@@ -1,1 +1,1 @@
-{"kingdom": "FUNGI", "isFront": false, "corners": ["BLANK", "POTION", "HIDDEN", "BLANK"], "points": 1, "isGold": true, "pointCondition": "POTION", "playableCondition": ["FUNGI", "FUNGI", "PLANT"]}
+{"id": "042", "kingdom": "FUNGI", "isFront": false, "corners": ["BLANK", "POTION", "HIDDEN", "BLANK"], "points": 1, "isGold": true, "pointCondition": "POTION", "playableCondition": ["FUNGI", "FUNGI", "PLANT"]}

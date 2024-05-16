@@ -1,1 +1,1 @@
-{"kingdom": "STARTING", "isFront": true, "corners": ["BLANK", "BLANK", "BLANK", "BLANK"], "backCorners": ["INSECT", "ANIMAL", "FUNGI", "PLANT"], "permanentResources": ["PLANT", "FUNGI"]}
+{"id": "083", "kingdom": "STARTING", "isFront": true, "corners": ["BLANK", "BLANK", "BLANK", "BLANK"], "backCorners": ["INSECT", "ANIMAL", "FUNGI", "PLANT"], "permanentResources": ["PLANT", "FUNGI"]}

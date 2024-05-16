@@ -16,4 +16,6 @@ module it.polimi.ingsw.psp17 {
     opens it.polimi.ingsw.controller to java.rmi;
     exports it.polimi.ingsw.view.gui;
     opens it.polimi.ingsw.view.gui to javafx.fxml;
+    exports it.polimi.ingsw.view.gui.eventhandlers;
+    opens it.polimi.ingsw.view.gui.eventhandlers to javafx.fxml;
 }

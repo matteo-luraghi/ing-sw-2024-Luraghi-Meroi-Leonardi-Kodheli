@@ -1,5 +1,6 @@
 {
+    "id": "098",
     "points":2,
     "isResourceGoal":true,
     "requirements": ["INSECT", "INSECT", "INSECT"]
-  }
+}

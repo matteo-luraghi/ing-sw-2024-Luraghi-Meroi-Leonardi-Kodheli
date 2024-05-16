@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.connection.Client;
+import it.polimi.ingsw.connection.ConnectionClosedException;
 import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.connection.socket.SocketClient;
 import it.polimi.ingsw.controller.Controller;
@@ -10,9 +11,15 @@ import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.ScoreBoard;
+import it.polimi.ingsw.view.gui.eventhandlers.ConnectToServerController;
+import it.polimi.ingsw.view.gui.eventhandlers.EventHandler;
+import it.polimi.ingsw.view.gui.eventhandlers.JoinGameController;
+import it.polimi.ingsw.view.gui.eventhandlers.LoginController;
 import it.polimi.ingsw.view.mainview.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -26,13 +33,15 @@ import java.util.ArrayList;
  */
 public class GUI extends Application implements View{
     private Client client = null;
-    private Controller controller = null;
     private ViewGameCardFactory gameCardViewer;
     private ViewScoreBoardFactory scoreBoardViewer;
     private ViewPlayerFieldFactory playerFieldViewer;
     private ViewDeckFactory deckViewer;
     private ViewGoalCardFactory goalCardViewer;
     private String sceneName;
+    private Stage stage;
+    private boolean connectedToServer;
+    private EventHandler currentEventHandler;
     /**
      * GUI constructor
      */
@@ -43,12 +52,13 @@ public class GUI extends Application implements View{
         this.scoreBoardViewer = new ViewScoreBoardGUIFactory();
         this.goalCardViewer = new ViewGoalCardGUIFactory();
         this.sceneName = "ConnectToServer.fxml";
+        connectedToServer = false;
     }
 
     /**
      * Method that starts the GUI for a player
      */
-    public void start(){
+    public void start() throws ConnectionClosedException {
         launch();
     }
 
@@ -58,21 +68,36 @@ public class GUI extends Application implements View{
      */
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ConnectToServerController.class.getResource(sceneName));
-        System.out.println(sceneName);
+        this.stage = stage;
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(sceneName));
         Scene scene = new Scene(fxmlLoader.load(), 600, 500);
         stage.setTitle(sceneName.split("\\.")[0]);
         stage.setScene(scene);
         stage.show();
-        switch (sceneName){
-            case "ConnectToServer.fxml":
-                ConnectToServerController controller = fxmlLoader.getController();
-                controller.setView(this);
-                break;
-            case null, default:
-                System.err.println("SceneName doesn't have a controller");
-                break;
-        }
+
+        currentEventHandler = fxmlLoader.getController();
+        currentEventHandler.setView(this);
+    }
+
+    /**
+     * Method to change into a particular scene
+     * @param sceneName the name of the scene we want to switch to
+     */
+    public void changeScene(String sceneName){
+        Platform.setImplicitExit(false);
+        Platform.runLater(() -> {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(sceneName));
+            Parent root;
+            try{
+                root = (Parent) fxmlLoader.load();
+                currentEventHandler = fxmlLoader.getController();
+                currentEventHandler.setView(this);
+                this.stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        });
     }
 
     /**
@@ -82,28 +107,52 @@ public class GUI extends Application implements View{
      * @param connectionProtocol The connection protocol that the client wants to use (either Socket or RMI)
      * @return true if the connection was successful, false otherwise
      */
-    public boolean connectToServer(String ip, int port, String connectionProtocol){
-        boolean connected = false;
+    public boolean connectToServer(String ip, int port, String connectionProtocol) {
+
         if (connectionProtocol.equalsIgnoreCase("socket")){
             try {
                 client = new SocketClient(ip, port, this);
-                connected = true;
+                connectedToServer = true;
             } catch (IOException | IllegalArgumentException e) {
-                connected = false;
+                connectedToServer = false;
             }
 
         }else if (connectionProtocol.equalsIgnoreCase("rmi")){
             try {
                 client = new RMIClient(ip, port, this);
-                connected = true;
+                connectedToServer = true;
             } catch (RemoteException | NotBoundException | IllegalArgumentException e) {
-                connected = false;
+                connectedToServer = false;
             }
         }
 
-        return connected;
+        if (connectedToServer && client.getClass() == RMIClient.class) {
+            new Thread(this::insertNickname).start();
+        }
+
+        if(connectedToServer){
+            new Thread(this::listenForDisconnection).start();
+        }
+
+        return connectedToServer;
     }
 
+    public void listenForDisconnection() {
+        boolean isDisconnecting = false;
+        while(true) {
+            client = getClient();
+            if(client != null && !client.getConnected() && !isDisconnecting) {
+                isDisconnecting = true;
+                Platform.runLater(() -> {
+                    System.out.println("Disconnected");
+                    currentEventHandler.disconnection();
+                    Platform.runLater(() -> {
+                        stage.close();
+                    });
+                } );
+            }
+        }
+    }
     /**
      * method to show any type of String
      *
@@ -120,10 +169,12 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * method to make the player insert its nickname
+     * method to show the "Login" fxml file
      */
     @Override
     public void insertNickname(boolean isJoin, String gameName) {
+        sceneName = "Login.fxml";
+        changeScene(sceneName);
     }
 
     /**
@@ -131,7 +182,10 @@ public class GUI extends Application implements View{
      * @param colors available
      */
     @Override
-    public void insertColor(ArrayList<Color> colors) {}
+    public void insertColor(ArrayList<Color> colors) {
+        LoginController loginController = (LoginController) currentEventHandler;
+        loginController.setAvailableColors(colors);
+    }
 
     /**
      * asks the client how many players there has to be in the game
@@ -277,4 +331,10 @@ public class GUI extends Application implements View{
     public void disconnectClient() throws RemoteException {
 
     }
+
+    /**
+     * Client getter
+     * @return this client
+     */
+    public Client getClient(){ return client; }
 }
