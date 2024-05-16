@@ -74,6 +74,12 @@ public abstract class ConnectionHandler implements Serializable {
     }
 
     /**
+     * Ask the player to choose a game to join or create a new game
+     * @param gameNames the names of not started games
+     */
+    public abstract void joinGameRequest(ArrayList<String> gameNames);
+
+    /**
      * Ask the player for their color
      * @param availableColors the possible colors
      */

@@ -13,7 +13,6 @@ import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.net.InetAddress;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -44,6 +43,19 @@ public class RMIConnectionHandler extends ConnectionHandler {
         } catch (Exception e) {
             System.out.println("Error connecting to client");
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Ask the player to choose a game to join or create a new game
+     * @param gameNames the names of not started games
+     */
+    @Override
+    public void joinGameRequest(ArrayList<String> gameNames) {
+        try {
+            this.view.showJoinOrCreate(gameNames);
+        } catch (RemoteException e) {
+            System.err.println("Error asking to join game");
         }
     }
 
