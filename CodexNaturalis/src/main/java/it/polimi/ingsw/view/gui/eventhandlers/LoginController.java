@@ -112,6 +112,7 @@ public class LoginController extends EventHandler{
         if(chosenColor == null){
             alert.setContentText("Color is not valid");
             alert.showAndWait();
+            return;
         }
 
         view.getClient().colorResponse(chosenColor);

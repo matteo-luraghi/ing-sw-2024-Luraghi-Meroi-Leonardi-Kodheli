@@ -49,7 +49,7 @@ public class JoinGameController  extends EventHandler{
         String selectedGameName = gamesList.getSelectionModel().getSelectedItem().toString();
 
         //Send data to the view
-        view.setIsJoining(false);
+        view.setIsJoining(true);
         view.setGameName(selectedGameName);
         view.changeScene("Login.fxml");
         view.setLoginParameters();
