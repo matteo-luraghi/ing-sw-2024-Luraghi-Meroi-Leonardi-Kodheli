@@ -2,16 +2,12 @@ package it.polimi.ingsw.view.gui.eventhandlers;
 
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.Util;
-import it.polimi.ingsw.view.gui.GUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class LoginController extends EventHandler{
 
@@ -20,8 +16,10 @@ public class LoginController extends EventHandler{
     public Label ColorLabel;
     public Button ColorButton;
     public Button LoginButton;
+    public Label gameName;
+    public Label waitingLabel;
     private boolean isJoin;
-    private String gameName;
+    private String gameNameString;
 
     public void setAvailableColors(ArrayList<Color> availableColors){
         ArrayList<String> colors = new ArrayList<>();
@@ -36,10 +34,10 @@ public class LoginController extends EventHandler{
         ColorButton.setVisible(true);
     }
 
-    public void setParameters(boolean isJoin, int numOfPlayers, String gameName){
+    public void setParameters(boolean isJoin, String gameNameString){
         this.isJoin = isJoin;
-        this.gameName = gameName;
-        //TODO: Update label "GAME!" to reflect gameName
+        this.gameNameString = gameNameString;
+        gameName.setText(gameNameString);
     }
 
     public void initialize(){
@@ -60,7 +58,7 @@ public class LoginController extends EventHandler{
             return;
         }
         try{
-            view.getClient().gameChoice(isJoin, gameName, user);
+            view.getClient().gameChoice(isJoin, gameNameString, user);
             //tick beside the textField?
             Username.setEditable(false);
             Username.setStyle("-fx-background-color: #77f545;");
@@ -95,7 +93,5 @@ public class LoginController extends EventHandler{
         ColorButton.setDisable(true);
     }
 
-    public void showWaitingForPlayers(){
-        //TODO: implement once the label is created
-    }
+    public void showWaitingForPlayers(){ waitingLabel.setVisible(true); }
 }

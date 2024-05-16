@@ -194,7 +194,7 @@ public class GUI extends Application implements View{
     public void setLoginParameters(){
         Platform.runLater(() -> {
             LoginController loginHandler = (LoginController) currentEventHandler;
-            loginHandler.setParameters(isJoining, numOfPlayersChosen, gameName);
+            loginHandler.setParameters(isJoining, gameName);
         });
     }
 
@@ -229,11 +229,14 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * method to display the waiting for players page
+     * method to display the waiting for players message in loginPage
      */
     @Override
     public void ShowWaitingForPlayers() {
-        System.out.println("Waiting for players");
+        Platform.runLater(() -> {
+            LoginController loginController = (LoginController) currentEventHandler;
+            loginController.showWaitingForPlayers();
+        });
     }
 
     /**
