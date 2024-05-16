@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.StartingCard;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 /**
  * Setup.fxml event handler, used to make the player chose a starting card side and a private goal card
@@ -40,9 +41,13 @@ public class SetupController extends EventHandler{
     }
 
     /**
-     * Function that gets called when the page loads, sets the choices for the connections ChoiceBox
+     * Function that gets called when the page loads
      */
     public void initialize(){
 
+    }
+
+    public void SelectStartingAndGoal() {
+        //Should probably be split up in SelectStarting e selectGoal
     }
 }
