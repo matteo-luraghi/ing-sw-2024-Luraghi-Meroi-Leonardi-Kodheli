@@ -2,7 +2,6 @@ package it.polimi.ingsw.connection;
 
 import it.polimi.ingsw.connection.socket.message.connectionMessage.Disconnection;
 import it.polimi.ingsw.connection.socket.SocketConnectionHandler;
-import it.polimi.ingsw.connection.socket.message.serverMessage.JoinGameRequest;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.RemoteController;
 
@@ -17,7 +16,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
