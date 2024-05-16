@@ -7,6 +7,7 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.RemoteController;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.RemoteException;
@@ -47,6 +48,8 @@ public class Server implements RemoteServer {
 
     public void start() throws IOException {
         // throws if the socket init fails
+        // export the registry to the same ip as the server
+        System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().toString());
         this.registry = LocateRegistry.createRegistry(1099);
 
         try {
