@@ -23,8 +23,8 @@ public class GoldCard extends ResourceCard{
      * @param playableCondition necessary condition to play the card
      */
     public GoldCard(Kingdom kingdom, boolean isFront, Resource[] corners, int points,
-                    PointCondition pointCondition, ArrayList<Resource> playableCondition) {
-        super(kingdom, isFront, corners, points, true);
+                    PointCondition pointCondition, ArrayList<Resource> playableCondition, int id) {
+        super(kingdom, isFront, corners, points, true, id);
         this.pointCondition = pointCondition;
         this.playableCondition = new ArrayList<>(playableCondition);
     }

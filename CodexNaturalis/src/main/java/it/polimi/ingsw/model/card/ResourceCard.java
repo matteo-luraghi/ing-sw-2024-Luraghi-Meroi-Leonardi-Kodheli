@@ -19,8 +19,8 @@ public class ResourceCard extends GameCard{
      * @param points points assigned when the card is played
      * @param isGold true if the card is gold
      */
-    public ResourceCard(Kingdom kingdom, boolean isFront, Resource[] corners, int points, boolean isGold) {
-        super(kingdom, isFront, corners);
+    public ResourceCard(Kingdom kingdom, boolean isFront, Resource[] corners, int points, boolean isGold, int id) {
+        super(kingdom, isFront, corners, id);
         this.points = points;
         this.isGold = isGold;
     }
