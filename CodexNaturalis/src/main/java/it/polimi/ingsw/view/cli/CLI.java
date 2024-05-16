@@ -5,8 +5,6 @@ import it.polimi.ingsw.connection.ConnectionClosedException;
 import it.polimi.ingsw.connection.RemoteServer;
 import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.connection.socket.SocketClient;
-import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.controller.RemoteController;
 import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.model.gamelogic.*;
 import it.polimi.ingsw.view.mainview.View;
@@ -19,8 +17,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * CLI class to show everything using text interface

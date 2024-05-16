@@ -7,6 +7,7 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.RemoteController;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.RemoteException;
@@ -47,6 +48,8 @@ public class Server implements RemoteServer {
 
     public void start() throws IOException {
         // throws if the socket init fails
+        // export the registry to the same ip as the server
+        System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
         this.registry = LocateRegistry.createRegistry(1099);
 
         try {
@@ -160,21 +163,15 @@ public class Server implements RemoteServer {
      */
     @Override
     public boolean checkUniqueNickname(String nickname){
-        Optional<Controller> optionalController = games.keySet().stream().filter(g -> !g.isGameStarted()).findFirst();
-        if (optionalController.isPresent()) {
-            //There is at least one player
-            Controller gameController = optionalController.get();
-            for(ConnectionHandler c : gameController.getHandlers()){
-                if(c.getClientNickname().equalsIgnoreCase(nickname)){
+        for(Controller c: games.keySet()) {
+            for (ConnectionHandler ch : c.getHandlers()) {
+                if (ch.getClientNickname().equals(nickname)) {
                     return false;
                 }
             }
-            return true;
-        } else {
-            //There are no open games -> this is the first player to login
-            return true;
         }
-
+        // no game with the same nickname
+        return true;
     }
 
     /**

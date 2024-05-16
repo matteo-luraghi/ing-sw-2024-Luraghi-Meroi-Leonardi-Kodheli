@@ -1,6 +1,5 @@
 package it.polimi.ingsw.controller;
 
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import it.polimi.ingsw.connection.ConnectionHandler;
