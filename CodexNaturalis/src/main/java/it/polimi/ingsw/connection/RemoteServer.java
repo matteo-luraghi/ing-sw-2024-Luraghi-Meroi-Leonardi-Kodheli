@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.Controller;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -40,8 +41,8 @@ public interface RemoteServer extends Remote {
     void removeClient(ConnectionHandler connectionHandler) throws RemoteException;
 
     /**
-     * Get all the games
-     * @return the game's controllers
+     * Get all the games names
+     * @return the names
      */
-    Set<Controller> getGames() throws RemoteException;
+     ArrayList<String> getGamesNames() throws RemoteException;
 }

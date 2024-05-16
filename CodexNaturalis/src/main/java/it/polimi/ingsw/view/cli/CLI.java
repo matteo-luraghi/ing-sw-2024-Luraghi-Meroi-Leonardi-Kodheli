@@ -6,6 +6,7 @@ import it.polimi.ingsw.connection.RemoteServer;
 import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.connection.socket.SocketClient;
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.RemoteController;
 import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.model.gamelogic.*;
 import it.polimi.ingsw.view.mainview.View;
@@ -18,6 +19,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -107,10 +109,7 @@ public class CLI implements View {
             Registry registry = ((RMIClient) client).getRegistry();
             try {
                 RemoteServer server = (RemoteServer) registry.lookup("server");
-                ArrayList<String> gameNames = (ArrayList<String>) server.getGames().stream()
-                    .filter(c -> !c.isGameStarted())
-                    .map(Controller::getGameName)
-                    .collect(Collectors.toList());
+                ArrayList<String> gameNames = server.getGamesNames();
 
                 showJoinOrCreate(gameNames);
             } catch (Exception e) {

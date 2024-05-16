@@ -26,7 +26,6 @@ public class YourTurn extends ServerMessage {
      */
     @Override
     public void show(View view) {
-        if(view.getClass() == CLI.class) {
             new Thread(() -> {
                 try {
                     view.showMessage("It's your turn!");
@@ -36,6 +35,5 @@ public class YourTurn extends ServerMessage {
                 ((CLI) view).setMyTurn(true);
                 ((CLI) view).setPlayPhase(true);
             }).start();
-        }
     }
 }

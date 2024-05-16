@@ -38,7 +38,7 @@ public interface View extends Remote {
      */
     void showMessage(String s) throws RemoteException;
 
-    void showJoinOrCreate(ArrayList<String> gameNames);
+    void showJoinOrCreate(ArrayList<String> gameNames) throws RemoteException;
 
     /**
      * method to make the player insert its nickname

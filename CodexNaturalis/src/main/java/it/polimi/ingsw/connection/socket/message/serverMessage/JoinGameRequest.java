@@ -3,6 +3,7 @@ package it.polimi.ingsw.connection.socket.message.serverMessage;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
@@ -30,6 +31,10 @@ public class JoinGameRequest extends ServerMessage{
      */
     @Override
     public void show(View view) {
-        view.showJoinOrCreate(this.gameNames);
+        try {
+            view.showJoinOrCreate(this.gameNames);
+        } catch (RemoteException e) {
+            System.err.println("Error asking login");
+        }
     }
 }

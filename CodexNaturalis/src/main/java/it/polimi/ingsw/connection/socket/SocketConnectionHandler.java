@@ -64,10 +64,7 @@ public class SocketConnectionHandler extends ConnectionHandler implements Runnab
 
             this.pingThread.start();
 
-            ArrayList<String> gameNames = (ArrayList<String>) this.server.getGames().stream()
-                    .filter(c -> !c.isGameStarted())
-                    .map(Controller::getGameName)
-                    .collect(Collectors.toList());
+            ArrayList<String> gameNames = this.server.getGamesNames();
 
             sendMessageClient(new JoinGameRequest(gameNames));
 

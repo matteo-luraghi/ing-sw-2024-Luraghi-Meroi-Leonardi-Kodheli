@@ -9,6 +9,7 @@ import it.polimi.ingsw.controller.RemoteController;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -114,9 +115,8 @@ public class Server implements RemoteServer {
         controller.addHandler(connectionHandler);
         connectionHandler.setController(controller);
         try {
-            // TODO: expose based on game's name
             RemoteController stub = (RemoteController) UnicastRemoteObject.exportObject(controller, 0);
-            this.registry.rebind("controller", stub);
+            this.registry.rebind("controller"+controller.getGameName(), stub);
         } catch (Exception e) {
             System.err.println("Error exposing the controller");
             System.out.println(e);
@@ -140,13 +140,12 @@ public class Server implements RemoteServer {
                 this.games.remove(controller);
             }
             // remove controller from registry
-            // TODO: remove based on game name
             try {
-                RemoteController stub = (RemoteController) this.registry.lookup("controller");
+                RemoteController stub = (RemoteController) this.registry.lookup("controller"+controller.getGameName());
                 UnicastRemoteObject.unexportObject(stub, true);
             } catch (Exception ignored) {}
             try {
-                this.registry.unbind("controller");
+                this.registry.unbind("controller"+controller.getGameName());
             } catch (Exception ignored) {}
 
             controller.broadcastMessage(new Disconnection(connectionHandler.getClientNickname()), handlers);
@@ -182,8 +181,19 @@ public class Server implements RemoteServer {
      * Get all the games
      * @return the game's controllers
      */
-    @Override
     public Set<Controller> getGames() {
         return games.keySet();
+    }
+
+    /**
+     * Get all the games names
+     * @return the names
+     */
+    @Override
+    public ArrayList<String> getGamesNames() throws RemoteException {
+        return (ArrayList<String>) getGames().stream()
+                .filter(c -> !c.isGameStarted())
+                .map(Controller::getGameName)
+                .collect(Collectors.toList());
     }
 }

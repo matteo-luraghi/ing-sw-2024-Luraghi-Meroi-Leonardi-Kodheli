@@ -8,7 +8,6 @@ import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.Coordinates;
-import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.rmi.NotBoundException;
@@ -26,6 +25,7 @@ public class RMIClient extends Client {
     private final Registry registry;
     private RemoteController controller = null;
     private RMIConnectionHandler connectionHandler;
+    private String gameName = null;
 
     public RMIClient(String ip, int port, View view) throws RemoteException, NotBoundException {
         super(view);
@@ -43,6 +43,9 @@ public class RMIClient extends Client {
      */
     @Override
     public void gameChoice(boolean isJoin, String gameName, String nickname) throws Exception {
+
+        this.gameName = gameName;
+
         this.connectionHandler = new RMIConnectionHandler(registry);
         this.connectionHandler.setClientNickname(nickname);
 
@@ -80,7 +83,7 @@ public class RMIClient extends Client {
             }).start();
 
             try {
-                this.controller = (RemoteController) registry.lookup("controller");
+                this.controller = (RemoteController) registry.lookup("controller"+gameName);
             } catch (NotBoundException ignored) {
             }
 
@@ -98,7 +101,7 @@ public class RMIClient extends Client {
     public void colorResponse(Color color) {
         if (this.controller == null) {
             try {
-                this.controller = (RemoteController) registry.lookup("controller");
+                this.controller = (RemoteController) registry.lookup("controller"+this.gameName);
             } catch (Exception e) {
                 System.err.println("Controller not found");
                 disconnect();
