@@ -1,1 +1,1 @@
-{"kingdom": "PLANT", "isFront": false, "corners": ["BLANK", "SCROLL", "HIDDEN", "BLANK"], "points": 1, "isGold": true, "pointCondition": "SCROLL", "playableCondition": ["PLANT", "PLANT", "FUNGI"]}
+{"id": "052", "kingdom": "PLANT", "isFront": false, "corners": ["BLANK", "SCROLL", "HIDDEN", "BLANK"], "points": 1, "isGold": true, "pointCondition": "SCROLL", "playableCondition": ["PLANT", "PLANT", "FUNGI"]}
