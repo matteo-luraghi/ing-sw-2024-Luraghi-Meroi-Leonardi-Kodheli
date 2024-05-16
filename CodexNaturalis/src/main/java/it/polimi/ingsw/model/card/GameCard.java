@@ -14,7 +14,7 @@ abstract public class GameCard implements Serializable {
     private final Kingdom kingdom;
     private boolean isFront;
 
-    private int id;
+    private final int id;
 
     /**
      * Constructor
