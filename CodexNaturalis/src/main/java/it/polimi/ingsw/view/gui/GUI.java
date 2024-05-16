@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.connection.ConnectionClosedException;
+import it.polimi.ingsw.connection.RemoteServer;
 import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.connection.socket.SocketClient;
 import it.polimi.ingsw.controller.Controller;
@@ -26,6 +27,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 /**
@@ -42,6 +44,9 @@ public class GUI extends Application implements View{
     private Stage stage;
     private boolean connectedToServer;
     private EventHandler currentEventHandler;
+    private int numOfPlayersChosen;
+    private boolean isJoining;
+    private String gameName;
     /**
      * GUI constructor
      */
@@ -53,6 +58,8 @@ public class GUI extends Application implements View{
         this.goalCardViewer = new ViewGoalCardGUIFactory();
         this.sceneName = "ConnectToServer.fxml";
         connectedToServer = false;
+        numOfPlayersChosen = -1;
+        gameName = "";
     }
 
     /**
@@ -84,6 +91,7 @@ public class GUI extends Application implements View{
      * @param sceneName the name of the scene we want to switch to
      */
     public void changeScene(String sceneName){
+        this.sceneName = sceneName;
         Platform.setImplicitExit(false);
         Platform.runLater(() -> {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(sceneName));
@@ -107,7 +115,7 @@ public class GUI extends Application implements View{
      * @param connectionProtocol The connection protocol that the client wants to use (either Socket or RMI)
      * @return true if the connection was successful, false otherwise
      */
-    public boolean connectToServer(String ip, int port, String connectionProtocol) {
+    public boolean connectToServer(String ip, int port, String connectionProtocol) throws ConnectionClosedException {
 
         if (connectionProtocol.equalsIgnoreCase("socket")){
             try {
@@ -126,8 +134,18 @@ public class GUI extends Application implements View{
             }
         }
 
-        if (connectedToServer && client.getClass() == RMIClient.class) {
-            new Thread(this::insertNickname).start();
+        if (client.getClass() == RMIClient.class) {
+            Registry registry = ((RMIClient) client).getRegistry();
+            try {
+                RemoteServer server = (RemoteServer) registry.lookup("server");
+                ArrayList<String> gameNames = server.getGamesNames();
+
+                showJoinOrCreate(gameNames);
+            } catch (Exception e) {
+                System.err.println("Error connecting to server");
+                e.printStackTrace();
+                throw new ConnectionClosedException("Connection closed");
+            }
         }
 
         if(connectedToServer){
@@ -165,7 +183,19 @@ public class GUI extends Application implements View{
 
     @Override
     public void showJoinOrCreate(ArrayList<String> gameNames) {
+        sceneName = "JoinGame.fxml";
+        changeScene(sceneName);
+        Platform.runLater(() -> {
+            JoinGameController joinGameHandler = (JoinGameController) currentEventHandler;
+            joinGameHandler.setGameNames(gameNames);
+        });
+    }
 
+    public void setLoginParameters(){
+        Platform.runLater(() -> {
+            LoginController loginHandler = (LoginController) currentEventHandler;
+            loginHandler.setParameters(isJoining, numOfPlayersChosen, gameName);
+        });
     }
 
     /**
@@ -183,15 +213,19 @@ public class GUI extends Application implements View{
      */
     @Override
     public void insertColor(ArrayList<Color> colors) {
-        LoginController loginController = (LoginController) currentEventHandler;
-        loginController.setAvailableColors(colors);
+        Platform.runLater(() -> {
+            LoginController loginController = (LoginController) currentEventHandler;
+            loginController.setAvailableColors(colors);
+        });
     }
 
     /**
-     * asks the client how many players there has to be in the game
+     * Directly send the number of players to the server (the player will have already chosen the number in the form)
      */
     @Override
     public void askForPlayersNumber() {
+        //We already have the number of players and the name of the game, so we simulate a response from the client
+        client.playersNumberResponse(numOfPlayersChosen, gameName);
     }
 
     /**
@@ -199,7 +233,7 @@ public class GUI extends Application implements View{
      */
     @Override
     public void ShowWaitingForPlayers() {
-
+        System.out.println("Waiting for players");
     }
 
     /**
@@ -337,4 +371,24 @@ public class GUI extends Application implements View{
      * @return this client
      */
     public Client getClient(){ return client; }
+
+    /**
+     * Set the number of players chosen for the game the player is creating
+     * @param num the number of players
+     */
+    public void setNumOfPlayersChosen(int num){
+        numOfPlayersChosen = num;
+    }
+
+    /**
+     * Set the isJoin flag when joining a game
+     * @param isJoining true if you are joining a game, false if you are creating it
+     */
+    public void setIsJoining(boolean isJoining){ this.isJoining = isJoining; }
+
+    /**
+     * Set the name of the game the player is creating or joining
+     * @param gameName the name of the game
+     */
+    public void setGameName(String gameName){ this.gameName = gameName; }
 }

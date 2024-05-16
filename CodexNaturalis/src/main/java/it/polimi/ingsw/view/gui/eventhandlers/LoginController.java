@@ -5,9 +5,7 @@ import it.polimi.ingsw.model.gamelogic.Util;
 import it.polimi.ingsw.view.gui.GUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -19,14 +17,33 @@ public class LoginController extends EventHandler{
 
     public TextField Username;
     public ChoiceBox Color;
-    private ArrayList<Color> availableColors;
+    public Label ColorLabel;
+    public Button ColorButton;
+    public Button LoginButton;
+    private boolean isJoin;
+    private String gameName;
+
     public void setAvailableColors(ArrayList<Color> availableColors){
-        ObservableList<Color> list = FXCollections.observableArrayList(availableColors);
+        ArrayList<String> colors = new ArrayList<>();
+        for(Color color : availableColors){
+            colors.add(color.toStringGUI());
+        }
+        ObservableList<String> list = FXCollections.observableArrayList(colors);
         Color.setItems(list);
         Color.setValue(list.getFirst());
         Color.setVisible(true);
+        ColorLabel.setVisible(true);
+        ColorButton.setVisible(true);
     }
+
+    public void setParameters(boolean isJoin, int numOfPlayers, String gameName){
+        this.isJoin = isJoin;
+        this.gameName = gameName;
+    }
+
     public void initialize(){
+        ColorLabel.setVisible(false);
+        ColorButton.setVisible(false);
         Color.setVisible(false);
     }
 
@@ -42,10 +59,11 @@ public class LoginController extends EventHandler{
             return;
         }
         try{
-            view.getClient().loginResponse(user);
+            view.getClient().gameChoice(isJoin, gameName, user);
             //tick beside the textField?
             Username.setEditable(false);
-            Username.setStyle("-fx-background-color: green;");
+            Username.setStyle("-fx-background-color: #77f545;");
+            LoginButton.setDisable(true);
         }catch (Exception e){
             alert.setContentText("Username is already present");
             alert.showAndWait();
@@ -65,12 +83,14 @@ public class LoginController extends EventHandler{
             return;
         }
 
-        chosenColor = (Color) (Color.getValue());
+        chosenColor = Util.stringToColor(Color.getValue().toString());
         if(chosenColor == null){
             alert.setContentText("Color is not valid");
             alert.showAndWait();
         }
 
         view.getClient().colorResponse(chosenColor);
+        Color.setDisable(true);
+        ColorButton.setDisable(true);
     }
 }

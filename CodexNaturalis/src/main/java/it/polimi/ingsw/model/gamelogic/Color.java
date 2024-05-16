@@ -28,5 +28,14 @@ public enum Color implements Serializable {
             default -> {return "UNKNOWN";}
         }
     }
+    public String toStringGUI(){
+        switch (this) {
+            case YELLOW -> { return "yellow";}
+            case RED -> {return "red";}
+            case BLUE -> {return "blue";}
+            case GREEN -> {return "green";}
+            default -> {return "UNKNOWN";}
+        }
+    }
 
 }
