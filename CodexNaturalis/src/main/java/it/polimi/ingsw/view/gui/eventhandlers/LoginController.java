@@ -42,7 +42,7 @@ public class LoginController extends EventHandler{
             return;
         }
         try{
-            view.getClient().loginResponse(user);
+            //view.getClient().loginResponse(user);
             //tick beside the textField?
             Username.setEditable(false);
             Username.setStyle("-fx-background-color: green;");

@@ -127,7 +127,7 @@ public class GUI extends Application implements View{
         }
 
         if (connectedToServer && client.getClass() == RMIClient.class) {
-            new Thread(this::insertNickname).start();
+            //new Thread(this::insertNickname).start();
         }
 
         if(connectedToServer){
