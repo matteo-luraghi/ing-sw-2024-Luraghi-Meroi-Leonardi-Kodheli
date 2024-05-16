@@ -39,6 +39,7 @@ public class LoginController extends EventHandler{
     public void setParameters(boolean isJoin, int numOfPlayers, String gameName){
         this.isJoin = isJoin;
         this.gameName = gameName;
+        //TODO: Update label "GAME!" to reflect gameName
     }
 
     public void initialize(){
@@ -92,5 +93,9 @@ public class LoginController extends EventHandler{
         view.getClient().colorResponse(chosenColor);
         Color.setDisable(true);
         ColorButton.setDisable(true);
+    }
+
+    public void showWaitingForPlayers(){
+        //TODO: implement once the label is created
     }
 }
