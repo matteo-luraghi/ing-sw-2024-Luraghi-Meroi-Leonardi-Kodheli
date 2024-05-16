@@ -1,6 +1,5 @@
 package it.polimi.ingsw.connection.socket.message.serverMessage;
 
-import it.polimi.ingsw.view.cli.CLI;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
@@ -32,8 +31,16 @@ public class YourTurn extends ServerMessage {
                 } catch (RemoteException e) {
                     System.err.println("Error sending message");
                 }
-                ((CLI) view).setMyTurn(true);
-                ((CLI) view).setPlayPhase(true);
+                try {
+                    view.setMyTurn(true);
+                } catch (RemoteException e) {
+                    System.err.println("Error setting my turn");
+                }
+                try {
+                    view.setPlayPhase(true);
+                } catch (RemoteException e) {
+                    System.err.println("Error setting play phase");
+                }
             }).start();
     }
 }

@@ -17,7 +17,7 @@ public class PlayCardResponse extends ClientMessage {
     private static final long serialVersionUID = -7671795239367074793L;
     private final ResourceCard card;
     private final Coordinates where;
-    private boolean isFront;
+    private final boolean isFront;
     /**
      * Constructor
      * @param card the card to play

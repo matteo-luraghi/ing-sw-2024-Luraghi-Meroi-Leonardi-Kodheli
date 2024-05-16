@@ -4,7 +4,6 @@ import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.connection.socket.message.clientMessage.*;
 import it.polimi.ingsw.connection.socket.message.connectionMessage.Disconnection;
 import it.polimi.ingsw.connection.socket.message.connectionMessage.Ping;
-import it.polimi.ingsw.connection.socket.message.serverMessage.JoinGameRequest;
 import it.polimi.ingsw.connection.socket.message.serverMessage.ServerMessage;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.ResourceCard;

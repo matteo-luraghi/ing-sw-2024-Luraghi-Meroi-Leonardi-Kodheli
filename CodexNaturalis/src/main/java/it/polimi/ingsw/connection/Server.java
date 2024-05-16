@@ -2,7 +2,6 @@ package it.polimi.ingsw.connection;
 
 import it.polimi.ingsw.connection.socket.message.connectionMessage.Disconnection;
 import it.polimi.ingsw.connection.socket.SocketConnectionHandler;
-import it.polimi.ingsw.connection.socket.message.serverMessage.JoinGameRequest;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.RemoteController;
 
@@ -17,7 +16,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -65,7 +63,7 @@ public class Server implements RemoteServer {
         try {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                clientSocket.setSoTimeout(0);
+                clientSocket.setSoTimeout(10000);
                 SocketConnectionHandler clientConnection = new SocketConnectionHandler(this, clientSocket);
                 // start the clientConnection thread
                 executor.submit(clientConnection);
@@ -86,7 +84,10 @@ public class Server implements RemoteServer {
             System.out.println("Active Games:" + games.keySet().size());
             // find the first free game and try to add the player
             optionalController = games.keySet().stream().
-                    filter(g -> !g.isGameStarted() && g.getGameName().equals(gameName)).findFirst();
+                    filter(g -> !g.isGameStarted()
+                            && g.getGameName().equals(gameName)
+                            && g.getHandlers().size() < games.get(g))
+                    .findFirst();
         }
         if (optionalController.isPresent()) {
             Controller gameController = optionalController.get();
@@ -96,12 +97,14 @@ public class Server implements RemoteServer {
             return;
         }
 
-        ArrayList<String> gameNames = (ArrayList<String>) getGames().stream()
-                .filter(c -> !c.isGameStarted())
-                .map(Controller::getGameName)
-                .toList();
+        ArrayList<String> gameNames = null;
+        try {
+            gameNames = getGamesNames();
+        } catch (RemoteException e) {
+            System.err.println("Error getting game names");
+        }
         // no game found -> game already started or game deleted
-        connectionHandler.sendMessage(new JoinGameRequest(gameNames));
+        connectionHandler.joinGameRequest(gameNames);
     }
 
     /**
@@ -133,7 +136,6 @@ public class Server implements RemoteServer {
      */
     @Override
     public void removeClient(ConnectionHandler connectionHandler) {
-        // TODO: filter based on game's name
         Optional<Controller> optionalController = this.games.keySet().stream().filter(c -> c.getHandlers().contains(connectionHandler)).findFirst();
         if (optionalController.isPresent()) {
             Controller controller = optionalController.get();
@@ -175,21 +177,13 @@ public class Server implements RemoteServer {
     }
 
     /**
-     * Get all the games
-     * @return the game's controllers
-     */
-    public Set<Controller> getGames() {
-        return games.keySet();
-    }
-
-    /**
      * Get all the games names
      * @return the names
      */
     @Override
     public ArrayList<String> getGamesNames() throws RemoteException {
-        return (ArrayList<String>) getGames().stream()
-                .filter(c -> !c.isGameStarted())
+        return (ArrayList<String>) this.games.keySet().stream()
+                .filter(c -> !c.isGameStarted() && c.getHandlers().size() < games.get(c))
                 .map(Controller::getGameName)
                 .collect(Collectors.toList());
     }

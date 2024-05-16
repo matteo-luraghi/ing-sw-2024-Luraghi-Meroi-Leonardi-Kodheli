@@ -1,10 +1,10 @@
 package it.polimi.ingsw.connection.socket.message.serverMessage;
 
 import it.polimi.ingsw.model.gamelogic.Player;
-import it.polimi.ingsw.view.cli.CLI;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
+import java.rmi.RemoteException;
 
 public class SetPlayerMessage extends ServerMessage {
     @Serial
@@ -17,8 +17,10 @@ public class SetPlayerMessage extends ServerMessage {
 
     @Override
     public void show(View view) {
-        if (view.getClass() == CLI.class) {
-            ((CLI) view).setUser(player);
+        try {
+            view.setUser(player);
+        } catch (RemoteException e) {
+            System.err.println("Error setting the player");
         }
     }
 }

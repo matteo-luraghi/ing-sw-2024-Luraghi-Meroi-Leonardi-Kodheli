@@ -4,11 +4,10 @@ import it.polimi.ingsw.connection.Server;
 import it.polimi.ingsw.connection.socket.SocketConnectionHandler;
 import it.polimi.ingsw.connection.socket.message.serverMessage.JoinGameRequest;
 import it.polimi.ingsw.connection.socket.message.serverMessage.TextMessage;
-import it.polimi.ingsw.controller.Controller;
 
 import java.io.Serial;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class JoinGameResponse extends ClientMessage{
     @Serial
@@ -33,10 +32,12 @@ public class JoinGameResponse extends ClientMessage{
     public void execute(Server server, SocketConnectionHandler connectionHandler) {
         if(!server.checkUniqueNickname(this.nickname)){
             connectionHandler.sendMessageClient(new TextMessage("Username already present"));
-            ArrayList<String> gameNames = (ArrayList<String>) server.getGames().stream()
-                    .filter(c -> !c.isGameStarted())
-                    .map(Controller::getGameName)
-                    .collect(Collectors.toList());
+            ArrayList<String> gameNames = null;
+            try {
+                gameNames = server.getGamesNames();
+            } catch (RemoteException e) {
+                System.err.println("Error getting games names");
+            }
             connectionHandler.sendMessageClient(new JoinGameRequest(gameNames));
         }else {
             connectionHandler.setClientNickname(nickname);
