@@ -17,12 +17,12 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="381.0">
                <children>
-                  <ImageView fx:id="startingImageFront" fitHeight="196.0" fitWidth="215.0" layoutX="76.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView onMouseClicked="#selectStartingCard" fx:id="startingImageFront" fitHeight="196.0" fitWidth="215.0" layoutX="76.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../School/PROVA%20FINALE%20(INGEGNERIA%20DEL%20SOFTWARE)/Introduzione/Regolamenti%20e%20materiale%20grafico/fronte%20oro%20in%20jpg/1709659025650-fa69fadb-c647-4aa4-a049-05e38017b96d_86.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="startingImageBack" fitHeight="175.0" fitWidth="215.0" layoutX="76.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView onMouseClicked="#selectStartingCard" fx:id="startingImageBack" fitHeight="175.0" fitWidth="215.0" layoutX="76.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../School/PROVA%20FINALE%20(INGEGNERIA%20DEL%20SOFTWARE)/Introduzione/Regolamenti%20e%20materiale%20grafico/retro%20carte%20oro%20in%20jpg/1709658535735-b4f02509-be6b-4cd6-acbe-7a6b989ab079_86.jpg" />
                      </image>
@@ -43,12 +43,12 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="381.0">
                <children>
-                  <ImageView fx:id="goalImage1" fitHeight="196.0" fitWidth="215.0" layoutX="76.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView onMouseClicked="#selectGoalCard" fx:id="goalImage1" fitHeight="196.0" fitWidth="215.0" layoutX="76.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../School/PROVA%20FINALE%20(INGEGNERIA%20DEL%20SOFTWARE)/Introduzione/Regolamenti%20e%20materiale%20grafico/fronte%20oro%20in%20jpg/1709659025650-fa69fadb-c647-4aa4-a049-05e38017b96d_87.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="goalImage2" fitHeight="175.0" fitWidth="215.0" layoutX="76.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView onMouseClicked="#selectGoalCard" fx:id="goalImage2" fitHeight="175.0" fitWidth="215.0" layoutX="76.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../School/PROVA%20FINALE%20(INGEGNERIA%20DEL%20SOFTWARE)/Introduzione/Regolamenti%20e%20materiale%20grafico/fronte%20oro%20in%20jpg/1709659025650-fa69fadb-c647-4aa4-a049-05e38017b96d_99.jpg" />
                      </image>

@@ -44,6 +44,8 @@ public class GUI extends Application implements View{
     private int numOfPlayersChosen;
     private boolean isJoining;
     private String gameName;
+    private GameState game = null;
+    private Player user = null;
     /**
      * GUI constructor
      */
@@ -175,7 +177,7 @@ public class GUI extends Application implements View{
      */
     @Override
     public void showMessage(String s) {
-
+        //TODO: Implement for when in playerField (should update the "chat")
     }
 
     @Override
@@ -189,7 +191,6 @@ public class GUI extends Application implements View{
     }
 
     public void setLoginParameters(){
-        System.out.println("Set Login parameters");
         Platform.runLater(() -> {
             LoginController loginHandler = (LoginController) currentEventHandler;
             loginHandler.setParameters(isJoining, gameName);
@@ -270,7 +271,10 @@ public class GUI extends Application implements View{
      */
     @Override
     public void ShowChoosePrivateGoal(GoalCard[] goalCards) {
-
+        Platform.runLater(() -> {
+            SetupController setupHandler = (SetupController) currentEventHandler;
+            setupHandler.setGoalCards(goalCards);
+        });
     }
 
     /**
@@ -282,7 +286,9 @@ public class GUI extends Application implements View{
      */
     @Override
     public void ShowPlayerField(Player playerToSee, Player playerAsking, GameState game) {
-
+        sceneName = "PlayerField.fxml";
+        changeScene(sceneName);
+        //TODO: implement when playerToSee != playerAsking
     }
 
     /**
@@ -366,7 +372,18 @@ public class GUI extends Application implements View{
      */
     @Override
     public void setGame(GameState game) throws RemoteException {
+        if(sceneName.equalsIgnoreCase("Setup.fxml")){
+            sceneName = "PlayerField.fxml";
+            changeScene(sceneName);
+        }
 
+        this.game = game;
+        for (Player p : game.getPlayers()) {
+            if (p.equals(this.user)) {
+                this.user = p;
+                break;
+            }
+        }
     }
 
     /**
