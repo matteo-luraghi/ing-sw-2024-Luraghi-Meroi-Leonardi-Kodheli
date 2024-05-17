@@ -361,9 +361,7 @@ public class GUI extends Application implements View{
      * @param user is the user that is going to use this client
      */
     @Override
-    public void setUser(Player user) throws RemoteException {
-
-    }
+    public void setUser(Player user) throws RemoteException { this.user = user; }
 
     /**
      * game setter

@@ -21,7 +21,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.eventhandlers.PlayerFieldController">
    <children>
       <BorderPane prefHeight="463.0" prefWidth="656.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -215,17 +215,17 @@
                                  <children>
                                     <ImageView fitHeight="120.0" fitWidth="150.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/CODEX_cards_gold_front/007.png" />
+                                          <Image url="@../../../../../assets/CODEX_cards_gold_front/007.png" />
                                        </image>
                                     </ImageView>
                                     <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="174.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/CODEX_cards_gold_front/004.png" />
+                                          <Image url="@../../../../../assets/CODEX_cards_gold_front/004.png" />
                                        </image>
                                     </ImageView>
                                     <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="340.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/CODEX_cards_gold_front/069.png" />
+                                          <Image url="@../../../../../assets/CODEX_cards_gold_front/069.png" />
                                        </image>
                                     </ImageView>
                                     <Label layoutX="224.0" layoutY="-1.0" text="Hand" textAlignment="CENTER">
@@ -244,7 +244,7 @@
                                     </Label>
                                     <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="25.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/CODEX_cards_gold_front/099.png" />
+                                          <Image url="@../../../../../assets/CODEX_cards_gold_front/099.png" />
                                        </image>
                                     </ImageView>
                                  </children>
@@ -253,12 +253,12 @@
                                  <children>
                                     <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="14.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/CODEX_cards_gold_front/094.png" />
+                                          <Image url="@../../../../../assets/CODEX_cards_gold_front/094.png" />
                                        </image>
                                     </ImageView>
                                     <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="184.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/CODEX_cards_gold_front/097.png" />
+                                          <Image url="@../../../../../assets/CODEX_cards_gold_front/097.png" />
                                        </image>
                                     </ImageView>
                                     <Label layoutX="113.0" layoutY="3.0" text="Common Goals">
@@ -272,17 +272,17 @@
                                  <children>
                                     <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/CODEX_cards_gold_back/037.png" />
+                                          <Image url="@../../../../../assets/CODEX_cards_gold_back/037.png" />
                                        </image>
                                     </ImageView>
                                     <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="170.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/CODEX_cards_gold_front/004.png" />
+                                          <Image url="@../../../../../assets/CODEX_cards_gold_front/004.png" />
                                        </image>
                                     </ImageView>
                                     <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="330.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/CODEX_cards_gold_front/017.png" />
+                                          <Image url="@../../../../../assets/CODEX_cards_gold_front/017.png" />
                                        </image>
                                     </ImageView>
                                     <Label layoutX="182.0" layoutY="-1.0" text="Resource Deck" textAlignment="CENTER">
@@ -296,17 +296,17 @@
                                  <children>
                                     <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/CODEX_cards_gold_back/058.png" />
+                                          <Image url="@../../../../../assets/CODEX_cards_gold_back/058.png" />
                                        </image>
                                     </ImageView>
                                     <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="170.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/CODEX_cards_gold_front/068.png" />
+                                          <Image url="@../../../../../assets/CODEX_cards_gold_front/068.png" />
                                        </image>
                                     </ImageView>
                                     <ImageView fitHeight="120.0" fitWidth="150.0" layoutX="330.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../assets/CODEX_cards_gold_front/079.png" />
+                                          <Image url="@../../../../../assets/CODEX_cards_gold_front/079.png" />
                                        </image>
                                     </ImageView>
                                     <Label layoutX="197.0" layoutY="-2.0" text="Gold Deck" textAlignment="CENTER">
