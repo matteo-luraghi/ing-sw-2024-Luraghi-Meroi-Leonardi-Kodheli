@@ -7,11 +7,9 @@ import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.connection.socket.SocketClient;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.card.StartingCard;
-import it.polimi.ingsw.model.gamelogic.Color;
-import it.polimi.ingsw.model.gamelogic.GameState;
-import it.polimi.ingsw.model.gamelogic.Player;
-import it.polimi.ingsw.model.gamelogic.ScoreBoard;
+import it.polimi.ingsw.model.gamelogic.*;
 import it.polimi.ingsw.view.gui.eventhandlers.*;
 import it.polimi.ingsw.view.mainview.*;
 import javafx.application.Application;
@@ -179,8 +177,8 @@ public class GUI extends Application implements View{
     @Override
     public void showMessage(String s) {
         Platform.runLater(()->{
-            if(sceneName.equalsIgnoreCase("playerfield.fxml")){
-                //TODO: Implement for when in playerField (should update the "chat")
+            if(currentEventHandler instanceof PlayerFieldController playerFieldController){
+                playerFieldController.addChatMessage(s);
             } else {
                 currentEventHandler.showPopup("", s);
             }
@@ -295,7 +293,19 @@ public class GUI extends Application implements View{
     public void ShowPlayerField(Player playerToSee, Player playerAsking, GameState game) {
         sceneName = "PlayerField.fxml";
         changeScene(sceneName);
-        //TODO: implement when playerToSee != playerAsking
+        //TODO: this will delete all of the chat when it's not the first time, will find another way
+    }
+
+    /**
+     * displays the player field of a specific player without passing the game
+     *
+     * @param playerToSee  specifies which playerfield has to be displayed
+     * @param playerAsking tells which player is asking to see it
+     */
+    public void ShowPlayerField(Player playerToSee, Player playerAsking) {
+        sceneName = "PlayerField.fxml";
+        changeScene(sceneName);
+        //TODO: this will delete all of the chat when it's not the first time, will find another way
     }
 
     /**
@@ -363,12 +373,18 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * isMyTurn setter
+     * user setter
      *
      * @param user is the user that is going to use this client
      */
     @Override
     public void setUser(Player user) throws RemoteException { this.user = user; }
+
+    /**
+     * user getter
+     * @return the user that is using this client
+     */
+    public Player getUser(){ return user; }
 
     /**
      * game setter
@@ -427,4 +443,14 @@ public class GUI extends Application implements View{
      * @param gameName the name of the game
      */
     public void setGameName(String gameName){ this.gameName = gameName; }
+
+    /**
+     * Method used to play a card from the GUI
+     * @param chosenIndex
+     * @param coordinates
+     */
+    public void playCard(int chosenIndex, Coordinates coordinates, boolean isFront) {
+        ResourceCard chosenCard = game.getGameTable().getPlayerZones().get(user).getHand().get(chosenIndex);
+        client.playCardResponse(chosenCard, coordinates, isFront);
+    }
 }
