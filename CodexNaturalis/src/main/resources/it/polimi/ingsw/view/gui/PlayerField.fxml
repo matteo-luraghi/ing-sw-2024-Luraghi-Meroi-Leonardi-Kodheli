@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
@@ -22,80 +23,65 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0"
-            prefWidth="656.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.polimi.ingsw.view.gui.eventhandlers.PlayerFieldController">
-   <BorderPane prefHeight="463.0" prefWidth="656.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="656.0" style="-fx-background-color: #ede3ba;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.eventhandlers.PlayerFieldController">
+   <BorderPane prefHeight="463.0" prefWidth="656.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <top>
-         <MenuBar BorderPane.alignment="CENTER">
-            <Menu mnemonicParsing="false" onAction="#showYourField" text="Show your field"/>
+         <MenuBar style="-fx-background-color: #d1be71;" BorderPane.alignment="CENTER">
+            <Menu mnemonicParsing="false" onAction="#showYourField" text="Show your field" />
          </MenuBar>
       </top>
       <left>
-         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="318.0" prefWidth="234.0"
-                     BorderPane.alignment="CENTER">
-            <Label alignment="CENTER" layoutY="-4.0" prefHeight="36.0" prefWidth="175.0" text="System Chat"
-                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="318.0" prefWidth="234.0" BorderPane.alignment="CENTER">
+            <Label alignment="CENTER" layoutY="-4.0" prefHeight="36.0" prefWidth="175.0" text="System Chat" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
-                  <Font size="25.0"/>
+                  <Font size="25.0" />
                </font>
             </Label>
-            <TextField layoutY="344.0" prefHeight="50.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0"
-                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0"/>
-            <ListView fx:id="chat" layoutY="42.0" prefHeight="227.0" prefWidth="214.0" AnchorPane.bottomAnchor="50.0"
-                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0"/>
-            <Button layoutX="129.0" layoutY="348.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0"
-                    text="Enter" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+            <TextField layoutY="344.0" prefHeight="50.0" prefWidth="175.0" style="-fx-background-color: #ede3ba;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
+            <ListView fx:id="chat" layoutY="42.0" prefHeight="227.0" prefWidth="214.0" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+            <Button layoutX="129.0" layoutY="348.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Enter" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <BorderPane prefHeight="298.0" prefWidth="234.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <center>
+                  <ImageView fitHeight="274.0" fitWidth="233.0" opacity="0.25" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                     <image>
+                        <Image url="@../../../../../assets/GUIGraphics/codexNaturalisTransparent.png" />
+                     </image>
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                  </ImageView>
+               </center>
+            </BorderPane>
          </AnchorPane>
       </left>
       <center>
-         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0"
-                     BorderPane.alignment="CENTER">
-            <ScrollPane hvalue="0.5" prefHeight="200.0" prefWidth="200.0" vvalue="0.5"
-                        AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                        AnchorPane.topAnchor="0.0">
-               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1200.0" prefWidth="1200.0">
-                  <StackPane layoutX="-505.6" layoutY="-208.0" prefHeight="786.0" prefWidth="1300.0"
-                             AnchorPane.bottomAnchor="-500.0" AnchorPane.leftAnchor="-700.0"
-                             AnchorPane.rightAnchor="-700.0" AnchorPane.topAnchor="-500.0">
+         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <ScrollPane hvalue="0.5" prefHeight="200.0" prefWidth="200.0" vvalue="0.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1200.0" prefWidth="1200.0" style="-fx-background-color: #f0ead1;">
+                  <StackPane layoutX="-505.6" layoutY="-208.0" prefHeight="786.0" prefWidth="1300.0" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="-500.0" AnchorPane.leftAnchor="-700.0" AnchorPane.rightAnchor="-700.0" AnchorPane.topAnchor="-500.0">
                      <Group>
-                        <Pane layoutX="127.0" layoutY="77.0" maxHeight="100.0" maxWidth="150.0"
-                              minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="150.0">
-                           <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true"
-                                      preserveRatio="true">
-                              <Image url="@../../../../../assets/CODEX_cards_gold_front/081.png"/>
+                        <Pane layoutX="127.0" layoutY="77.0" maxHeight="100.0" maxWidth="150.0" minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="150.0">
+                           <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                              <Image url="@../../../../../assets/CODEX_cards_gold_front/081.png" />
                            </ImageView>
-                           <Button alignment="TOP_RIGHT" maxHeight="38.0" maxWidth="34.0"
-                                   minHeight="38.0" minWidth="34.0" mnemonicParsing="false"
-                                   onMouseClicked="#playCard" opacity="0.0" prefHeight="38.0"
-                                   prefWidth="34.0" text="[-1,1]">
+                           <Button alignment="TOP_RIGHT" maxHeight="38.0" maxWidth="34.0" minHeight="38.0" minWidth="34.0" mnemonicParsing="false" onMouseClicked="#playCard" opacity="0.0" prefHeight="38.0" prefWidth="34.0" text="[-1,1]">
                               <cursor>
-                                 <Cursor fx:constant="HAND"/>
+                                 <Cursor fx:constant="HAND" />
                               </cursor>
                            </Button>
-                           <Button alignment="TOP_RIGHT" layoutX="116.0" maxHeight="38.0"
-                                   maxWidth="34.0" minHeight="38.0" minWidth="34.0"
-                                   mnemonicParsing="false" onMouseClicked="#playCard" opacity="0.0"
-                                   prefHeight="38.0" prefWidth="34.0" text="[1,1]">
+                           <Button alignment="TOP_RIGHT" layoutX="116.0" maxHeight="38.0" maxWidth="34.0" minHeight="38.0" minWidth="34.0" mnemonicParsing="false" onMouseClicked="#playCard" opacity="0.0" prefHeight="38.0" prefWidth="34.0" text="[1,1]">
                               <cursor>
-                                 <Cursor fx:constant="HAND"/>
+                                 <Cursor fx:constant="HAND" />
                               </cursor>
                            </Button>
-                           <Button alignment="TOP_RIGHT" layoutX="116.0" layoutY="62.0"
-                                   maxHeight="38.0" maxWidth="34.0" minHeight="38.0" minWidth="34.0"
-                                   mnemonicParsing="false" onMouseClicked="#playCard" opacity="0.0"
-                                   prefHeight="38.0" prefWidth="34.0" text="[1,-1]">
+                           <Button alignment="TOP_RIGHT" layoutX="116.0" layoutY="62.0" maxHeight="38.0" maxWidth="34.0" minHeight="38.0" minWidth="34.0" mnemonicParsing="false" onMouseClicked="#playCard" opacity="0.0" prefHeight="38.0" prefWidth="34.0" text="[1,-1]">
                               <cursor>
-                                 <Cursor fx:constant="HAND"/>
+                                 <Cursor fx:constant="HAND" />
                               </cursor>
                            </Button>
-                           <Button alignment="TOP_RIGHT" layoutY="62.0" maxHeight="38.0"
-                                   maxWidth="34.0" minHeight="38.0" minWidth="34.0"
-                                   mnemonicParsing="false" onMouseClicked="#playCard" opacity="0.0"
-                                   prefHeight="38.0" prefWidth="34.0" text="[-1,-1]">
+                           <Button alignment="TOP_RIGHT" layoutY="62.0" maxHeight="38.0" maxWidth="34.0" minHeight="38.0" minWidth="34.0" mnemonicParsing="false" onMouseClicked="#playCard" opacity="0.0" prefHeight="38.0" prefWidth="34.0" text="[-1,-1]">
                               <cursor>
-                                 <Cursor fx:constant="HAND"/>
+                                 <Cursor fx:constant="HAND" />
                               </cursor>
                            </Button>
                         </Pane>
@@ -106,120 +92,104 @@
          </AnchorPane>
       </center>
       <right>
-         <AnchorPane prefHeight="318.0" prefWidth="223.0" BorderPane.alignment="CENTER">
-            <ScrollPane prefHeight="400.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
-                        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="540.0" prefWidth="200.0">
-                  <Pane prefHeight="120.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0"
-                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <AnchorPane prefHeight="318.0" prefWidth="223.0" style="-fx-background-color: #f0ead1;" BorderPane.alignment="CENTER">
+            <ScrollPane prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="540.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;">
+                  <Pane prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <Circle centerX="15.0" centerY="15.0" radius="10.0" stroke="BLACK" strokeType="INSIDE">
                         <fill>
                            <LinearGradient>
                               <stops>
                                  <Stop>
                                     <color>
-                                       <Color red="0.8526315689086914" green="0.3221052587032318"
-                                              blue="0.3221052587032318"/>
+                                       <Color red="0.8526315689086914" green="0.3221052587032318" blue="0.3221052587032318" />
                                     </color>
                                  </Stop>
                                  <Stop offset="1.0">
                                     <color>
-                                       <Color red="1.0"/>
+                                       <Color red="1.0" />
                                     </color>
                                  </Stop>
                               </stops>
                            </LinearGradient>
                         </fill>
                      </Circle>
-                     <Label layoutX="33.0" layoutY="4.0" prefHeight="20.0" prefWidth="161.0"
-                            text="Player Name">
+                     <Label layoutX="33.0" layoutY="4.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
                         <font>
-                           <Font size="14.0"/>
+                           <Font size="14.0" />
                         </font>
                      </Label>
-                     <Label layoutX="139.0" layoutY="25.0" prefHeight="17.0" prefWidth="47.0"
-                            text="Points: 0"/>
-                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="13.0" layoutY="50.0"
-                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/Icons/Animal.jpg"/>
+                     <Label layoutX="139.0" layoutY="25.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
+                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="13.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/Icons/Animal.jpg" />
                      </ImageView>
-                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="105.0" layoutY="85.0"
-                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/Icons/Animal.jpg"/>
+                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="105.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/Icons/Animal.jpg" />
                      </ImageView>
-                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="59.0" layoutY="85.0"
-                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/Icons/Animal.jpg"/>
+                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="59.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/Icons/Animal.jpg" />
                      </ImageView>
-                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="13.0" layoutY="85.0"
-                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/Icons/Animal.jpg"/>
+                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="13.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/Icons/Animal.jpg" />
                      </ImageView>
-                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="151.0" layoutY="50.0"
-                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/Icons/Animal.jpg"/>
+                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="151.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/Icons/Animal.jpg" />
                      </ImageView>
-                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="105.0" layoutY="50.0"
-                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/Icons/Animal.jpg"/>
+                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="105.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/Icons/Animal.jpg" />
                      </ImageView>
-                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="59.0" layoutY="50.0"
-                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/Icons/Animal.jpg"/>
+                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="59.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/Icons/Animal.jpg" />
                      </ImageView>
                      <Label layoutX="35.0" layoutY="50.0" text="0">
                         <font>
-                           <Font size="20.0"/>
+                           <Font size="20.0" />
                         </font>
                      </Label>
                      <Label layoutX="81.0" layoutY="50.0" text="0">
                         <font>
-                           <Font size="20.0"/>
+                           <Font size="20.0" />
                         </font>
                      </Label>
                      <Label layoutX="127.0" layoutY="50.0" text="0">
                         <font>
-                           <Font size="20.0"/>
+                           <Font size="20.0" />
                         </font>
                      </Label>
                      <Label layoutX="173.0" layoutY="50.0" text="0">
                         <font>
-                           <Font size="20.0"/>
+                           <Font size="20.0" />
                         </font>
                      </Label>
                      <Label layoutX="35.0" layoutY="85.0" text="0">
                         <font>
-                           <Font size="20.0"/>
+                           <Font size="20.0" />
                         </font>
                      </Label>
                      <Label layoutX="81.0" layoutY="85.0" text="0">
                         <font>
-                           <Font size="20.0"/>
+                           <Font size="20.0" />
                         </font>
                      </Label>
                      <Label layoutX="127.0" layoutY="85.0" text="0">
                         <font>
-                           <Font size="20.0"/>
+                           <Font size="20.0" />
                         </font>
                      </Label>
                      <Label layoutX="164.0" layoutY="80.0" text="#1">
                         <font>
-                           <Font size="24.0"/>
+                           <Font size="24.0" />
                         </font>
                      </Label>
                   </Pane>
-                  <Pane prefHeight="120.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0"
-                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="140.0">
-                     <ProgressBar prefWidth="200.0" progress="0.0"/>
+                  <Pane prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="140.0">
+                     <ProgressBar prefWidth="200.0" progress="0.0" style="-fx-background-color: #ede3ba;" />
                   </Pane>
-                  <Pane prefHeight="120.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0"
-                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="280.0">
-                     <ProgressBar prefWidth="200.0" progress="0.0"/>
+                  <Pane prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="280.0">
+                     <ProgressBar prefWidth="200.0" progress="0.0" style="-fx-background-color: #f0ead1;" />
                   </Pane>
-                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="120.0" prefWidth="200.0"
-                        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                        AnchorPane.topAnchor="420.0">
-                     <ProgressBar prefWidth="200.0" progress="0.0"/>
+                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="420.0">
+                     <ProgressBar prefWidth="200.0" progress="0.0" style="-fx-background-color: #f0ead1;" />
                   </Pane>
                </AnchorPane>
             </ScrollPane>
@@ -227,106 +197,76 @@
       </right>
       <bottom>
          <AnchorPane prefHeight="140.0" prefWidth="656.0" BorderPane.alignment="CENTER">
-            <ScrollPane fx:id="scrollPane" layoutX="14.0" prefHeight="200.0" prefWidth="656.0"
-                        AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                        AnchorPane.topAnchor="0.0">
-               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="2097.0">
-                  <Pane prefHeight="130.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0"
-                        AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <ImageView fx:id="hand0" fitHeight="120.0" fitWidth="150.0" layoutY="30.0"
-                                onMouseClicked="#selectPlayCard" pickOnBounds="true"
-                                preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/007.png"/>
+            <ScrollPane fx:id="scrollPane" layoutX="14.0" prefHeight="200.0" prefWidth="656.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="2097.0" style="-fx-background-color: #d1be71;">
+                  <Pane prefHeight="130.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <ImageView fx:id="hand0" fitHeight="120.0" fitWidth="150.0" layoutY="30.0" onMouseClicked="#selectPlayCard" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/CODEX_cards_gold_front/007.png" />
                      </ImageView>
-                     <ImageView fx:id="hand1" fitHeight="120.0" fitWidth="150.0" layoutX="174.0"
-                                layoutY="30.0" onMouseClicked="#selectPlayCard" pickOnBounds="true"
-                                preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/004.png"/>
+                     <ImageView fx:id="hand1" fitHeight="120.0" fitWidth="150.0" layoutX="174.0" layoutY="30.0" onMouseClicked="#selectPlayCard" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/CODEX_cards_gold_front/004.png" />
                      </ImageView>
-                     <ImageView fx:id="hand2" fitHeight="120.0" fitWidth="150.0" layoutX="340.0"
-                                layoutY="28.0" onMouseClicked="#selectPlayCard" pickOnBounds="true"
-                                preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/069.png"/>
+                     <ImageView fx:id="hand2" fitHeight="120.0" fitWidth="150.0" layoutX="340.0" layoutY="28.0" onMouseClicked="#selectPlayCard" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/CODEX_cards_gold_front/069.png" />
                      </ImageView>
                      <Label layoutX="224.0" layoutY="-1.0" text="Hand" textAlignment="CENTER">
                         <font>
-                           <Font size="21.0"/>
+                           <Font size="21.0" />
                         </font>
                      </Label>
                   </Pane>
-                  <Pane layoutX="503.0" prefHeight="130.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
-                        AnchorPane.leftAnchor="510.0" AnchorPane.topAnchor="0.0">
+                  <Pane layoutX="503.0" prefHeight="130.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="510.0" AnchorPane.topAnchor="0.0">
                      <Label layoutX="52.0" layoutY="1.0" text="Private Goal">
                         <font>
-                           <Font size="18.0"/>
+                           <Font size="18.0" />
                         </font>
                      </Label>
-                     <ImageView fx:id="privateGoal" fitHeight="150.0" fitWidth="150.0" layoutX="25.0"
-                                layoutY="28.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/099.png"/>
+                     <ImageView fx:id="privateGoal" fitHeight="150.0" fitWidth="150.0" layoutX="25.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/CODEX_cards_gold_front/099.png" />
                      </ImageView>
                   </Pane>
-                  <Pane layoutX="826.0" layoutY="-35.0" prefHeight="130.0" prefWidth="369.0"
-                        AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="720.0"
-                        AnchorPane.topAnchor="0.0">
-                     <ImageView fx:id="commonGoal0" fitHeight="150.0" fitWidth="150.0" layoutX="14.0"
-                                layoutY="30.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/094.png"/>
+                  <Pane layoutX="826.0" layoutY="-35.0" prefHeight="130.0" prefWidth="369.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="720.0" AnchorPane.topAnchor="0.0">
+                     <ImageView fx:id="commonGoal0" fitHeight="150.0" fitWidth="150.0" layoutX="14.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/CODEX_cards_gold_front/094.png" />
                      </ImageView>
-                     <ImageView fx:id="commonGoal1" fitHeight="150.0" fitWidth="150.0" layoutX="184.0"
-                                layoutY="30.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/097.png"/>
+                     <ImageView fx:id="commonGoal1" fitHeight="150.0" fitWidth="150.0" layoutX="184.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/CODEX_cards_gold_front/097.png" />
                      </ImageView>
                      <Label layoutX="113.0" layoutY="3.0" text="Common Goals">
                         <font>
-                           <Font size="18.0"/>
+                           <Font size="18.0" />
                         </font>
                      </Label>
                   </Pane>
-                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="130.0" prefWidth="500.0"
-                        AnchorPane.leftAnchor="1100.0" AnchorPane.topAnchor="0.0">
-                     <ImageView fx:id="resourceDeck" fitHeight="120.0" fitWidth="150.0" layoutX="10.0"
-                                layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true"
-                                preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_back/037.png"/>
+                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="130.0" prefWidth="500.0" AnchorPane.leftAnchor="1100.0" AnchorPane.topAnchor="0.0">
+                     <ImageView fx:id="resourceDeck" fitHeight="120.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/CODEX_cards_gold_back/037.png" />
                      </ImageView>
-                     <ImageView fx:id="resourceUncovered0" fitHeight="120.0" fitWidth="150.0"
-                                layoutX="170.0" layoutY="30.0" onMouseClicked="#drawCard"
-                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/004.png"/>
+                     <ImageView fx:id="resourceUncovered0" fitHeight="120.0" fitWidth="150.0" layoutX="170.0" layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/CODEX_cards_gold_front/004.png" />
                      </ImageView>
-                     <ImageView fx:id="resourceUncovered1" fitHeight="120.0" fitWidth="150.0"
-                                layoutX="330.0" layoutY="28.0" onMouseClicked="#drawCard"
-                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/017.png"/>
+                     <ImageView fx:id="resourceUncovered1" fitHeight="120.0" fitWidth="150.0" layoutX="330.0" layoutY="28.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/CODEX_cards_gold_front/017.png" />
                      </ImageView>
                      <Label layoutX="182.0" layoutY="-1.0" text="Resource Deck" textAlignment="CENTER">
                         <font>
-                           <Font size="21.0"/>
+                           <Font size="21.0" />
                         </font>
                      </Label>
                   </Pane>
-                  <Pane layoutX="20.0" layoutY="20.0" prefHeight="130.0" prefWidth="500.0"
-                        AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1600.0"
-                        AnchorPane.topAnchor="0.0">
-                     <ImageView fx:id="goldDeck" fitHeight="120.0" fitWidth="150.0" layoutX="10.0"
-                                layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true"
-                                preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_back/058.png"/>
+                  <Pane layoutX="20.0" layoutY="20.0" prefHeight="130.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1600.0" AnchorPane.topAnchor="0.0">
+                     <ImageView fx:id="goldDeck" fitHeight="120.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/CODEX_cards_gold_back/058.png" />
                      </ImageView>
-                     <ImageView fx:id="goldUncovered0" fitHeight="120.0" fitWidth="150.0" layoutX="170.0"
-                                layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true"
-                                preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/068.png"/>
+                     <ImageView fx:id="goldUncovered0" fitHeight="120.0" fitWidth="150.0" layoutX="170.0" layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/CODEX_cards_gold_front/068.png" />
                      </ImageView>
-                     <ImageView fx:id="goldUncovered1" fitHeight="120.0" fitWidth="150.0" layoutX="330.0"
-                                layoutY="28.0" onMouseClicked="#drawCard" pickOnBounds="true"
-                                preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/079.png"/>
+                     <ImageView fx:id="goldUncovered1" fitHeight="120.0" fitWidth="150.0" layoutX="330.0" layoutY="28.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../../../../../assets/CODEX_cards_gold_front/079.png" />
                      </ImageView>
                      <Label layoutX="197.0" layoutY="-2.0" text="Gold Deck" textAlignment="CENTER">
                         <font>
-                           <Font size="21.0"/>
+                           <Font size="21.0" />
                         </font>
                      </Label>
                   </Pane>
