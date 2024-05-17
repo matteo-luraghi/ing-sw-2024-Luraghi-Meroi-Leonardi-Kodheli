@@ -4,7 +4,7 @@ import it.polimi.ingsw.view.gui.GUI;
 import javafx.scene.control.Alert;
 
 /**
- * Abstact class that gets extended by all of the event handlers for the GUI
+ * Abstact class that gets extended by all the event handlers for the GUI
  * Useful to store common methods for all event handlers
  * @author Gabriel Leonardi
  */
@@ -27,6 +27,16 @@ public abstract class EventHandler {
         alert.setTitle("Disconnection");
         alert.setHeaderText("There was a problem with yours or someone's connection");
         alert.setContentText("You will be kicked out now, bye!");
+        alert.showAndWait();
+    }
+    /**
+     * Shows an information popup
+     */
+    public void showPopup(String title, String text){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(title);
+        alert.setContentText(text);
         alert.showAndWait();
     }
 }
