@@ -100,5 +100,32 @@ public class PlayerFieldController extends EventHandler{
     }
 
     public void drawCard(MouseEvent mouseEvent) {
+        chosenImage = (ImageView) mouseEvent.getSource();
+        boolean isGold;
+        //Select the chosen card
+        if(chosenImage.equals(resourceDeck)){
+            chosenIndex = 0;
+            isGold = false;
+        } else if(chosenImage.equals(resourceUncovered0)){
+            chosenIndex = 1;
+            isGold = false;
+        } else if(chosenImage.equals(resourceUncovered1)){
+            chosenIndex = 2;
+            isGold = false;
+        } else if(chosenImage.equals(goldDeck)){
+            chosenIndex = 0;
+            isGold = true;
+        } else if(chosenImage.equals(goldUncovered0)){
+            chosenIndex = 1;
+            isGold = true;
+        } else if(chosenImage.equals(goldUncovered1)){
+            chosenIndex = 2;
+            isGold = true;
+        } else {
+            view.showMessage("How are you trying to draw a card that is not in a deck");
+            return;
+        }
+
+        view.getClient().drawCardResponse(chosenIndex, isGold);
     }
 }
