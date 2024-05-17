@@ -179,10 +179,10 @@ public class GUI extends Application implements View{
     @Override
     public void showMessage(String s) {
         Platform.runLater(()->{
-            if(sceneName.equalsIgnoreCase("setup.fxml")){
-                currentEventHandler.showPopup("", s);
-            } else if(sceneName.equalsIgnoreCase("playerfield.fxml")){
+            if(sceneName.equalsIgnoreCase("playerfield.fxml")){
                 //TODO: Implement for when in playerField (should update the "chat")
+            } else {
+                currentEventHandler.showPopup("", s);
             }
         });
     }
