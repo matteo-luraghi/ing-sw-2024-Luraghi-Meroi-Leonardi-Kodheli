@@ -68,6 +68,8 @@ public class SetupController extends EventHandler{
             view.getClient().playStartingCardResponse(startingCard, startingFront.isSelected());
             int goalIndex = goal1.isSelected() ? 0 : 1;
             view.getClient().goalCardResponse(goalCards[goalIndex]);
+
+            //Disable everything to disallow overrides
             goal1.setDisable(true);
             goal2.setDisable(true);
             startingFront.setDisable(true);

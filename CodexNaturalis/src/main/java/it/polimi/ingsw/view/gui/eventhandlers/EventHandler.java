@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
  */
 public abstract class EventHandler {
     protected GUI view;
+    private Alert alert = null;
 
     /**
      * View setter
@@ -33,10 +34,20 @@ public abstract class EventHandler {
      * Shows an information popup
      */
     public void showPopup(String title, String text){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(title);
         alert.setContentText(text);
         alert.showAndWait();
+        alert = null;
+    }
+
+    /**
+     * If there is an active alert, close it
+     */
+    public void closePopup(){
+        if(alert != null){
+            alert.close();
+        }
     }
 }
