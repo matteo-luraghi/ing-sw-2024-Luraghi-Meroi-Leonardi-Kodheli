@@ -114,7 +114,7 @@ public class GUI extends Application implements View{
      * @param connectionProtocol The connection protocol that the client wants to use (either Socket or RMI)
      * @return true if the connection was successful, false otherwise
      */
-    public boolean connectToServer(String ip, int port, String connectionProtocol) throws ConnectionClosedException {
+    public void connectToServer(String ip, int port, String connectionProtocol) throws ConnectionClosedException {
 
         if (connectionProtocol.equalsIgnoreCase("socket")){
             try {
@@ -131,6 +131,9 @@ public class GUI extends Application implements View{
             } catch (RemoteException | NotBoundException | IllegalArgumentException e) {
                 connectedToServer = false;
             }
+        }
+        if (!connectedToServer){
+            throw new ConnectionClosedException("Error connecting to the server");
         }
 
         if (client.getClass() == RMIClient.class) {
@@ -150,8 +153,6 @@ public class GUI extends Application implements View{
         if(connectedToServer){
             new Thread(this::listenForDisconnection).start();
         }
-
-        return connectedToServer;
     }
 
     public void listenForDisconnection() {
@@ -177,7 +178,11 @@ public class GUI extends Application implements View{
      */
     @Override
     public void showMessage(String s) {
-        //TODO: Implement for when in playerField (should update the "chat")
+        if(sceneName.equalsIgnoreCase("setup.fxml")){
+            currentEventHandler.showPopup("", "Other players are still choosing");
+        } else if(sceneName.equalsIgnoreCase("playerfield.fxml")){
+            //TODO: Implement for when in playerField (should update the "chat")
+        }
     }
 
     @Override
