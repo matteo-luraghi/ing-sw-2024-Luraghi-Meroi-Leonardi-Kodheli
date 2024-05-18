@@ -29,14 +29,37 @@ public class RMIClient extends Client {
     private RMIConnectionHandler connectionHandler;
     private String gameName = null;
 
-    public RMIClient(String ip, int port, View view) throws RemoteException, NotBoundException {
+    /**
+     * Constructor
+     * @param ip the server ip address
+     * @param port the server port
+     * @param view the view interface
+     * @throws RemoteException if errors in exposing/getting the RMI registry
+     * @throws NotBoundException if errors in RMI connection
+     * @throws IPNotFoundException if unable to find the machine's ip address
+     */
+    public RMIClient(String ip, int port, View view) throws RemoteException, NotBoundException, IPNotFoundException {
         super(view);
+        // get the server registry
         this.registry = LocateRegistry.getRegistry(ip, port);
+
+        // find the client's ip address
+        String clientIP = null;
         try {
-            System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
-        } catch (Exception e) {
-            e.printStackTrace();
+            clientIP = InetAddress.getLocalHost().getHostAddress();
+        } catch (Exception ignored) {
         }
+
+        if (clientIP == null || clientIP.isEmpty() || clientIP.startsWith("127.0.")) {
+            clientIP = IPAddresses.getAddress();
+            if (clientIP == null) {
+                throw new IPNotFoundException("Error getting client ip address");
+            }
+        }
+
+        System.setProperty("java.rmi.server.hostname", clientIP);
+
+        // create the client's registry
         boolean valid = false;
         int viewPort = 1100;
         while(!valid) {
@@ -49,6 +72,10 @@ public class RMIClient extends Client {
         }
     }
 
+    /**
+     * Registry getter
+     * @return the server registry
+     */
     public Registry getRegistry() {
         return this.registry;
     }
@@ -86,6 +113,7 @@ public class RMIClient extends Client {
 
             this.connectionHandler.setView();
 
+            // join a game or create a new one
             new Thread(() -> {
                 try {
                     if (isJoin) {
@@ -99,6 +127,7 @@ public class RMIClient extends Client {
                 }
             }).start();
 
+            // get the game's controller
             try {
                 this.controller = (RemoteController) registry.lookup("controller"+gameName);
             } catch (NotBoundException ignored) {
