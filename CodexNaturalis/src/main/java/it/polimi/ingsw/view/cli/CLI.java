@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.cli;
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.connection.ConnectionClosedException;
 import it.polimi.ingsw.connection.RemoteServer;
+import it.polimi.ingsw.connection.rmi.IPNotFoundException;
 import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.connection.socket.SocketClient;
 import it.polimi.ingsw.model.card.*;
@@ -49,7 +50,9 @@ public class CLI implements View {
     }
 
     /**
-     * method to connect a client to the server
+     * Starts the correct type of client and handles connection exception
+     * then listens for disconnections
+     * @throws ConnectionClosedException if unable to connect to the server
      */
     @Override
     public void start() throws ConnectionClosedException{
@@ -87,7 +90,7 @@ public class CLI implements View {
                     try {
                         client = new RMIClient(ip, port, this);
                         connected = true;
-                    } catch (RemoteException | NotBoundException | IllegalArgumentException e) {
+                    } catch (RemoteException | NotBoundException | IllegalArgumentException | IPNotFoundException e) {
                         System.out.println("Error connecting to the server, try again");
                     }
                 } catch (NumberFormatException e) {

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.connection;
 
+import it.polimi.ingsw.connection.rmi.IPAddresses;
+import it.polimi.ingsw.connection.rmi.IPNotFoundException;
 import it.polimi.ingsw.connection.socket.message.connectionMessage.Disconnection;
 import it.polimi.ingsw.connection.socket.SocketConnectionHandler;
 import it.polimi.ingsw.controller.Controller;
@@ -44,12 +46,25 @@ public class Server implements RemoteServer {
         this.executor = Executors.newCachedThreadPool();
     }
 
-    public void start() throws IOException {
-        // throws if the socket init fails
-        // export the registry to the same ip as the server
-        System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
+    /**
+     * Start the server by exposing itself in the RMI registry,
+     * opening the server socket and starting accepting socket connections
+     * @throws IOException if the socket initialization fails
+     * @throws IPNotFoundException if unable to find the machine's ip
+     */
+    public void start() throws IOException, IPNotFoundException {
+        // find the server's ip address
+        String serverIP = InetAddress.getLocalHost().getHostAddress();
+        if (serverIP == null || serverIP.isEmpty() || serverIP.startsWith("127.0.")) {
+            serverIP = IPAddresses.getAddress();
+            if (serverIP == null) {
+                throw new IPNotFoundException("Getting the server ip address");
+            }
+        }
+        System.setProperty("java.rmi.server.hostname", serverIP);
         this.registry = LocateRegistry.createRegistry(1099);
 
+        // expose the server via RMI
         try {
             RemoteServer serverStub = (RemoteServer) UnicastRemoteObject.exportObject(this, 0);
             registry.rebind("server", serverStub);
@@ -58,6 +73,7 @@ public class Server implements RemoteServer {
             throw new IOException();
         }
 
+        // open the socket and start listening for connections
         this.serverSocket = new ServerSocket(this.port);
         System.out.println("Server running...");
         try {
@@ -69,7 +85,7 @@ public class Server implements RemoteServer {
                 executor.submit(clientConnection);
             }
         } catch (IOException e) {
-            System.out.println("Error connecting to the client");
+            System.err.println("Error connecting to the client");
         }
     }
 
@@ -89,6 +105,8 @@ public class Server implements RemoteServer {
                             && g.getHandlers().size() < games.get(g))
                     .findFirst();
         }
+
+        // add the player to the game
         if (optionalController.isPresent()) {
             Controller gameController = optionalController.get();
             gameController.addHandler(connectionHandler);
@@ -97,13 +115,13 @@ public class Server implements RemoteServer {
             return;
         }
 
+        // no game found -> game already started or game deleted
         ArrayList<String> gameNames = null;
         try {
             gameNames = getGamesNames();
         } catch (RemoteException e) {
             System.err.println("Error getting game names");
         }
-        // no game found -> game already started or game deleted
         connectionHandler.joinGameRequest(gameNames);
     }
 
@@ -120,6 +138,8 @@ public class Server implements RemoteServer {
         }
         controller.addHandler(connectionHandler);
         connectionHandler.setController(controller);
+
+        // expose the controller via RMI
         try {
             RemoteController stub = (RemoteController) UnicastRemoteObject.exportObject(controller, 0);
             this.registry.rebind("controller"+controller.getGameName(), stub);
@@ -141,9 +161,12 @@ public class Server implements RemoteServer {
             Controller controller = optionalController.get();
             controller.getHandlers().remove(connectionHandler);
             ArrayList<ConnectionHandler> handlers = controller.getHandlers();
+
+            // remove the controller from the active games
             synchronized (this.gameLock) {
                 this.games.remove(controller);
             }
+
             // remove controller from registry
             try {
                 RemoteController stub = (RemoteController) this.registry.lookup("controller"+controller.getGameName());
@@ -153,6 +176,7 @@ public class Server implements RemoteServer {
                 this.registry.unbind("controller"+controller.getGameName());
             } catch (Exception ignored) {}
 
+            // send a disconnection message to all player
             controller.broadcastMessage(new Disconnection(connectionHandler.getClientNickname()), handlers);
 
         }

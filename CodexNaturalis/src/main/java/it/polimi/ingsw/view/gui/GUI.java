@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.connection.ConnectionClosedException;
 import it.polimi.ingsw.connection.RemoteServer;
+import it.polimi.ingsw.connection.rmi.IPNotFoundException;
 import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.connection.socket.SocketClient;
 import it.polimi.ingsw.controller.Controller;
@@ -109,8 +110,8 @@ public class GUI extends Application implements View{
      * Method to connect a client to a server
      * @param ip the ip of the server
      * @param port the port of the server
-     * @param connectionProtocol The connection protocol that the client wants to use (either Socket or RMI)
-     * @return true if the connection was successful, false otherwise
+     * @param connectionProtocol The connection protocol that the client wants to use (either Socket or RMI)p
+     * @throws ConnectionClosedException if unable to connect to the server
      */
     public void connectToServer(String ip, int port, String connectionProtocol) throws ConnectionClosedException {
 
@@ -126,7 +127,7 @@ public class GUI extends Application implements View{
             try {
                 client = new RMIClient(ip, port, this);
                 connectedToServer = true;
-            } catch (RemoteException | NotBoundException | IllegalArgumentException e) {
+            } catch (RemoteException | NotBoundException | IllegalArgumentException | IPNotFoundException e) {
                 connectedToServer = false;
             }
         }

@@ -4,6 +4,7 @@ import java.io.Serial;
 
 /**
  * NicknameAlreadyPresentException class
+ * used to notify the user that the nickname they have chosen has already been taken
  * @author Matteo Leonardo Luraghi
  */
 public class NicknameAlreadyPresentException extends Exception {
