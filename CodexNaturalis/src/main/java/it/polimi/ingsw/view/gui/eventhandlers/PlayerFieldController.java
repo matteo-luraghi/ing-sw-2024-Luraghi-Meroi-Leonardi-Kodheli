@@ -129,8 +129,15 @@ public class PlayerFieldController extends EventHandler{
             }
         }
 
-        //Set hand
-        ArrayList<ResourceCard> hand = playerField.getHand();
+        setHand(playerField.getHand(), isYourPlayerfield);
+
+        //Set private goal
+        temp = new Image(Util.getImageFromID(playerField.getPrivateGoal().getId(), isYourPlayerfield));
+        privateGoal.setImage(temp);
+    }
+
+    public void setHand(ArrayList<ResourceCard> hand, boolean isYourPlayerfield){
+        Image temp;
         if(hand.getFirst() != null){
             temp = new Image(Util.getImageFromID(hand.getFirst().getId(), isYourPlayerfield));
             hand0.setImage(temp);
@@ -142,11 +149,12 @@ public class PlayerFieldController extends EventHandler{
         if(hand.size() == 3 && hand.get(2) != null){
             temp = new Image(Util.getImageFromID(hand.get(2).getId(), isYourPlayerfield));
             hand2.setImage(temp);
+            hand2.setVisible(true);
+            hand2.setDisable(false);
+        } else {
+            hand2.setVisible(false);
+            hand2.setDisable(true);
         }
-
-        //Set private goal
-        temp = new Image(Util.getImageFromID(playerField.getPrivateGoal().getId(), isYourPlayerfield));
-        privateGoal.setImage(temp);
     }
 
     public void addChatMessage(String s) {
@@ -202,10 +210,6 @@ public class PlayerFieldController extends EventHandler{
                 }
             }
         }
-
-        if(!isFront){
-            //TODO:Take the current card and flip it
-        }
     }
 
     public void drawCard(MouseEvent mouseEvent) {
@@ -252,12 +256,7 @@ public class PlayerFieldController extends EventHandler{
          */
 
         //Find the resource card that just got played
-        ResourceCard card = null;
-        for(Coordinates c : playerZone.getGameZone().keySet()){
-            if(c.getX() == where.getX() && c.getY() == where.getY()){
-                card = (ResourceCard) playerZone.getGameZone().get(c);
-            }
-        }
+        ResourceCard card = (ResourceCard) playerZone.getGameCardByEqualCoordinate(where);
 
         //Create the pane
         int newX = where.getX() * 116;

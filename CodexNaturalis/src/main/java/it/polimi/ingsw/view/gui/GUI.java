@@ -240,6 +240,7 @@ public class GUI extends Application implements View{
         Platform.runLater(() -> {
             PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
             playerFieldHandler.cardPlayOK();
+            playerFieldHandler.setHand(game.getGameTable().getPlayerZones().get(user).getHand(), true);
         });
     }
 
@@ -384,6 +385,7 @@ public class GUI extends Application implements View{
         });
     }
 
+
     /**
      * shows who has won the game
      *
@@ -468,6 +470,12 @@ public class GUI extends Application implements View{
                 break;
             }
         }
+
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.setHand(game.getGameTable().getPlayerZones().get(user).getHand(), true);
+            playerFieldHandler.setDecks(game.getGameTable().getResourceDeck(), game.getGameTable().getGoldDeck());
+        });
     }
 
     /**
@@ -512,12 +520,13 @@ public class GUI extends Application implements View{
 
     /**
      * Method used to play a card from the GUI
-     * @param chosenIndex
-     * @param coordinates
+     * @param chosenIndex the index of the card in his hand
+     * @param coordinates where he wants to play it
      */
     public void playCard(int chosenIndex, Coordinates coordinates, boolean isFront) {
         ResourceCard chosenCard = game.getGameTable().getPlayerZones().get(user).getHand().get(chosenIndex);
         client.playCardResponse(chosenCard, coordinates, isFront);
     }
+
 
 }
