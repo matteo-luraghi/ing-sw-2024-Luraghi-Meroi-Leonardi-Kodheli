@@ -8,10 +8,12 @@ import it.polimi.ingsw.view.gui.GUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -34,15 +36,19 @@ public class PlayerFieldController extends EventHandler{
     public ImageView goldUncovered0;
     public ImageView goldUncovered1;
     public ImageView startingCard;
+    public Group playerField;
 
+    private ResourceCard chosenCard;
     private ImageView chosenImage;
     private int chosenIndex;
     private boolean isFront;
+    private Coordinates chosenCords;
     public void initialize(){
         ObservableList<String> items = FXCollections.observableArrayList();
         chat.setItems(items);
         chosenIndex = -1;
         chosenImage = null;
+        chosenCords = null;
     }
 
     @Override
@@ -117,7 +123,7 @@ public class PlayerFieldController extends EventHandler{
                 temp = new Image(Util.getImageFromID(playerField.getGameZone().get(c).getId(), playerField.getGameZone().get(c).getIsFront()));
                 startingCard.setImage(temp);
             } else {
-                //TODO: Implement for multiple cards
+                createCard((ResourceCard) playerField.getGameZone().get(c), c);
             }
         }
 
@@ -160,7 +166,8 @@ public class PlayerFieldController extends EventHandler{
         coordinateString = coordinateString.substring(1, coordinateString.length() - 1);
         x = Integer.parseInt(coordinateString.split(",")[0]);
         y = Integer.parseInt(coordinateString.split(",")[1]);
-        view.playCard(chosenIndex, new Coordinates(x,y), isFront);
+        chosenCords = new Coordinates(x,y);
+        view.playCard(chosenIndex, chosenCords, isFront);
     }
 
     public void selectPlayCard(MouseEvent mouseEvent) {
@@ -175,7 +182,6 @@ public class PlayerFieldController extends EventHandler{
             view.showMessage("How are you trying to play a card that is not in your hand");
             return;
         }
-
         //Let the user select the side they prefer
         TextInputDialog dialog = new TextInputDialog("Choose a side");
         dialog.setTitle("Choose a side");
@@ -229,5 +235,44 @@ public class PlayerFieldController extends EventHandler{
         }
 
         view.getClient().drawCardResponse(chosenIndex, isGold);
+    }
+
+    public void cardPlayOK() {
+        //The card got played succesfully, either i create a new card and add it to the screen or i request the whole playerzone again
+        showYourField(); //this is reloading
+    }
+
+    private void createCard(ResourceCard card, Coordinates where){
+        /*
+        [0,0] is at x:0 y:0
+        x+1 = +116
+        y+1 = -60  I dont know why -60
+         */
+
+        //Create the pane
+        int newX = where.getX() * 116;
+        int newY = where.getY() * -60;
+        Pane pane = new Pane();
+        pane.setLayoutX(newX);
+        pane.setLayoutY(newY);
+        pane.setPrefWidth(150);
+        pane.setPrefHeight(100);
+
+        //Create the ImageView
+        ImageView imageView = new ImageView();
+        Image image = new Image(Util.getImageFromID(card.getId(), isFront));
+        imageView.setImage(image);
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(150);
+        imageView.setPickOnBounds(true);
+        imageView.setPreserveRatio(true);
+
+        //Create the 4 buttons
+
+        //Add everything to the pane
+        pane.getChildren().add(imageView);
+
+        //Append the pane to the group
+        playerField.getChildren().add(pane);
     }
 }

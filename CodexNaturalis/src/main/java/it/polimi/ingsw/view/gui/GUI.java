@@ -6,7 +6,6 @@ import it.polimi.ingsw.connection.RemoteServer;
 import it.polimi.ingsw.connection.rmi.IPNotFoundException;
 import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.connection.socket.SocketClient;
-import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.Resource;
 import it.polimi.ingsw.model.card.ResourceCard;
@@ -237,6 +236,13 @@ public class GUI extends Application implements View{
         client.playersNumberResponse(numOfPlayersChosen, gameName);
     }
 
+    public void cardPlayedOK(){
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.cardPlayOK();
+        });
+    }
+
     /**
      * method to display the waiting for players message in loginPage
      */
@@ -411,7 +417,7 @@ public class GUI extends Application implements View{
      */
     @Override
     public void setMyTurn(boolean isMyTurn) throws RemoteException {
-
+        client.yourTurnOk();
     }
 
     /**
