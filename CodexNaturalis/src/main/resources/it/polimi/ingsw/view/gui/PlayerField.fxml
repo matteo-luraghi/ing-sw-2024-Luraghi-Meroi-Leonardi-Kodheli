@@ -44,7 +44,7 @@
                <center>
                   <ImageView fitHeight="274.0" fitWidth="233.0" opacity="0.25" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                      <image>
-                        <Image url="@../../../../../assets/GUIGraphics/codexNaturalisTransparent.png" />
+                        <Image url="@assets/GUIGraphics/codexNaturalisTransparent.png" />
                      </image>
                      <viewport>
                         <Rectangle2D />
@@ -62,7 +62,7 @@
                      <Group>
                         <Pane layoutX="127.0" layoutY="77.0" maxHeight="100.0" maxWidth="150.0" minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="150.0">
                            <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                              <Image url="@../../../../../assets/CODEX_cards_gold_front/081.png" />
+                              <Image url="@assets/CODEX_cards_gold_front/081.png" />
                            </ImageView>
                            <Button alignment="TOP_RIGHT" maxHeight="38.0" maxWidth="34.0" minHeight="38.0" minWidth="34.0" mnemonicParsing="false" onMouseClicked="#playCard" opacity="0.0" prefHeight="38.0" prefWidth="34.0" text="[-1,1]">
                               <cursor>
@@ -121,25 +121,25 @@
                      </Label>
                      <Label layoutX="139.0" layoutY="25.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
                      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="13.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/Icons/Animal.jpg" />
+                        <Image url="@assets/Icons/Animal.jpg" />
                      </ImageView>
                      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="105.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/Icons/Animal.jpg" />
+                        <Image url="@assets/Icons/Animal.jpg" />
                      </ImageView>
                      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="59.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/Icons/Animal.jpg" />
+                        <Image url="@assets/Icons/Animal.jpg" />
                      </ImageView>
                      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="13.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/Icons/Animal.jpg" />
+                        <Image url="@assets/Icons/Animal.jpg" />
                      </ImageView>
                      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="151.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/Icons/Animal.jpg" />
+                        <Image url="@assets/Icons/Animal.jpg" />
                      </ImageView>
                      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="105.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/Icons/Animal.jpg" />
+                        <Image url="@assets/Icons/Animal.jpg" />
                      </ImageView>
                      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="59.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/Icons/Animal.jpg" />
+                        <Image url="@assets/Icons/Animal.jpg" />
                      </ImageView>
                      <Label layoutX="35.0" layoutY="50.0" text="0">
                         <font>
@@ -201,13 +201,13 @@
                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="2097.0" style="-fx-background-color: #d1be71;">
                   <Pane prefHeight="130.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <ImageView fx:id="hand0" fitHeight="120.0" fitWidth="150.0" layoutY="30.0" onMouseClicked="#selectPlayCard" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/007.png" />
+                        <Image url="@assets/CODEX_cards_gold_front/007.png" />
                      </ImageView>
                      <ImageView fx:id="hand1" fitHeight="120.0" fitWidth="150.0" layoutX="174.0" layoutY="30.0" onMouseClicked="#selectPlayCard" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/004.png" />
+                        <Image url="@assets/CODEX_cards_gold_front/004.png" />
                      </ImageView>
                      <ImageView fx:id="hand2" fitHeight="120.0" fitWidth="150.0" layoutX="340.0" layoutY="28.0" onMouseClicked="#selectPlayCard" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/069.png" />
+                        <Image url="@assets/CODEX_cards_gold_front/069.png" />
                      </ImageView>
                      <Label layoutX="224.0" layoutY="-1.0" text="Hand" textAlignment="CENTER">
                         <font>
@@ -222,15 +222,15 @@
                         </font>
                      </Label>
                      <ImageView fx:id="privateGoal" fitHeight="150.0" fitWidth="150.0" layoutX="25.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/099.png" />
+                        <Image url="@assets/CODEX_cards_gold_front/099.png" />
                      </ImageView>
                   </Pane>
                   <Pane layoutX="826.0" layoutY="-35.0" prefHeight="130.0" prefWidth="369.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="720.0" AnchorPane.topAnchor="0.0">
                      <ImageView fx:id="commonGoal0" fitHeight="150.0" fitWidth="150.0" layoutX="14.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/094.png" />
+                        <Image url="@assets/CODEX_cards_gold_front/094.png" />
                      </ImageView>
                      <ImageView fx:id="commonGoal1" fitHeight="150.0" fitWidth="150.0" layoutX="184.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/097.png" />
+                        <Image url="@assets/CODEX_cards_gold_front/097.png" />
                      </ImageView>
                      <Label layoutX="113.0" layoutY="3.0" text="Common Goals">
                         <font>
@@ -240,13 +240,13 @@
                   </Pane>
                   <Pane layoutX="10.0" layoutY="10.0" prefHeight="130.0" prefWidth="500.0" AnchorPane.leftAnchor="1100.0" AnchorPane.topAnchor="0.0">
                      <ImageView fx:id="resourceDeck" fitHeight="120.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_back/037.png" />
+                        <Image url="@assets/CODEX_cards_gold_back/037.png" />
                      </ImageView>
                      <ImageView fx:id="resourceUncovered0" fitHeight="120.0" fitWidth="150.0" layoutX="170.0" layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/004.png" />
+                        <Image url="@assets/CODEX_cards_gold_front/004.png" />
                      </ImageView>
                      <ImageView fx:id="resourceUncovered1" fitHeight="120.0" fitWidth="150.0" layoutX="330.0" layoutY="28.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/017.png" />
+                        <Image url="@assets/CODEX_cards_gold_front/017.png" />
                      </ImageView>
                      <Label layoutX="182.0" layoutY="-1.0" text="Resource Deck" textAlignment="CENTER">
                         <font>
@@ -256,13 +256,13 @@
                   </Pane>
                   <Pane layoutX="20.0" layoutY="20.0" prefHeight="130.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1600.0" AnchorPane.topAnchor="0.0">
                      <ImageView fx:id="goldDeck" fitHeight="120.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_back/058.png" />
+                        <Image url="@assets/CODEX_cards_gold_back/058.png" />
                      </ImageView>
                      <ImageView fx:id="goldUncovered0" fitHeight="120.0" fitWidth="150.0" layoutX="170.0" layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/068.png" />
+                        <Image url="@assets/CODEX_cards_gold_front/068.png" />
                      </ImageView>
                      <ImageView fx:id="goldUncovered1" fitHeight="120.0" fitWidth="150.0" layoutX="330.0" layoutY="28.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@../../../../../assets/CODEX_cards_gold_front/079.png" />
+                        <Image url="@assets/CODEX_cards_gold_front/079.png" />
                      </ImageView>
                      <Label layoutX="197.0" layoutY="-2.0" text="Gold Deck" textAlignment="CENTER">
                         <font>

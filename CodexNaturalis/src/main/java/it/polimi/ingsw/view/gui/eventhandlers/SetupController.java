@@ -2,9 +2,11 @@ package it.polimi.ingsw.view.gui.eventhandlers;
 
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.StartingCard;
+import it.polimi.ingsw.model.gamelogic.Util;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -31,7 +33,11 @@ public class SetupController extends EventHandler{
      */
     public void setStartingCard(StartingCard startingCard){
         this.startingCard = startingCard;
-        //TODO: Set the starting card images
+
+        Image image1 = new Image(Util.getImageFromID(startingCard.getId(), true));
+        startingImageFront.setImage(image1);
+        Image image2 = new Image(Util.getImageFromID(startingCard.getId(), false));
+        startingImageBack.setImage(image2);
     }
 
     /**
@@ -40,8 +46,11 @@ public class SetupController extends EventHandler{
      */
     public void setGoalCards(GoalCard[] goalCards){
         this.goalCards = goalCards;
-
-        //TODO: Set the goal cards images
+        //Set the images
+        Image image1 = new Image(Util.getImageFromID(goalCards[0].getId(), true));
+        goalImage1.setImage(image1);
+        Image image2 = new Image(Util.getImageFromID(goalCards[1].getId(), true));
+        goalImage2.setImage(image2);
     }
 
     /**

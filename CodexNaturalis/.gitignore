@@ -89,4 +89,5 @@ fabric.properties
 target
 
 /src/main/resources/assets
+/src/main/resources/it/polimi/ingsw/view/gui/assets
 

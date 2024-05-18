@@ -25,6 +25,19 @@ public class LoginController extends EventHandler{
     private boolean isJoin;
     private String gameNameString;
 
+    @Override
+    public void showPopup(String title, String text){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(title);
+        alert.setContentText(text);
+        alert.showAndWait();
+        alert = null;
+        Color.setDisable(false);
+        ColorButton.setDisable(false);
+    }
+
+
     /**
      * Sets the currently available colors to the ChoiceBox and shows the color choosing part of the form
      * @param availableColors the colors that are currently available

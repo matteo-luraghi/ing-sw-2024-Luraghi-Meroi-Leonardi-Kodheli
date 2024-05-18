@@ -19,7 +19,7 @@
          <center>
             <ImageView fitHeight="297.0" fitWidth="298.0" opacity="0.25" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@../../../../../assets/GUIGraphics/codexNaturalisTransparent.png" />
+                  <Image url="@assets/GUIGraphics/codexNaturalisTransparent.png" />
                </image>
                <viewport>
                   <Rectangle2D />
