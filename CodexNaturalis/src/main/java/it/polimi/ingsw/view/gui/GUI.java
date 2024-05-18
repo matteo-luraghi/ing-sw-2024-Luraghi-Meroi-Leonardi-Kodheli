@@ -3,15 +3,14 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.connection.ConnectionClosedException;
 import it.polimi.ingsw.connection.RemoteServer;
+import it.polimi.ingsw.connection.rmi.IPNotFoundException;
 import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.connection.socket.SocketClient;
-import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.card.Resource;
+import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.card.StartingCard;
-import it.polimi.ingsw.model.gamelogic.Color;
-import it.polimi.ingsw.model.gamelogic.GameState;
-import it.polimi.ingsw.model.gamelogic.Player;
-import it.polimi.ingsw.model.gamelogic.ScoreBoard;
+import it.polimi.ingsw.model.gamelogic.*;
 import it.polimi.ingsw.view.gui.eventhandlers.*;
 import it.polimi.ingsw.view.mainview.*;
 import javafx.application.Application;
@@ -26,6 +25,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * GUI class to show the game using graphic interface
@@ -44,6 +45,8 @@ public class GUI extends Application implements View{
     private int numOfPlayersChosen;
     private boolean isJoining;
     private String gameName;
+    private GameState game = null;
+    private Player user = null;
     /**
      * GUI constructor
      */
@@ -109,10 +112,10 @@ public class GUI extends Application implements View{
      * Method to connect a client to a server
      * @param ip the ip of the server
      * @param port the port of the server
-     * @param connectionProtocol The connection protocol that the client wants to use (either Socket or RMI)
-     * @return true if the connection was successful, false otherwise
+     * @param connectionProtocol The connection protocol that the client wants to use (either Socket or RMI)p
+     * @throws ConnectionClosedException if unable to connect to the server
      */
-    public boolean connectToServer(String ip, int port, String connectionProtocol) throws ConnectionClosedException {
+    public void connectToServer(String ip, int port, String connectionProtocol) throws ConnectionClosedException {
 
         if (connectionProtocol.equalsIgnoreCase("socket")){
             try {
@@ -126,9 +129,12 @@ public class GUI extends Application implements View{
             try {
                 client = new RMIClient(ip, port, this);
                 connectedToServer = true;
-            } catch (RemoteException | NotBoundException | IllegalArgumentException e) {
+            } catch (RemoteException | NotBoundException | IllegalArgumentException | IPNotFoundException e) {
                 connectedToServer = false;
             }
+        }
+        if (!connectedToServer){
+            throw new ConnectionClosedException("Error connecting to the server");
         }
 
         if (client.getClass() == RMIClient.class) {
@@ -148,8 +154,6 @@ public class GUI extends Application implements View{
         if(connectedToServer){
             new Thread(this::listenForDisconnection).start();
         }
-
-        return connectedToServer;
     }
 
     public void listenForDisconnection() {
@@ -175,7 +179,13 @@ public class GUI extends Application implements View{
      */
     @Override
     public void showMessage(String s) {
-
+        Platform.runLater(()->{
+            if(currentEventHandler instanceof PlayerFieldController playerFieldController){
+                playerFieldController.addChatMessage(s);
+            } else {
+                currentEventHandler.showPopup("", s);
+            }
+        });
     }
 
     @Override
@@ -189,7 +199,6 @@ public class GUI extends Application implements View{
     }
 
     public void setLoginParameters(){
-        System.out.println("Set Login parameters");
         Platform.runLater(() -> {
             LoginController loginHandler = (LoginController) currentEventHandler;
             loginHandler.setParameters(isJoining, gameName);
@@ -225,6 +234,13 @@ public class GUI extends Application implements View{
     public void askForPlayersNumber() {
         //We already have the number of players and the name of the game, so we simulate a response from the client
         client.playersNumberResponse(numOfPlayersChosen, gameName);
+    }
+
+    public void cardPlayedOK(){
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.cardPlayOK();
+        });
     }
 
     /**
@@ -270,7 +286,10 @@ public class GUI extends Application implements View{
      */
     @Override
     public void ShowChoosePrivateGoal(GoalCard[] goalCards) {
-
+        Platform.runLater(() -> {
+            SetupController setupHandler = (SetupController) currentEventHandler;
+            setupHandler.setGoalCards(goalCards);
+        });
     }
 
     /**
@@ -282,7 +301,20 @@ public class GUI extends Application implements View{
      */
     @Override
     public void ShowPlayerField(Player playerToSee, Player playerAsking, GameState game) {
+        System.err.println("This shouldn't be called in the GUI");
+    }
 
+    /**
+     * displays the player field of a specific player without passing the game
+     *
+     * @param playerToSee  specifies which playerfield has to be displayed
+     * @param playerAsking tells which player is asking to see it
+     */
+    public void ShowPlayerField(Player playerToSee, Player playerAsking) {
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.setPlayerField(game.getGameTable().getPlayerZones().get(playerToSee), playerAsking.getNickname().equals(playerToSee.getNickname()));
+        });
     }
 
     /**
@@ -292,15 +324,64 @@ public class GUI extends Application implements View{
      */
     @Override
     public void ShowDecks(GameState game) {
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.setDecks(game.getGameTable().getResourceDeck(), game.getGameTable().getGoldDeck());
+        });
+    }
 
+    /**
+     * displays the two decks and the uncovered cards without passing the game
+     */
+    public void ShowDecks(){
+        ShowDecks(game);
     }
 
     /**
      * displays the scoreboard
+     * @param scoreBoard the scoreboard we want to show
      */
     @Override
     public void ShowScoreBoard(ScoreBoard scoreBoard) {
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.setScoreBoard(scoreBoard);
+        });
+    }
 
+    /**
+     * displays the scoreboard without passing the scoreboard
+     */
+    public void ShowScoreBoard(){
+        ShowScoreBoard(game.getGameTable().getScoreBoard());
+    }
+
+    /**
+     * Displays the resource maps of all players
+     */
+    public void showResourceMaps() {
+        Map<Player, Map<Resource, Integer>> resourceMaps = new HashMap<>();
+        for(Player p : game.getPlayers()){
+            resourceMaps.put(p, game.getGameTable().getPlayerZones().get(p).getResourceMap());
+        }
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.setResourceMaps(resourceMaps);
+        });
+    }
+
+    /**
+     * Shows the common goals for this view's game
+     */
+    public void showCommonGoals(){
+        GoalCard[] commonGoals = new GoalCard[2];
+        commonGoals[0] = game.getGameTable().getCommonGoal(0);
+        commonGoals[1] = game.getGameTable().getCommonGoal(1);
+
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.setCommonGoals(commonGoals);
+        });
     }
 
     /**
@@ -336,7 +417,9 @@ public class GUI extends Application implements View{
      */
     @Override
     public void setMyTurn(boolean isMyTurn) throws RemoteException {
-
+        if(isMyTurn){
+            client.yourTurnOk();
+        }
     }
 
     /**
@@ -350,14 +433,18 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * isMyTurn setter
+     * user setter
      *
      * @param user is the user that is going to use this client
      */
     @Override
-    public void setUser(Player user) throws RemoteException {
+    public void setUser(Player user) throws RemoteException { this.user = user; }
 
-    }
+    /**
+     * user getter
+     * @return the user that is using this client
+     */
+    public Player getUser(){ return user; }
 
     /**
      * game setter
@@ -366,8 +453,28 @@ public class GUI extends Application implements View{
      */
     @Override
     public void setGame(GameState game) throws RemoteException {
+        if(sceneName.equalsIgnoreCase("Setup.fxml")){
+            Platform.runLater(()-> {
+                currentEventHandler.closePopup();
+                sceneName = "PlayerField.fxml";
+                changeScene(sceneName);
+            });
+        }
 
+        this.game = game;
+        for (Player p : game.getPlayers()) {
+            if (p.equals(this.user)) {
+                this.user = p;
+                break;
+            }
+        }
     }
+
+    /**
+     * player field getter
+     * @return the player field of this user
+     */
+    public PlayerField getYourPlayerField(){ return this.game.getGameTable().getPlayerZones().get(user); }
 
     /**
      * Disconnect the client
@@ -402,4 +509,15 @@ public class GUI extends Application implements View{
      * @param gameName the name of the game
      */
     public void setGameName(String gameName){ this.gameName = gameName; }
+
+    /**
+     * Method used to play a card from the GUI
+     * @param chosenIndex
+     * @param coordinates
+     */
+    public void playCard(int chosenIndex, Coordinates coordinates, boolean isFront) {
+        ResourceCard chosenCard = game.getGameTable().getPlayerZones().get(user).getHand().get(chosenIndex);
+        client.playCardResponse(chosenCard, coordinates, isFront);
+    }
+
 }

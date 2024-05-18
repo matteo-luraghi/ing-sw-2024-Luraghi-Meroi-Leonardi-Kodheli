@@ -256,7 +256,10 @@ public class Controller implements RemoteController {
 
     @Override
     public void checkGame() {
-        if (getHandlers().size() == this.numOfPlayers) {
+        Optional<ConnectionHandler> userWithoutColor = getHandlers().stream().parallel()
+                .filter(ch -> ch.getClientColor() == null)
+                .findFirst();
+        if (getHandlers().size() == this.numOfPlayers && userWithoutColor.isEmpty()) {
             start();
         }
     }
@@ -415,7 +418,11 @@ public class Controller implements RemoteController {
             card.flip();
         }
         if(!currentPlayer.getNickname().equals(connectionHandler.getClientNickname())){
-            System.err.println("Someone who isn't the current player is playing");
+            connectionHandler.sendTextMessage("You aren't the current player");
+            return;
+        }
+        if(game.getTurnState() != TurnState.PLAY){
+            connectionHandler.sendTextMessage("It's not the time to play a card");
             return;
         }
 
@@ -423,6 +430,11 @@ public class Controller implements RemoteController {
         if(playerZone.IsPlayable(where, card)){
             // play the card and update points
             int score = playerZone.Play(where, card);
+            if(score == -1) {
+                connectionHandler.sendTextMessage("Unable to play the card, try again");
+                playCardState();
+                return;
+            }
             game.getGameTable().getScoreBoard().addPoints(currentPlayer, score);
 
             // update game for all the players
@@ -460,7 +472,11 @@ public class Controller implements RemoteController {
     public void drawCard(ConnectionHandler connectionHandler, int which, boolean isGold) {
         Player currentPlayer = game.getTurn();
         if(!currentPlayer.getNickname().equals(connectionHandler.getClientNickname())){
-            System.err.println("Someone who isn't the current player is playing");
+            connectionHandler.sendTextMessage("You aren't the current player");
+            return;
+        }
+        if(game.getTurnState() != TurnState.DRAW){
+            connectionHandler.sendTextMessage("It's not the time to draw a card");
             return;
         }
 

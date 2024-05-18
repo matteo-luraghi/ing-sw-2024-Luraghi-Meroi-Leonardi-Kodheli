@@ -1,5 +1,7 @@
 package it.polimi.ingsw.connection;
 
+import it.polimi.ingsw.connection.rmi.IPNotFoundException;
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -21,9 +23,11 @@ public class ServerMain {
                 server.start();
                 started = true;
             } catch(NumberFormatException e) {
-                System.out.println("Insert a valid number!");
+                System.err.println("Insert a valid number!");
             } catch (IOException e) {
-                System.out.println("Error starting the server, try again");
+                System.err.println("Error starting the server, try again");
+            } catch (IPNotFoundException e) {
+                System.err.println("Unable to find server ip");
             }
 
         } while (!started);

@@ -1,46 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.eventhandlers.ConnectToServerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ede3ba;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.eventhandlers.ConnectToServerController">
    <!-- Controller needs to be changed to the correct one -->
    <children>
-      <VBox alignment="CENTER" layoutX="175.3333282470703" layoutY="101.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="101.0">
+      <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <ImageView fitHeight="297.0" fitWidth="298.0" opacity="0.25" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@assets/GUIGraphics/codexNaturalisTransparent.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
+         </center>
+      </BorderPane>
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Server IP" />
-            <TextField fx:id="serverIP" maxWidth="250.0" prefWidth="150.0" />
-         </children>
-      </VBox>
-      <VBox alignment="CENTER" layoutX="175.3333282470703" layoutY="169.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="169.0">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Server Port" />
-            <TextField fx:id="serverPort" maxWidth="250.0" prefWidth="150.0" />
-         </children>
-      </VBox>
-      <VBox alignment="CENTER" layoutX="264.0" layoutY="314.0" maxWidth="300.0" prefWidth="200.0" AnchorPane.leftAnchor="265.0" AnchorPane.rightAnchor="265.0" AnchorPane.topAnchor="314.0">
-         <children>
-            <Button fx:id="connectButton" mnemonicParsing="false" onMouseClicked="#ConnectToServer" text="Connect">
+            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="74.0" prefWidth="600.0" text="Connect to the server" textAlignment="CENTER">
                <font>
-                  <Font size="14.0" />
+                  <Font size="40.0" />
                </font>
-            </Button>
-         </children>
-      </VBox>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="224.0" layoutY="41.0" text="Connect to the server" textAlignment="CENTER" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <VBox alignment="CENTER" layoutX="200.0" layoutY="236.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="236.0">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Connection Protocol" />
-            <ChoiceBox fx:id="connectionChoice" maxWidth="250.0" prefWidth="150.0" />
+            </Label>
+            <VBox alignment="CENTER" prefHeight="82.0" prefWidth="600.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="251.0" text="Server IP">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="serverIP" maxWidth="250.0" prefHeight="25.0" prefWidth="150.0" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="82.0" prefWidth="600.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="251.0" text="Server port">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="serverPort" maxWidth="250.0" prefHeight="25.0" prefWidth="150.0" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="82.0" prefWidth="600.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="251.0" text="Connection Protocol">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="connectionChoice" maxWidth="250.0" prefWidth="150.0" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" maxHeight="100.0" maxWidth="642.0" prefHeight="100.0" prefWidth="600.0">
+               <children>
+                  <Button fx:id="connectButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#ConnectToServer" prefHeight="46.0" prefWidth="116.0" text="Connect" textAlignment="CENTER">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
          </children>
       </VBox>
    </children>

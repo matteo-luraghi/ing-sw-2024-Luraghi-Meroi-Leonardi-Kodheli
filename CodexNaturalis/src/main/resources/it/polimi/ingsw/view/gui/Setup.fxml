@@ -1,73 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.eventhandlers.SetupController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="732.0" style="-fx-background-color: #ede3ba;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.eventhandlers.SetupController">
    <children>
-      <SplitPane dividerPositions="0.5, 0.5" layoutX="51.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="381.0">
+      <BorderPane layoutX="20.0" layoutY="20.0" prefHeight="542.0" prefWidth="732.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <ImageView fitHeight="297.0" fitWidth="402.0" opacity="0.25" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@assets/GUIGraphics/codexNaturalisTransparent.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
+         </center>
+      </BorderPane>
+      <VBox alignment="CENTER" prefHeight="542.0" prefWidth="732.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="503.0" prefWidth="732.0">
                <children>
-                  <ImageView fx:id="startingImageFront" fitHeight="196.0" fitWidth="215.0" layoutX="76.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../School/PROVA%20FINALE%20(INGEGNERIA%20DEL%20SOFTWARE)/Introduzione/Regolamenti%20e%20materiale%20grafico/fronte%20oro%20in%20jpg/1709659025650-fa69fadb-c647-4aa4-a049-05e38017b96d_86.jpg" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="startingImageBack" fitHeight="175.0" fitWidth="215.0" layoutX="76.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../School/PROVA%20FINALE%20(INGEGNERIA%20DEL%20SOFTWARE)/Introduzione/Regolamenti%20e%20materiale%20grafico/retro%20carte%20oro%20in%20jpg/1709658535735-b4f02509-be6b-4cd6-acbe-7a6b989ab079_86.jpg" />
-                     </image>
-                  </ImageView>
-                  <RadioButton fx:id="startingFront" layoutX="32.0" layoutY="161.0" mnemonicParsing="false">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="startingCard" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="startingBack" layoutX="32.0" layoutY="368.0" mnemonicParsing="false" toggleGroup="$startingCard" />
-                  <Label layoutX="32.0" layoutY="14.0" prefHeight="56.0" prefWidth="298.0" text="Choose either the front or the back of your starting card" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="381.0">
+                     <children>
+                        <ImageView fx:id="goalImage1" fitHeight="196.0" fitWidth="215.0" layoutX="76.0" layoutY="92.0" onMouseClicked="#selectGoalCard" pickOnBounds="true" preserveRatio="true">
+                        </ImageView>
+                        <ImageView fx:id="goalImage2" fitHeight="175.0" fitWidth="215.0" layoutX="76.0" layoutY="290.0" onMouseClicked="#selectGoalCard" pickOnBounds="true" preserveRatio="true">
+                        </ImageView>
+                        <RadioButton fx:id="goal1" layoutX="32.0" layoutY="161.0" mnemonicParsing="false">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="goalCardGroup" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="goal2" layoutX="32.0" layoutY="368.0" mnemonicParsing="false" toggleGroup="$goalCardGroup" />
+                        <Label layoutX="48.0" layoutY="14.0" prefHeight="56.0" prefWidth="298.0" text="Choose either of the goal cards" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="381.0">
+                     <children>
+                        <ImageView fx:id="startingImageFront" fitHeight="196.0" fitWidth="215.0" layoutX="76.0" layoutY="92.0" onMouseClicked="#selectStartingCard" pickOnBounds="true" preserveRatio="true">
+                        </ImageView>
+                        <ImageView fx:id="startingImageBack" fitHeight="175.0" fitWidth="215.0" layoutX="76.0" layoutY="290.0" onMouseClicked="#selectStartingCard" pickOnBounds="true" preserveRatio="true">
+                        </ImageView>
+                        <RadioButton fx:id="startingFront" layoutX="32.0" layoutY="161.0" mnemonicParsing="false">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="startingCardGroup" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="startingBack" layoutX="32.0" layoutY="368.0" mnemonicParsing="false" toggleGroup="$startingCardGroup" />
+                        <Label layoutX="32.0" layoutY="14.0" prefHeight="56.0" prefWidth="298.0" text="Choose either the front or the back of your starting card" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
                </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="381.0">
-               <children>
-                  <ImageView fx:id="goalImage1" fitHeight="196.0" fitWidth="215.0" layoutX="76.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../School/PROVA%20FINALE%20(INGEGNERIA%20DEL%20SOFTWARE)/Introduzione/Regolamenti%20e%20materiale%20grafico/fronte%20oro%20in%20jpg/1709659025650-fa69fadb-c647-4aa4-a049-05e38017b96d_87.jpg" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="goalImage2" fitHeight="175.0" fitWidth="215.0" layoutX="76.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../School/PROVA%20FINALE%20(INGEGNERIA%20DEL%20SOFTWARE)/Introduzione/Regolamenti%20e%20materiale%20grafico/fronte%20oro%20in%20jpg/1709659025650-fa69fadb-c647-4aa4-a049-05e38017b96d_99.jpg" />
-                     </image>
-                  </ImageView>
-                  <RadioButton fx:id="goal1" layoutX="32.0" layoutY="161.0" mnemonicParsing="false">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="goalCard" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="goal2" layoutX="32.0" layoutY="368.0" mnemonicParsing="false" toggleGroup="$goalCard" />
-                  <Label layoutX="48.0" layoutY="14.0" prefHeight="56.0" prefWidth="298.0" text="Choose either of the goal cards" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
-      <Button fx:id="submitButton" layoutY="502.0" mnemonicParsing="false" onMouseClicked="#SelectStartingAndGoal" prefHeight="41.0" prefWidth="732.0" text="Submit!" />
+            </HBox>
+            <Button fx:id="submitButton" mnemonicParsing="false" onMouseClicked="#SelectStartingAndGoal" prefHeight="50.0" prefWidth="118.0" text="Submit!">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

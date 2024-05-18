@@ -1,46 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.eventhandlers.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ede3ba;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.eventhandlers.LoginController">
    <children>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0">
+      <BorderPane layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <ImageView fitHeight="297.0" fitWidth="298.0" opacity="0.25" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@assets/GUIGraphics/codexNaturalisTransparent.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
+         </center>
+      </BorderPane>
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="172.0" layoutY="14.0" text="Welcome to">
-               <font>
-                  <Font size="48.0" />
-               </font>
-            </Label>
-            <Pane layoutY="151.0" prefHeight="95.0" prefWidth="416.0" AnchorPane.bottomAnchor="169.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="151.0">
+            <VBox alignment="CENTER" prefHeight="83.0" prefWidth="600.0">
                <children>
-                  <Label layoutX="14.0" layoutY="14.0" text="Select your username" />
-                  <TextField fx:id="Username" layoutX="59.0" layoutY="31.0" />
-                  <Button fx:id="LoginButton" layoutX="397.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#loginPlayer" prefHeight="25.0" prefWidth="132.0" text="Check nickname" />
+                  <Label prefHeight="133.0" prefWidth="256.0" text="Welcome to">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="gameName" alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="256.0" text="Game!" textAlignment="CENTER">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Label>
                </children>
-            </Pane>
-            <Pane layoutX="20.0" layoutY="99.0" prefHeight="95.0" prefWidth="416.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
+            </VBox>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Pane layoutY="-10.0" prefHeight="134.0" prefWidth="600.0">
+                  <HBox alignment="CENTER" prefHeight="130.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label fx:id="ColorLabel" layoutX="14.0" layoutY="14.0" text="Select your color" />
-                        <ChoiceBox fx:id="Color" layoutX="58.0" layoutY="31.0" prefWidth="150.0" />
-                        <Button fx:id="ColorButton" layoutX="399.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#chooseColor" prefHeight="25.0" prefWidth="132.0" text="Check color" />
-                        <Label fx:id="waitingLabel" layoutX="286.0" layoutY="126.0" text="Label" visible="false" />
+                        <AnchorPane prefHeight="130.0" prefWidth="299.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="33.0" text="Select your username">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="Username" alignment="CENTER" layoutX="64.0" layoutY="61.0" prefHeight="25.0" prefWidth="171.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="130.0" prefWidth="302.0">
+                           <children>
+                              <Button fx:id="LoginButton" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="43.0" mnemonicParsing="false" onMouseClicked="#loginPlayer" prefHeight="25.0" prefWidth="171.0" text="Check nickname">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
                      </children>
-                  </Pane>
-               </children></Pane>
-            <Label fx:id="gameName" alignment="CENTER" contentDisplay="CENTER" layoutX="174.0" layoutY="84.0" prefHeight="70.0" prefWidth="256.0" text="Game!" textAlignment="CENTER">
-               <font>
-                  <Font size="48.0" />
-               </font>
-            </Label>
+                  </HBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="waitingLabel" text="Label" visible="false" />
+                  <HBox alignment="CENTER" prefHeight="130.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane prefHeight="130.0" prefWidth="304.0">
+                           <children>
+                              <Label fx:id="ColorLabel" layoutX="85.0" layoutY="38.0" text="Select your color">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <ChoiceBox fx:id="Color" layoutX="66.0" layoutY="65.0" prefHeight="25.0" prefWidth="171.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="130.0" prefWidth="300.0">
+                           <children>
+                              <Button fx:id="ColorButton" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="43.0" mnemonicParsing="false" onMouseClicked="#chooseColor" prefHeight="25.0" prefWidth="171.0" text="Check color">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
          </children>
-      </AnchorPane>
+      </VBox>
    </children>
 </AnchorPane>

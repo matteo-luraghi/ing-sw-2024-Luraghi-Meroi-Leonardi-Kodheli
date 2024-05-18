@@ -78,13 +78,15 @@ public class ConnectToServerController extends EventHandler{
             alert.showAndWait();
             return;
         }
-
-        //Tries to connect to the server (if it returns true, messages will be sent automatically)
-        if(!view.connectToServer(ip, port, connection)){
+        try{
+            //Tries to connect to the server (if it returns true, messages will be sent automatically)
+            view.connectToServer(ip, port, connection);
+        }catch (ConnectionClosedException e){
             alert.setTitle("Error");
             alert.setHeaderText("Server error");
             alert.setContentText("Error connecting to the server, try again");
             alert.showAndWait();
         }
+
     }
 }

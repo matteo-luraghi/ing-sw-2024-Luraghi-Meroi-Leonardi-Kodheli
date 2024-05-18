@@ -2,6 +2,7 @@ package it.polimi.ingsw.connection.socket.message.serverMessage;
 
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.view.cli.CLI;
+import it.polimi.ingsw.view.gui.GUI;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.rmi.RemoteException;
@@ -35,6 +36,8 @@ public class DrawCardRequest extends ServerMessage {
         }
         if (view.getClass() == CLI.class) {
             new Thread(() -> ((CLI) view).setPlayPhase(false)).start();
+        } else if (view.getClass() == GUI.class) {
+            ((GUI) view).cardPlayedOK();
         }
     }
 }
