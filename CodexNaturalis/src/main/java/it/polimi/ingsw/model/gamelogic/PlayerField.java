@@ -254,6 +254,20 @@ public class PlayerField implements Serializable {
     }
 
     /**
+     * Method to get a gamecard by searching it's coordinates (no the same object in tha map)
+     * @param coordinates Coordinates of the searched card
+     * @return the searched card or null
+     */
+    public GameCard getGameCardByEqualCoordinate(Coordinates coordinates)
+    {
+        for(Coordinates coordinates1:gameZone.keySet())
+        {
+            if(coordinates1.getX()== coordinates.getX() && coordinates1.getY()== coordinates.getY())
+                return gameZone.get(coordinates1);
+        }
+        return null;
+    }
+    /**
      * method to know if a card is playable in the given coordinates
      * @param where the coordinates in which you want to play the card
      * @param card the card you want to play
