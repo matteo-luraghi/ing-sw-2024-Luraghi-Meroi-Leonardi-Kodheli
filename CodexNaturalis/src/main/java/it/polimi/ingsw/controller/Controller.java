@@ -256,7 +256,10 @@ public class Controller implements RemoteController {
 
     @Override
     public void checkGame() {
-        if (getHandlers().size() == this.numOfPlayers) {
+        Optional<ConnectionHandler> userWithoutColor = getHandlers().stream().parallel()
+                .filter(ch -> ch.getClientColor() == null)
+                .findFirst();
+        if (getHandlers().size() == this.numOfPlayers && userWithoutColor.isEmpty()) {
             start();
         }
     }
