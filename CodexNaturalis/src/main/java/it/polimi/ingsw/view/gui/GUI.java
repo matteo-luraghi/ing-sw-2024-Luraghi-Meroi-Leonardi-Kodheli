@@ -417,7 +417,9 @@ public class GUI extends Application implements View{
      */
     @Override
     public void setMyTurn(boolean isMyTurn) throws RemoteException {
-        client.yourTurnOk();
+        if(isMyTurn){
+            client.yourTurnOk();
+        }
     }
 
     /**
@@ -467,6 +469,12 @@ public class GUI extends Application implements View{
             }
         }
     }
+
+    /**
+     * player field getter
+     * @return the player field of this user
+     */
+    public PlayerField getYourPlayerField(){ return this.game.getGameTable().getPlayerZones().get(user); }
 
     /**
      * Disconnect the client

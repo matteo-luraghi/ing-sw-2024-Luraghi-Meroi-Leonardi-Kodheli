@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.gui.eventhandlers;
 
+import it.polimi.ingsw.model.card.GameCard;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.Resource;
 import it.polimi.ingsw.model.card.ResourceCard;
@@ -115,6 +116,7 @@ public class PlayerFieldController extends EventHandler{
 
     public void setPlayerField(PlayerField playerField, boolean isYourPlayerfield) {
         //TODO: PlayerField will probably need a List<ResourceCard> to understand in which order to play them in
+        //TODO: THIS WILL STACK IMAGES ON TOP OF ONE ANOTHER; CALL THIS ONLY ON NEW PLAYER FIELD
 
         //Set player zone
         Image temp;
@@ -123,7 +125,7 @@ public class PlayerFieldController extends EventHandler{
                 temp = new Image(Util.getImageFromID(playerField.getGameZone().get(c).getId(), playerField.getGameZone().get(c).getIsFront()));
                 startingCard.setImage(temp);
             } else {
-                createCard((ResourceCard) playerField.getGameZone().get(c), c);
+                createCard(playerField, c);
             }
         }
 
@@ -137,7 +139,7 @@ public class PlayerFieldController extends EventHandler{
             temp = new Image(Util.getImageFromID(hand.get(1).getId(), isYourPlayerfield));
             hand1.setImage(temp);
         }
-        if(hand.get(2) != null){
+        if(hand.size() == 3 && hand.get(2) != null){
             temp = new Image(Util.getImageFromID(hand.get(2).getId(), isYourPlayerfield));
             hand2.setImage(temp);
         }
@@ -239,15 +241,23 @@ public class PlayerFieldController extends EventHandler{
 
     public void cardPlayOK() {
         //The card got played succesfully, either i create a new card and add it to the screen or i request the whole playerzone again
-        showYourField(); //this is reloading
+        createCard(view.getYourPlayerField(), chosenCords); //This only creates the new card
     }
 
-    private void createCard(ResourceCard card, Coordinates where){
+    private void createCard(PlayerField playerZone, Coordinates where){
         /*
         [0,0] is at x:0 y:0
         x+1 = +116
         y+1 = -60  I dont know why -60
          */
+
+        //Find the resource card that just got played
+        ResourceCard card = null;
+        for(Coordinates c : playerZone.getGameZone().keySet()){
+            if(c.getX() == where.getX() && c.getY() == where.getY()){
+                card = (ResourceCard) playerZone.getGameZone().get(c);
+            }
+        }
 
         //Create the pane
         int newX = where.getX() * 116;
@@ -267,12 +277,55 @@ public class PlayerFieldController extends EventHandler{
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
 
-        //Create the 4 buttons
+        //Create the 4 buttons (if needed)
+        ArrayList<Button> buttons = new ArrayList<>();
+        //Top left
+        if(card.getCorner(0) != Resource.COVERED && card.getCorner(0) != Resource.HIDDEN && playerZone.getUpLeft(card) == null){
+            buttons.add(createButton(where.getX()-1, where.getY()+1, false, false));
+        }
+        //Top right
+        if(card.getCorner(1) != Resource.COVERED && card.getCorner(1) != Resource.HIDDEN && playerZone.getUpRight(card) == null){
+            buttons.add(createButton(where.getX()+1, where.getY()+1, true, false));
+        }
+        //Bottom left
+        if(card.getCorner(2) != Resource.COVERED && card.getCorner(2) != Resource.HIDDEN && playerZone.getDownLeft(card) == null){
+            buttons.add(createButton(where.getX()-1, where.getY()-1, false, true));
+        }
+        //Bottom right
+        if(card.getCorner(3) != Resource.COVERED && card.getCorner(3) != Resource.HIDDEN && playerZone.getDownRight(card) == null){
+            buttons.add(createButton(where.getX()+1, where.getY()-1, true, true));
+        }
 
         //Add everything to the pane
         pane.getChildren().add(imageView);
 
+        for(Button button : buttons){
+            pane.getChildren().add(button);
+        }
         //Append the pane to the group
         playerField.getChildren().add(pane);
+    }
+
+    private Button createButton(int x, int y, boolean isRight, boolean isDown){
+        Button button = new Button();
+        String text = "[" + x + "," + y + "]";
+        button.setText(text);
+        button.setOpacity(0);
+        if(isRight){
+            button.setLayoutX(116);
+        }
+        if(isDown){
+            button.setLayoutY(62);
+        }
+        button.setPrefHeight(38);
+        button.setPrefWidth(34);
+        button.setMaxHeight(38);
+        button.setMaxWidth(34);
+        button.setMinHeight(38);
+        button.setMinWidth(34);
+        button.setOnMouseClicked(this::playCard);
+        button.setStyle("-fx-cursor: hand;");
+
+        return button;
     }
 }
