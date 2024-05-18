@@ -86,6 +86,11 @@ public class Deck implements Serializable {
     }
 
     /**
+     * Get the first card of the deck without drawign it
+     * @return the card on the top of the deck
+     */
+    public ResourceCard getTopCard(){ return cards.peek(); }
+    /**
      * Draw function (only called internally from the Deck class)
      * @param which can be 0 (from deck), 1(first uncovered card), 2(second uncovered card)
      * @throws NullPointerException when trying to draw from an uncovered card that does not exist

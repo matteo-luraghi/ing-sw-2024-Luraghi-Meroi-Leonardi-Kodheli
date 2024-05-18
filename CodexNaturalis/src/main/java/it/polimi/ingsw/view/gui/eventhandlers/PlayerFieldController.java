@@ -1,15 +1,20 @@
 package it.polimi.ingsw.view.gui.eventhandlers;
 
+import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.card.Resource;
 import it.polimi.ingsw.model.card.ResourceCard;
-import it.polimi.ingsw.model.gamelogic.Coordinates;
-import it.polimi.ingsw.model.gamelogic.Player;
+import it.polimi.ingsw.model.gamelogic.*;
+import it.polimi.ingsw.view.gui.GUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Optional;
 
 public class PlayerFieldController extends EventHandler{
@@ -28,8 +33,8 @@ public class PlayerFieldController extends EventHandler{
     public ImageView goldDeck;
     public ImageView goldUncovered0;
     public ImageView goldUncovered1;
+    public ImageView startingCard;
 
-    private ResourceCard chosenCard;
     private ImageView chosenImage;
     private int chosenIndex;
     private boolean isFront;
@@ -38,6 +43,102 @@ public class PlayerFieldController extends EventHandler{
         chat.setItems(items);
         chosenIndex = -1;
         chosenImage = null;
+    }
+
+    @Override
+    public void setView(GUI view){
+        this.view = view;
+        //Initialize all the graphic fields though the view
+        showYourField(); //Shows player zone, hand and private goal
+        //Shows the resource maps of all players
+        view.showResourceMaps();
+        //Shows the points that every player has
+        view.ShowScoreBoard();
+        //Shows both resource and gold decks
+        view.ShowDecks();
+        //Shows the 2 common goals;
+        view.showCommonGoals();
+    }
+
+    public void setCommonGoals(GoalCard[] commonGoals) {
+        Image temp;
+        temp = new Image(Util.getImageFromID(commonGoals[0].getId(), true));
+        commonGoal0.setImage(temp);
+        temp = new Image(Util.getImageFromID(commonGoals[1].getId(), true));
+        commonGoal1.setImage(temp);
+    }
+
+    public void setDecks(Deck resourceDeck1, Deck goldDeck1) {
+        Image temp;
+        //Set resource deck
+        if(!resourceDeck1.isDeckEmpty()){
+            temp = new Image(Util.getImageFromID(resourceDeck1.getTopCard().getId(), false));
+            resourceDeck.setImage(temp);
+        }
+        if(resourceDeck1.getUncoveredCards()[0] != null){
+            temp = new Image(Util.getImageFromID(resourceDeck1.getUncoveredCards()[0].getId(), true));
+            resourceUncovered0.setImage(temp);
+        }
+        if(resourceDeck1.getUncoveredCards()[1] != null){
+            temp = new Image(Util.getImageFromID(resourceDeck1.getUncoveredCards()[1].getId(), true));
+            resourceUncovered1.setImage(temp);
+        }
+
+        //Set gold deck
+        if(!goldDeck1.isDeckEmpty()){
+            temp = new Image(Util.getImageFromID(goldDeck1.getTopCard().getId(), false));
+            goldDeck.setImage(temp);
+        }
+        if(goldDeck1.getUncoveredCards()[0] != null){
+            temp = new Image(Util.getImageFromID(goldDeck1.getUncoveredCards()[0].getId(), true));
+            goldUncovered0.setImage(temp);
+        }
+        if(goldDeck1.getUncoveredCards()[1] != null){
+            temp = new Image(Util.getImageFromID(goldDeck1.getUncoveredCards()[1].getId(), true));
+            goldUncovered1.setImage(temp);
+        }
+    }
+
+    public void setScoreBoard(ScoreBoard scoreBoard) {
+        //TODO: Implement when fxml is finished
+    }
+
+    public void setResourceMaps(Map<Player, Map<Resource, Integer>> resourceMaps) {
+        //TODO: Implement when fxml is finished
+    }
+
+    public void setPlayerField(PlayerField playerField, boolean isYourPlayerfield) {
+        //TODO: PlayerField will probably need a List<ResourceCard> to understand in which order to play them in
+
+        //Set player zone
+        Image temp;
+        for(Coordinates c: playerField.getGameZone().keySet()){
+            if(c.getX() == 0 && c.getY() == 0){
+                temp = new Image(Util.getImageFromID(playerField.getGameZone().get(c).getId(), playerField.getGameZone().get(c).getIsFront()));
+                startingCard.setImage(temp);
+            } else {
+                //TODO: Implement for multiple cards
+            }
+        }
+
+        //Set hand
+        ArrayList<ResourceCard> hand = playerField.getHand();
+        if(hand.getFirst() != null){
+            temp = new Image(Util.getImageFromID(hand.getFirst().getId(), isYourPlayerfield));
+            hand0.setImage(temp);
+        }
+        if(hand.get(1) != null){
+            temp = new Image(Util.getImageFromID(hand.get(1).getId(), isYourPlayerfield));
+            hand1.setImage(temp);
+        }
+        if(hand.get(2) != null){
+            temp = new Image(Util.getImageFromID(hand.get(2).getId(), isYourPlayerfield));
+            hand2.setImage(temp);
+        }
+
+        //Set private goal
+        temp = new Image(Util.getImageFromID(playerField.getPrivateGoal().getId(), isYourPlayerfield));
+        privateGoal.setImage(temp);
     }
 
     public void addChatMessage(String s) {
@@ -102,6 +203,7 @@ public class PlayerFieldController extends EventHandler{
     public void drawCard(MouseEvent mouseEvent) {
         chosenImage = (ImageView) mouseEvent.getSource();
         boolean isGold;
+
         //Select the chosen card
         if(chosenImage.equals(resourceDeck)){
             chosenIndex = 0;

@@ -8,6 +8,7 @@ import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.connection.socket.SocketClient;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.card.GoalCard;
+import it.polimi.ingsw.model.card.Resource;
 import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.*;
@@ -25,6 +26,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * GUI class to show the game using graphic interface
@@ -292,9 +295,7 @@ public class GUI extends Application implements View{
      */
     @Override
     public void ShowPlayerField(Player playerToSee, Player playerAsking, GameState game) {
-        sceneName = "PlayerField.fxml";
-        changeScene(sceneName);
-        //TODO: this will delete all of the chat when it's not the first time, will find another way
+        System.err.println("This shouldn't be called in the GUI");
     }
 
     /**
@@ -304,9 +305,10 @@ public class GUI extends Application implements View{
      * @param playerAsking tells which player is asking to see it
      */
     public void ShowPlayerField(Player playerToSee, Player playerAsking) {
-        sceneName = "PlayerField.fxml";
-        changeScene(sceneName);
-        //TODO: this will delete all of the chat when it's not the first time, will find another way
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.setPlayerField(game.getGameTable().getPlayerZones().get(playerToSee), playerAsking.getNickname().equals(playerToSee.getNickname()));
+        });
     }
 
     /**
@@ -316,15 +318,64 @@ public class GUI extends Application implements View{
      */
     @Override
     public void ShowDecks(GameState game) {
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.setDecks(game.getGameTable().getResourceDeck(), game.getGameTable().getGoldDeck());
+        });
+    }
 
+    /**
+     * displays the two decks and the uncovered cards without passing the game
+     */
+    public void ShowDecks(){
+        ShowDecks(game);
     }
 
     /**
      * displays the scoreboard
+     * @param scoreBoard the scoreboard we want to show
      */
     @Override
     public void ShowScoreBoard(ScoreBoard scoreBoard) {
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.setScoreBoard(scoreBoard);
+        });
+    }
 
+    /**
+     * displays the scoreboard without passing the scoreboard
+     */
+    public void ShowScoreBoard(){
+        ShowScoreBoard(game.getGameTable().getScoreBoard());
+    }
+
+    /**
+     * Displays the resource maps of all players
+     */
+    public void showResourceMaps() {
+        Map<Player, Map<Resource, Integer>> resourceMaps = new HashMap<>();
+        for(Player p : game.getPlayers()){
+            resourceMaps.put(p, game.getGameTable().getPlayerZones().get(p).getResourceMap());
+        }
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.setResourceMaps(resourceMaps);
+        });
+    }
+
+    /**
+     * Shows the common goals for this view's game
+     */
+    public void showCommonGoals(){
+        GoalCard[] commonGoals = new GoalCard[2];
+        commonGoals[0] = game.getGameTable().getCommonGoal(0);
+        commonGoals[1] = game.getGameTable().getCommonGoal(1);
+
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.setCommonGoals(commonGoals);
+        });
     }
 
     /**
@@ -454,4 +505,5 @@ public class GUI extends Application implements View{
         ResourceCard chosenCard = game.getGameTable().getPlayerZones().get(user).getHand().get(chosenIndex);
         client.playCardResponse(chosenCard, coordinates, isFront);
     }
+
 }

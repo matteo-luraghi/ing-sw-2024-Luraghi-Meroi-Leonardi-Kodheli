@@ -61,7 +61,7 @@
                   <StackPane layoutX="-505.6" layoutY="-208.0" prefHeight="786.0" prefWidth="1300.0" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="-500.0" AnchorPane.leftAnchor="-700.0" AnchorPane.rightAnchor="-700.0" AnchorPane.topAnchor="-500.0">
                      <Group>
                         <Pane layoutX="127.0" layoutY="77.0" maxHeight="100.0" maxWidth="150.0" minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="150.0">
-                           <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <ImageView fx:id="startingCard" fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            </ImageView>
                            <Button alignment="TOP_RIGHT" maxHeight="38.0" maxWidth="34.0" minHeight="38.0" minWidth="34.0" mnemonicParsing="false" onMouseClicked="#playCard" opacity="0.0" prefHeight="38.0" prefWidth="34.0" text="[-1,1]">
                               <cursor>
