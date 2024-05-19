@@ -109,6 +109,22 @@ public class GUI extends Application implements View{
     }
 
     /**
+     * Get the available games from the server
+     * @return the list of games' names
+     */
+    public ArrayList<String> refreshGameNames() {
+        ArrayList<String> gameNames;
+        Registry registry = ((RMIClient) client).getRegistry();
+        try {
+            RemoteServer server = (RemoteServer) registry.lookup("server");
+            gameNames = server.getGamesNames();
+        } catch (Exception e) {
+               gameNames = null;
+        }
+        return gameNames;
+    }
+
+    /**
      * Method to connect a client to a server
      * @param ip the ip of the server
      * @param port the port of the server
@@ -138,17 +154,14 @@ public class GUI extends Application implements View{
         }
 
         if (client.getClass() == RMIClient.class) {
-            Registry registry = ((RMIClient) client).getRegistry();
-            try {
-                RemoteServer server = (RemoteServer) registry.lookup("server");
-                ArrayList<String> gameNames = server.getGamesNames();
-
-                showJoinOrCreate(gameNames);
-            } catch (Exception e) {
+            // get the games' names
+            ArrayList<String> gameNames = refreshGameNames();
+            if (gameNames == null) {
                 System.err.println("Error connecting to server");
-                e.printStackTrace();
                 throw new ConnectionClosedException("Connection closed");
             }
+            // make the player choose to join or create a game
+            showJoinOrCreate(gameNames);
         }
 
         if(connectedToServer){
