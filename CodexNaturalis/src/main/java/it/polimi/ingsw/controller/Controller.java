@@ -421,7 +421,7 @@ public class Controller implements RemoteController {
             connectionHandler.sendTextMessage("You aren't the current player");
             return;
         }
-        if(game.getTurnState() != TurnState.PLAY){
+        if(game.getState() != State.GAMEFLOW && game.getTurnState() != TurnState.PLAY){
             connectionHandler.sendTextMessage("It's not the time to play a card");
             return;
         }
@@ -475,7 +475,7 @@ public class Controller implements RemoteController {
             connectionHandler.sendTextMessage("You aren't the current player");
             return;
         }
-        if(game.getTurnState() != TurnState.DRAW){
+        if(game.getState() != State.GAMEFLOW && game.getTurnState() != TurnState.DRAW){
             connectionHandler.sendTextMessage("It's not the time to draw a card");
             return;
         }
@@ -513,6 +513,7 @@ public class Controller implements RemoteController {
     @Override
     public void changeTurnState(){
         //TODO: Sometimes it takes one more turn, look up old git from Lorenzo Mevoi
+        //Should be fixed, test for this later
         game.nextTurn();
 
         for (Player player : game.getPlayers()) {
@@ -521,6 +522,13 @@ public class Controller implements RemoteController {
             }
         }
 
+        if (!isPenultimateTurn && game.getGameTable().getScoreBoard().getBoard().values().stream().anyMatch(value -> value > 0)){
+            //If someone has at least 20 points, we start the countdown
+            isPenultimateTurn = true;
+            for(ConnectionHandler c : getHandlers()){
+                c.sendTextMessage("Someone has at least 20 points! Starting penultimate turn!");
+            }
+        }
         //Here i'm assuming players[0] is the first player, which now is the case but it might not be in the future
         if(game.getTurn() == game.getPlayers().getFirst()){
             if(isLastTurn){
@@ -534,13 +542,6 @@ public class Controller implements RemoteController {
                     c.sendTextMessage("Last turn!!");
                 }
                 isLastTurn = true;
-            }
-        }
-        if (!isPenultimateTurn && game.getGameTable().getScoreBoard().getBoard().values().stream().anyMatch(value -> value > 0)){
-            //If someone has at least 20 points, we start the countdown
-            isPenultimateTurn = true;
-            for(ConnectionHandler c : getHandlers()){
-                c.sendTextMessage("Someone has at least 20 points! Starting penultimate turn!");
             }
         }
         yourTurnState();

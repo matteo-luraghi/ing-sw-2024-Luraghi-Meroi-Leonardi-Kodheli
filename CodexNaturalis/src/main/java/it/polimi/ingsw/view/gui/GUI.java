@@ -406,7 +406,9 @@ public class GUI extends Application implements View{
      */
     @Override
     public void ShowWinner(GameState game) {
-
+        Platform.runLater(() -> {
+            currentEventHandler.showPopup("We have a winner!", game.getWinner().getNickname() + " has won!");
+        });
     }
 
     /**
