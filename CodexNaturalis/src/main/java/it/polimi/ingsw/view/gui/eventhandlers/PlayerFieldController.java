@@ -279,19 +279,19 @@ public class PlayerFieldController extends EventHandler{
         //Create the 4 buttons (if needed)
         ArrayList<Button> buttons = new ArrayList<>();
         //Top left
-        if(card.getCorner(0) != Resource.COVERED && card.getCorner(0) != Resource.HIDDEN && playerZone.getUpLeft(card) == null){
+        if((!card.getIsFront() || (card.getCorner(0) != Resource.COVERED && card.getCorner(0) != Resource.HIDDEN)) && playerZone.getUpLeft(card) == null){
             buttons.add(createButton(where.getX()-1, where.getY()+1, false, false));
         }
         //Top right
-        if(card.getCorner(1) != Resource.COVERED && card.getCorner(1) != Resource.HIDDEN && playerZone.getUpRight(card) == null){
+        if((!card.getIsFront() || (card.getCorner(1) != Resource.COVERED && card.getCorner(1) != Resource.HIDDEN)) && playerZone.getUpRight(card) == null){
             buttons.add(createButton(where.getX()+1, where.getY()+1, true, false));
         }
         //Bottom left
-        if(card.getCorner(2) != Resource.COVERED && card.getCorner(2) != Resource.HIDDEN && playerZone.getDownLeft(card) == null){
+        if((!card.getIsFront() || (card.getCorner(2) != Resource.COVERED && card.getCorner(2) != Resource.HIDDEN)) && playerZone.getDownLeft(card) == null){
             buttons.add(createButton(where.getX()-1, where.getY()-1, false, true));
         }
         //Bottom right
-        if(card.getCorner(3) != Resource.COVERED && card.getCorner(3) != Resource.HIDDEN && playerZone.getDownRight(card) == null){
+        if((!card.getIsFront() || (card.getCorner(3) != Resource.COVERED && card.getCorner(3) != Resource.HIDDEN)) && playerZone.getDownRight(card) == null){
             buttons.add(createButton(where.getX()+1, where.getY()-1, true, true));
         }
 

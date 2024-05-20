@@ -200,10 +200,19 @@
                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="2097.0" style="-fx-background-color: #d1be71;">
                   <Pane prefHeight="130.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <ImageView fx:id="hand0" fitHeight="120.0" fitWidth="150.0" layoutY="30.0" onMouseClicked="#selectPlayCard" pickOnBounds="true" preserveRatio="true">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
                      </ImageView>
                      <ImageView fx:id="hand1" fitHeight="120.0" fitWidth="150.0" layoutX="174.0" layoutY="30.0" onMouseClicked="#selectPlayCard" pickOnBounds="true" preserveRatio="true">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
                      </ImageView>
                      <ImageView fx:id="hand2" fitHeight="120.0" fitWidth="150.0" layoutX="340.0" layoutY="28.0" onMouseClicked="#selectPlayCard" pickOnBounds="true" preserveRatio="true">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
                      </ImageView>
                      <Label layoutX="224.0" layoutY="-1.0" text="Hand" textAlignment="CENTER">
                         <font>
@@ -233,10 +242,19 @@
                   </Pane>
                   <Pane layoutX="10.0" layoutY="10.0" prefHeight="130.0" prefWidth="500.0" AnchorPane.leftAnchor="1100.0" AnchorPane.topAnchor="0.0">
                      <ImageView fx:id="resourceDeck" fitHeight="120.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
                      </ImageView>
                      <ImageView fx:id="resourceUncovered0" fitHeight="120.0" fitWidth="150.0" layoutX="170.0" layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
                      </ImageView>
                      <ImageView fx:id="resourceUncovered1" fitHeight="120.0" fitWidth="150.0" layoutX="330.0" layoutY="28.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
                      </ImageView>
                      <Label layoutX="182.0" layoutY="-1.0" text="Resource Deck" textAlignment="CENTER">
                         <font>
@@ -246,10 +264,19 @@
                   </Pane>
                   <Pane layoutX="20.0" layoutY="20.0" prefHeight="130.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1600.0" AnchorPane.topAnchor="0.0">
                      <ImageView fx:id="goldDeck" fitHeight="120.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
                      </ImageView>
                      <ImageView fx:id="goldUncovered0" fitHeight="120.0" fitWidth="150.0" layoutX="170.0" layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
                      </ImageView>
                      <ImageView fx:id="goldUncovered1" fitHeight="120.0" fitWidth="150.0" layoutX="330.0" layoutY="28.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
                      </ImageView>
                      <Label layoutX="197.0" layoutY="-2.0" text="Gold Deck" textAlignment="CENTER">
                         <font>
