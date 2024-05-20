@@ -165,12 +165,6 @@ public class PlayerField implements Serializable {
         {
             return -1;
         }
-        int points=0;
-        if (!card.getIsGold()) {
-            points=card.getPoints();
-        } else {
-            points=calculateCardPoints(where, (GoldCard) card);
-        }
 
         gameZone.put(where, card);
 
@@ -227,6 +221,13 @@ public class PlayerField implements Serializable {
 }
             }
         }
+        int points=0;
+        if (!card.getIsGold()) {
+            points=card.getPoints();
+        } else {
+            points=calculateCardPoints(where, (GoldCard) card);
+        }
+
         //Return the amount of points the card has scored
         if(!card.getIsFront())
             return 0;
