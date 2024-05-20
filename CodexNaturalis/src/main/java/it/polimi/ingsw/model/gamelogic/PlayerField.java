@@ -254,7 +254,7 @@ public class PlayerField implements Serializable {
     }
 
     /**
-     * Method to get a gamecard by searching it's coordinates (no the same object in tha map)
+     * Method to get a gamecard by searching its coordinates (no the same object in tha map)
      * @param coordinates Coordinates of the searched card
      * @return the searched card or null
      */
@@ -474,7 +474,7 @@ public class PlayerField implements Serializable {
     public GameCard getDownRight(GameCard currentGameCard) {
         Coordinates currentCoordinates=getCoordinates(currentGameCard);
         Coordinates rCoordinates=new Coordinates(currentCoordinates.getX()+1,currentCoordinates.getY()-1);
-        return getGameZone().get(rCoordinates);
+        return getGameCardByEqualCoordinate(rCoordinates);
     }
 
     /**
@@ -485,7 +485,7 @@ public class PlayerField implements Serializable {
     public GameCard getDownLeft(GameCard currentGameCard) {
         Coordinates currentCoordinates=getCoordinates(currentGameCard);
         Coordinates lCoordinates=new Coordinates(currentCoordinates.getX()-1,currentCoordinates.getY()-1);
-        return getGameZone().get(lCoordinates);
+        return getGameCardByEqualCoordinate(lCoordinates);
     }
 
     /**
@@ -496,7 +496,7 @@ public class PlayerField implements Serializable {
     public GameCard getUpRight(GameCard currentGameCard) {
         Coordinates currentCoordinates=getCoordinates(currentGameCard);
         Coordinates rCoordinates=new Coordinates(currentCoordinates.getX()+1,currentCoordinates.getY()+1);
-        return getGameZone().get(rCoordinates);
+        return getGameCardByEqualCoordinate(rCoordinates);
     }
 
     /**
@@ -507,7 +507,7 @@ public class PlayerField implements Serializable {
     public GameCard getUpLeft(GameCard currentGameCard) {
         Coordinates currentCoordinates=getCoordinates(currentGameCard);
         Coordinates lCoordinates=new Coordinates(currentCoordinates.getX()-1,currentCoordinates.getY()+1);
-        return getGameZone().get(lCoordinates);
+        return getGameCardByEqualCoordinate(lCoordinates);
     }
     /**
      * Given a gamecard returns the closest card up
@@ -517,7 +517,7 @@ public class PlayerField implements Serializable {
     public GameCard getUp(GameCard currentGameCard) {
         Coordinates currentCoordinates=getCoordinates(currentGameCard);
         Coordinates Coordinates=new Coordinates(currentCoordinates.getX(),currentCoordinates.getY()+1);
-        return getGameZone().get(Coordinates);
+        return getGameCardByEqualCoordinate(Coordinates);
     }
 
     /**
@@ -528,7 +528,7 @@ public class PlayerField implements Serializable {
     public GameCard getDown(GameCard currentGameCard) {
         Coordinates currentCoordinates=getCoordinates(currentGameCard);
         Coordinates Coordinates=new Coordinates(currentCoordinates.getX(),currentCoordinates.getY()-1);
-        return getGameZone().get(Coordinates);
+        return getGameCardByEqualCoordinate(Coordinates);
     }
 
 }
