@@ -17,9 +17,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
@@ -95,23 +92,7 @@
             <ScrollPane prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="540.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;">
                   <Pane fx:id="player1" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <Circle centerX="15.0" centerY="15.0" radius="10.0" stroke="BLACK" strokeType="INSIDE">
-                        <fill>
-                           <LinearGradient>
-                              <stops>
-                                 <Stop>
-                                    <color>
-                                       <Color red="0.8526315689086914" green="0.3221052587032318" blue="0.3221052587032318" />
-                                    </color>
-                                 </Stop>
-                                 <Stop offset="1.0">
-                                    <color>
-                                       <Color red="1.0" />
-                                    </color>
-                                 </Stop>
-                              </stops>
-                           </LinearGradient>
-                        </fill>
+                     <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE">
                      </Circle>
                      <Label fx:id="playerName" layoutX="33.0" layoutY="4.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
                         <font>
@@ -120,62 +101,62 @@
                      </Label>
                      <Label layoutX="139.0" layoutY="25.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
                      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="13.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@assets/Icons/Animal.jpg" />
+                        <Image url="@assets/Icons/animal.png" />
                      </ImageView>
                      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="105.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@assets/Icons/Animal.jpg" />
+                        <Image url="@assets/Icons/fungi.png" />
                      </ImageView>
                      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="59.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@assets/Icons/Animal.jpg" />
+                        <Image url="@assets/Icons/insect.png" />
                      </ImageView>
                      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="13.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@assets/Icons/Animal.jpg" />
+                        <Image url="@assets/Icons/plant.png" />
                      </ImageView>
                      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="151.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@assets/Icons/Animal.jpg" />
+                        <Image url="@assets/Icons/feather.png" />
                      </ImageView>
                      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="105.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@assets/Icons/Animal.jpg" />
+                        <Image url="@assets/Icons/potion.png" />
                      </ImageView>
                      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="59.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@assets/Icons/Animal.jpg" />
+                        <Image url="@assets/Icons/scroll.png" />
                      </ImageView>
-                     <Label layoutX="35.0" layoutY="50.0" text="0">
+                     <Label fx:id="animal" layoutX="35.0" layoutY="50.0" text="0">
                         <font>
                            <Font size="20.0" />
                         </font>
                      </Label>
-                     <Label layoutX="81.0" layoutY="50.0" text="0">
+                     <Label fx:id="fungi" layoutX="81.0" layoutY="50.0" text="0">
                         <font>
                            <Font size="20.0" />
                         </font>
                      </Label>
-                     <Label layoutX="127.0" layoutY="50.0" text="0">
+                     <Label fx:id="insect" layoutX="127.0" layoutY="50.0" text="0">
                         <font>
                            <Font size="20.0" />
                         </font>
                      </Label>
-                     <Label layoutX="173.0" layoutY="50.0" text="0">
+                     <Label fx:id="plant" layoutX="173.0" layoutY="50.0" text="0">
                         <font>
                            <Font size="20.0" />
                         </font>
                      </Label>
-                     <Label layoutX="35.0" layoutY="85.0" text="0">
+                     <Label fx:id="feather" layoutX="35.0" layoutY="85.0" text="0">
                         <font>
                            <Font size="20.0" />
                         </font>
                      </Label>
-                     <Label layoutX="81.0" layoutY="85.0" text="0">
+                     <Label fx:id="potion" layoutX="81.0" layoutY="85.0" text="0">
                         <font>
                            <Font size="20.0" />
                         </font>
                      </Label>
-                     <Label layoutX="127.0" layoutY="85.0" text="0">
+                     <Label fx:id="scroll" layoutX="127.0" layoutY="85.0" text="0">
                         <font>
                            <Font size="20.0" />
                         </font>
                      </Label>
-                     <Label layoutX="164.0" layoutY="80.0" text="#1">
+                     <Label fx:id="points" layoutX="164.0" layoutY="80.0" text="#1">
                         <font>
                            <Font size="24.0" />
                         </font>

@@ -38,6 +38,7 @@ public class PlayerFieldController extends EventHandler{
     public Group playerField;
     public Pane player1;
 
+    private ArrayList<Pane> playerPanes;
     private ResourceCard chosenCard;
     private ImageView chosenImage;
     private int chosenIndex;
@@ -111,11 +112,39 @@ public class PlayerFieldController extends EventHandler{
     }
 
     public void setScoreBoard(ScoreBoard scoreBoard) {
-        //TODO: Implement when fxml is finished
+        for(Player player: scoreBoard.getBoard().keySet()){
+            Pane currentPlayerPane = null;
+            for(Pane pane : playerPanes){
+                if(((Label) getChildrenFromID(pane, "playerName")).getText().equalsIgnoreCase(player.getNickname())){
+                    currentPlayerPane = pane;
+                    break;
+                }
+            }
+
+            ((Label) getChildrenFromID(currentPlayerPane, "points")).setText(scoreBoard.getBoard().get(player).toString());
+        }
     }
 
     public void setResourceMaps(Map<Player, Map<Resource, Integer>> resourceMaps) {
-        //TODO: Implement when fxml is finished
+        for(Player player: resourceMaps.keySet()){
+            Pane currentPlayerPane = null;
+            for(Pane pane : playerPanes){
+                if(((Label) getChildrenFromID(pane, "playerName")).getText().equalsIgnoreCase(player.getNickname())){
+                    currentPlayerPane = pane;
+                    break;
+                }
+            }
+            Map<Resource, Integer> resourceMap = resourceMaps.get(player);
+
+            //Set the text of the labels to the current value contained
+            ((Label) getChildrenFromID(currentPlayerPane, "animal")).setText(resourceMap.get(Resource.ANIMAL).toString());
+            ((Label) getChildrenFromID(currentPlayerPane, "fungi")).setText(resourceMap.get(Resource.FUNGI).toString());
+            ((Label) getChildrenFromID(currentPlayerPane, "insect")).setText(resourceMap.get(Resource.INSECT).toString());
+            ((Label) getChildrenFromID(currentPlayerPane, "plant")).setText(resourceMap.get(Resource.PLANT).toString());
+            ((Label) getChildrenFromID(currentPlayerPane, "potion")).setText(resourceMap.get(Resource.POTION).toString());
+            ((Label) getChildrenFromID(currentPlayerPane, "scroll")).setText(resourceMap.get(Resource.SCROLL).toString());
+            ((Label) getChildrenFromID(currentPlayerPane, "feather")).setText(resourceMap.get(Resource.FEATHER).toString());
+        }
     }
 
     public void setPlayerField(PlayerField playerField, boolean isYourPlayerfield) {
@@ -243,18 +272,19 @@ public class PlayerFieldController extends EventHandler{
     }
 
     public void cardPlayOK() {
-        //The card got played succesfully, either i create a new card and add it to the screen or i request the whole playerzone again
-        createCard(view.getYourPlayerField(), chosenCords); //This only creates the new card
+        //The card got played successfully
+        //This only creates the new card
+        createCard(view.getYourPlayerField(), chosenCords);
     }
 
     private void createCard(PlayerField playerZone, Coordinates where){
         /*
         [0,0] is at x:0 y:0
         x+1 = +116
-        y+1 = -60  I dont know why -60
+        y+1 = -60
          */
         //Find the resource card that just got played
-        GameCard card = (GameCard) playerZone.getGameCardByEqualCoordinate(where);
+        GameCard card = playerZone.getGameCardByEqualCoordinate(where);
 
         //Create the pane
         int newX = where.getX() * 116;
@@ -276,27 +306,22 @@ public class PlayerFieldController extends EventHandler{
 
         //Create the 4 buttons (if needed)
         ArrayList<Button> buttons = new ArrayList<>();
-        if(false/*where.getX() == 0 && where.getY() == 0*/){
-
-        } else {
-            //Top left
-            if((!card.getIsFront() || (card.getCorner(0) != Resource.COVERED && card.getCorner(0) != Resource.HIDDEN)) && playerZone.getUpLeft(card) == null){
-                buttons.add(createButton(where.getX()-1, where.getY()+1, false, false));
-            }
-            //Top right
-            if((!card.getIsFront() || (card.getCorner(1) != Resource.COVERED && card.getCorner(1) != Resource.HIDDEN)) && playerZone.getUpRight(card) == null){
-                buttons.add(createButton(where.getX()+1, where.getY()+1, true, false));
-            }
-            //Bottom left
-            if((!card.getIsFront() || (card.getCorner(2) != Resource.COVERED && card.getCorner(2) != Resource.HIDDEN)) && playerZone.getDownLeft(card) == null){
-                buttons.add(createButton(where.getX()-1, where.getY()-1, false, true));
-            }
-            //Bottom right
-            if((!card.getIsFront() || (card.getCorner(3) != Resource.COVERED && card.getCorner(3) != Resource.HIDDEN)) && playerZone.getDownRight(card) == null){
-                buttons.add(createButton(where.getX()+1, where.getY()-1, true, true));
-            }
+        //Top left
+        if((!card.getIsFront() || (card.getCorner(0) != Resource.COVERED && card.getCorner(0) != Resource.HIDDEN)) && playerZone.getUpLeft(card) == null){
+            buttons.add(createButton(where.getX()-1, where.getY()+1, false, false));
         }
-
+        //Top right
+        if((!card.getIsFront() || (card.getCorner(1) != Resource.COVERED && card.getCorner(1) != Resource.HIDDEN)) && playerZone.getUpRight(card) == null){
+            buttons.add(createButton(where.getX()+1, where.getY()+1, true, false));
+        }
+        //Bottom left
+        if((!card.getIsFront() || (card.getCorner(2) != Resource.COVERED && card.getCorner(2) != Resource.HIDDEN)) && playerZone.getDownLeft(card) == null){
+            buttons.add(createButton(where.getX()-1, where.getY()-1, false, true));
+        }
+        //Bottom right
+        if((!card.getIsFront() || (card.getCorner(3) != Resource.COVERED && card.getCorner(3) != Resource.HIDDEN)) && playerZone.getDownRight(card) == null){
+            buttons.add(createButton(where.getX()+1, where.getY()-1, true, true));
+        }
 
         //Add everything to the pane
         pane.getChildren().add(imageView);
