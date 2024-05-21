@@ -1,9 +1,6 @@
 package it.polimi.ingsw.view.gui.eventhandlers;
 
-import it.polimi.ingsw.model.card.GameCard;
-import it.polimi.ingsw.model.card.GoalCard;
-import it.polimi.ingsw.model.card.Resource;
-import it.polimi.ingsw.model.card.ResourceCard;
+import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.model.gamelogic.*;
 import it.polimi.ingsw.view.gui.GUI;
 import javafx.application.Platform;
@@ -128,12 +125,7 @@ public class PlayerFieldController extends EventHandler{
         //Set player zone
         Image temp;
         for(Coordinates c: playerField.getGameZone().keySet()){
-            if(c.getX() == 0 && c.getY() == 0){
-                temp = new Image(Util.getImageFromID(playerField.getGameZone().get(c).getId(), playerField.getGameZone().get(c).getIsFront()));
-                startingCard.setImage(temp);
-            } else {
-                createCard(playerField, c);
-            }
+            createCard(playerField, c);
         }
 
         setHand(playerField.getHand(), isYourPlayerfield);
@@ -261,9 +253,8 @@ public class PlayerFieldController extends EventHandler{
         x+1 = +116
         y+1 = -60  I dont know why -60
          */
-
         //Find the resource card that just got played
-        ResourceCard card = (ResourceCard) playerZone.getGameCardByEqualCoordinate(where);
+        GameCard card = (GameCard) playerZone.getGameCardByEqualCoordinate(where);
 
         //Create the pane
         int newX = where.getX() * 116;
@@ -276,7 +267,7 @@ public class PlayerFieldController extends EventHandler{
 
         //Create the ImageView
         ImageView imageView = new ImageView();
-        Image image = new Image(Util.getImageFromID(card.getId(), isFront));
+        Image image = new Image(Util.getImageFromID(card.getId(), card.getIsFront()));
         imageView.setImage(image);
         imageView.setFitHeight(100);
         imageView.setFitWidth(150);
@@ -285,22 +276,27 @@ public class PlayerFieldController extends EventHandler{
 
         //Create the 4 buttons (if needed)
         ArrayList<Button> buttons = new ArrayList<>();
-        //Top left
-        if((!card.getIsFront() || (card.getCorner(0) != Resource.COVERED && card.getCorner(0) != Resource.HIDDEN)) && playerZone.getUpLeft(card) == null){
-            buttons.add(createButton(where.getX()-1, where.getY()+1, false, false));
+        if(false/*where.getX() == 0 && where.getY() == 0*/){
+
+        } else {
+            //Top left
+            if((!card.getIsFront() || (card.getCorner(0) != Resource.COVERED && card.getCorner(0) != Resource.HIDDEN)) && playerZone.getUpLeft(card) == null){
+                buttons.add(createButton(where.getX()-1, where.getY()+1, false, false));
+            }
+            //Top right
+            if((!card.getIsFront() || (card.getCorner(1) != Resource.COVERED && card.getCorner(1) != Resource.HIDDEN)) && playerZone.getUpRight(card) == null){
+                buttons.add(createButton(where.getX()+1, where.getY()+1, true, false));
+            }
+            //Bottom left
+            if((!card.getIsFront() || (card.getCorner(2) != Resource.COVERED && card.getCorner(2) != Resource.HIDDEN)) && playerZone.getDownLeft(card) == null){
+                buttons.add(createButton(where.getX()-1, where.getY()-1, false, true));
+            }
+            //Bottom right
+            if((!card.getIsFront() || (card.getCorner(3) != Resource.COVERED && card.getCorner(3) != Resource.HIDDEN)) && playerZone.getDownRight(card) == null){
+                buttons.add(createButton(where.getX()+1, where.getY()-1, true, true));
+            }
         }
-        //Top right
-        if((!card.getIsFront() || (card.getCorner(1) != Resource.COVERED && card.getCorner(1) != Resource.HIDDEN)) && playerZone.getUpRight(card) == null){
-            buttons.add(createButton(where.getX()+1, where.getY()+1, true, false));
-        }
-        //Bottom left
-        if((!card.getIsFront() || (card.getCorner(2) != Resource.COVERED && card.getCorner(2) != Resource.HIDDEN)) && playerZone.getDownLeft(card) == null){
-            buttons.add(createButton(where.getX()-1, where.getY()-1, false, true));
-        }
-        //Bottom right
-        if((!card.getIsFront() || (card.getCorner(3) != Resource.COVERED && card.getCorner(3) != Resource.HIDDEN)) && playerZone.getDownRight(card) == null){
-            buttons.add(createButton(where.getX()+1, where.getY()-1, true, true));
-        }
+
 
         //Add everything to the pane
         pane.getChildren().add(imageView);
