@@ -72,7 +72,6 @@
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="waitingLabel" text="Label" visible="false" />
                   <HBox alignment="CENTER" prefHeight="130.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane prefHeight="130.0" prefWidth="304.0">
@@ -98,6 +97,11 @@
                   </HBox>
                </children>
             </AnchorPane>
+            <Label fx:id="waitingLabel" text="Waiting for players" visible="false">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
          </children>
       </VBox>
    </children>

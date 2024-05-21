@@ -103,7 +103,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
+                              <Label fx:id= "points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
                               <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                                  <Image url="@assets/Icons/animal.png" />
                               </ImageView>
@@ -125,22 +125,22 @@
                               <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="112.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
                                  <Image url="@assets/Icons/scroll.png" />
                               </ImageView>
-                              <Label fx:id="animal" layoutX="25.0" layoutY="24.0" text="0">
+                              <Label fx:id="plant" layoutX="25.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="fungi" layoutX="173.0" layoutY="24.0" text="0">
+                              <Label fx:id="animal" layoutX="173.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="insect" layoutX="127.0" layoutY="24.0" text="0">
+                              <Label fx:id="fungi" layoutX="127.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="plant" layoutX="78.0" layoutY="24.0" text="0">
+                              <Label fx:id="insect" layoutX="78.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -160,23 +160,18 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="points" layoutX="159.0" layoutY="59.0" text="#1">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
                            </children>
                         </AnchorPane>
                         <Line endX="100.0" startX="-100.0" startY="-0.41419318318367004" />
                         <AnchorPane fx:id="player2" prefHeight="107.0" prefWidth="201.0">
                            <children>
-                              <Circle fx:id="color1" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                              <Label fx:id="playerName1" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
+                              <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Label fx:id="playerName" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
+                              <Label fx:id= "points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
                               <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@assets/Icons/animal.png" />
@@ -212,44 +207,39 @@
                                     <Image url="@assets/Icons/scroll.png" />
                                  </image>
                               </ImageView>
-                              <Label fx:id="animal1" layoutX="25.0" layoutY="24.0" text="0">
+                              <Label fx:id="plant" layoutX="25.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="fungi1" layoutX="173.0" layoutY="24.0" text="0">
+                              <Label fx:id="animal" layoutX="173.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="insect1" layoutX="127.0" layoutY="24.0" text="0">
+                              <Label fx:id="fungi" layoutX="127.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="plant1" layoutX="78.0" layoutY="24.0" text="0">
+                              <Label fx:id="insect" layoutX="78.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="feather1" layoutX="42.0" layoutY="62.0" text="0">
+                              <Label fx:id="feather" layoutX="42.0" layoutY="62.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="potion1" layoutX="90.0" layoutY="62.0" text="0">
+                              <Label fx:id="potion" layoutX="90.0" layoutY="62.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="scroll1" layoutX="139.0" layoutY="62.0" text="0">
+                              <Label fx:id="scroll" layoutX="139.0" layoutY="62.0" text="0">
                                  <font>
                                     <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="points1" layoutX="159.0" layoutY="59.0" text="#1">
-                                 <font>
-                                    <Font size="24.0" />
                                  </font>
                               </Label>
                            </children>
@@ -257,13 +247,13 @@
                         <Line endX="100.0" startX="-100.0" startY="-0.41419318318367004" />
                         <AnchorPane fx:id="player3" prefHeight="107.0" prefWidth="201.0">
                            <children>
-                              <Circle fx:id="color11" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                              <Label fx:id="playerName11" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
+                              <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Label fx:id="playerName" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
+                              <Label fx:id= "points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
                               <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@assets/Icons/animal.png" />
@@ -299,58 +289,53 @@
                                     <Image url="@assets/Icons/scroll.png" />
                                  </image>
                               </ImageView>
-                              <Label fx:id="animal11" layoutX="25.0" layoutY="24.0" text="0">
+                              <Label fx:id="plant" layoutX="25.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="fungi11" layoutX="173.0" layoutY="24.0" text="0">
+                              <Label fx:id="animal" layoutX="173.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="insect11" layoutX="127.0" layoutY="24.0" text="0">
+                              <Label fx:id="fungi" layoutX="127.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="plant11" layoutX="78.0" layoutY="24.0" text="0">
+                              <Label fx:id="insect" layoutX="78.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="feather11" layoutX="42.0" layoutY="62.0" text="0">
+                              <Label fx:id="feather" layoutX="42.0" layoutY="62.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="potion11" layoutX="90.0" layoutY="62.0" text="0">
+                              <Label fx:id="potion" layoutX="90.0" layoutY="62.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="scroll11" layoutX="139.0" layoutY="62.0" text="0">
+                              <Label fx:id="scroll" layoutX="139.0" layoutY="62.0" text="0">
                                  <font>
                                     <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="points11" layoutX="159.0" layoutY="59.0" text="#1">
-                                 <font>
-                                    <Font size="24.0" />
                                  </font>
                               </Label>
                            </children>
                         </AnchorPane>
                         <Line endX="100.0" startX="-100.0" startY="-0.41419318318367004" />
-                        <AnchorPane fx:id="player31" prefHeight="107.0" prefWidth="201.0">
+                        <AnchorPane fx:id="player4" prefHeight="107.0" prefWidth="201.0">
                            <children>
-                              <Circle fx:id="color111" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                              <Label fx:id="playerName111" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
+                              <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Label fx:id="playerName" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
+                              <Label fx:id= "points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
                               <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@assets/Icons/animal.png" />
@@ -386,44 +371,39 @@
                                     <Image url="@assets/Icons/scroll.png" />
                                  </image>
                               </ImageView>
-                              <Label fx:id="animal111" layoutX="25.0" layoutY="24.0" text="0">
+                              <Label fx:id="plant" layoutX="25.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="fungi111" layoutX="173.0" layoutY="24.0" text="0">
+                              <Label fx:id="animal" layoutX="173.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="insect111" layoutX="127.0" layoutY="24.0" text="0">
+                              <Label fx:id="fungi" layoutX="127.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="plant111" layoutX="78.0" layoutY="24.0" text="0">
+                              <Label fx:id="insect" layoutX="78.0" layoutY="24.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="feather111" layoutX="42.0" layoutY="62.0" text="0">
+                              <Label fx:id="feather" layoutX="42.0" layoutY="62.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="potion111" layoutX="90.0" layoutY="62.0" text="0">
+                              <Label fx:id="potion" layoutX="90.0" layoutY="62.0" text="0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="scroll111" layoutX="139.0" layoutY="62.0" text="0">
+                              <Label fx:id="scroll" layoutX="139.0" layoutY="62.0" text="0">
                                  <font>
                                     <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="points111" layoutX="159.0" layoutY="59.0" text="#1">
-                                 <font>
-                                    <Font size="24.0" />
                                  </font>
                               </Label>
                            </children>
