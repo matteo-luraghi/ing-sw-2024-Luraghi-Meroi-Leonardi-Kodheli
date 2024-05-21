@@ -34,10 +34,13 @@ public class DrawCardRequest extends ServerMessage {
         } catch (RemoteException e) {
             System.err.println("Error sending message");
         }
-        if (view.getClass() == CLI.class) {
-            new Thread(() -> ((CLI) view).setPlayPhase(false)).start();
-        } else if (view.getClass() == GUI.class) {
-            ((GUI) view).cardPlayedOK();
-        }
+            new Thread(() -> {
+                try {
+                    view.setPlayPhase(false);
+                } catch (RemoteException e) {
+                    System.err.println("Error sending message");
+                }
+            }).start();
+
     }
 }

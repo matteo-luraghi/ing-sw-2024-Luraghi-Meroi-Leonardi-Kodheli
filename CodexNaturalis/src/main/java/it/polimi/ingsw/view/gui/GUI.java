@@ -446,6 +446,14 @@ public class GUI extends Application implements View{
      */
     @Override
     public void setPlayPhase(boolean playPhase) throws RemoteException {
+        if(!playPhase){
+            Platform.runLater(() -> {
+                Platform.runLater(() -> {
+                    PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+                    playerFieldHandler.cardPlayOK();
+                });
+            });
+        }
     }
 
     /**
