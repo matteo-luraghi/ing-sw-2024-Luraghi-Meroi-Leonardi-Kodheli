@@ -421,7 +421,7 @@ public class Controller implements RemoteController {
             connectionHandler.sendTextMessage("You aren't the current player");
             return;
         }
-        if(game.getState() != State.GAMEFLOW && game.getTurnState() != TurnState.PLAY){
+        if(game.getState() != State.GAMEFLOW || game.getTurnState() != TurnState.PLAY){
             connectionHandler.sendTextMessage("It's not the time to play a card");
             return;
         }
@@ -475,7 +475,7 @@ public class Controller implements RemoteController {
             connectionHandler.sendTextMessage("You aren't the current player");
             return;
         }
-        if(game.getState() != State.GAMEFLOW && game.getTurnState() != TurnState.DRAW){
+        if(game.getState() != State.GAMEFLOW || game.getTurnState() != TurnState.DRAW){
             connectionHandler.sendTextMessage("It's not the time to draw a card");
             return;
         }
