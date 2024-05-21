@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.card.Resource;
 import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.gamelogic.*;
 import it.polimi.ingsw.view.gui.GUI;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,6 +39,7 @@ public class PlayerFieldController extends EventHandler{
     public ImageView goldUncovered1;
     public ImageView startingCard;
     public Group playerField;
+    public Pane player1;
 
     private ResourceCard chosenCard;
     private ImageView chosenImage;
@@ -50,6 +52,7 @@ public class PlayerFieldController extends EventHandler{
         chosenIndex = -1;
         chosenImage = null;
         chosenCords = null;
+
     }
 
     @Override
@@ -65,6 +68,10 @@ public class PlayerFieldController extends EventHandler{
         view.ShowDecks();
         //Shows the 2 common goals;
         view.showCommonGoals();
+        //Set the static part of the player areas
+        Label playerName = (Label) getChildrenFromID(player1, "playerName");
+        playerName.setText(view.getUser().getNickname());
+
     }
 
     public void setCommonGoals(GoalCard[] commonGoals) {

@@ -94,7 +94,7 @@
          <AnchorPane prefHeight="318.0" prefWidth="223.0" style="-fx-background-color: #f0ead1;" BorderPane.alignment="CENTER">
             <ScrollPane prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="540.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;">
-                  <Pane prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Pane fx:id="player1" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <Circle centerX="15.0" centerY="15.0" radius="10.0" stroke="BLACK" strokeType="INSIDE">
                         <fill>
                            <LinearGradient>
@@ -113,7 +113,7 @@
                            </LinearGradient>
                         </fill>
                      </Circle>
-                     <Label layoutX="33.0" layoutY="4.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
+                     <Label fx:id="playerName" layoutX="33.0" layoutY="4.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
                         <font>
                            <Font size="14.0" />
                         </font>
