@@ -112,16 +112,8 @@ public class GUI extends Application implements View{
      * Get the available games from the server
      * @return the list of games' names
      */
-    public ArrayList<String> refreshGameNames() {
-        ArrayList<String> gameNames;
-        Registry registry = ((RMIClient) client).getRegistry();
-        try {
-            RemoteServer server = (RemoteServer) registry.lookup("server");
-            gameNames = server.getGamesNames();
-        } catch (Exception e) {
-               gameNames = null;
-        }
-        return gameNames;
+    public void refreshGameNames() {
+        client.refreshGamesNames();
     }
 
     /**
@@ -155,7 +147,15 @@ public class GUI extends Application implements View{
 
         if (client.getClass() == RMIClient.class) {
             // get the games' names
-            ArrayList<String> gameNames = refreshGameNames();
+            ArrayList<String> gameNames;
+            Registry registry = ((RMIClient) client).getRegistry();
+            try {
+                RemoteServer server = (RemoteServer) registry.lookup("server");
+                gameNames = server.getGamesNames();
+            } catch (Exception e) {
+                gameNames = null;
+            }
+
             if (gameNames == null) {
                 System.err.println("Error connecting to server");
                 throw new ConnectionClosedException("Connection closed");
@@ -500,8 +500,10 @@ public class GUI extends Application implements View{
      */
     @Override
     public void setGameNames(ArrayList<String> gameNames) {
-        //TODO: do the correct stuff
-        System.out.println(gameNames);
+        Platform.runLater(() -> {
+            JoinGameController joinGameHandler = (JoinGameController) currentEventHandler;
+            joinGameHandler.setGameNames(gameNames);
+        });
     }
 
     /**

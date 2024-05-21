@@ -99,6 +99,6 @@ public class JoinGameController  extends EventHandler{
      * Refreshed the list of currently available games
      */
     public void refreshGame() {
-        setGameNames(view.refreshGameNames());
+        view.refreshGameNames();
     }
 }
