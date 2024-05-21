@@ -12,7 +12,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -37,6 +40,9 @@ public class PlayerFieldController extends EventHandler{
     public ImageView startingCard;
     public Group playerField;
     public Pane player1;
+    public Pane player2;
+    public Pane player3;
+    public Pane player4;
 
     private ArrayList<Pane> playerPanes;
     private ResourceCard chosenCard;
@@ -50,7 +56,11 @@ public class PlayerFieldController extends EventHandler{
         chosenIndex = -1;
         chosenImage = null;
         chosenCords = null;
-
+        playerPanes = new ArrayList<>();
+        playerPanes.add(player1);
+        playerPanes.add(player2);
+        playerPanes.add(player3);
+        playerPanes.add(player4);
     }
 
     @Override
@@ -66,12 +76,8 @@ public class PlayerFieldController extends EventHandler{
         view.ShowDecks();
         //Shows the 2 common goals;
         view.showCommonGoals();
-        //Set the static part of the player areas
-        Label playerName = (Label) getChildrenFromID(player1, "playerName");
-        playerName.setText(view.getUser().getNickname());
-        playerPanes = new ArrayList<>();
-        playerPanes.add(player1);
-
+        //Set the static fields of the players
+        view.showStaticContent();
     }
 
     public void setCommonGoals(GoalCard[] commonGoals) {
@@ -118,7 +124,7 @@ public class PlayerFieldController extends EventHandler{
             String playerNick = ((Label) getChildrenFromID(pane, "playerName")).getText();
             for (Player player : scoreBoard.getBoard().keySet()) {
                 if (player.getNickname().equalsIgnoreCase(playerNick)) {
-                    ((Label) getChildrenFromID(pane, "points")).setText(scoreBoard.getBoard().getOrDefault(player, 0).toString());
+                    ((Label) getChildrenFromID(pane, "points")).setText("Points: " + scoreBoard.getBoard().getOrDefault(player, 0).toString());
                 }
             }
         }
@@ -184,6 +190,29 @@ public class PlayerFieldController extends EventHandler{
             hand2.setDisable(true);
         }
     }
+    public void setStaticContent(ArrayList<Player> players) {
+        for(int i = 0; i < 4; i++){
+            Pane currentPane = playerPanes.get(i);
+            if(i >= players.size()){
+                currentPane.setVisible(false);
+                currentPane.setDisable(true);
+                currentPane.setMaxHeight(0);
+            } else {
+                //Set the nickname and the color of each playerPane
+                ((Label) getChildrenFromID(currentPane, "playerName")).setText(players.get(i).getNickname());
+                Color color;
+                switch (players.get(i).getColor()){
+                    case RED -> color = Color.RED;
+                    case BLUE -> color = Color.BLUE;
+                    case GREEN -> color = Color.GREEN;
+                    case YELLOW -> color = Color.YELLOW;
+                    case null, default -> color = Color.WHITE;
+                }
+                ((Circle) getChildrenFromID(currentPane, "color")).setFill(color);
+
+            }
+        }
+    }
 
     public void addChatMessage(String s) {
         chat.getItems().add(s);
@@ -194,6 +223,9 @@ public class PlayerFieldController extends EventHandler{
         view.ShowPlayerField(currentPlayer, currentPlayer);
     }
 
+    public void showStaticContent(){
+        view.showStaticContent();
+    }
     public void playCard(MouseEvent mouseEvent) {
         if(chosenIndex == -1){
             view.showMessage("Select a card to play first");

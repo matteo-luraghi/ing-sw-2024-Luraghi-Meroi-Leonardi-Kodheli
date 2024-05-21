@@ -448,10 +448,8 @@ public class GUI extends Application implements View{
     public void setPlayPhase(boolean playPhase) throws RemoteException {
         if(!playPhase){
             Platform.runLater(() -> {
-                Platform.runLater(() -> {
-                    PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
-                    playerFieldHandler.cardPlayOK();
-                });
+                PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+                playerFieldHandler.cardPlayOK();
             });
         }
     }
@@ -575,4 +573,10 @@ public class GUI extends Application implements View{
     }
 
 
+    public void showStaticContent() {
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.setStaticContent(game.getPlayers());
+        });
+    }
 }
