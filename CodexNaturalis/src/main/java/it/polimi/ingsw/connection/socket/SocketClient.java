@@ -18,6 +18,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * SocketClient class
@@ -184,5 +185,13 @@ public class SocketClient extends Client {
     @Override
     public void drawCardResponse(int which, boolean isGold) {
         sendMessageServer(new DrawCardResponse(which, isGold));
+    }
+
+    /**
+     * Get the available games from the server
+     */
+    @Override
+    public void refreshGamesNames() {
+        sendMessageServer(new RefreshGamesNamesRequest());
     }
 }

@@ -75,7 +75,7 @@ public class Server implements RemoteServer {
 
         // open the socket and start listening for connections
         this.serverSocket = new ServerSocket(this.port);
-        System.out.println("Server running...");
+        System.out.println("Server running at " + serverIP + ":" + this.port);
         try {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
@@ -132,6 +132,18 @@ public class Server implements RemoteServer {
      */
     @Override
     public void createGame(ConnectionHandler connectionHandler, int numberOfPlayers, String gameName) {
+        Optional<Controller> alreadyPresent = games.keySet().stream().parallel()
+                .filter(c -> c.getGameName().equals(gameName))
+                .findFirst();
+        if (alreadyPresent.isPresent()) {
+            connectionHandler.sendTextMessage("Name already present, choose another one.");
+            try {
+                connectionHandler.joinGameRequest(getGamesNames());
+            } catch (RemoteException e) {
+                System.err.println("Error sending join / create request");
+            }
+            return;
+        }
         Controller controller = new Controller(gameName, numberOfPlayers);
         synchronized (this.gameLock) {
             this.games.put(controller, numberOfPlayers);

@@ -42,7 +42,6 @@ public class RMIConnectionHandler extends ConnectionHandler {
             this.view = (View) this.viewRegistry.lookup("view" + getClientNickname());
         } catch (Exception e) {
             System.out.println("Error connecting to client");
-            e.printStackTrace();
         }
     }
 

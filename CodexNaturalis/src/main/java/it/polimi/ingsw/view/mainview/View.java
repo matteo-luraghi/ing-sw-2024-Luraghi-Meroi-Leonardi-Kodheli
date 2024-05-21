@@ -136,6 +136,12 @@ public interface View extends Remote {
     void setGame(GameState game) throws RemoteException;
 
     /**
+     * Update the list of names of available games
+     * @param gameNames the names
+     */
+    void setGameNames(ArrayList<String> gameNames) throws RemoteException;
+
+    /**
      * Disconnect the client
      */
     void disconnectClient() throws RemoteException;

@@ -541,6 +541,17 @@ public class CLI implements View {
     }
 
     /**
+     * Update the list of names of available games
+     *
+     * @param gameNames the names
+     */
+    @Override
+    public void setGameNames(ArrayList<String> gameNames) {
+        // TODO: do the correct stuff
+        System.out.println(gameNames);
+    }
+
+    /**
      * isMyTurn getter
      * @return whether it is my turn or not
      */

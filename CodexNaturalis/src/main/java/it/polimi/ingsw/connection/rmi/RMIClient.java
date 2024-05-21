@@ -17,6 +17,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.ExportException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 /**
  * RMIClient class
@@ -106,7 +107,6 @@ public class RMIClient extends Client {
                 // export view
                 View stubView = (View) UnicastRemoteObject.exportObject(getView(), 0);
                 this.viewRegistry.rebind("view" + nickname, stubView);
-            } catch (ExportException ignored) {
             } catch (Exception e) {
                 System.out.println("Error exporting view");
             }
@@ -258,6 +258,25 @@ public class RMIClient extends Client {
         } catch (Exception e) {
             System.err.println("Error drawing a card");
             disconnect();
+        }
+    }
+
+    /**
+     * Get the available games from the server
+     */
+    @Override
+    public void refreshGamesNames() {
+        ArrayList<String> gamesNames;
+        try {
+            RemoteServer server = (RemoteServer) this.registry.lookup("server");
+            gamesNames = server.getGamesNames();
+        } catch (Exception e) {
+            gamesNames = null;
+        }
+        try {
+            this.getView().setGameNames(gamesNames);
+        } catch (RemoteException e) {
+            System.err.println("Error sending games' names");
         }
     }
 

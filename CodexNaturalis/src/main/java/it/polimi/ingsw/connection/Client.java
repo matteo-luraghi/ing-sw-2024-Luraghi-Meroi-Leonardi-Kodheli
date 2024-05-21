@@ -6,6 +6,8 @@ import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.Coordinates;
 import it.polimi.ingsw.view.mainview.View;
+
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -102,6 +104,11 @@ public abstract class Client {
      * @param isGold which deck to draw from
      */
     public void drawCardResponse(int which, boolean isGold) {}
+
+    /**
+     * Get the available games from the server
+     */
+    public abstract void refreshGamesNames();
 
     /**
      * Disconnect the client
