@@ -8,7 +8,6 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -17,11 +16,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="656.0" style="-fx-background-color: #ede3ba;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.eventhandlers.PlayerFieldController">
-   <BorderPane prefHeight="463.0" prefWidth="656.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+   <BorderPane prefHeight="463.0" prefWidth="656.0" style="-fx-background-color: #ede3ba;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <top>
          <MenuBar style="-fx-background-color: #d1be71;" BorderPane.alignment="CENTER">
             <Menu mnemonicParsing="false" onAction="#showYourField" text="Show your field" />
@@ -89,88 +90,346 @@
       </center>
       <right>
          <AnchorPane prefHeight="318.0" prefWidth="223.0" style="-fx-background-color: #f0ead1;" BorderPane.alignment="CENTER">
-            <ScrollPane prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="540.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;">
-                  <Pane fx:id="player1" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE">
+            <ScrollPane prefHeight="298.0" prefWidth="223.33333333333334" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <AnchorPane prefHeight="499.0" prefWidth="202.0" style="-fx-background-color: #f0ead1;">
+                  <VBox layoutY="2.0" prefHeight="433.3333333333333" prefWidth="202.0" style="-fx-background-color: #ede3ba;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane fx:id="player1" prefHeight="107.0" prefWidth="201.0">
+                           <children>
+                              <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE">
                      </Circle>
-                     <Label fx:id="playerName" layoutX="33.0" layoutY="4.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
-                        <font>
-                           <Font size="14.0" />
-                        </font>
-                     </Label>
-                     <Label layoutX="139.0" layoutY="25.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
-                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="13.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@assets/Icons/animal.png" />
-                     </ImageView>
-                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="105.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@assets/Icons/fungi.png" />
-                     </ImageView>
-                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="59.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@assets/Icons/insect.png" />
-                     </ImageView>
-                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="13.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@assets/Icons/plant.png" />
-                     </ImageView>
-                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="151.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@assets/Icons/feather.png" />
-                     </ImageView>
-                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="105.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@assets/Icons/potion.png" />
-                     </ImageView>
-                     <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="59.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="@assets/Icons/scroll.png" />
-                     </ImageView>
-                     <Label fx:id="animal" layoutX="35.0" layoutY="50.0" text="0">
-                        <font>
-                           <Font size="20.0" />
-                        </font>
-                     </Label>
-                     <Label fx:id="fungi" layoutX="81.0" layoutY="50.0" text="0">
-                        <font>
-                           <Font size="20.0" />
-                        </font>
-                     </Label>
-                     <Label fx:id="insect" layoutX="127.0" layoutY="50.0" text="0">
-                        <font>
-                           <Font size="20.0" />
-                        </font>
-                     </Label>
-                     <Label fx:id="plant" layoutX="173.0" layoutY="50.0" text="0">
-                        <font>
-                           <Font size="20.0" />
-                        </font>
-                     </Label>
-                     <Label fx:id="feather" layoutX="35.0" layoutY="85.0" text="0">
-                        <font>
-                           <Font size="20.0" />
-                        </font>
-                     </Label>
-                     <Label fx:id="potion" layoutX="81.0" layoutY="85.0" text="0">
-                        <font>
-                           <Font size="20.0" />
-                        </font>
-                     </Label>
-                     <Label fx:id="scroll" layoutX="127.0" layoutY="85.0" text="0">
-                        <font>
-                           <Font size="20.0" />
-                        </font>
-                     </Label>
-                     <Label fx:id="points" layoutX="164.0" layoutY="80.0" text="#1">
-                        <font>
-                           <Font size="24.0" />
-                        </font>
-                     </Label>
-                  </Pane>
-                  <Pane prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="140.0">
-                     <ProgressBar prefWidth="200.0" progress="0.0" style="-fx-background-color: #ede3ba;" />
-                  </Pane>
-                  <Pane prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="280.0">
-                     <ProgressBar prefWidth="200.0" progress="0.0" style="-fx-background-color: #f0ead1;" />
-                  </Pane>
-                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="120.0" prefWidth="200.0" style="-fx-background-color: #f0ead1;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="420.0">
-                     <ProgressBar prefWidth="200.0" progress="0.0" style="-fx-background-color: #f0ead1;" />
-                  </Pane>
+                              <Label fx:id="playerName" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <Image url="@assets/Icons/animal.png" />
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="100.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <Image url="@assets/Icons/fungi.png" />
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="48.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <Image url="@assets/Icons/insect.png" />
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <Image url="@assets/Icons/plant.png" />
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="12.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <Image url="@assets/Icons/feather.png" />
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="66.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <Image url="@assets/Icons/potion.png" />
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="112.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <Image url="@assets/Icons/scroll.png" />
+                              </ImageView>
+                              <Label fx:id="animal" layoutX="25.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="fungi" layoutX="173.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="insect" layoutX="127.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="plant" layoutX="78.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="feather" layoutX="42.0" layoutY="62.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="potion" layoutX="90.0" layoutY="62.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="scroll" layoutX="139.0" layoutY="62.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="points" layoutX="159.0" layoutY="59.0" text="#1">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <Line endX="100.0" startX="-100.0" startY="-0.41419318318367004" />
+                        <AnchorPane fx:id="player2" prefHeight="107.0" prefWidth="201.0">
+                           <children>
+                              <Circle fx:id="color1" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Label fx:id="playerName1" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/animal.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="100.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/fungi.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="48.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/insect.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/plant.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="12.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/feather.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="66.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/potion.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="112.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/scroll.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="animal1" layoutX="25.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="fungi1" layoutX="173.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="insect1" layoutX="127.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="plant1" layoutX="78.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="feather1" layoutX="42.0" layoutY="62.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="potion1" layoutX="90.0" layoutY="62.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="scroll1" layoutX="139.0" layoutY="62.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="points1" layoutX="159.0" layoutY="59.0" text="#1">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <Line endX="100.0" startX="-100.0" startY="-0.41419318318367004" />
+                        <AnchorPane fx:id="player3" prefHeight="107.0" prefWidth="201.0">
+                           <children>
+                              <Circle fx:id="color11" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Label fx:id="playerName11" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/animal.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="100.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/fungi.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="48.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/insect.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/plant.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="12.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/feather.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="66.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/potion.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="112.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/scroll.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="animal11" layoutX="25.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="fungi11" layoutX="173.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="insect11" layoutX="127.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="plant11" layoutX="78.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="feather11" layoutX="42.0" layoutY="62.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="potion11" layoutX="90.0" layoutY="62.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="scroll11" layoutX="139.0" layoutY="62.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="points11" layoutX="159.0" layoutY="59.0" text="#1">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <Line endX="100.0" startX="-100.0" startY="-0.41419318318367004" />
+                        <AnchorPane fx:id="player31" prefHeight="107.0" prefWidth="201.0">
+                           <children>
+                              <Circle fx:id="color111" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Label fx:id="playerName111" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/animal.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="100.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/fungi.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="48.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/insect.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/plant.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="12.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/feather.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="66.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/potion.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="112.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/Icons/scroll.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="animal111" layoutX="25.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="fungi111" layoutX="173.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="insect111" layoutX="127.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="plant111" layoutX="78.0" layoutY="24.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="feather111" layoutX="42.0" layoutY="62.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="potion111" layoutX="90.0" layoutY="62.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="scroll111" layoutX="139.0" layoutY="62.0" text="0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="points111" layoutX="159.0" layoutY="59.0" text="#1">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
                </AnchorPane>
             </ScrollPane>
          </AnchorPane>
