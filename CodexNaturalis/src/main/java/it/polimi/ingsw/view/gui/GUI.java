@@ -494,9 +494,20 @@ public class GUI extends Application implements View{
         }
 
         Platform.runLater(() -> {
-            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
-            playerFieldHandler.setHand(game.getGameTable().getPlayerZones().get(user).getHand(), true);
-            playerFieldHandler.setDecks(game.getGameTable().getResourceDeck(), game.getGameTable().getGoldDeck());
+            try {
+                PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+                playerFieldHandler.setHand(game.getGameTable().getPlayerZones().get(user).getHand(), true);
+                playerFieldHandler.setDecks(game.getGameTable().getResourceDeck(), game.getGameTable().getGoldDeck());
+                playerFieldHandler.setScoreBoard(game.getGameTable().getScoreBoard());
+
+                Map<Player, Map<Resource, Integer>> resourceMaps = new HashMap<>();
+                for (Player p : game.getPlayers()) {
+                    resourceMaps.put(p, game.getGameTable().getPlayerZones().get(p).getResourceMap());
+                }
+                playerFieldHandler.setResourceMaps(resourceMaps);
+            } catch (ClassCastException e){
+
+            }
         });
     }
 

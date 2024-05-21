@@ -69,6 +69,8 @@ public class PlayerFieldController extends EventHandler{
         //Set the static part of the player areas
         Label playerName = (Label) getChildrenFromID(player1, "playerName");
         playerName.setText(view.getUser().getNickname());
+        playerPanes = new ArrayList<>();
+        playerPanes.add(player1);
 
     }
 
@@ -112,16 +114,13 @@ public class PlayerFieldController extends EventHandler{
     }
 
     public void setScoreBoard(ScoreBoard scoreBoard) {
-        for(Player player: scoreBoard.getBoard().keySet()){
-            Pane currentPlayerPane = null;
-            for(Pane pane : playerPanes){
-                if(((Label) getChildrenFromID(pane, "playerName")).getText().equalsIgnoreCase(player.getNickname())){
-                    currentPlayerPane = pane;
-                    break;
+        for(Pane pane : playerPanes) {
+            String playerNick = ((Label) getChildrenFromID(pane, "playerName")).getText();
+            for (Player player : scoreBoard.getBoard().keySet()) {
+                if (player.getNickname().equalsIgnoreCase(playerNick)) {
+                    ((Label) getChildrenFromID(pane, "points")).setText(scoreBoard.getBoard().getOrDefault(player, 0).toString());
                 }
             }
-
-            ((Label) getChildrenFromID(currentPlayerPane, "points")).setText(scoreBoard.getBoard().get(player).toString());
         }
     }
 
@@ -135,15 +134,16 @@ public class PlayerFieldController extends EventHandler{
                 }
             }
             Map<Resource, Integer> resourceMap = resourceMaps.get(player);
-
-            //Set the text of the labels to the current value contained
-            ((Label) getChildrenFromID(currentPlayerPane, "animal")).setText(resourceMap.get(Resource.ANIMAL).toString());
-            ((Label) getChildrenFromID(currentPlayerPane, "fungi")).setText(resourceMap.get(Resource.FUNGI).toString());
-            ((Label) getChildrenFromID(currentPlayerPane, "insect")).setText(resourceMap.get(Resource.INSECT).toString());
-            ((Label) getChildrenFromID(currentPlayerPane, "plant")).setText(resourceMap.get(Resource.PLANT).toString());
-            ((Label) getChildrenFromID(currentPlayerPane, "potion")).setText(resourceMap.get(Resource.POTION).toString());
-            ((Label) getChildrenFromID(currentPlayerPane, "scroll")).setText(resourceMap.get(Resource.SCROLL).toString());
-            ((Label) getChildrenFromID(currentPlayerPane, "feather")).setText(resourceMap.get(Resource.FEATHER).toString());
+            if(currentPlayerPane != null) {
+                //Set the text of the labels to the current value contained
+                ((Label) getChildrenFromID(currentPlayerPane, "animal")).setText(resourceMap.get(Resource.ANIMAL).toString());
+                ((Label) getChildrenFromID(currentPlayerPane, "fungi")).setText(resourceMap.get(Resource.FUNGI).toString());
+                ((Label) getChildrenFromID(currentPlayerPane, "insect")).setText(resourceMap.get(Resource.INSECT).toString());
+                ((Label) getChildrenFromID(currentPlayerPane, "plant")).setText(resourceMap.get(Resource.PLANT).toString());
+                ((Label) getChildrenFromID(currentPlayerPane, "potion")).setText(resourceMap.get(Resource.POTION).toString());
+                ((Label) getChildrenFromID(currentPlayerPane, "scroll")).setText(resourceMap.get(Resource.SCROLL).toString());
+                ((Label) getChildrenFromID(currentPlayerPane, "feather")).setText(resourceMap.get(Resource.FEATHER).toString());
+            }
         }
     }
 
