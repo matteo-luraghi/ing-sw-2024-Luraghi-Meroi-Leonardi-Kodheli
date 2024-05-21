@@ -75,7 +75,9 @@ public class Server implements RemoteServer {
 
         // open the socket and start listening for connections
         this.serverSocket = new ServerSocket(this.port);
-        System.out.println("Server running at " + serverIP + ":" + this.port);
+        System.out.println("Server running at " + serverIP);
+        System.out.println("Port for Socket connection: " + port);
+        System.out.println("Port for RMI connection: " + 1099);
         try {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
