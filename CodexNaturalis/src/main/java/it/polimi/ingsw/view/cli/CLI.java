@@ -37,6 +37,7 @@ public class CLI implements View {
     private boolean playPhase = false;
     private boolean connected = true;
     private String gameName;
+    private ArrayList<String> gameList;
 
     /**
      * CLI constructor
@@ -152,55 +153,86 @@ public class CLI implements View {
 
     @Override
     public void showJoinOrCreate(ArrayList<String> gameNames) {
+        gameList = gameNames;
         boolean isJoin = false;
-        if (gameNames.isEmpty()) {
-            System.out.println("There are no games available, you have to create a new one.");
-        } else {
-            boolean correctInput = false;
 
-            do {
-                System.out.println("Do you want to join an existing game or create a new one?\nJoin|Create");
-                String gameChoice = this.scanner.nextLine();
+        boolean correctInput = false;
 
-                if (!gameChoice.equalsIgnoreCase("join") && !gameChoice.equalsIgnoreCase("create")) {
+
+        do {
+            System.out.println("Do you want to join an existing game or create a new one?\nJoin|Create");
+            String gameChoice = this.scanner.nextLine();
+
+            if (!gameChoice.equalsIgnoreCase("join") && !gameChoice.equalsIgnoreCase("create")) {
+                System.out.println(AnsiColors.ANSI_RED + "Invalid input, try again" + AnsiColors.ANSI_RESET);
+            } else {
+                correctInput = true;
+                if (gameChoice.equalsIgnoreCase("join")) {
+                    isJoin = true;
+                }
+            }
+        } while (!correctInput);
+
+        if (isJoin) {
+            while (gameList.isEmpty() && isJoin) {
+                System.out.println("There are no available games, create a new one or wait for some game to be started.\nCreate|Refresh");
+                String createOrRefresh = scanner.nextLine();
+
+                if (!createOrRefresh.equalsIgnoreCase("create") && !createOrRefresh.equalsIgnoreCase("refresh")) {
                     System.out.println(AnsiColors.ANSI_RED + "Invalid input, try again" + AnsiColors.ANSI_RESET);
                 } else {
-                    correctInput = true;
-                    if (gameChoice.equalsIgnoreCase("join")) {
-                        isJoin = true;
+                    if (createOrRefresh.equalsIgnoreCase("refresh")) {
+                        client.refreshGamesNames();
+                    } else {
+                        isJoin = false;
                     }
                 }
-            } while (!correctInput);
-        }
-        String gameName = null;
-        if (isJoin) {
-            System.out.println("Here there are all the available games:");
-
-            for (String name : gameNames) {
-                System.out.println("- " + name);
             }
-            System.out.println();
+            if (isJoin) {
+                System.out.println("Here there are all the available games:");
 
-            boolean correctInput = false;
-            do {
-                System.out.println("which one do you want to join?");
-                gameName = scanner.nextLine();
-
-                if (!gameNames.contains(gameName)) {
-                    System.out.println(AnsiColors.ANSI_RED+"Name not present. Try again."+AnsiColors.ANSI_RESET);
-                } else {
-                    correctInput = true;
+                for (String name : gameList) {
+                    System.out.println("- " + name);
                 }
-            } while (!correctInput);
-        } else {
+                System.out.println();
+
+                correctInput = false;
+                do {
+                    System.out.println("which one do you want to join?\nType 'refresh' to refresh the game's list.");
+                    gameName = scanner.nextLine();
+
+                    if (gameName.equalsIgnoreCase("refresh")) {
+                        client.refreshGamesNames();
+
+                        if (gameList.isEmpty()) {
+                            System.out.println("There are no available games, type 'refresh' to refresh the game's list.");
+                        } else {
+                            for (String name : gameList) {
+                                System.out.println("- " + name);
+                            }
+                            System.out.println();
+                        }
+                    } else {
+                        if (!gameList.contains(gameName)) {
+                            System.out.println(AnsiColors.ANSI_RED + "Name not present. Try again." + AnsiColors.ANSI_RESET);
+                        } else {
+                            correctInput = true;
+                        }
+                    }
+                } while (!correctInput);
+            }
+        }
+        if (!isJoin) {
             //creating a new game
-            boolean correctInput = false;
+            correctInput = false;
             do {
                 System.out.println("Choose a name for your game:");
                 gameName = scanner.nextLine();
 
-                if (gameNames.contains(gameName)) {
+                if (gameList.contains(gameName)) {
                     System.out.println(AnsiColors.ANSI_RED + "Name already present, choose another one." + AnsiColors.ANSI_RESET);
+                } else if (gameName.equalsIgnoreCase("join") || gameName.equalsIgnoreCase("create") || gameName.equalsIgnoreCase("refresh")) {
+                    System.out.println(AnsiColors.ANSI_RED + "Illegal game name, choose another one." + AnsiColors.ANSI_RESET);
                 } else {
                     correctInput = true;
                 }
@@ -547,8 +579,7 @@ public class CLI implements View {
      */
     @Override
     public void setGameNames(ArrayList<String> gameNames) {
-        // TODO: do the correct stuff
-        System.out.println(gameNames);
+        gameList = gameNames;
     }
 
     /**
