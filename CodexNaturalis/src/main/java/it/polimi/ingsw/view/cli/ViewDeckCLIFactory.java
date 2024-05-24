@@ -13,6 +13,9 @@ import it.polimi.ingsw.view.mainview.ViewGoalCardFactory;
  */
 public class ViewDeckCLIFactory extends ViewDeckFactory {
 
+    /**
+     * ViewDeckCLIFactory constructor
+     */
     public ViewDeckCLIFactory() {
         this.goalCardViewer = new ViewGoalCardCLIFactory();
         this.gameCardViewer = new ViewGameCardCLIFactory();

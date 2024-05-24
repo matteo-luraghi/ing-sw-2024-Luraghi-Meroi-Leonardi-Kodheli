@@ -58,5 +58,8 @@ public abstract class ViewDeckFactory implements Serializable {
         this.goalCardViewer = goalCardViewer;
     }
 
+    /**
+     * method to show the game's common goals next to one another
+     */
     public abstract void showCommonGoals();
 }

@@ -15,6 +15,10 @@ public abstract class ViewScoreBoardFactory implements Serializable {
     private static final long serialVersionUID = -6180496716791423076L;
     protected ScoreBoard scoreBoard;
 
+    /**
+     * scoreboard setter
+     * @param scoreBoard is the scoreboard that is about to be displayed
+     */
     public void set(ScoreBoard scoreBoard) {
         this.scoreBoard = scoreBoard;
     }

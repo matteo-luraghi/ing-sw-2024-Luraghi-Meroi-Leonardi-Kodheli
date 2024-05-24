@@ -62,14 +62,18 @@ public class CLI implements View {
         int port = 0;
         Client client = null;
         String nickname = null;
+
         do {
+            //make the client connect to the server through an IP and port given by the user
             System.out.println("Which connection type would you like to use? (rmi or socket)");
             String connection = scanner.nextLine();
             if (connection.equalsIgnoreCase("socket")) {
+                //socket connection
                 System.out.println("Insert a valid ip address:");
                 ip = scanner.nextLine();
                 System.out.println("Insert a valid port to connect:");
                 String portStr = scanner.nextLine();
+                //try catch to see if the port inserted is valid and to try to connect to the given server
                 try {
                     port = Integer.parseInt(portStr);
                     try {
@@ -82,10 +86,12 @@ public class CLI implements View {
                     System.out.println("Insert a valid port number!");
                 }
             } else if(connection.equalsIgnoreCase("rmi")) {
+                //RMI connection
                 System.out.println("Insert a valid ip address:");
                 ip = scanner.nextLine();
                 System.out.println("Insert a valid port to connect:");
                 String portStr = scanner.nextLine();
+                //try catch to see if the port inserted is valid and to try to connect to the given server
                 try {
                     port = Integer.parseInt(portStr);
                     try {
@@ -106,6 +112,7 @@ public class CLI implements View {
         this.client = client;
 
         if (client.getClass() == RMIClient.class) {
+            //insert the client into the RMI registry
             Registry registry = ((RMIClient) client).getRegistry();
             try {
                 RemoteServer server = (RemoteServer) registry.lookup("server");
@@ -119,6 +126,7 @@ public class CLI implements View {
             }
         }
 
+        //while statement to disconnect the client in case of loss of connection
         while(true) {
             if(!client.getConnected() || !this.connected) {
                 System.out.println("Disconnected");
@@ -158,7 +166,7 @@ public class CLI implements View {
 
         boolean correctInput = false;
 
-
+        //do-while statement to check the user's input
         do {
             System.out.println("Do you want to join an existing game or create a new one?\nJoin|Create");
             String gameChoice = this.scanner.nextLine();
@@ -174,7 +182,9 @@ public class CLI implements View {
         } while (!correctInput);
 
         if (isJoin) {
+            //the user's choice is to join a game
             while (gameList.isEmpty() && isJoin) {
+                //there are no available games at the moment
                 System.out.println("There are no available games, create a new one or wait for some game to be started.\nCreate|Refresh");
                 String createOrRefresh = scanner.nextLine();
 
@@ -184,11 +194,13 @@ public class CLI implements View {
                     if (createOrRefresh.equalsIgnoreCase("refresh")) {
                         client.refreshGamesNames();
                     } else {
+                        //the user chooses to create a game instead
                         isJoin = false;
                     }
                 }
             }
             if (isJoin) {
+                //there is at least one available game
                 System.out.println("Here there are all the available games:");
 
                 for (String name : gameList) {
@@ -197,6 +209,7 @@ public class CLI implements View {
                 System.out.println();
 
                 correctInput = false;
+                //do-while statement to check the user's input
                 do {
                     System.out.println("which one do you want to join?\nType 'refresh' to refresh the game's list.");
                     gameName = scanner.nextLine();
@@ -225,6 +238,7 @@ public class CLI implements View {
         if (!isJoin) {
             //creating a new game
             correctInput = false;
+            //do-while statement to check that the user doesn't choose an illegal name for the game
             do {
                 System.out.println("Choose a name for your game:");
                 gameName = scanner.nextLine();
@@ -521,8 +535,6 @@ public class CLI implements View {
         return isMyTurn;
     }
 
-    //game, user, playPhase
-
     /**
      * playPhase setter
      * @param playPhase tells whether it's the client's turn or not
@@ -597,6 +609,9 @@ public class CLI implements View {
     public void getCommands() {
         String command = "";
         Player lastPlayerField = null;
+
+        //while statement to continuously check for the user's commands
+        //it is stopped only if the user gets disconnected (it gets disconnected at the end of a game)
         while (this.client.getConnected() && this.connected) {
             System.out.println("Enter a command: ");
             command = this.scanner.nextLine();
@@ -609,12 +624,14 @@ public class CLI implements View {
                 case "show card" -> {commandShowCard(game, user, lastPlayerField);}
                 case "show legend" -> {showLegend();}
                 case "play card" -> {
+                    //command available only if it's the client's turn and it's the playphase
                     if (isMyTurn && playPhase) {
                         ShowPlayerField(user, user, game);
 
                         boolean correctInput = false;
                         int card = 0;
                         System.out.println();
+                        //do-while statement to check the user's input and to make him choose the card to play
                         do {
                             System.out.println("Which of your hand's cards?\n1|2|3");
                             try {
@@ -628,6 +645,7 @@ public class CLI implements View {
                             }
                         } while (!correctInput);
                         correctInput = false;
+                        //do-while statement to check the user's input and to make him choose the side on which to play the card
                         do {
                             System.out.println("On which side do you want to play it?\nFRONT|BACK");
                             boolean isFront;
@@ -635,7 +653,7 @@ public class CLI implements View {
                             if (isFrontString.equalsIgnoreCase("front") || isFrontString.equalsIgnoreCase("back")) {
                                 isFront = isFrontString.equalsIgnoreCase("front");
                                 correctInput = true;
-
+                                //everything's fine, sending the message to the server
                                 Coordinates where = getCardCoordinatesFromInput();
                                 client.playCardResponse(game.getGameTable().getPlayerZones().get(user).getHand().get(card - 1), where, isFront);
                             } else {
@@ -650,15 +668,20 @@ public class CLI implements View {
                     }
                 }
                 case "draw card" -> {
+                    //command available only if it's the user's turn and it's the drawphase
                     if (isMyTurn && !playPhase) {
                         boolean correctInput = false;
                         ShowDecks(game);
                         System.out.println();
+                        //do-while statement to check the user's input and to make him choose what do draw
                         do {
                             System.out.println("From which deck do you want to draw from?\nResource|Gold");
                             String deck = scanner.nextLine();
                             if (deck.equalsIgnoreCase("resource") || deck.equalsIgnoreCase("gold")) {
                                 do {
+                                    //"deck" draws from the covered cards
+                                    //"u1" draws the first uncovered card
+                                    //"u2" draw the second uncovered card
                                     System.out.println("Where do you want to draw from?\nDeck|U1|U2");
                                     String where = scanner.nextLine();
                                     if (where.equalsIgnoreCase("deck") || where.equalsIgnoreCase("u1") || where.equalsIgnoreCase("u2")) {
@@ -675,12 +698,15 @@ public class CLI implements View {
                                             }
                                         }
                                         correctInput = true;
+                                        //everything's fine, sending the message to the server
                                         client.drawCardResponse(which, (deck.equalsIgnoreCase("gold")));
                                     } else {
+                                        //did not type "deck", "u1" or "u2"
                                         System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." + AnsiColors.ANSI_RESET);
                                     }
                                 } while (!correctInput);
                             } else {
+                                //did not type "resource" or "gold"
                                 System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." + AnsiColors.ANSI_RESET);
                             }
                         } while (!correctInput);
@@ -765,6 +791,7 @@ public class CLI implements View {
         Player lastPlayerField;
         boolean correctInput = false;
         Player player = null;
+        //do-while statement to check the user's input and to make him choose the playerfield to see
         do {
             System.out.println("Which player do you want to see the field of?");
             for (Player p : game.getPlayers()) {
@@ -795,6 +822,7 @@ public class CLI implements View {
      */
     private void commandShowCard(GameState game, Player asking, Player lastPlayerField) {
         if (lastPlayerField == null) {
+            //the user has not yet seen a playerfield, making him choose one before chooseing the card
             boolean correctInput = false;
             do {
                 System.out.println("Enter the player you want to see the card of:");
@@ -823,6 +851,7 @@ public class CLI implements View {
         Coordinates where = getCardCoordinatesFromInput();
 
         GameCard card = null;
+        //for statement to find the card inside the gamezone
         for (Coordinates c : game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().keySet()) {
             if (c.getX()== where.getX() && c.getY()== where.getY()) {
                 card = game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(c);
@@ -858,6 +887,7 @@ public class CLI implements View {
         boolean correctInput = false;
         int x = 0;
         int y = 0;
+        //do-while statement to check the user's input and to make him choose the X coordinate
         do {
             System.out.println("Insert x coordinate:");
             try {
@@ -870,6 +900,7 @@ public class CLI implements View {
             }
         } while (!correctInput);
         correctInput = false;
+        //do-while statement to check the user's input and to make him choose the Y coordinate
         do {
             System.out.println("Insert y coordinate:");
             try {
