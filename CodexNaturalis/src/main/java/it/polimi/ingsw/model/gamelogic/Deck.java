@@ -86,7 +86,7 @@ public class Deck implements Serializable {
     }
 
     /**
-     * Get the first card of the deck without drawign it
+     * Get the first card of the deck without drawing it
      * @return the card on the top of the deck
      */
     public ResourceCard getTopCard(){ return cards.peek(); }

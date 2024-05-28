@@ -55,6 +55,6 @@ public class ScoreBoard implements Serializable {
         if(points<0)
             throw new IllegalArgumentException();
         else
-        board.put(player, board.get(player)+points);
+            board.put(player, board.get(player)+points);
     }
 }

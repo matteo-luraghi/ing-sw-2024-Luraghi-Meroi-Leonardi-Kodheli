@@ -43,14 +43,14 @@ public class PlayerField implements Serializable {
         gameZone.put(new Coordinates(0,0), startingCard);
         resourceMap = getInitializeResourceMap(); //resource map has to be initialized otherwise in resourceMap.get you get a null pointer
 
-        if (startingCard.getIsFront()) {
+        if (startingCard.getIsFront()) { //add to the resource map the starting card's permanent resources
             for (Resource resource : startingCard.getPermanentResources()) {
                 if (resource != null) {
                     resourceMap.put(resource, resourceMap.get(resource) + 1);
                 }
             }
         }
-        for (int i = 0; i <= 3; i++) {
+        for (int i = 0; i <= 3; i++) { //add to the resource map the starting card's corner resources
             Resource resource = startingCard.getCorner(i);
             if (resource != null && !resource.equals(Resource.BLANK) && !resource.equals(Resource.HIDDEN)) {
 
@@ -67,14 +67,14 @@ public class PlayerField implements Serializable {
     public void addStartingCard(StartingCard startingCard){
         gameZone.put(new Coordinates(0,0), startingCard);
 
-        if (startingCard.getIsFront()) {
+        if (startingCard.getIsFront()) { //add to the resource map the starting card's permanent resources
             for (Resource resource : startingCard.getPermanentResources()) {
                 if (resource != null) {
                     resourceMap.put(resource, resourceMap.get(resource) + 1);
                 }
             }
         }
-        for (int i = 0; i <= 3; i++) {
+        for (int i = 0; i <= 3; i++) { //add to the resource map the starting card's corner resources
             Resource resource = startingCard.getCorner(i);
             if (resource != null && !resource.equals(Resource.BLANK) && !resource.equals(Resource.HIDDEN)) {
 
@@ -110,12 +110,7 @@ public class PlayerField implements Serializable {
      */
     private void drawFromDeck (Deck from) {
         ResourceCard card = from.DrawFromDeck();
-        /*System.out.println("points: "+ card.getPoints());
-        System.out.println("isgold: "+ card.getIsGold());
-        System.out.println("kingdom: "+ card.getKingdom());
-        System.out.println("isfront: "+ card.getIsFront());
-        System.out.println(card.getCorner(0)+" "+card.getCorner(1)+" "+card.getCorner(2)+" "+card.getCorner(3));
-        */hand.add(card);
+        hand.add(card);
     }
 
     /**
@@ -125,14 +120,7 @@ public class PlayerField implements Serializable {
      */
     private void drawFromUncovered (Deck from, int which) {
         ResourceCard card = from.DrawFromUncovered(which);
-      /*  System.out.println("points: "+ card.getPoints());
-        System.out.println("isgold: "+ card.getIsGold());
-        System.out.println("kingdom: "+ card.getKingdom());
-        System.out.println("isfront: "+ card.getIsFront());
-        System.out.println(card.getCorner(0)+" "+card.getCorner(1)+" "+card.getCorner(2)+" "+card.getCorner(3));
-       */ hand.add(card);
-
-
+        hand.add(card);
     }
 
     /**
@@ -157,7 +145,7 @@ public class PlayerField implements Serializable {
      * @param card the card you want to play
      * @return the number of points that the card has gotten (-1 for unplaced card)
      */
-//Mostly, have still to check properly limit cases
+    //Mostly, have still to check properly limit cases
     public int Play (Coordinates where, ResourceCard card) {
 
         //better if we check
