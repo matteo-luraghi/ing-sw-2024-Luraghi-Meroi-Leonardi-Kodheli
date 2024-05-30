@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.gamelogic;
 
+import it.polimi.ingsw.model.gamelogic.gamechat.GameChat;
+import it.polimi.ingsw.model.gamelogic.gamechat.Message;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,6 +21,8 @@ public class GameState implements Serializable {
     private GameTable gameTable;
     private Player winner;
 
+    private GameChat gameChat;
+
     /**
      * GameState Constructor, firstly configured as in SETUP state
      *
@@ -33,8 +38,53 @@ public class GameState implements Serializable {
         this.gameTable = GameTable;
         this.winner = null;
         this.state = State.SETUP;
+        gameChat=new GameChat();
     }
 
+    /**
+     * get a message by Index
+     * @param index index of the wanted message
+     * @return Message if the index is in bounds
+     * @throws IndexOutOfBoundsException when index out of bounds
+     */
+    public Message getMessageByIndex(int index) throws IndexOutOfBoundsException
+    {
+        if(index<0 || index>=gameChat.getMessages().size())
+            throw new IndexOutOfBoundsException();
+        return gameChat.getMessages().get(index);
+    }
+
+    /**
+     * gets the messages of gamechat
+     * @return Arraylist of message
+     */
+    public ArrayList<Message> getMessages()
+    {
+        return  gameChat.getMessages();
+    }
+    /**
+     * lastMessage getter
+     * @return Message
+     */
+    public Message getLastMessage()
+    {
+        return gameChat.getLastMessage();
+    }
+
+    /**
+     * save message method for gamechat
+     * @param messageString string to save
+     * @param author author of the message
+     * @return if the author is not in the player list then it will not be saved
+     */
+    public boolean saveMessage(String messageString, Player author)
+    {
+        if(!players.contains(author))
+            return false;
+        Message message=new Message(messageString,author);
+        gameChat.saveMessage(message);
+        return true;
+    }
     /**
      * getState returns the current state
      *
