@@ -21,7 +21,7 @@ public class PlayerField implements Serializable {
     private GoalCard privateGoal;
 
     private Map<Coordinates, GameCard> gameZone;
-
+    private ArrayList<GameCard> InPlayOrder;
     private Map<Resource, Integer> resourceMap;
 
     /**
@@ -31,6 +31,7 @@ public class PlayerField implements Serializable {
         hand = new ArrayList<ResourceCard>();
         gameZone = new HashMap<Coordinates, GameCard>();
         resourceMap = getInitializeResourceMap(); //resource map has to be initialized otherwise in resourceMap.get you get a null pointer
+        InPlayOrder=new ArrayList<GameCard>();
     }
 
     /**
@@ -42,14 +43,16 @@ public class PlayerField implements Serializable {
         gameZone = new HashMap<Coordinates, GameCard>();
         gameZone.put(new Coordinates(0,0), startingCard);
         resourceMap = getInitializeResourceMap(); //resource map has to be initialized otherwise in resourceMap.get you get a null pointer
-
+        InPlayOrder=new ArrayList<GameCard>();
         if (startingCard.getIsFront()) { //add to the resource map the starting card's permanent resources
             for (Resource resource : startingCard.getPermanentResources()) {
                 if (resource != null) {
                     resourceMap.put(resource, resourceMap.get(resource) + 1);
+
                 }
             }
         }
+        InPlayOrder.add(startingCard); //add the starting card as the first card
         for (int i = 0; i <= 3; i++) { //add to the resource map the starting card's corner resources
             Resource resource = startingCard.getCorner(i);
             if (resource != null && !resource.equals(Resource.BLANK) && !resource.equals(Resource.HIDDEN)) {
@@ -60,6 +63,30 @@ public class PlayerField implements Serializable {
 
     }
 
+
+    /**
+     * inOrderPlayList getter, this arraylist is useful for keeping track of the placing
+     * order in the gui interface (overlapping corners)
+     * @return GameCard arraylist
+     */
+    public ArrayList<GameCard> getInPlayOrderList()
+    {
+        return InPlayOrder;
+    }
+
+    /**
+     * get in order of play the corresponding card id
+     * @return Id Arraylist of the cards
+     */
+    public ArrayList<Integer> getInPlayOrderCardId()
+    {
+        ArrayList<Integer> IdList=new ArrayList<>();
+        for(int i=0;i<InPlayOrder.size();i++)
+        {
+            IdList.add(InPlayOrder.get(i).getId());
+        }
+        return IdList;
+    }
     /**
      * Adds the startingCard to the player field
      * @param startingCard the startingCard the player chose
@@ -215,10 +242,11 @@ public class PlayerField implements Serializable {
         } else {
             points=calculateCardPoints(where, (GoldCard) card);
         }
-
+        InPlayOrder.add(card); //keep track of the play order
         //Return the amount of points the card has scored
         if(!card.getIsFront())
             return 0;
+
         return points;
     }
 
