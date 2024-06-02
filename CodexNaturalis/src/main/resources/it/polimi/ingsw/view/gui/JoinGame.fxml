@@ -83,7 +83,7 @@
                         <Font name="Cambria Bold Italic" size="26.0" />
                      </font>
                   </Label>
-                  <ListView fx:id="gamesList" layoutX="-10.666666666666666" onMouseClicked="#joinGame" prefHeight="299.0" prefWidth="278.0" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0" />
+                  <ListView fx:id="gamesList" layoutX="-10.666666666666666" onMouseClicked="#joinGame" prefHeight="299.0" prefWidth="278.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 2;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0" />
                   <Button mnemonicParsing="false" onMouseClicked="#refreshGame" prefHeight="40.0" prefWidth="289.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;" text="Refresh" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <font>
                         <Font name="Cambria Bold" size="19.0" />
