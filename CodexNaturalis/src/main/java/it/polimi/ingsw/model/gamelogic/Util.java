@@ -5,11 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.view.gui.GUI;
-import it.polimi.ingsw.view.gui.eventhandlers.ConnectToServerController;
-import it.polimi.ingsw.view.mainview.AnsiColors;
-import javafx.scene.image.Image;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
@@ -365,9 +361,9 @@ public class Util {
 
         String path;
         if(isFront){
-            return GUI.class.getResource("assets/CODEX_cards_gold_front/" + cardName).toString();
+            return GUI.class.getResource("it/polimi/ingsw/view/gui/assets/CODEX_cards_gold_front/" + cardName).toString();
         }else{
-            return GUI.class.getResource("assets/CODEX_cards_gold_back/" + cardName).toString();
+            return GUI.class.getResource("it/polimi/ingsw/view/gui/assets/CODEX_cards_gold_back/" + cardName).toString();
         }
     }
 }
