@@ -21,7 +21,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="656.0" style="-fx-background-color: #ede3ba;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.eventhandlers.PlayerFieldController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #ede3ba;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.eventhandlers.PlayerFieldController">
    <BorderPane prefHeight="463.0" prefWidth="656.0" style="-fx-background-color: #ede3ba;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <top>
          <MenuBar style="-fx-background-color: #d1be71;" BorderPane.alignment="CENTER">
@@ -90,9 +90,9 @@
       </center>
       <right>
          <AnchorPane prefHeight="318.0" prefWidth="223.0" style="-fx-background-color: #f0ead1;" BorderPane.alignment="CENTER">
-            <ScrollPane prefHeight="298.0" prefWidth="223.33333333333334" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <AnchorPane prefHeight="499.0" prefWidth="202.0" style="-fx-background-color: #f0ead1;">
-                  <VBox layoutY="2.0" prefHeight="433.3333333333333" prefWidth="202.0" style="-fx-background-color: #ede3ba;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ScrollPane prefHeight="635.0" prefWidth="223.0" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <AnchorPane prefHeight="704.0" prefWidth="202.0" style="-fx-background-color: #f0ead1;">
+                  <VBox layoutY="2.0" prefHeight="842.0" prefWidth="241.0" style="-fx-background-color: #ede3ba;" AnchorPane.bottomAnchor="-138.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-39.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane fx:id="player1" prefHeight="107.0" prefWidth="201.0">
                            <children>
@@ -103,7 +103,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id= "points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
+                              <Label fx:id="points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
                               <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                                  <Image url="@assets/Icons/animal.png" />
                               </ImageView>
@@ -162,7 +162,7 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <Line endX="100.0" startX="-100.0" startY="-0.41419318318367004" />
+                        <Line endX="137.2928924560547" endY="-0.41486215591430664" startX="-100.0" startY="-0.41419318318367004" />
                         <AnchorPane fx:id="player2" prefHeight="107.0" prefWidth="201.0">
                            <children>
                               <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
@@ -171,7 +171,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id= "points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
+                              <Label fx:id="points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
                               <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@assets/Icons/animal.png" />
@@ -244,7 +244,7 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <Line endX="100.0" startX="-100.0" startY="-0.41419318318367004" />
+                        <Line endX="134.2928924560547" endY="-1.1217072010040283" startX="-100.0" startY="-0.41419318318367004" />
                         <AnchorPane fx:id="player3" prefHeight="107.0" prefWidth="201.0">
                            <children>
                               <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
@@ -253,7 +253,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id= "points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
+                              <Label fx:id="points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
                               <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@assets/Icons/animal.png" />
@@ -326,7 +326,7 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <Line endX="100.0" startX="-100.0" startY="-0.41419318318367004" />
+                        <Line endX="140.2928924560547" startX="-100.0" startY="-0.41419318318367004" />
                         <AnchorPane fx:id="player4" prefHeight="107.0" prefWidth="201.0">
                            <children>
                               <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
@@ -335,7 +335,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id= "points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
+                              <Label fx:id="points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="47.0" text="Points: 0" />
                               <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@assets/Icons/animal.png" />

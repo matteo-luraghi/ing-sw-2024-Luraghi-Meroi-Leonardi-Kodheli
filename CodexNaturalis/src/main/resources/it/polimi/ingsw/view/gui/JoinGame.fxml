@@ -20,27 +20,27 @@
       <ColorAdjust />
    </effect>
    <children>
-      <BorderPane layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <left>
-            <ImageView fitHeight="297.0" fitWidth="298.0" opacity="0.25" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-               <image>
-                  <Image url="@assets/GUIGraphics/codexNaturalisTransparent.png" />
-               </image>
-               <viewport>
-                  <Rectangle2D />
-               </viewport>
-            </ImageView>
-         </left>
-      </BorderPane>
       <HBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane prefHeight="400.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                <children>
+                  <BorderPane prefHeight="400.0" prefWidth="304.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <ImageView fitHeight="306.0" fitWidth="317.0" nodeOrientation="INHERIT" opacity="0.25" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                           <image>
+                              <Image url="@assets/GUIGraphics/codexNaturalisTransparent.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                        </ImageView>
+                     </center>
+                  </BorderPane>
                   <VBox alignment="CENTER" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="92.66666666666667" AnchorPane.topAnchor="290.0">
                      <children>
-                        <Button fx:id="createButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#createGame" prefWidth="200.0" text="Create">
+                        <Button fx:id="createButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#createGame" prefWidth="200.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-background-radius: 100; -fx-border-radius: 100; -fx-border-width: 2;" text="Create">
                            <font>
-                              <Font size="27.0" />
+                              <Font name="Cambria Bold" size="27.0" />
                            </font>
                         </Button>
                      </children>
@@ -49,10 +49,10 @@
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" text="Enter the game name">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="Cambria Italic" size="21.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="gameName" alignment="CENTER" maxWidth="400.0" prefWidth="200.0">
+                        <TextField fx:id="gameName" alignment="CENTER" maxWidth="400.0" prefWidth="200.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 100; -fx-background-radius: 100; -fx-border-width: 2;">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -63,15 +63,15 @@
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="240.0" text="Enter the number of players">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="Cambria Italic" size="20.0" />
                            </font>
                         </Label>
-                        <ChoiceBox fx:id="numOfPlayers" prefWidth="150.0" />
+                        <ChoiceBox fx:id="numOfPlayers" prefWidth="150.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 100; -fx-background-radius: 100; -fx-border-width: 2;" />
                      </children>
                   </VBox>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="56.0" layoutY="14.0" prefHeight="38.0" prefWidth="189.0" text="Create a game:" textAlignment="CENTER" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="56.66666666666666">
                      <font>
-                        <Font size="26.0" />
+                        <Font name="Cambria Bold Italic" size="26.0" />
                      </font>
                   </Label>
                </children>
@@ -80,13 +80,13 @@
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="72.0" layoutY="14.0" prefHeight="38.0" prefWidth="149.0" text="Join a game:" AnchorPane.leftAnchor="72.0" AnchorPane.rightAnchor="72.0">
                      <font>
-                        <Font size="26.0" />
+                        <Font name="Cambria Bold Italic" size="26.0" />
                      </font>
                   </Label>
                   <ListView fx:id="gamesList" layoutX="-10.666666666666666" onMouseClicked="#joinGame" prefHeight="299.0" prefWidth="278.0" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0" />
-                  <Button mnemonicParsing="false" onMouseClicked="#refreshGame" prefHeight="40.0" prefWidth="289.0" text="Refresh" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <Button mnemonicParsing="false" onMouseClicked="#refreshGame" prefHeight="40.0" prefWidth="289.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;" text="Refresh" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <font>
-                        <Font size="19.0" />
+                        <Font name="Cambria Bold" size="19.0" />
                      </font>
                   </Button>
                </children>

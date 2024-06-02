@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -31,45 +32,51 @@
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="74.0" prefWidth="600.0" text="Connect to the server" textAlignment="CENTER">
                <font>
-                  <Font size="40.0" />
+                  <Font name="Cambria Bold Italic" size="40.0" />
                </font>
             </Label>
             <VBox alignment="CENTER" prefHeight="82.0" prefWidth="600.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="251.0" text="Server IP">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Cambria Italic" size="24.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="serverIP" maxWidth="250.0" prefHeight="25.0" prefWidth="150.0" />
+                  <TextField fx:id="serverIP" maxWidth="250.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-background-radius: 100; -fx-border-radius: 100; -fx-border-width: 2;" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="82.0" prefWidth="600.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="251.0" text="Server port">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Cambria Italic" size="24.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="serverPort" maxWidth="250.0" prefHeight="25.0" prefWidth="150.0" />
+                  <TextField fx:id="serverPort" maxWidth="250.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 100; -fx-background-radius: 100; -fx-border-width: 2;" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="82.0" prefWidth="600.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="251.0" text="Connection Protocol">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Cambria Italic" size="24.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="connectionChoice" maxWidth="250.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="connectionChoice" maxWidth="250.0" prefWidth="150.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 100; -fx-background-radius: 100; -fx-border-width: 2;" styleClass="button">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ChoiceBox>
                </children>
             </VBox>
             <VBox alignment="CENTER" maxHeight="100.0" maxWidth="642.0" prefHeight="100.0" prefWidth="600.0">
                <children>
-                  <Button fx:id="connectButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#ConnectToServer" prefHeight="46.0" prefWidth="116.0" text="Connect" textAlignment="CENTER">
+                  <Button fx:id="connectButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#ConnectToServer" prefHeight="46.0" prefWidth="116.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 100; -fx-background-radius: 100; -fx-border-width: 2;" text="Connect" textAlignment="CENTER">
                      <font>
-                        <Font size="22.0" />
+                        <Font name="Cambria Bold" size="22.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </VBox>
