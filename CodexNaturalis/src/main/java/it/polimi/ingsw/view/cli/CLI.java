@@ -970,8 +970,11 @@ public class CLI implements View {
 
                     do {
                         System.out.println("Who is the recipient?");
-                        System.out.println("all| ");
+                        System.out.print("all| ");
                         for (Player p : game.getPlayers()) {
+                            if (p.getNickname().equals(user.getNickname())) {
+                                continue;
+                            }
                             System.out.print(p.toString()+"| ");
                         }
                         System.out.println();
@@ -982,9 +985,13 @@ public class CLI implements View {
                             if (p.getNickname().equals(recipient))
                                 player = p;
                         }
+
                         if (!recipient.equalsIgnoreCase("all") && player==null) {
                             //invalid recipient
                             System.out.println(AnsiColors.ANSI_RED+"Invalid input, try again."+AnsiColors.ANSI_RESET);
+                        } else if (player.getNickname().equalsIgnoreCase(user.getNickname())) {
+                            //The recipient is the user itself
+                            System.out.println(AnsiColors.ANSI_RED+"Cannot send a message to yourself, try again."+AnsiColors.ANSI_RESET);
                         } else {
                             //valid recipient
                             correctInput = true;
