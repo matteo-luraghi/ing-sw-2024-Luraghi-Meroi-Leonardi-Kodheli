@@ -1,8 +1,15 @@
 package it.polimi.ingsw.model.gamelogic.gamechat;
 
+import it.polimi.ingsw.model.gamelogic.Player;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * gamechat class
+ * @author Francesk Kodheli
+ */
 public class GameChat {
 
     private ArrayList<Message> messages;
@@ -47,5 +54,37 @@ public class GameChat {
         messages.add(message);
     }
 
+    /**
+     * method to filter the chat for a given player
+     * @param player to filter the chat for
+     * @return the filtered gamechat
+     */
+    public GameChat filterChat (Player player) {
+        GameChat filteredChat = new GameChat();
 
+        for (Message m : messages) {
+            if (m.getRecipient().equalsIgnoreCase("all") || m.getRecipient().equalsIgnoreCase(player.getNickname())) {
+                filteredChat.saveMessage(m);
+            }
+        }
+
+        return filteredChat;
+    }
+
+    /**
+     * useful in CLI, shows 10 messages starting from a selected messagePage
+     * @param messagePage if it is 0 it shows the last 10 messages, otherwise it shows the corresponding message page
+     * @return the message page requested
+     */
+    public ArrayList<Message> messagesToShow (int messagePage) {
+        int index = this.messages.size() - 1 - (messagePage*10);
+
+        ArrayList<Message> toShow = new ArrayList<>();
+
+        for (int i=0; i<10; i++) {
+            toShow.add(this.messages.get(index-i));
+        }
+
+        return toShow;
+    }
 }

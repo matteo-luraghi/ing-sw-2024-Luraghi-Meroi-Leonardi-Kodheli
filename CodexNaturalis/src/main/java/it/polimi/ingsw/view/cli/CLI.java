@@ -8,6 +8,8 @@ import it.polimi.ingsw.connection.rmi.RMIClient;
 import it.polimi.ingsw.connection.socket.SocketClient;
 import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.model.gamelogic.*;
+import it.polimi.ingsw.model.gamelogic.gamechat.GameChat;
+import it.polimi.ingsw.model.gamelogic.gamechat.Message;
 import it.polimi.ingsw.view.mainview.View;
 
 import it.polimi.ingsw.view.mainview.*;
@@ -38,6 +40,8 @@ public class CLI implements View {
     private boolean connected = true;
     private String gameName;
     private ArrayList<String> gameList;
+
+    private GameChat gameChat;
 
     /**
      * CLI constructor
@@ -595,6 +599,14 @@ public class CLI implements View {
     }
 
     /**
+     * Update the game chat
+     * @param gameChat the updated chat
+     */
+    public void setGameChat (GameChat gameChat) {
+        this.gameChat = gameChat;
+    }
+
+    /**
      * isMyTurn getter
      * @return whether it is my turn or not
      */
@@ -622,6 +634,7 @@ public class CLI implements View {
                 case "show decks" -> {ShowDecks(game);}
                 case "show scoreboard" -> {ShowScoreBoard(game.getGameTable().getScoreBoard());}
                 case "show card" -> {commandShowCard(game, user, lastPlayerField);}
+                case "show chat" -> {System.out.println("chat");}
                 case "show legend" -> {showLegend();}
                 case "play card" -> {
                     //command available only if it's the client's turn and it's the playphase
@@ -913,5 +926,64 @@ public class CLI implements View {
             }
         } while (!correctInput);
         return (new Coordinates(x,y));
+    }
+
+    private void showChat () {
+        int messagePage = 0;
+        ArrayList<Message> myChat = this.gameChat.messagesToShow(messagePage);
+        boolean correctInput = false;
+        String command = null;
+        boolean exitChat = false;
+
+        printChat(messagePage, myChat);
+
+        while (!exitChat) {
+            System.out.println("What do you want to do in chat?\nexit | previous | next | write | refresh");
+            command = this.scanner.nextLine();
+
+            switch (command.toLowerCase()) {
+                case "exit" -> {exitChat = true;}
+                case "previous" -> {
+                    if (messagePage == 0) {
+                        System.out.println(AnsiColors.ANSI_RED+"You are already seeing the newest messages."+AnsiColors.ANSI_RESET);
+                    } else {
+                        messagePage--;
+
+                        myChat = this.gameChat.messagesToShow(messagePage);
+
+                        printChat(messagePage, myChat);
+                    }
+                }
+                case "next" -> {
+                    if (messagePage == myChat.size()/10) {
+                        System.out.println(AnsiColors.ANSI_RED+"You are already seeing the oldest messages."+AnsiColors.ANSI_RESET);
+                    } else {
+                        messagePage++;
+
+                        myChat = this.gameChat.messagesToShow(messagePage);
+
+                        printChat(messagePage, myChat);
+                    }
+                }
+                case "write" -> {}
+                default -> {System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." + AnsiColors.ANSI_RESET);}
+            }
+        }
+    }
+
+    /**
+     * method to print the game chat
+     * @param messagePage the page you want to see
+     * @param myChat the game's chat
+     */
+    private void printChat(int messagePage, ArrayList<Message> myChat) {
+        myChat = (ArrayList<Message>) myChat.reversed();
+
+        System.out.println(user.toString()+"'s gamechat. Page:" + messagePage);
+        System.out.println();
+        for (Message m : myChat) {
+            System.out.println("- " + m.toString());
+        }
+        System.out.println();
     }
 }

@@ -4,21 +4,28 @@ import it.polimi.ingsw.model.gamelogic.Player;
 
 import java.util.Date;
 
+/**
+ * message class
+ * @author Francesk Kodheli
+ */
 public class Message {
 
     private String message;
     private Player author;
     private Date date;
 
+    private String recipient; //can be a player's nickname or "all" to send the message to everyone
+
     /**
      * Default constructor for message, date is initialized with the class
      * @param message String message
      * @param author Author of the message
      */
-    public Message(String message, Player author)
+    public Message(String message, Player author, String recipient)
     {
         this.message=message;
         this.author=author;
+        this.recipient = recipient;
         date=new Date();
     }
 
@@ -56,11 +63,37 @@ public class Message {
     }
 
     /**
+     * recipient getter
+     * @return a player's name or "all" to send the message to everyone
+     */
+    public String getRecipient () {
+        return this.recipient;
+    }
+
+    /**
      * date getter
      * @return Date copy
      */
     public Date getDate()
     {
         return (Date) date.clone(); //prevent modifications to the date
+    }
+
+    /**
+     * method to print the message
+     * @return
+     */
+    public String toString () {
+        String result = "";
+
+        if (!this.recipient.equalsIgnoreCase("all")) {
+            result += "(PRIVATE) ";
+        }
+
+        result += "(" + this.author + "): ";
+
+        result += this.message;
+
+        return result;
     }
 }
