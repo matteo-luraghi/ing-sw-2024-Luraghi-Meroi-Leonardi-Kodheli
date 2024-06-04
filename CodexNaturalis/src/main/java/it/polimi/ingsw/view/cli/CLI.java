@@ -931,7 +931,6 @@ public class CLI implements View {
     private void showChat () {
         int messagePage = 0;
         ArrayList<Message> myChat = this.gameChat.messagesToShow(messagePage);
-        boolean correctInput = false;
         String command = null;
         boolean exitChat = false;
 
@@ -965,7 +964,60 @@ public class CLI implements View {
                         printChat(messagePage, myChat);
                     }
                 }
-                case "write" -> {}
+                case "write" -> {
+                    boolean correctInput = false;
+                    String recipient = null;
+
+                    do {
+                        System.out.println("Who is the recipient?");
+                        System.out.println("all| ");
+                        for (Player p : game.getPlayers()) {
+                            System.out.print(p.toString()+"| ");
+                        }
+                        System.out.println();
+                        recipient = this.scanner.nextLine();
+
+                        Player player = null;
+                        for (Player p : game.getPlayers()) {
+                            if (p.getNickname().equals(recipient))
+                                player = p;
+                        }
+                        if (!recipient.equalsIgnoreCase("all") && player==null) {
+                            //invalid recipient
+                            System.out.println(AnsiColors.ANSI_RED+"Invalid input, try again."+AnsiColors.ANSI_RESET);
+                        } else {
+                            //valid recipient
+                            correctInput = true;
+                        }
+                    } while (!correctInput);
+
+                    correctInput = false;
+
+                    do {
+                        System.out.println("Enter the message text:");
+                        String text = this.scanner.nextLine();
+
+                        if (text.isEmpty()) {
+                            //empty text
+                            System.out.println(AnsiColors.ANSI_RED+"A message cannot be empty."+AnsiColors.ANSI_RESET);
+                        } else {
+                            //valid message
+                            Message toSend = new Message(text, user, recipient);
+                            //client.sendMessageInChat(toSend);
+                            correctInput = true;
+                            System.out.println(AnsiColors.ANSI_GREEN+"Message sent!"+AnsiColors.ANSI_RESET);
+                        }
+                    } while (!correctInput);
+
+                    messagePage = 0;
+                    myChat = this.gameChat.messagesToShow(messagePage);
+                    printChat(messagePage, myChat);
+                }
+                case "refresh" -> {
+                    messagePage = 0;
+                    myChat = this.gameChat.messagesToShow(messagePage);
+                    printChat(messagePage, myChat);
+                }
                 default -> {System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." + AnsiColors.ANSI_RESET);}
             }
         }
