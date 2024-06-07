@@ -634,7 +634,7 @@ public class CLI implements View {
                 case "show decks" -> {ShowDecks(game);}
                 case "show scoreboard" -> {ShowScoreBoard(game.getGameTable().getScoreBoard());}
                 case "show card" -> {commandShowCard(game, user, lastPlayerField);}
-                case "show chat" -> {System.out.println("chat");}
+                case "show chat" -> {showChat();}
                 case "show legend" -> {showLegend();}
                 case "play card" -> {
                     //command available only if it's the client's turn and it's the playphase
@@ -928,6 +928,9 @@ public class CLI implements View {
         return (new Coordinates(x,y));
     }
 
+    /**
+     * method to handle chat commands
+     */
     private void showChat () {
         int messagePage = 0;
         ArrayList<Message> myChat = this.gameChat.messagesToShow(messagePage);
