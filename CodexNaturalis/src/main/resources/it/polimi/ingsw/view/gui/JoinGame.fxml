@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -24,7 +25,7 @@
          <children>
             <AnchorPane prefHeight="400.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                <children>
-                  <BorderPane prefHeight="400.0" prefWidth="304.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <BorderPane prefHeight="400.0" prefWidth="306.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <center>
                         <ImageView fitHeight="306.0" fitWidth="317.0" nodeOrientation="INHERIT" opacity="0.25" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                            <image>
@@ -36,44 +37,58 @@
                         </ImageView>
                      </center>
                   </BorderPane>
-                  <VBox alignment="CENTER" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="92.66666666666667" AnchorPane.topAnchor="290.0">
+                  <VBox alignment="CENTER" prefHeight="400.0" prefWidth="307.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Button fx:id="createButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#createGame" prefWidth="200.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-background-radius: 100; -fx-border-radius: 100; -fx-border-width: 2;" text="Create">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="199.0" text="Create a game:" textAlignment="CENTER">
                            <font>
-                              <Font name="Cambria Bold" size="27.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefWidth="200.0" AnchorPane.bottomAnchor="221.33333333333334" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="119.0">
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" text="Enter the game name">
-                           <font>
-                              <Font name="Cambria Italic" size="21.0" />
+                              <Font name="Cambria Bold Italic" size="26.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="gameName" alignment="CENTER" maxWidth="400.0" prefWidth="200.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 100; -fx-background-radius: 100; -fx-border-width: 2;">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </TextField>
+                        <VBox alignment="CENTER" prefWidth="200.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="Enter the game name">
+                                 <font>
+                                    <Font name="Cambria Italic" size="21.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="gameName" alignment="CENTER" maxWidth="250.0" prefHeight="7.0" prefWidth="209.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 100; -fx-background-radius: 100; -fx-border-width: 2;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="50.0" right="50.0" top="10.0" />
+                                 </VBox.margin>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="240.0" text="Enter the number of players">
+                                 <font>
+                                    <Font name="Cambria Italic" size="20.0" />
+                                 </font>
+                              </Label>
+                              <ChoiceBox fx:id="numOfPlayers" prefWidth="150.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 100; -fx-background-radius: 100; -fx-border-width: 2;">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </ChoiceBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="7.0" prefWidth="306.0">
+                           <children>
+                              <Button fx:id="createButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#createGame" prefWidth="153.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-background-radius: 100; -fx-border-radius: 100; -fx-border-width: 2;" text="Create">
+                                 <font>
+                                    <Font name="Cambria Bold" size="27.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" AnchorPane.bottomAnchor="145.33333333333331" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="199.0">
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="240.0" text="Enter the number of players">
-                           <font>
-                              <Font name="Cambria Italic" size="20.0" />
-                           </font>
-                        </Label>
-                        <ChoiceBox fx:id="numOfPlayers" prefWidth="150.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 100; -fx-background-radius: 100; -fx-border-width: 2;" />
-                     </children>
-                  </VBox>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="56.0" layoutY="14.0" prefHeight="38.0" prefWidth="189.0" text="Create a game:" textAlignment="CENTER" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="56.66666666666666">
-                     <font>
-                        <Font name="Cambria Bold Italic" size="26.0" />
-                     </font>
-                  </Label>
                </children>
             </AnchorPane>
             <AnchorPane HBox.hgrow="ALWAYS">
