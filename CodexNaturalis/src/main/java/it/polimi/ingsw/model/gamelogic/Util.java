@@ -359,11 +359,10 @@ public class Util {
             cardName = "0" + cardName;
         }
 
-        String path;
         if(isFront){
-            return GUI.class.getResource("it/polimi/ingsw/view/gui/assets/CODEX_cards_gold_front/" + cardName).toString();
+            return GUI.class.getResource("assets/CODEX_cards_gold_front/" + cardName).toString();
         }else{
-            return GUI.class.getResource("it/polimi/ingsw/view/gui/assets/CODEX_cards_gold_back/" + cardName).toString();
+            return GUI.class.getResource("assets/CODEX_cards_gold_back/" + cardName).toString();
         }
     }
 }
