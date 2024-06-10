@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.*;
+import it.polimi.ingsw.model.gamelogic.gamechat.Message;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -571,5 +572,11 @@ public class Controller implements RemoteController {
             c.showScoreBoard(game.getGameTable().getScoreBoard());
         }
         //Do i have to do something for when the game ends?
+    }
+
+    @Override
+    public void addMessageToChat(Message message) {
+        game.saveMessage(message);
+        // TODO: send a update chat message to all players
     }
 }

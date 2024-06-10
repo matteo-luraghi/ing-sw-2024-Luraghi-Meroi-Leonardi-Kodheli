@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.ScoreBoard;
+import it.polimi.ingsw.model.gamelogic.gamechat.GameChat;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.Serial;
@@ -302,6 +303,20 @@ public class RMIConnectionHandler extends ConnectionHandler {
             this.view.ShowScoreBoard(scoreBoard);
         } catch (RemoteException e) {
             System.err.println("Error showing scoreboard");
+            disconnect();
+        }
+    }
+
+    /**
+     * Show the updated chat
+     * @param chat the updated chat
+     */
+    @Override
+    public void showChat(GameChat chat) {
+        try {
+            this.view.setGameChat(chat);
+        } catch (RemoteException e) {
+            System.err.println("Error showing chat");
             disconnect();
         }
     }

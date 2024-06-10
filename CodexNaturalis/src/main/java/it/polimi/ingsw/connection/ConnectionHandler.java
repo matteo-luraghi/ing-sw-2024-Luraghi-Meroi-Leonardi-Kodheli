@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.ScoreBoard;
+import it.polimi.ingsw.model.gamelogic.gamechat.GameChat;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -164,6 +165,8 @@ public abstract class ConnectionHandler implements Serializable {
      * @param scoreBoard the scoreboard
      */
     public void showScoreBoard(ScoreBoard scoreBoard) {}
+
+    public abstract void showChat(GameChat chat);
 
     /**
      * Send a message to the client

@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.card.Resource;
 import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.*;
+import it.polimi.ingsw.model.gamelogic.gamechat.GameChat;
 import it.polimi.ingsw.view.gui.eventhandlers.*;
 import it.polimi.ingsw.view.mainview.*;
 import javafx.application.Application;
@@ -416,6 +417,17 @@ public class GUI extends Application implements View{
      */
     @Override
     public void ShowEndOfGame() {
+
+    }
+
+    /**
+     * sets the game chat
+     *
+     * @param gameChat the chat
+     * @throws RemoteException to handle exceptions that may occur when using RMI
+     */
+    @Override
+    public void setGameChat(GameChat gameChat) throws RemoteException {
 
     }
 

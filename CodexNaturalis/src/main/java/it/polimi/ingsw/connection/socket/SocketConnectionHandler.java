@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.ScoreBoard;
+import it.polimi.ingsw.model.gamelogic.gamechat.GameChat;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -256,6 +257,15 @@ public class SocketConnectionHandler extends ConnectionHandler implements Runnab
     @Override
     public void showScoreBoard(ScoreBoard scoreBoard) {
         sendMessageClient(new ScoreBoardMessage(scoreBoard));
+    }
+
+    /**
+     * Show the updated chat using a UpdateChatMessage server message
+     * @param chat the updated chat
+     */
+    @Override
+    public void showChat(GameChat chat) {
+        sendMessageClient(new UpdateChatMessage(chat));
     }
 
     /**

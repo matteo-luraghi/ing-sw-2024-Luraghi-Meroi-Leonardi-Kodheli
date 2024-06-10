@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.GameState;
 import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.ScoreBoard;
+import it.polimi.ingsw.model.gamelogic.gamechat.GameChat;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -121,6 +122,13 @@ public interface View extends Remote {
      * @throws RemoteException to handle exceptions that may occur when using RMI
      */
     void ShowEndOfGame() throws RemoteException;
+
+    /**
+     * sets the game chat
+     * @param gameChat the chat
+     * @throws RemoteException to handle exceptions that may occur when using RMI
+     */
+    void setGameChat (GameChat gameChat) throws RemoteException;
 
     /**
      * method to get the user's inputs

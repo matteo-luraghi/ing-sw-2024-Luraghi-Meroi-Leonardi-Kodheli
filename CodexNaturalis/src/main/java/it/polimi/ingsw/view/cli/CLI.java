@@ -602,6 +602,7 @@ public class CLI implements View {
      * Update the game chat
      * @param gameChat the updated chat
      */
+    @Override
     public void setGameChat (GameChat gameChat) {
         this.gameChat = gameChat;
     }
@@ -1013,7 +1014,7 @@ public class CLI implements View {
                         } else {
                             //valid message
                             Message toSend = new Message(text, user, recipient);
-                            //client.sendMessageInChat(toSend);
+                            client.sendMessageInChat(toSend);
                             correctInput = true;
                             System.out.println(AnsiColors.ANSI_GREEN+"Message sent!"+AnsiColors.ANSI_RESET);
                         }

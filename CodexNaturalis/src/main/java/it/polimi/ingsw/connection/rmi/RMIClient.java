@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.Coordinates;
+import it.polimi.ingsw.model.gamelogic.gamechat.Message;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.net.InetAddress;
@@ -276,6 +277,20 @@ public class RMIClient extends Client {
             this.getView().setGameNames(gamesNames);
         } catch (RemoteException e) {
             System.err.println("Error sending games' names");
+        }
+    }
+
+    /**
+     * Send a message in the chat
+     * @param message the message
+     */
+    @Override
+    public void sendMessageInChat(Message message) {
+        try {
+            this.controller.addMessageToChat(message);
+        } catch (Exception e) {
+            System.err.println("Error receiving new message in chat");
+            disconnect();
         }
     }
 

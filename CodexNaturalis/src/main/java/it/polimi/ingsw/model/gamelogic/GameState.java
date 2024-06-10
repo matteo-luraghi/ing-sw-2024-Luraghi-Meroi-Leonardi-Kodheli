@@ -73,18 +73,13 @@ public class GameState implements Serializable {
 
     /**
      * save message method for gamechat
-     * @param messageString string to save
-     * @param author author of the message
-     * @param recipient can be "all" or a player's name
-     * @return if the author is not in the player list then it will not be saved
+     * @param message the new message
      */
-    public boolean saveMessage(String messageString, Player author, String recipient)
+    public void saveMessage(Message message)
     {
-        if(!players.contains(author))
-            return false;
-        Message message=new Message(messageString,author, recipient);
-        gameChat.saveMessage(message);
-        return true;
+        if(players.contains(message.getAuthor())) {
+            gameChat.saveMessage(message);
+        }
     }
     /**
      * getState returns the current state

@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.Coordinates;
+import it.polimi.ingsw.model.gamelogic.gamechat.Message;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.io.IOException;
@@ -193,5 +194,14 @@ public class SocketClient extends Client {
     @Override
     public void refreshGamesNames() {
         sendMessageServer(new RefreshGamesNamesRequest());
+    }
+
+    /**
+     * Send a message in the chat
+     * @param message the message
+     */
+    @Override
+    public void sendMessageInChat(Message message) {
+        sendMessageServer(new AddMessageToChat(message));
     }
 }
