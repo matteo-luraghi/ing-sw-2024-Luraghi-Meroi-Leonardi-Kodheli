@@ -2,19 +2,22 @@ package it.polimi.ingsw.model.gamelogic.gamechat;
 
 import it.polimi.ingsw.model.gamelogic.Player;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * message class
  * @author Francesk Kodheli
  */
-public class Message {
+public class Message implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -6160152938762690523L;
+    private final String message;
+    private final Player author;
+    private final Date date;
 
-    private String message;
-    private Player author;
-    private Date date;
-
-    private String recipient; //can be a player's nickname or "all" to send the message to everyone
+    private final String recipient; //can be a player's nickname or "all" to send the message to everyone
 
     /**
      * Default constructor for message, date is initialized with the class
@@ -26,6 +29,7 @@ public class Message {
         this.message=message;
         this.author=author;
         this.recipient = recipient;
+        // initialize the date to now
         date=new Date();
     }
 
@@ -35,8 +39,8 @@ public class Message {
      */
     public Message(Message message)
     {
-
         this.message= message.getMessage();
+        this.recipient = message.getRecipient();
         this.author= message.getAuthor();
         this.date=message.getDate();
     }
@@ -48,7 +52,6 @@ public class Message {
      */
     public String getMessage()
     {
-
         return new String(message); //prevent modifications to the message
     }
 
@@ -58,7 +61,6 @@ public class Message {
      */
     public Player getAuthor()
     {
-
         return author;
     }
 

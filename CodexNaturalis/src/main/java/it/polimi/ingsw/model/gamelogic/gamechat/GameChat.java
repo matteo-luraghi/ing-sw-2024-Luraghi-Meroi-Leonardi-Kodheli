@@ -2,16 +2,17 @@ package it.polimi.ingsw.model.gamelogic.gamechat;
 
 import it.polimi.ingsw.model.gamelogic.Player;
 
-import java.lang.reflect.Array;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * gamechat class
  * @author Francesk Kodheli
  */
-public class GameChat {
-
+public class GameChat implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -3923695197721707905L;
     private ArrayList<Message> messages;
 
 

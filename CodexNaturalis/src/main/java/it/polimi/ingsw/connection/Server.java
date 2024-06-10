@@ -58,6 +58,7 @@ public class Server implements RemoteServer {
         if (serverIP == null || serverIP.isEmpty() || serverIP.startsWith("127.0.")) {
             serverIP = IPAddresses.getAddress();
             if (serverIP == null) {
+                // TODO: add manual ip selecting?
                 throw new IPNotFoundException("Getting the server ip address");
             }
         }
@@ -106,16 +107,17 @@ public class Server implements RemoteServer {
                             && g.getGameName().equals(gameName)
                             && g.getHandlers().size() < games.get(g))
                     .findFirst();
+
+            // add the player to the game
+            if (optionalController.isPresent()) {
+                Controller gameController = optionalController.get();
+                gameController.addHandler(connectionHandler);
+                connectionHandler.setController(gameController);
+                connectionHandler.getController().chooseColorState(connectionHandler);
+            }
         }
 
-        // add the player to the game
-        if (optionalController.isPresent()) {
-            Controller gameController = optionalController.get();
-            gameController.addHandler(connectionHandler);
-            connectionHandler.setController(gameController);
-            connectionHandler.getController().chooseColorState(connectionHandler);
-            return;
-        }
+        if (optionalController.isPresent()) return;
 
         // no game found -> game already started or game deleted
         ArrayList<String> gameNames = null;
@@ -134,9 +136,13 @@ public class Server implements RemoteServer {
      */
     @Override
     public void createGame(ConnectionHandler connectionHandler, int numberOfPlayers, String gameName) {
-        Optional<Controller> alreadyPresent = games.keySet().stream().parallel()
-                .filter(c -> c.getGameName().equals(gameName))
-                .findFirst();
+        Optional<Controller> alreadyPresent;
+        synchronized (this.gameLock) {
+         alreadyPresent = games.keySet().stream().parallel()
+                    .filter(c -> c.getGameName().equals(gameName))
+                    .findFirst();
+        }
+
         if (alreadyPresent.isPresent()) {
             connectionHandler.sendTextMessage("Name already present, choose another one.");
             try {
@@ -146,12 +152,14 @@ public class Server implements RemoteServer {
             }
             return;
         }
-        Controller controller = new Controller(gameName, numberOfPlayers);
+
+        Controller controller;
         synchronized (this.gameLock) {
+            controller = new Controller(gameName, numberOfPlayers);
             this.games.put(controller, numberOfPlayers);
+            controller.addHandler(connectionHandler);
+            connectionHandler.setController(controller);
         }
-        controller.addHandler(connectionHandler);
-        connectionHandler.setController(controller);
 
         // expose the controller via RMI
         try {
@@ -159,7 +167,6 @@ public class Server implements RemoteServer {
             this.registry.rebind("controller"+controller.getGameName(), stub);
         } catch (Exception e) {
             System.err.println("Error exposing the controller");
-            System.out.println(e);
         }
         connectionHandler.getController().chooseColorState(connectionHandler);
     }
