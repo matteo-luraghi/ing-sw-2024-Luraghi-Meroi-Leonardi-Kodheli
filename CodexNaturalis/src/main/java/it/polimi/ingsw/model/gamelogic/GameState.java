@@ -42,6 +42,14 @@ public class GameState implements Serializable {
     }
 
     /**
+     * chat getter
+     * @return the chat
+     */
+    public GameChat getChat() {
+        return this.gameChat;
+    }
+
+    /**
      * get a message by Index
      * @param index index of the wanted message
      * @return Message if the index is in bounds

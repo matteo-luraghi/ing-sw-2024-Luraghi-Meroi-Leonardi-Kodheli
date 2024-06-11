@@ -312,7 +312,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
      * @param chat the updated chat
      */
     @Override
-    public void showChat(GameChat chat) {
+    public void updateChat(GameChat chat) {
         try {
             this.view.setGameChat(chat);
         } catch (RemoteException e) {

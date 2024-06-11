@@ -264,7 +264,7 @@ public class SocketConnectionHandler extends ConnectionHandler implements Runnab
      * @param chat the updated chat
      */
     @Override
-    public void showChat(GameChat chat) {
+    public void updateChat(GameChat chat) {
         sendMessageClient(new UpdateChatMessage(chat));
     }
 

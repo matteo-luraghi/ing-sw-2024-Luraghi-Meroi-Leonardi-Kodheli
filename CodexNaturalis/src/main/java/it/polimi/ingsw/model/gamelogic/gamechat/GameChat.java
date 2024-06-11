@@ -63,8 +63,11 @@ public class GameChat implements Serializable {
     public GameChat filterChat (Player player) {
         GameChat filteredChat = new GameChat();
 
+        // only the author and the receiver of the message can see it
         for (Message m : messages) {
-            if (m.getRecipient().equalsIgnoreCase("all") || m.getRecipient().equalsIgnoreCase(player.getNickname())) {
+            if (m.getRecipient().equalsIgnoreCase("all") ||
+                    m.getRecipient().equalsIgnoreCase(player.getNickname()) ||
+                    m.getAuthor().getNickname().equalsIgnoreCase(player.getNickname())) {
                 filteredChat.saveMessage(m);
             }
         }
@@ -78,6 +81,11 @@ public class GameChat implements Serializable {
      * @return the message page requested
      */
     public ArrayList<Message> messagesToShow (int messagePage) {
+
+        if (this.messages.size() < 10) {
+            return (ArrayList<Message>) this.messages.clone();
+        }
+
         int index = this.messages.size() - 1 - (messagePage*10);
 
         ArrayList<Message> toShow = new ArrayList<>();

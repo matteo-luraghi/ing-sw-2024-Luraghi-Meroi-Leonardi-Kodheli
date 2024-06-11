@@ -61,6 +61,10 @@ public class CLI implements View {
      */
     @Override
     public void start() throws ConnectionClosedException{
+
+        // initialize the chat
+        this.gameChat = new GameChat();
+
         boolean connected = false;
         String ip = null;
         int port = 0;
@@ -993,7 +997,7 @@ public class CLI implements View {
                         if (!recipient.equalsIgnoreCase("all") && player==null) {
                             //invalid recipient
                             System.out.println(AnsiColors.ANSI_RED+"Invalid input, try again."+AnsiColors.ANSI_RESET);
-                        } else if (player.getNickname().equalsIgnoreCase(user.getNickname())) {
+                        } else if (player != null && player.getNickname().equalsIgnoreCase(user.getNickname())) {
                             //The recipient is the user itself
                             System.out.println(AnsiColors.ANSI_RED+"Cannot send a message to yourself, try again."+AnsiColors.ANSI_RESET);
                         } else {
@@ -1040,7 +1044,9 @@ public class CLI implements View {
      * @param myChat the game's chat
      */
     private void printChat(int messagePage, ArrayList<Message> myChat) {
-        myChat = (ArrayList<Message>) myChat.reversed();
+        if (!myChat.isEmpty()) {
+            //myChat = (ArrayList<Message>) myChat.reversed();
+        }
 
         System.out.println(user.toString()+"'s gamechat. Page:" + messagePage);
         System.out.println();

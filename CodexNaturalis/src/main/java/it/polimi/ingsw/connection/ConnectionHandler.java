@@ -166,7 +166,11 @@ public abstract class ConnectionHandler implements Serializable {
      */
     public void showScoreBoard(ScoreBoard scoreBoard) {}
 
-    public abstract void showChat(GameChat chat);
+    /**
+     * Send the updated chat
+     * @param chat the chat
+     */
+    public abstract void updateChat(GameChat chat);
 
     /**
      * Send a message to the client

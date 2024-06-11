@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.ResourceCard;
 import it.polimi.ingsw.model.card.StartingCard;
 import it.polimi.ingsw.model.gamelogic.*;
+import it.polimi.ingsw.model.gamelogic.gamechat.GameChat;
 import it.polimi.ingsw.model.gamelogic.gamechat.Message;
 
 import java.io.FileReader;
@@ -577,6 +578,12 @@ public class Controller implements RemoteController {
     @Override
     public void addMessageToChat(Message message) {
         game.saveMessage(message);
-        // TODO: send a update chat message to all players
+
+        GameChat chat = getGame().getChat();
+
+        for (Player player : game.getPlayers()) {
+            ConnectionHandler c = getHandlerByNickname(player.getNickname());
+            c.updateChat(chat.filterChat(player));
+        }
     }
 }
