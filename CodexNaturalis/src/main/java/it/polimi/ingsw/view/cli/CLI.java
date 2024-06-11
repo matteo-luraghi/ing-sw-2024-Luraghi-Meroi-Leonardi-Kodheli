@@ -1044,10 +1044,6 @@ public class CLI implements View {
      * @param myChat the game's chat
      */
     private void printChat(int messagePage, ArrayList<Message> myChat) {
-        if (!myChat.isEmpty()) {
-            //myChat = (ArrayList<Message>) myChat.reversed();
-        }
-
         System.out.println(user.toString()+"'s gamechat. Page:" + messagePage);
         System.out.println();
         for (Message m : myChat) {
