@@ -82,7 +82,7 @@ public class GameChat implements Serializable {
      */
     public ArrayList<Message> messagesToShow (int messagePage) {
 
-        if (this.messages.size() < 10) {
+        if (this.messages.size() <= 10) {
             return (ArrayList<Message>) this.messages.clone();
         }
 
@@ -90,8 +90,16 @@ public class GameChat implements Serializable {
 
         ArrayList<Message> toShow = new ArrayList<>();
 
-        for (int i=0; i<10; i++) {
-            toShow.add(this.messages.get(index-i));
+        if (messagePage == this.messages.size()/10) {
+            index = 0;
+            for (int i=0; i<10; i++) {
+                toShow.add(this.messages.get(index+i));
+            }
+        }
+        else {
+            for (int i = 0; i < 10; i++) {
+                toShow.add(this.messages.get(index - i));
+            }
         }
 
         return toShow;

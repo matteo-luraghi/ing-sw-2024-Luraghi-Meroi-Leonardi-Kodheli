@@ -4,6 +4,8 @@ import it.polimi.ingsw.model.gamelogic.Player;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.security.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -15,8 +17,7 @@ public class Message implements Serializable {
     private static final long serialVersionUID = -6160152938762690523L;
     private final String message;
     private final Player author;
-    private final Date date;
-
+    private final String time;
     private final String recipient; //can be a player's nickname or "all" to send the message to everyone
 
     /**
@@ -30,7 +31,9 @@ public class Message implements Serializable {
         this.author=author;
         this.recipient = recipient;
         // initialize the date to now
-        date=new Date();
+        Date date=new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("[HH:mm:ss]");
+        this.time = dateFormat.format(date);
     }
 
     /**
@@ -42,7 +45,7 @@ public class Message implements Serializable {
         this.message= message.getMessage();
         this.recipient = message.getRecipient();
         this.author= message.getAuthor();
-        this.date=message.getDate();
+        this.time=message.getTime();
     }
 
 
@@ -52,7 +55,7 @@ public class Message implements Serializable {
      */
     public String getMessage()
     {
-        return new String(message); //prevent modifications to the message
+        return message; //prevent modifications to the message
     }
 
     /**
@@ -76,9 +79,9 @@ public class Message implements Serializable {
      * date getter
      * @return Date copy
      */
-    public Date getDate()
+    public String getTime()
     {
-        return (Date) date.clone(); //prevent modifications to the date
+        return this.time;
     }
 
     /**
@@ -87,6 +90,8 @@ public class Message implements Serializable {
      */
     public String toString () {
         String result = "";
+
+        result += this.time + " ";
 
         if (!this.recipient.equalsIgnoreCase("all")) {
             result += "(PRIVATE) ";
