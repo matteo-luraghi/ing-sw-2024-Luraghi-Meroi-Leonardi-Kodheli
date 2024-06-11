@@ -945,12 +945,12 @@ public class CLI implements View {
         printChat(messagePage, myChat);
 
         while (!exitChat) {
-            System.out.println("What do you want to do in chat?\nexit | previous | next | write | refresh");
+            System.out.println("What do you want to do in chat?\nexit | newer | older | write | refresh");
             command = this.scanner.nextLine();
 
             switch (command.toLowerCase()) {
                 case "exit" -> {exitChat = true;}
-                case "previous" -> {
+                case "newer" -> {
                     if (messagePage == 0) {
                         System.out.println(AnsiColors.ANSI_RED+"You are already seeing the newest messages."+AnsiColors.ANSI_RESET);
                     } else {
@@ -961,8 +961,8 @@ public class CLI implements View {
                         printChat(messagePage, myChat);
                     }
                 }
-                case "next" -> {
-                    if (messagePage == myChat.size()/10) {
+                case "older" -> {
+                    if (messagePage == gameChat.getMessages().size()/10) {
                         System.out.println(AnsiColors.ANSI_RED+"You are already seeing the oldest messages."+AnsiColors.ANSI_RESET);
                     } else {
                         messagePage++;

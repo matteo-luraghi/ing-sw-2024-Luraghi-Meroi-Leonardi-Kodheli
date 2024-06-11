@@ -97,7 +97,7 @@ public class GameChat implements Serializable {
             }
         }
         else {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 9; i >= 0; i--) {
                 toShow.add(this.messages.get(index - i));
             }
         }
