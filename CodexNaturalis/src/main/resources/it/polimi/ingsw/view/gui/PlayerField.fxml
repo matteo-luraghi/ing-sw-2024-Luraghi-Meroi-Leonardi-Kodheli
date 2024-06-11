@@ -36,7 +36,7 @@
                </font>
             </Label>
             <TextField layoutY="344.0" prefHeight="50.0" prefWidth="179.0" style="-fx-background-color: #ede3ba; -fx-border-color: #d1be71; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="55.0" />
-            <ListView fx:id="chat" layoutY="42.0" prefHeight="227.0" prefWidth="214.0" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+            <ListView fx:id="chat" layoutY="42.0" prefHeight="542.0" prefWidth="235.0" style="-fx-background-color: #f0ead1;" />
             <Button layoutX="129.0" layoutY="348.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="56.0" style="-fx-background-color: #ede3ba; -fx-border-color: #d1be71; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;" text="Enter" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font name="Cambria Bold" size="12.0" />
@@ -59,7 +59,7 @@
          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <ScrollPane hvalue="0.5" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #d1be71;" vvalue="0.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1200.0" prefWidth="1200.0" style="-fx-background-color: #f0ead1;">
-                  <StackPane layoutX="-784.0" layoutY="-500.0" prefHeight="786.0" prefWidth="1300.0" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="-500.0" AnchorPane.leftAnchor="-784.0" AnchorPane.rightAnchor="-616.0" AnchorPane.topAnchor="-500.0">
+                  <StackPane layoutX="-914.0" layoutY="-500.0" prefHeight="10000.0" prefWidth="1300.0" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="-500.0" AnchorPane.leftAnchor="-1000.0" AnchorPane.rightAnchor="-1000.0" AnchorPane.topAnchor="-500.0">
                      <Group fx:id="playerField">
                         <Pane maxHeight="100.0" maxWidth="150.0" minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="150.0">
                            <ImageView fx:id="startingCard" fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
