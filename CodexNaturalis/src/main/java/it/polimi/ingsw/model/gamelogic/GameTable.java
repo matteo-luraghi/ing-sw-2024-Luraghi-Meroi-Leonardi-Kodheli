@@ -347,17 +347,7 @@ public class GameTable implements Serializable {
                 totalCombos = findMaxCombosInOverlappingCombos(OverLappingCombos) + ChosenCombos.size();
                 points += totalCombos * privateGoal.getPoints();
             }
-
-
-
-
-
-
         }
-        Player player = Util.getKeyByValue(PlayerZones, Player);
-        Scoreboard.addPoints(player, points);
         return points;
-
-
     }
 }
