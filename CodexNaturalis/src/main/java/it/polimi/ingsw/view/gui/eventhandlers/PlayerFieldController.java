@@ -11,6 +11,7 @@ import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -48,8 +49,8 @@ public class PlayerFieldController extends EventHandler{
     private ResourceCard chosenCard;
     private ImageView chosenImage;
     private int chosenIndex;
-    private boolean isFront;
     private Coordinates chosenCords;
+    private ArrayList<Boolean> isFrontList;
     public void initialize(){
         ObservableList<String> items = FXCollections.observableArrayList();
         chat.setItems(items);
@@ -61,6 +62,10 @@ public class PlayerFieldController extends EventHandler{
         playerPanes.add(player2);
         playerPanes.add(player3);
         playerPanes.add(player4);
+        isFrontList = new ArrayList<>(3);
+        isFrontList.add(0, true);
+        isFrontList.add(1, true);
+        isFrontList.add(2, true);
     }
 
     @Override
@@ -173,15 +178,15 @@ public class PlayerFieldController extends EventHandler{
     public void setHand(ArrayList<ResourceCard> hand, boolean isYourPlayerfield){
         Image temp;
         if(hand.getFirst() != null){
-            temp = new Image(Util.getImageFromID(hand.getFirst().getId(), isYourPlayerfield));
+            temp = new Image(Util.getImageFromID(hand.getFirst().getId(), isYourPlayerfield && isFrontList.get(0)));
             hand0.setImage(temp);
         }
         if(hand.get(1) != null){
-            temp = new Image(Util.getImageFromID(hand.get(1).getId(), isYourPlayerfield));
+            temp = new Image(Util.getImageFromID(hand.get(1).getId(), isYourPlayerfield && isFrontList.get(1)));
             hand1.setImage(temp);
         }
         if(hand.size() == 3 && hand.get(2) != null){
-            temp = new Image(Util.getImageFromID(hand.get(2).getId(), isYourPlayerfield));
+            temp = new Image(Util.getImageFromID(hand.get(2).getId(), isYourPlayerfield && isFrontList.get(2)));
             hand2.setImage(temp);
             hand2.setVisible(true);
             hand2.setDisable(false);
@@ -223,9 +228,6 @@ public class PlayerFieldController extends EventHandler{
         view.ShowPlayerField(currentPlayer, currentPlayer);
     }
 
-    public void showStaticContent(){
-        view.showStaticContent();
-    }
     public void playCard(MouseEvent mouseEvent) {
         if(chosenIndex == -1){
             view.showMessage("Select a card to play first");
@@ -237,7 +239,10 @@ public class PlayerFieldController extends EventHandler{
         x = Integer.parseInt(coordinateString.split(",")[0]);
         y = Integer.parseInt(coordinateString.split(",")[1]);
         chosenCords = new Coordinates(x,y);
-        view.playCard(chosenIndex, chosenCords, isFront);
+        view.playCard(chosenIndex, chosenCords, isFrontList.get(chosenIndex));
+        isFrontList.remove(chosenIndex);
+        chosenIndex = -1;
+        isFrontList.add(true);
     }
 
     public void selectPlayCard(MouseEvent mouseEvent) {
@@ -252,22 +257,18 @@ public class PlayerFieldController extends EventHandler{
             view.showMessage("How are you trying to play a card that is not in your hand");
             return;
         }
-        //Let the user select the side they prefer
-        TextInputDialog dialog = new TextInputDialog("Choose a side");
-        dialog.setTitle("Choose a side");
-        dialog.setHeaderText("Which side do you want to play this card on?");
-        dialog.setContentText("Only type front or back");
-        boolean correct = false;
-        while(!correct){
-            Optional<String> optionalSide = dialog.showAndWait();
-            if(optionalSide.isPresent()){
-                String side = optionalSide.get();
-                if(side.equalsIgnoreCase("front") || side.equalsIgnoreCase("back")){
-                    isFront = side.equalsIgnoreCase("front");
-                    correct = true;
-                } else {
-                    showPopup("Error", "Insert either front or back");
-                }
+
+        if(mouseEvent.getButton().equals(MouseButton.SECONDARY)){
+            //The user clicked with the right click, flip the card
+            isFrontList.set(chosenIndex, !isFrontList.get(chosenIndex));
+            String cardPath = chosenImage.getImage().getUrl();
+            Image image = new Image(Util.getImageFromID(Integer.parseInt(cardPath.substring(cardPath.lastIndexOf("/")+1, cardPath.lastIndexOf("."))), isFrontList.get(chosenIndex)));
+            if(chosenIndex==0){
+                hand0.setImage(image);
+            }else if (chosenIndex==1){
+                hand1.setImage(image);
+            }else if (chosenIndex==2){
+                hand2.setImage(image);
             }
         }
     }
