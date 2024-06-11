@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui.eventhandlers;
 
 import it.polimi.ingsw.view.gui.GUI;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -33,6 +34,7 @@ public abstract class EventHandler {
         alert.setHeaderText("There was a problem with yours or someone's connection");
         alert.setContentText("You will be kicked out now, bye!");
         alert.showAndWait();
+        Platform.exit();
     }
     /**
      * Shows an information popup

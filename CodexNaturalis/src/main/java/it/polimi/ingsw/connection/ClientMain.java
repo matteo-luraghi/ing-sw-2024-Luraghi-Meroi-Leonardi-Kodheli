@@ -18,10 +18,10 @@ public class ClientMain {
 
         try {
             //if no args are passed in, cli will start TODO: Change it to gui when gui works
-            if(args.length == 0 || args[0].equalsIgnoreCase("-cli")){
-                new CLI().start();
-            } else if(args[0].equalsIgnoreCase("-gui")) {
+            if(args.length == 0 || args[0].equalsIgnoreCase("-gui")){
                 new GUI().start();
+            } else if(args[0].equalsIgnoreCase("-cli")) {
+                new CLI().start();
             } else {
                 System.out.println("Insert a valid argument");
             }

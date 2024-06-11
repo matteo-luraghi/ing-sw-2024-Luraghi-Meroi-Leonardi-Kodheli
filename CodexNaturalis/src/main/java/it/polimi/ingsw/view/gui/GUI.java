@@ -34,11 +34,6 @@ import java.util.Map;
  */
 public class GUI extends Application implements View{
     private Client client = null;
-    private ViewGameCardFactory gameCardViewer;
-    private ViewScoreBoardFactory scoreBoardViewer;
-    private ViewPlayerFieldFactory playerFieldViewer;
-    private ViewDeckFactory deckViewer;
-    private ViewGoalCardFactory goalCardViewer;
     private String sceneName;
     private Stage stage;
     private boolean connectedToServer;
@@ -48,19 +43,16 @@ public class GUI extends Application implements View{
     private String gameName;
     private GameState game = null;
     private Player user = null;
+    boolean isDisconnecting;
     /**
      * GUI constructor
      */
     public GUI(){
-        this.deckViewer = new ViewDeckGUIFactory();
-        this.gameCardViewer = new ViewGameCardGUIFactory();
-        this.playerFieldViewer = new ViewPlayerFieldGUIFactory();
-        this.scoreBoardViewer = new ViewScoreBoardGUIFactory();
-        this.goalCardViewer = new ViewGoalCardGUIFactory();
         this.sceneName = "ConnectToServer.fxml";
         connectedToServer = false;
         numOfPlayersChosen = -1;
         gameName = "";
+        isDisconnecting = false;
     }
 
     /**
@@ -82,6 +74,10 @@ public class GUI extends Application implements View{
         stage.setTitle(sceneName.split("\\.")[0]);
         stage.setScene(scene);
         stage.show();
+        stage.setOnCloseRequest(e -> {
+            Platform.exit();
+            isDisconnecting = true;
+        });
 
         currentEventHandler = fxmlLoader.getController();
         currentEventHandler.setView(this);
@@ -102,6 +98,11 @@ public class GUI extends Application implements View{
                 currentEventHandler = fxmlLoader.getController();
                 currentEventHandler.setView(this);
                 this.stage.setScene(new Scene(root));
+                stage.setTitle(sceneName.split("\\.")[0]);
+                stage.setOnCloseRequest(e -> {
+                    Platform.exit();
+                    isDisconnecting = true;
+                });
                 stage.show();
             } catch (IOException e){
                 e.printStackTrace();
@@ -171,8 +172,7 @@ public class GUI extends Application implements View{
     }
 
     public void listenForDisconnection() {
-        boolean isDisconnecting = false;
-        while(true) {
+        while(!isDisconnecting) {
             client = getClient();
             if(client != null && !client.getConnected() && !isDisconnecting) {
                 isDisconnecting = true;
@@ -545,7 +545,15 @@ public class GUI extends Application implements View{
      */
     @Override
     public void disconnectClient() throws RemoteException {
-
+        Platform.runLater(()->{
+            isDisconnecting = true;
+            System.out.println("Disconnected");
+            currentEventHandler.disconnection();
+            Platform.runLater(() -> {
+                stage.close();
+            });
+        });
+        client.disconnect();
     }
 
     /**
