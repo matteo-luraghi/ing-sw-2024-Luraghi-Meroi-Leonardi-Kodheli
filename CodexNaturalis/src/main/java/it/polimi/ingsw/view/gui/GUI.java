@@ -201,7 +201,7 @@ public class GUI extends Application implements View{
             if(currentEventHandler instanceof PlayerFieldController playerFieldController){
                 playerFieldController.addChatMessage(s);
             } else {
-                //currentEventHandler.showPopup("", s);
+                currentEventHandler.showPopup("", s);
             }
         });
     }
