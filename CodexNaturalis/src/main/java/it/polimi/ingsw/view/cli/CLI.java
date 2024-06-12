@@ -15,6 +15,7 @@ import it.polimi.ingsw.view.mainview.View;
 import it.polimi.ingsw.view.mainview.*;
 
 import java.io.IOException;
+import java.rmi.ConnectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
@@ -60,7 +61,7 @@ public class CLI implements View {
      * @throws ConnectionClosedException if unable to connect to the server
      */
     @Override
-    public void start() throws ConnectionClosedException{
+    public void start() throws ConnectionClosedException {
 
         // initialize the chat
         this.gameChat = new GameChat();
@@ -88,7 +89,7 @@ public class CLI implements View {
                         client = new SocketClient(ip, port, this);
                         connected = true;
                     } catch (IOException | IllegalArgumentException e) {
-                        System.out.println("Error connecting to the server, try again");
+                        System.err.println("Error connecting to the server, try again");
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Insert a valid port number!");
@@ -106,14 +107,14 @@ public class CLI implements View {
                         client = new RMIClient(ip, port, this);
                         connected = true;
                     } catch (RemoteException | NotBoundException | IllegalArgumentException | IPNotFoundException e) {
-                        System.out.println("Error connecting to the server, try again");
+                        System.err.println("Error connecting to the server, try again");
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Insert a valid port number!");
                 }
 
             } else {
-                System.out.println("Invalid option");
+                System.err.println("Invalid option");
             }
         } while(!connected);
         WelcomeMessage();
@@ -128,16 +129,13 @@ public class CLI implements View {
 
                 showJoinOrCreate(gameNames);
             } catch (Exception e) {
-                System.err.println("Error connecting to server");
-                e.printStackTrace();
-                throw new ConnectionClosedException("Connection closed");
+                throw new ConnectionClosedException("Error connecting to the server, try again");
             }
         }
 
         //while statement to disconnect the client in case of loss of connection
-        while(true) {
+        while (true) {
             if(!client.getConnected() || !this.connected) {
-                System.out.println("Disconnected");
                 throw new ConnectionClosedException("Connection closed");
             }
         }

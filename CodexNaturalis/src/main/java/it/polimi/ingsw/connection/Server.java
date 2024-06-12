@@ -64,6 +64,7 @@ public class Server implements RemoteServer {
                 Scanner scanner = new Scanner(System.in);
                 System.out.println("Insert the server ip address:");
                 serverIP = scanner.nextLine();
+                scanner.close();
                 // check for valid IP address, otherwise throw the exception
                 if (!serverIP.matches("^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$")) {
                     throw new IPNotFoundException("Error getting the server ip address");

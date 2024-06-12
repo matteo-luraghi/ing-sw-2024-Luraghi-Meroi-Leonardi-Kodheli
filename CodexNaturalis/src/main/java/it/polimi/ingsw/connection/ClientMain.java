@@ -3,6 +3,9 @@ package it.polimi.ingsw.connection;
 import it.polimi.ingsw.view.cli.CLI;
 import it.polimi.ingsw.view.gui.GUI;
 
+import java.rmi.ConnectException;
+import java.rmi.RemoteException;
+
 /**
  * ClientMain class
  * used to launch the game for the client
@@ -16,19 +19,25 @@ public class ClientMain {
      */
     public static void main(String[] args) {
 
-        try {
-            //if no args are passed in, cli will start TODO: Change it to gui when gui works
-            if(args.length == 0 || args[0].equalsIgnoreCase("-gui")){
-                new GUI().start();
-            } else if(args[0].equalsIgnoreCase("-cli")) {
-                new CLI().start();
-            } else {
-                System.out.println("Insert a valid argument");
-            }
+        boolean started = false;
 
-        } catch (ConnectionClosedException e) {
-            System.out.println(e.getMessage());
-        }
+        do {
+            try {
+                //if no args are passed in, gui will start
+                if(args.length == 0 || args[0].equalsIgnoreCase("-gui")){
+                    started = true;
+                    new GUI().start();
+                } else if(args[0].equalsIgnoreCase("-cli")) {
+                    started = true;
+                    new CLI().start();
+                } else {
+                    System.out.println("Insert a valid argument");
+                }
+            } catch (ConnectionClosedException e) {
+                started = false;
+                System.err.println(e.getMessage());
+            }
+        } while (!started);
 
     }
 }
