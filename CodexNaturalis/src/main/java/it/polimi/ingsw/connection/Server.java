@@ -18,6 +18,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -55,13 +56,24 @@ public class Server implements RemoteServer {
     public void start() throws IOException, IPNotFoundException {
         // find the server's ip address
         String serverIP = InetAddress.getLocalHost().getHostAddress();
+        // if the ip is not found or ip is localhost try to get the ip using IPAddreses class
         if (serverIP == null || serverIP.isEmpty() || serverIP.startsWith("127.0.")) {
             serverIP = IPAddresses.getAddress();
+            // try to ask the user the server's ip
             if (serverIP == null) {
-                // TODO: add manual ip selecting?
-                throw new IPNotFoundException("Getting the server ip address");
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Insert the server ip address:");
+                serverIP = scanner.nextLine();
+                // check for valid IP address, otherwise throw the exception
+                if (!serverIP.matches("^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$")) {
+                    throw new IPNotFoundException("Error getting the server ip address");
+                }
             }
         }
+
+        // open the socket
+        this.serverSocket = new ServerSocket(this.port);
+
         System.setProperty("java.rmi.server.hostname", serverIP);
         this.registry = LocateRegistry.createRegistry(1099);
 
@@ -74,11 +86,11 @@ public class Server implements RemoteServer {
             throw new IOException();
         }
 
-        // open the socket and start listening for connections
-        this.serverSocket = new ServerSocket(this.port);
         System.out.println("Server running at " + serverIP);
         System.out.println("Port for Socket connection: " + port);
         System.out.println("Port for RMI connection: " + 1099);
+
+        // start accepting socket connections
         try {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
