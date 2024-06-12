@@ -31,10 +31,12 @@ public class JoinGameRequest extends ServerMessage{
      */
     @Override
     public void show(View view) {
-        try {
-            view.showJoinOrCreate(this.gameNames);
-        } catch (RemoteException e) {
-            System.err.println("Error asking login");
-        }
+        new Thread(() -> {
+            try {
+                view.showJoinOrCreate(this.gameNames);
+            } catch (RemoteException e) {
+                System.err.println("Error asking login");
+            }
+        }).start();
     }
 }
