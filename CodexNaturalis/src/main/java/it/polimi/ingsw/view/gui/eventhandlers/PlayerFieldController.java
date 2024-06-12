@@ -317,7 +317,16 @@ public class PlayerFieldController extends EventHandler{
         y+1 = -60
          */
         //Find the resource card that just got played
-        GameCard card = playerZone.getGameCardByEqualCoordinate(where);
+        GameCard card = null;
+
+        // if this thread is faster than the update game one
+        // wait until the game is updated and then display the played card
+        while(card == null) {
+            try {
+                playerZone = view.getYourPlayerField();
+                card = playerZone.getGameCardByEqualCoordinate(where);
+            } catch (NullPointerException ignored) {}
+        }
 
         //Create the pane
         int newX = where.getX() * 116;
