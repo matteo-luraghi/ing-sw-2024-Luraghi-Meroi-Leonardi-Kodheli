@@ -518,6 +518,18 @@ public class Controller implements RemoteController {
         //Should be fixed, test for this later
         game.nextTurn();
 
+        //this should be the code to skip turns when someone is stuck
+        /*Player currentPlayer = game.getTurn();
+
+        ConnectionHandler currentPlayerHandler = getHandlerByNickname(currentPlayer.getNickname());
+
+        if (!game.getGameTable().getPlayerZones().get(currentPlayer).canPlayHand()) {
+            //the player cannot play any card in any position
+            currentPlayerHandler.sendTextMessage("You are stuck, skipping your turn");
+            changeTurnState();
+            return;
+        }*/
+
         for (Player player : game.getPlayers()) {
             if (!player.getNickname().equals(game.getTurn().getNickname())) {
                 ConnectionHandler c = getHandlerByNickname(player.getNickname());
