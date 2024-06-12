@@ -34,6 +34,7 @@ public abstract class EventHandler {
         alert.setHeaderText("There was a problem with yours or someone's connection");
         alert.setContentText("You will be kicked out now, bye!");
         alert.showAndWait();
+        view.getClient().disconnect();
         Platform.exit();
     }
     /**

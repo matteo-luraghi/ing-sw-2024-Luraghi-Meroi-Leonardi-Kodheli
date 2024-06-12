@@ -60,6 +60,7 @@ public class GUI extends Application implements View{
      */
     public void start() throws ConnectionClosedException {
         launch();
+        throw new ConnectionClosedException("Connection closed");
     }
 
     /**
@@ -75,6 +76,8 @@ public class GUI extends Application implements View{
         stage.setScene(scene);
         stage.show();
         stage.setOnCloseRequest(e -> {
+            currentEventHandler = fxmlLoader.getController();
+            currentEventHandler.disconnection();
             Platform.exit();
             isDisconnecting = true;
         });
@@ -100,6 +103,8 @@ public class GUI extends Application implements View{
                 this.stage.setScene(new Scene(root));
                 stage.setTitle(sceneName.split("\\.")[0]);
                 stage.setOnCloseRequest(e -> {
+                    currentEventHandler = fxmlLoader.getController();
+                    currentEventHandler.disconnection();
                     Platform.exit();
                     isDisconnecting = true;
                 });
@@ -173,7 +178,6 @@ public class GUI extends Application implements View{
 
     public void listenForDisconnection() {
         while(!isDisconnecting) {
-            client = getClient();
             if(client != null && !client.getConnected() && !isDisconnecting) {
                 isDisconnecting = true;
                 Platform.runLater(() -> {
@@ -197,7 +201,7 @@ public class GUI extends Application implements View{
             if(currentEventHandler instanceof PlayerFieldController playerFieldController){
                 playerFieldController.addChatMessage(s);
             } else {
-                currentEventHandler.showPopup("", s);
+                //currentEventHandler.showPopup("", s);
             }
         });
     }
