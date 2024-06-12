@@ -251,7 +251,7 @@ public class CLI implements View {
 
                 if (gameList.contains(gameName)) {
                     System.out.println(AnsiColors.ANSI_RED + "Name already present, choose another one." + AnsiColors.ANSI_RESET);
-                } else if (gameName.equalsIgnoreCase("join") || gameName.equalsIgnoreCase("create") || gameName.equalsIgnoreCase("refresh")) {
+                } else if (gameName.equalsIgnoreCase("join") || gameName.equalsIgnoreCase("create") || gameName.equalsIgnoreCase("refresh") || gameName.equalsIgnoreCase("")) {
                     System.out.println(AnsiColors.ANSI_RED + "Illegal game name, choose another one." + AnsiColors.ANSI_RESET);
                 } else {
                     correctInput = true;
@@ -273,12 +273,16 @@ public class CLI implements View {
         while (!valid) {
             System.out.println("Choose a nickname");
             String nickname = scanner.nextLine();
-            try {
-                client.gameChoice(isJoin, gameName, nickname);
-                valid = true;
-            } catch (Exception e) {
-                // if RMI client exception if the nickname is already present
-                System.out.println("Nickname already existent, choose another one");
+            if (nickname.equalsIgnoreCase("")) {
+                System.out.println(AnsiColors.ANSI_RED + "Illegal nickname, choose another one" + AnsiColors.ANSI_RESET);
+            } else {
+                try {
+                    client.gameChoice(isJoin, gameName, nickname);
+                    valid = true;
+                } catch (Exception e) {
+                    // if RMI client exception if the nickname is already present
+                    System.out.println(AnsiColors.ANSI_RED + "Nickname already existent, choose another one" + AnsiColors.ANSI_RESET);
+                }
             }
         }
     }
