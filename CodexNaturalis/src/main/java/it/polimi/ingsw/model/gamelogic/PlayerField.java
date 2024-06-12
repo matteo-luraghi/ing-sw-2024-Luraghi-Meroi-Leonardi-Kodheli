@@ -68,7 +68,7 @@ public class PlayerField implements Serializable {
      * Checks indistinctly all the possible coordinates within the playable range (also occupied ones) by calling IsPlayable
      * @return true if the player can make a move otherwise false (should skip the turn)
      */
-    boolean canPlayHand()
+    public boolean canPlayHand()
     {
 
         for(ResourceCard card: getHand())
