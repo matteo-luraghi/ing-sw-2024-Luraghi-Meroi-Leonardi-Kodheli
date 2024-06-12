@@ -526,17 +526,32 @@ public class Controller implements RemoteController {
         //Should be fixed, test for this later
         game.nextTurn();
 
+        //code to skip to the end of a game if every hand is empty
+        /*int endGame = 0;
+        for (Player p : game.getPlayers()) {
+            if (game.getGameTable().getPlayerZones().get(p).getHand().isEmpty()) {
+                endGame++;
+            }
+        }
+        if (endGame == game.getPlayers().size()) {
+            for(ConnectionHandler c : getHandlers()){
+                c.sendTextMessage("Counting goals...");
+            }
+            countGoals();
+            return;
+        }*/
         //this should be the code to skip turns when someone is stuck
         /*Player currentPlayer = game.getTurn();
 
         ConnectionHandler currentPlayerHandler = getHandlerByNickname(currentPlayer.getNickname());
 
-        if (!game.getGameTable().getPlayerZones().get(currentPlayer).canPlayHand()) {
+        if (!game.getGameTable().getPlayerZones().get(currentPlayer).canPlayHand() || game.getGameTable().getPlayerZones().get(currentPlayer).getHand().isEmpty()) {
             //the player cannot play any card in any position
             currentPlayerHandler.sendTextMessage("You are stuck, skipping your turn");
             changeTurnState();
             return;
         }*/
+
 
         for (Player player : game.getPlayers()) {
             if (!player.getNickname().equals(game.getTurn().getNickname())) {
