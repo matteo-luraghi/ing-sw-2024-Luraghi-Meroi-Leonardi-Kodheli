@@ -41,9 +41,9 @@ public class PlayerField implements Serializable {
     public PlayerField (StartingCard startingCard) {
         hand = new ArrayList<ResourceCard>();
         gameZone = new HashMap<Coordinates, GameCard>();
-        gameZone.put(new Coordinates(0,0), startingCard);
+        gameZone.put(new Coordinates(0, 0), startingCard);
         resourceMap = getInitializeResourceMap(); //resource map has to be initialized otherwise in resourceMap.get you get a null pointer
-        InPlayOrder=new ArrayList<GameCard>();
+        InPlayOrder = new ArrayList<GameCard>();
         if (startingCard.getIsFront()) { //add to the resource map the starting card's permanent resources
             for (Resource resource : startingCard.getPermanentResources()) {
                 if (resource != null) {
@@ -63,7 +63,31 @@ public class PlayerField implements Serializable {
 
     }
 
+    /**
+     * Checks that with the current hand the player can make a move
+     * Checks indistinctly all the possible coordinates within the playable range (also occupied ones) by calling IsPlayable
+     * @return true if the player can make a move otherwise false (should skip the turn)
+     */
+    boolean canPlayHand()
+    {
 
+        for(ResourceCard card: getHand())
+        {
+            for(GameCard placedCard: getGameZone().values())
+            {
+                Coordinates coordinates=getCoordinates(placedCard);
+                if(IsPlayable(new Coordinates(coordinates.getX()-1, coordinates.getY()+1),card)
+                        || IsPlayable(new Coordinates(coordinates.getX()+1, coordinates.getY()+1),card)
+                        || IsPlayable(new Coordinates(coordinates.getX()-1, coordinates.getY()-1),card)
+                        || IsPlayable(new Coordinates(coordinates.getX()+1, coordinates.getY()-1),card)
+                )
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     /**
      * inOrderPlayList getter, this arraylist is useful for keeping track of the placing
      * order in the gui interface (overlapping corners)
