@@ -445,6 +445,14 @@ public class Controller implements RemoteController {
                 c.updateGame(game);
             }
 
+            //code to skip drawing phase when the decks are empty
+            /*if (game.getGameTable().getGoldDeck().isDeckEmpty() && game.getGameTable().getResourceDeck().isDeckEmpty()) {
+                ConnectionHandler c = getHandlerByNickname(currentPlayer.getNickname());
+                c.sendTextMessage("The decks are empty. Skipping draw phase.");
+                changeTurnState();
+            } else {
+                drawCardState();
+            }*/
             // next phase
             drawCardState();
         }else{
