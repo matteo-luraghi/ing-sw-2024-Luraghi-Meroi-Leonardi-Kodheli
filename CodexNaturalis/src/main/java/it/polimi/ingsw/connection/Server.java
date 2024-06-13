@@ -39,7 +39,7 @@ public class Server implements RemoteServer {
 
     /**
      * Constructor
-     * @param port server port
+     * @param port server port for the socket connection
      */
     public Server(int port) {
         this.port = port;
@@ -51,7 +51,7 @@ public class Server implements RemoteServer {
      * Start the server by exposing itself in the RMI registry,
      * opening the server socket and starting accepting socket connections
      * @throws IOException if the socket initialization fails
-     * @throws IPNotFoundException if unable to find the machine's ip
+     * @throws IPNotFoundException if unable to find the server's ip
      */
     public void start() throws IOException, IPNotFoundException {
         // find the server's ip address
@@ -143,9 +143,10 @@ public class Server implements RemoteServer {
     }
 
     /**
-     * Overloading of addToGame with number of players
-     * @param connectionHandler the client handler
+     * Create a new game
+     * @param connectionHandler the client handler of the game's creator
      * @param numberOfPlayers the number of players for the new game
+     * @param gameName the name of the new game
      */
     @Override
     public void createGame(ConnectionHandler connectionHandler, int numberOfPlayers, String gameName) {
@@ -210,14 +211,14 @@ public class Server implements RemoteServer {
                 this.registry.unbind("controller"+controller.getGameName());
             } catch (Exception ignored) {}
 
-            // send a disconnection message to all player
+            // send a disconnection message to all the other players in the game
             controller.broadcastMessage(new Disconnection(connectionHandler.getClientNickname()), handlers);
 
         }
     }
 
     /**
-     * Check if the nickname is unique in the group
+     * Check if the nickname is unique in all the games
      * @param nickname the nickname
      * @return true if no other player with the same nickname
      */
@@ -235,7 +236,7 @@ public class Server implements RemoteServer {
     }
 
     /**
-     * Get all the games names
+     * Get all the games' names
      * @return the names
      */
     @Override

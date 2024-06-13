@@ -18,13 +18,14 @@ public class Winner extends ServerMessage {
 
     /**
      * Constructor
+     * @param game the game
      */
     public Winner(GameState game) {
         this.game = game;
     }
 
     /**
-     * Shows the winner in CLI or GUI
+     * Show the winner
      * @param view the view interface
      */
     @Override

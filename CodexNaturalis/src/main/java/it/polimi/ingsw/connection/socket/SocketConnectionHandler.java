@@ -13,10 +13,7 @@ import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.model.gamelogic.ScoreBoard;
 import it.polimi.ingsw.model.gamelogic.gamechat.GameChat;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -24,9 +21,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * SocketConnectionHandler class
+ * used to manage connection via socket between server and client
  * @author Matteo Leonardo Luraghi
  */
 public class SocketConnectionHandler extends ConnectionHandler implements Runnable {
+    @Serial
+    private static final long serialVersionUID = 896814728292632245L;
     private final Server server;
     private final Socket socket;
     private final Thread pingThread;
@@ -36,8 +36,8 @@ public class SocketConnectionHandler extends ConnectionHandler implements Runnab
 
     /**
      * Constructor that initializes a ping thread
-     * @param server a server
-     * @param socket a socket
+     * @param server the server
+     * @param socket the socket
      */
     public SocketConnectionHandler(Server server, Socket socket) {
         this.server = server;
@@ -54,6 +54,11 @@ public class SocketConnectionHandler extends ConnectionHandler implements Runnab
         });
     }
 
+    /**
+     * Start the connection handler by getting the input and output streams of the socket connection,
+     * starting the pingThread, sending the first JoinGameRequest
+     * and start listening for new messages from the server
+     */
     @Override
     public void run() {
         try {

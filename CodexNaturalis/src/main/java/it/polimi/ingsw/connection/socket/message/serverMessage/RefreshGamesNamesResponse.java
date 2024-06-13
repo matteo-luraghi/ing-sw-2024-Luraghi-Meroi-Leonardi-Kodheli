@@ -16,13 +16,16 @@ public class RefreshGamesNamesResponse extends ServerMessage{
     private static final long serialVersionUID = -7449258385989902785L;
     private final ArrayList<String> gamesNames;
 
+    /**
+     * Constructor
+     * @param gamesNames the available games' names
+     */
     public RefreshGamesNamesResponse(ArrayList<String> gamesNames) {
         this.gamesNames = gamesNames;
     }
 
     /**
-     * show the message in the CLI or GUI
-     *
+     * Show the message
      * @param view the view interface
      */
     @Override

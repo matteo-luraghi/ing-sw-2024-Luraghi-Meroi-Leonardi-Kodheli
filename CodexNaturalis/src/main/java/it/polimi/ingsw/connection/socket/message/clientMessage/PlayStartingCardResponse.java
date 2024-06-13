@@ -15,8 +15,8 @@ public class PlayStartingCardResponse extends ClientMessage {
     @Serial
     private static final long serialVersionUID = -2792935142620727036L;
     private final StartingCard card;
-
     private final boolean isFront;
+
     /**
      * Constructor
      * @param card the card to play

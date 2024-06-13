@@ -6,15 +6,28 @@ import it.polimi.ingsw.view.mainview.View;
 import java.io.Serial;
 import java.rmi.RemoteException;
 
+/**
+ * UpdateGameMessage class
+ * used to send the updated game to the players
+ * @author Matteo Leonardo Luraghi
+ */
 public class UpdateGameMessage extends ServerMessage {
     @Serial
     private static final long serialVersionUID = 5383660042861452692L;
     private final GameState game;
 
+    /**
+     * Constructor
+     * @param game the updated game
+     */
     public UpdateGameMessage(GameState game) {
         this.game = game;
     }
 
+    /**
+     * Set the updated game in the view
+     * @param view the view interface
+     */
     @Override
     public void show(View view) {
         new Thread(() -> {

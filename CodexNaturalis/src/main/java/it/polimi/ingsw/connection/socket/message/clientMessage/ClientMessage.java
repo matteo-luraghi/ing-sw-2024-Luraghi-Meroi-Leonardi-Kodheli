@@ -15,7 +15,7 @@ public abstract class ClientMessage implements Serializable {
     private static final long serialVersionUID = -748320518806449772L;
 
     /**
-     * constructor
+     * Constructor
      */
     public ClientMessage() {
     }

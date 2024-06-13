@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 /**
  * RMIConnectionHandler class
+ * used to manage connection via RMI between server and client
  * @author Matteo Leonardo Luraghi
  */
 public class RMIConnectionHandler extends ConnectionHandler {
@@ -30,6 +31,11 @@ public class RMIConnectionHandler extends ConnectionHandler {
     private final Registry registry;
     private final Registry viewRegistry;
 
+    /**
+     * Constructor
+     * @param registry the RMI server registry
+     * @param viewRegistry the RMI view registry
+     */
     public RMIConnectionHandler(Registry registry, Registry viewRegistry) {
         this.registry = registry;
         this.viewRegistry = viewRegistry;
@@ -357,7 +363,6 @@ public class RMIConnectionHandler extends ConnectionHandler {
             server.removeClient(this);
         } catch (Exception e) {
             System.err.println("Error disconnecting");
-            e.printStackTrace();
         }
     }
 }

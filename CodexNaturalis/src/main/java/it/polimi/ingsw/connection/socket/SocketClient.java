@@ -12,17 +12,16 @@ import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.Coordinates;
 import it.polimi.ingsw.model.gamelogic.gamechat.Message;
 import it.polimi.ingsw.view.mainview.View;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.ArrayList;
 
 /**
  * SocketClient class
+ * used to receive and send messages from and to the server
  * @author Matteo Leonardo Luraghi
  */
 public class SocketClient extends Client {
@@ -34,8 +33,8 @@ public class SocketClient extends Client {
 
     /**
      * Constructor, builds the threads needed for messages
-     * @param ip the ip address
-     * @param port the port of the connection
+     * @param ip the server's ip address
+     * @param port the server's port of the connection
      * @param view View interface
      * @throws IOException if the connection with the server fails
      */
@@ -117,6 +116,12 @@ public class SocketClient extends Client {
         }
     }
 
+    /**
+     * Send the chosen game name to the server
+     * @param isJoin true if the user wants to join a game
+     * @param gameName game name
+     * @param nickname user nickname
+     */
     @Override
     public void gameChoice(boolean isJoin, String gameName, String nickname) {
         sendMessageServer(new JoinGameResponse(isJoin, gameName, nickname));

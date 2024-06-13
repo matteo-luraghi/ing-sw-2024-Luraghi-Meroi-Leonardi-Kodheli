@@ -19,6 +19,7 @@ public class PlayersNumberResponse extends ClientMessage{
     /**
      * Constructor
      * @param numPlayers number of players
+     * @param gameName the game's to join name
      */
     public PlayersNumberResponse(int numPlayers, String gameName) {
         this.numPlayers = numPlayers;

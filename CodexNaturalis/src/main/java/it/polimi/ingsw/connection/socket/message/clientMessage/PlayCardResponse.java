@@ -18,9 +18,12 @@ public class PlayCardResponse extends ClientMessage {
     private final ResourceCard card;
     private final Coordinates where;
     private final boolean isFront;
+
     /**
      * Constructor
      * @param card the card to play
+     * @param where the coordinates
+     * @param isFront specify the side of the card
      */
     public PlayCardResponse(ResourceCard card, Coordinates where, boolean isFront) {
         this.card = card;

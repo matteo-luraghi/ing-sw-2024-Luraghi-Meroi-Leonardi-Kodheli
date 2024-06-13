@@ -18,8 +18,7 @@ public class RefreshGamesNamesRequest extends ClientMessage{
     private static final long serialVersionUID = 512033551693565894L;
 
     /**
-     * Execute the specific action based on message
-     *
+     * Get the names of the games from the server and send them to the client
      * @param server            server to use
      * @param connectionHandler client handler
      */

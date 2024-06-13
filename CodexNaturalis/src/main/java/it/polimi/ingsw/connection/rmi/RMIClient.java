@@ -10,7 +10,6 @@ import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.Coordinates;
 import it.polimi.ingsw.model.gamelogic.gamechat.Message;
 import it.polimi.ingsw.view.mainview.View;
-
 import java.net.InetAddress;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -21,6 +20,7 @@ import java.util.ArrayList;
 
 /**
  * RMIClient class
+ * used to manage the RMI connection with the Server
  * @author Matteo Leonardo Luraghi
  */
 public class RMIClient extends Client {

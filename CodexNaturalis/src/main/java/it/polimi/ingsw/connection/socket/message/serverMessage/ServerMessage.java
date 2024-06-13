@@ -14,13 +14,13 @@ public abstract class ServerMessage implements Serializable {
     private static final long serialVersionUID = -5503253453512925709L;
 
     /**
-     * Constructor, sets the message type
+     * Constructor
      */
     public ServerMessage() {
     }
 
     /**
-     * show the message in the CLI or GUI
+     * show the message
      * @param view the view interface
      */
     public abstract void show(View view);

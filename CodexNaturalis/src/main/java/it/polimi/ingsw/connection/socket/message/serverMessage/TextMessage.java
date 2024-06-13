@@ -24,7 +24,7 @@ public class TextMessage extends ServerMessage {
     }
 
     /**
-     * Show the message in the CLI or GUI
+     * Show the message
      * @param view the view interface
      */
     @Override

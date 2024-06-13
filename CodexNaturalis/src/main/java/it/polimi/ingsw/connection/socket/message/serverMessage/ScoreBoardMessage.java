@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 /**
  * ScoreBoardMessage class
  * used to show the scoreboard during the final phase of the game
+ * @author Matteo Leonardo Luraghi
  */
 public class ScoreBoardMessage extends ServerMessage{
     @Serial
@@ -24,7 +25,7 @@ public class ScoreBoardMessage extends ServerMessage{
     }
 
     /**
-     * Show the scoreboard via CLI or GUI
+     * Show the scoreboard
      * @param view the view interface
      */
     @Override

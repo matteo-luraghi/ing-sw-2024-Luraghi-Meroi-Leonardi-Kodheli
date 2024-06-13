@@ -9,6 +9,11 @@ import java.io.Serial;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+/**
+ * JoinGameResponse class
+ * used to add the player to the selected game or create a new game
+ * @author Matteo Leonardo Luraghi
+ */
 public class JoinGameResponse extends ClientMessage{
     @Serial
     private static final long serialVersionUID = 3108231749238138153L;
@@ -16,6 +21,12 @@ public class JoinGameResponse extends ClientMessage{
     private final String gameName;
     private final String nickname;
 
+    /**
+     * Constructor
+     * @param isJoin select the join or create option
+     * @param gameName the game's name
+     * @param nickname the player's nickname
+     */
     public JoinGameResponse(boolean isJoin, String gameName, String nickname) {
         this.isJoin = isJoin;
         this.gameName = gameName;
@@ -23,8 +34,7 @@ public class JoinGameResponse extends ClientMessage{
     }
 
     /**
-     * Execute the specific action based on message
-     *
+     * Add the player to the selected game or create a new game
      * @param server            server to use
      * @param connectionHandler client handler
      */

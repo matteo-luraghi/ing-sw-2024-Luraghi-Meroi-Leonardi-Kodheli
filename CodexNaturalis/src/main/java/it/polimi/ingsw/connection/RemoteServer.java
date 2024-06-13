@@ -21,14 +21,15 @@ public interface RemoteServer extends Remote {
     void joinGame(ConnectionHandler connectionHandler, String gameName) throws RemoteException;
 
     /**
-     * Overloading of addToGame with number of players
-     * @param connectionHandler the client handler
+     * Create a new game
+     * @param connectionHandler the client handler of the game's creator
      * @param numberOfPlayers the number of players for the new game
+     * @param gameName the name of the new game
      */
     void createGame(ConnectionHandler connectionHandler, int numberOfPlayers, String gameName) throws RemoteException;
 
     /**
-     * Check if the nickname is unique in the group
+     * Check if the nickname is unique in all the games
      * @param nickname the nickname
      * @return true if no other player with the same nickname
      */
@@ -41,7 +42,7 @@ public interface RemoteServer extends Remote {
     void removeClient(ConnectionHandler connectionHandler) throws RemoteException;
 
     /**
-     * Get all the games names
+     * Get all the games' names
      * @return the names
      */
      ArrayList<String> getGamesNames() throws RemoteException;

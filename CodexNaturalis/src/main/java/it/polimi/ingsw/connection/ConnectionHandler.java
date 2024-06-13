@@ -183,6 +183,11 @@ public abstract class ConnectionHandler implements Serializable {
      */
     public void disconnect() {}
 
+    /**
+     * Equality based on nickname
+     * @param o the connectionHanlder to check equality with
+     * @return true if the nickname is the same in both the connectionHandlers
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

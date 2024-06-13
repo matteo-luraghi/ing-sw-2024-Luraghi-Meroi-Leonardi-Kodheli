@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
 public class YourTurn extends ServerMessage {
     @Serial
     private static final long serialVersionUID = -532540375599572593L;
+
     /**
      * Constructor
      */
@@ -25,22 +26,22 @@ public class YourTurn extends ServerMessage {
      */
     @Override
     public void show(View view) {
-            new Thread(() -> {
-                try {
-                    view.showMessage("It's your turn!");
-                } catch (RemoteException e) {
-                    System.err.println("Error sending message");
-                }
-                try {
-                    view.setMyTurn(true);
-                } catch (RemoteException e) {
-                    System.err.println("Error setting my turn");
-                }
-                try {
-                    view.setPlayPhase(true);
-                } catch (RemoteException e) {
-                    System.err.println("Error setting play phase");
-                }
-            }).start();
+        new Thread(() -> {
+            try {
+                view.showMessage("It's your turn!");
+            } catch (RemoteException e) {
+                System.err.println("Error sending message");
+            }
+            try {
+                view.setMyTurn(true);
+            } catch (RemoteException e) {
+                System.err.println("Error setting my turn");
+            }
+            try {
+                view.setPlayPhase(true);
+            } catch (RemoteException e) {
+                System.err.println("Error setting play phase");
+            }
+        }).start();
     }
 }

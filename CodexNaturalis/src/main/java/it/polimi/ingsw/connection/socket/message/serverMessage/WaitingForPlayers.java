@@ -21,7 +21,7 @@ public class WaitingForPlayers extends ServerMessage {
     }
 
     /**
-     * Shows the waiting for players window in CLI or GUI
+     * Shows the waiting for players message
      * @param view the view interface
      */
     @Override

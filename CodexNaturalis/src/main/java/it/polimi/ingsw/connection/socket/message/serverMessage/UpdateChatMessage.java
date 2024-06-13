@@ -25,7 +25,7 @@ public class UpdateChatMessage extends ServerMessage {
     }
 
     /**
-     * Shows the chat via TUI or GUI
+     * Show the chat
      * @param view the view interface
      */
     @Override
