@@ -69,18 +69,19 @@ public class PlayerField implements Serializable {
      * @return true if the player can make a move otherwise false (should skip the turn)
      */
     public boolean canPlayHand() {
-        Resource[] corners = new Resource[4];
-        for(int i=0; i<4; i++) {corners[i] = Resource.BLANK;}
-        ResourceCard card = new ResourceCard(Kingdom.FUNGI, false, corners, 0, false, -1);
+        ResourceCard card = getHand().get(0);
+        card.flip();
         for(GameCard placedCard: getGameZone().values()) {
             Coordinates coordinates=getCoordinates(placedCard);
             if(IsPlayable(new Coordinates(coordinates.getX()-1, coordinates.getY()+1),card)
                     || IsPlayable(new Coordinates(coordinates.getX()+1, coordinates.getY()+1),card)
                     || IsPlayable(new Coordinates(coordinates.getX()-1, coordinates.getY()-1),card)
                     || IsPlayable(new Coordinates(coordinates.getX()+1, coordinates.getY()-1),card)) {
+                card.flip();
                 return true;
             }
         }
+        card.flip();
         return false;
     }
 
