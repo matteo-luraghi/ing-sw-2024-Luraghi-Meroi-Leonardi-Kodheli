@@ -50,7 +50,7 @@ import java.util.*;
     /**
      * Client Handler getter by nickname
      * @param nickname the nickname of a Player
-     * @return the corresponding SocketConnectionHandler
+     * @return the corresponding ConnectionHandler
      * @throws RemoteException to handle exceptions that may occur when using RMI
      */
      ConnectionHandler getHandlerByNickname(String nickname) throws RemoteException;
@@ -106,6 +106,10 @@ import java.util.*;
      */
      void setColor(ConnectionHandler connectionHandler, Color color) throws RemoteException;
 
+    /**
+     * checks if the game is ready to start
+     * @throws RemoteException to handle exceptions that may occur using RMI
+     */
      void checkGame() throws RemoteException;
 
     /**
@@ -144,9 +148,10 @@ import java.util.*;
 
     /**
      * Make the player play a card if it can be played, otherwise make the player chose a new pair of card/where
+     * @param connectionHandler The player who is playing the card
      * @param card The card that needs to be played
      * @param where Where the card needs to be played
-     * @param connectionHandler The player who is playing the card
+     * @param isFront The side to play the card
      * @throws RemoteException to handle exceptions that may occur when using RMI
      */
      void playCard(ConnectionHandler connectionHandler, ResourceCard card, Coordinates where, boolean isFront) throws RemoteException;
@@ -159,9 +164,9 @@ import java.util.*;
 
     /**
      * Make the player draw a card if it can be drawn, otherwise make the player draw from somewhere else
+     * @param connectionHandler The player who is playing the card
      * @param which the card he wants to draw
      * @param isGold which deck he wants to draw from
-     * @param connectionHandler The player who is playing the card
      * @throws RemoteException to handle exceptions that may occur when using RMI
      */
      void drawCard(ConnectionHandler connectionHandler, int which, boolean isGold) throws RemoteException;

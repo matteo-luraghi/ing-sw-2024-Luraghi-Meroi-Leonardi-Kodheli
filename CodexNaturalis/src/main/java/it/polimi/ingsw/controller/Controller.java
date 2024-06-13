@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -33,8 +34,11 @@ public class Controller implements RemoteController {
     private boolean isLastTurn;
     private int numOfGoalCardsChosen;
     private final String gameName;
+
     /**
-     * Constructor without parameters
+     * Constructor
+     * @param gameName the game's name
+     * @param numOfPlayers the number of players needed for the game
      */
     public Controller(String gameName, int numOfPlayers) {
         this.gameName = gameName;
@@ -58,7 +62,6 @@ public class Controller implements RemoteController {
 
     /**
      * gameState getter
-     *
      * @return the current gameState;
      */
     @Override
@@ -68,7 +71,6 @@ public class Controller implements RemoteController {
 
     /**
      * gameState setter
-     *
      * @param game the game
      */
     @Override
@@ -78,7 +80,6 @@ public class Controller implements RemoteController {
 
     /**
      * Client handlers getter
-     *
      * @return list of handlers
      */
     @Override
@@ -88,7 +89,6 @@ public class Controller implements RemoteController {
 
     /**
      * Add a client handler to the list
-     *
      * @param handler client handler to be added
      */
     @Override
@@ -98,9 +98,8 @@ public class Controller implements RemoteController {
 
     /**
      * Client Handler getter by nickname
-     *
      * @param nickname the nickname of a Player
-     * @return the corresponding SocketConnectionHandler
+     * @return the corresponding ConnectionHandler
      */
     @Override
     public ConnectionHandler getHandlerByNickname(String nickname) {
@@ -119,7 +118,6 @@ public class Controller implements RemoteController {
 
     /**
      * Send a message to all the clients
-     *
      * @param msg      the message to be sent
      * @param handlers all the handlers to send the message to
      */
@@ -137,7 +135,6 @@ public class Controller implements RemoteController {
 
     /**
      * isGamEnded setter
-     *
      * @param gameEnded value
      */
     @Override
@@ -147,7 +144,6 @@ public class Controller implements RemoteController {
 
     /**
      * isGameEnded getter
-     *
      * @return value
      */
     @Override
@@ -157,7 +153,6 @@ public class Controller implements RemoteController {
 
     /**
      * isGameStarted setter
-     *
      * @param gameStarted value
      */
     @Override
@@ -167,7 +162,6 @@ public class Controller implements RemoteController {
 
     /**
      * isGameStarted getter
-     *
      * @return value
      */
     @Override
@@ -177,7 +171,6 @@ public class Controller implements RemoteController {
 
     /**
      * Get all the starting cards from the json files
-     *
      * @return the shuffled queue of starting cards
      */
     private Queue<StartingCard> getStartingCards() {
@@ -189,7 +182,7 @@ public class Controller implements RemoteController {
                 JsonObject parsedStartingCard = parser.parse(reader).getAsJsonObject();
                 cardsList.add(Util.fromJSONtoStartingCard(parsedStartingCard));
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println("Error parsing starting cards");
             }
         }
         Collections.shuffle(cardsList);
@@ -211,19 +204,22 @@ public class Controller implements RemoteController {
                 boolean isResourceGoal=parsedGoalCard.get("isResourceGoal").getAsBoolean();
                 if(isResourceGoal) {
                     cardsList.add(Util.fromJSONtoResourceGoalCard(parsedGoalCard));
-                }
-                else {
+                } else {
                     cardsList.add(Util.fromJSONtoPositionGoalCard(parsedGoalCard));
                 }
-
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println("Error parsing goal cards");
             }
         }
         Collections.shuffle(cardsList);
         return new LinkedList<>(cardsList);
     }
 
+
+    /**
+     * sets the state as choose color
+     * @param connectionHandler the current connection handler
+     */
     @Override
     public void chooseColorState(ConnectionHandler connectionHandler) {
         ArrayList<Color> availableColors = new ArrayList<>(List.of(Color.values()));
@@ -233,6 +229,11 @@ public class Controller implements RemoteController {
         connectionHandler.colorRequest(availableColors);
     }
 
+    /**
+     * sets the player's color
+     * @param connectionHandler the player's connection handler
+     * @param color the chosen color
+     */
     @Override
     public void setColor(ConnectionHandler connectionHandler, Color color){
         for(ConnectionHandler c: getHandlers()){
@@ -256,6 +257,10 @@ public class Controller implements RemoteController {
         }
     }
 
+    /**
+     * checks if the game is ready to start
+     * @throws RemoteException to handle exceptions that may occur using RMI
+     */
     @Override
     public void checkGame() {
         Optional<ConnectionHandler> userWithoutColor = getHandlers().stream().parallel()
@@ -349,6 +354,7 @@ public class Controller implements RemoteController {
         }
         game.getGameTable().getPlayerZones().get(currentPlayer).addStartingCard(card);
     }
+
     /**
      * Sets the chosen goal card as a private goal for a certain player
      * @param goal the goal card chosen
@@ -409,9 +415,10 @@ public class Controller implements RemoteController {
 
     /**
      * Make the player play a card if it can be played, otherwise make the player chose a new pair of card/where
+     * @param connectionHandler The player who is playing the card
      * @param card The card that needs to be played
      * @param where Where the card needs to be played
-     * @param connectionHandler The player who is playing the card
+     * @param isFront The side to play the card
      */
     @Override
     public void playCard(ConnectionHandler connectionHandler, ResourceCard card, Coordinates where, boolean isFront) {
@@ -474,9 +481,9 @@ public class Controller implements RemoteController {
 
     /**
      * Make the player draw a card if it can be drawn, otherwise make the player draw from somewhere else
+     * @param connectionHandler The player who is playing the card
      * @param which the card he wants to draw
      * @param isGold which deck he wants to draw from
-     * @param connectionHandler The player who is playing the card
      */
     @Override
     public void drawCard(ConnectionHandler connectionHandler, int which, boolean isGold) {
@@ -610,6 +617,10 @@ public class Controller implements RemoteController {
         //Do i have to do something for when the game ends?
     }
 
+    /**
+     * Save the message in the chat
+     * @param message the message
+     */
     @Override
     public void addMessageToChat(Message message) {
         game.saveMessage(message);
