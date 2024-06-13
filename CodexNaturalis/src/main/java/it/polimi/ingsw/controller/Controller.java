@@ -453,13 +453,13 @@ public class Controller implements RemoteController {
             }
 
             //code to skip drawing phase when the decks are empty
-            /*if (game.getGameTable().getGoldDeck().isDeckEmpty() && game.getGameTable().getResourceDeck().isDeckEmpty()) {
+            if (game.getGameTable().getGoldDeck().isDeckEmpty() && game.getGameTable().getResourceDeck().isDeckEmpty()) {
                 ConnectionHandler c = getHandlerByNickname(currentPlayer.getNickname());
                 c.sendTextMessage("The decks are empty. Skipping draw phase.");
                 changeTurnState();
             } else {
                 drawCardState();
-            }*/
+            }
             // next phase
             drawCardState();
         }else{
@@ -534,7 +534,7 @@ public class Controller implements RemoteController {
         game.nextTurn();
 
         //code to skip to the end of a game if every hand is empty
-        /*int endGame = 0;
+        int endGame = 0;
         for (Player p : game.getPlayers()) {
             if (game.getGameTable().getPlayerZones().get(p).getHand().isEmpty()) {
                 endGame++;
@@ -546,9 +546,9 @@ public class Controller implements RemoteController {
             }
             countGoals();
             return;
-        }*/
+        }
         //this should be the code to skip turns when someone is stuck
-        /*Player currentPlayer = game.getTurn();
+        Player currentPlayer = game.getTurn();
 
         ConnectionHandler currentPlayerHandler = getHandlerByNickname(currentPlayer.getNickname());
 
@@ -557,7 +557,7 @@ public class Controller implements RemoteController {
             currentPlayerHandler.sendTextMessage("You are stuck, skipping your turn");
             changeTurnState();
             return;
-        }*/
+        }
 
 
         for (Player player : game.getPlayers()) {
@@ -566,7 +566,7 @@ public class Controller implements RemoteController {
             }
         }
 
-        if (!isPenultimateTurn && game.getGameTable().getScoreBoard().getBoard().values().stream().anyMatch(value -> value > 0)){
+        if (!isPenultimateTurn && game.getGameTable().getScoreBoard().getBoard().values().stream().anyMatch(value -> value >= 20)){
             //If someone has at least 20 points, we start the countdown
             isPenultimateTurn = true;
             for(ConnectionHandler c : getHandlers()){

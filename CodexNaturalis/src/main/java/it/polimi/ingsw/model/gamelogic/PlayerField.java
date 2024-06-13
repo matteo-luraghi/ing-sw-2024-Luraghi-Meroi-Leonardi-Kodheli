@@ -68,26 +68,22 @@ public class PlayerField implements Serializable {
      * Checks indistinctly all the possible coordinates within the playable range (also occupied ones) by calling IsPlayable
      * @return true if the player can make a move otherwise false (should skip the turn)
      */
-    public boolean canPlayHand()
-    {
-
-        for(ResourceCard card: getHand())
-        {
-            for(GameCard placedCard: getGameZone().values())
-            {
-                Coordinates coordinates=getCoordinates(placedCard);
-                if(IsPlayable(new Coordinates(coordinates.getX()-1, coordinates.getY()+1),card)
-                        || IsPlayable(new Coordinates(coordinates.getX()+1, coordinates.getY()+1),card)
-                        || IsPlayable(new Coordinates(coordinates.getX()-1, coordinates.getY()-1),card)
-                        || IsPlayable(new Coordinates(coordinates.getX()+1, coordinates.getY()-1),card)
-                )
-                {
-                    return true;
-                }
+    public boolean canPlayHand() {
+        Resource[] corners = new Resource[4];
+        for(int i=0; i<4; i++) {corners[i] = Resource.BLANK;}
+        ResourceCard card = new ResourceCard(Kingdom.FUNGI, false, corners, 0, false, -1);
+        for(GameCard placedCard: getGameZone().values()) {
+            Coordinates coordinates=getCoordinates(placedCard);
+            if(IsPlayable(new Coordinates(coordinates.getX()-1, coordinates.getY()+1),card)
+                    || IsPlayable(new Coordinates(coordinates.getX()+1, coordinates.getY()+1),card)
+                    || IsPlayable(new Coordinates(coordinates.getX()-1, coordinates.getY()-1),card)
+                    || IsPlayable(new Coordinates(coordinates.getX()+1, coordinates.getY()-1),card)) {
+                return true;
             }
         }
         return false;
     }
+
     /**
      * inOrderPlayList getter, this arraylist is useful for keeping track of the placing
      * order in the gui interface (overlapping corners)
