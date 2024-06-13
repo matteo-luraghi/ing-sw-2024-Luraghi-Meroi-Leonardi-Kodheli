@@ -34,7 +34,6 @@ public class ClientMain {
                     System.out.println("Insert a valid argument");
                 }
             } catch (ConnectionClosedException e) {
-                started = false;
                 System.err.println(e.getMessage());
             }
         } while (!started);
