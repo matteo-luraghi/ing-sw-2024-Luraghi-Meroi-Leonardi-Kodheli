@@ -56,7 +56,7 @@
          </AnchorPane>
       </left>
       <center>
-         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <AnchorPane BorderPane.alignment="CENTER">
             <ScrollPane hvalue="0.5" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #d1be71;" vvalue="0.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1200.0" prefWidth="1200.0" style="-fx-background-color: #f0ead1;">
                   <StackPane layoutX="-914.0" layoutY="-500.0" prefHeight="10000.0" prefWidth="1300.0" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="-500.0" AnchorPane.leftAnchor="-1000.0" AnchorPane.rightAnchor="-1000.0" AnchorPane.topAnchor="-500.0">
@@ -109,7 +109,8 @@
                               <Label fx:id="points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="71.0" text="Points: 0">
                                  <font>
                                     <Font name="Cambria Bold" size="12.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                                  <Image url="@assets/Icons/animal.png" />
                               </ImageView>
@@ -180,7 +181,8 @@
                               <Label fx:id="points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="70.0" text="Points: 0">
                                  <font>
                                     <Font name="Cambria Bold" size="12.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@assets/Icons/animal.png" />
@@ -265,7 +267,8 @@
                               <Label fx:id="points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="71.0" text="Points: 0">
                                  <font>
                                     <Font name="Cambria Bold" size="12.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@assets/Icons/animal.png" />
@@ -350,7 +353,8 @@
                               <Label fx:id="points" layoutX="133.0" layoutY="6.0" prefHeight="17.0" prefWidth="75.0" text="Points: 0">
                                  <font>
                                     <Font name="Cambria Bold" size="12.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="145.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@assets/Icons/animal.png" />
@@ -454,6 +458,7 @@
                            <Font name="Cambria Bold Italic" size="21.0" />
                         </font>
                      </Label>
+                     <Line endX="141.0" endY="-57.0" layoutX="359.0" layoutY="57.0" startX="141.0" startY="95.0" stroke="#7c6c34" strokeWidth="3.0" />
                   </Pane>
                   <Pane layoutX="503.0" prefHeight="130.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="510.0" AnchorPane.topAnchor="0.0">
                      <Label layoutX="52.0" layoutY="1.0" text="Private Goal">
@@ -463,6 +468,7 @@
                      </Label>
                      <ImageView fx:id="privateGoal" fitHeight="150.0" fitWidth="150.0" layoutX="25.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                      </ImageView>
+                     <Line endX="141.0" endY="-57.0" layoutX="59.0" layoutY="55.0" startX="141.0" startY="95.0" stroke="#7c6c34" strokeWidth="3.0" />
                   </Pane>
                   <Pane layoutX="826.0" layoutY="-35.0" prefHeight="130.0" prefWidth="369.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="720.0" AnchorPane.topAnchor="0.0">
                      <ImageView fx:id="commonGoal0" fitHeight="150.0" fitWidth="150.0" layoutX="14.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
@@ -474,6 +480,7 @@
                            <Font name="Cambria Bold Italic" size="18.0" />
                         </font>
                      </Label>
+                     <Line endX="141.0" endY="-57.0" layoutX="229.0" layoutY="57.0" startX="141.0" startY="95.0" stroke="#7c6c34" strokeWidth="3.0" />
                   </Pane>
                   <Pane layoutX="10.0" layoutY="10.0" prefHeight="130.0" prefWidth="500.0" AnchorPane.leftAnchor="1100.0" AnchorPane.topAnchor="0.0">
                      <ImageView fx:id="resourceDeck" fitHeight="120.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
@@ -496,6 +503,7 @@
                            <Font name="Cambria Bold Italic" size="21.0" />
                         </font>
                      </Label>
+                     <Line endX="141.0" endY="-57.0" layoutX="360.0" layoutY="49.0" startX="141.0" startY="95.0" stroke="#7c6c34" strokeWidth="3.0" />
                   </Pane>
                   <Pane layoutX="20.0" layoutY="20.0" prefHeight="130.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1600.0" AnchorPane.topAnchor="0.0">
                      <ImageView fx:id="goldDeck" fitHeight="120.0" fitWidth="150.0" layoutX="10.0" layoutY="30.0" onMouseClicked="#drawCard" pickOnBounds="true" preserveRatio="true">
