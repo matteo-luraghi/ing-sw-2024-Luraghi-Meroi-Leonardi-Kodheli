@@ -180,14 +180,17 @@ public class GameState implements Serializable {
     private Player ComputeWinner()
     {
         int points=0;
+        int goalCount=0;
         Player CurrWinner = null;
         for(Player player: this.players)
         {
-            if(gameTable.getScoreBoard().getPoints(player)>points)
+            if(gameTable.getScoreBoard().getPoints(player)>points || (gameTable.getScoreBoard().getPoints(player)==points && gameTable.getScoreBoard().GetReachedPointsCount(player)>goalCount))
             {
                 points=gameTable.getScoreBoard().getPoints(player);
+                goalCount=gameTable.getScoreBoard().GetReachedPointsCount(player);
                 CurrWinner=player;
             }
+
 
         }
 

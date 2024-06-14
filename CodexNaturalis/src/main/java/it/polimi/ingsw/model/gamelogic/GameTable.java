@@ -153,7 +153,7 @@ public class GameTable implements Serializable {
      */
     private int countCommonGoalPoints(PlayerField Player) {
         int points = 0;
-        int min = 0;
+        int min;
 
         for (int i = 0; i < 2; i++) {
             GoalCard commonGoal = getCommonGoal(i);
@@ -169,6 +169,7 @@ public class GameTable implements Serializable {
                     min = Math.min((int) Math.floor(num / resourcesNeeded.get(resource)), min);
                 }
                 points += commonGoal.getPoints() * min; //points times minimum occurrences of that goal
+                getScoreBoard().addReachedPointsCount(Util.getKeyByValue(getPlayerZones(),Player),min);
             } else {
 
 
@@ -241,6 +242,7 @@ public class GameTable implements Serializable {
                 int totalCombos=0;
                 if(!OverLappingCombos.isEmpty()) {
                     totalCombos = findMaxCombosInOverlappingCombos(OverLappingCombos) + ChosenCombos.size();
+                    getScoreBoard().addReachedPointsCount(Util.getKeyByValue(getPlayerZones(),Player),totalCombos);
                     points += totalCombos * commonGoal.getPoints();
                 }
             }
@@ -253,6 +255,7 @@ public class GameTable implements Serializable {
      * CountGoalPoints counts the goal points of a player given the PlayerField
      *
      * @param Player
+     * @return  the counted Goal Points
      */
     public int countGoalPoints(PlayerField Player) {
         int points = countCommonGoalPoints(Player);
@@ -270,7 +273,7 @@ public class GameTable implements Serializable {
                 min = Math.min((int) Math.floor(num / resourcesNeeded.get(resource)), min);
             }
             points += privateGoal.getPoints() * min; //points times minimum occurrences of that goal
-
+            getScoreBoard().addReachedPointsCount(Util.getKeyByValue(getPlayerZones(),Player),min);
 
         } else {
 
@@ -346,6 +349,7 @@ public class GameTable implements Serializable {
             if(!OverLappingCombos.isEmpty()) {
                 totalCombos = findMaxCombosInOverlappingCombos(OverLappingCombos) + ChosenCombos.size();
                 points += totalCombos * privateGoal.getPoints();
+                getScoreBoard().addReachedPointsCount(Util.getKeyByValue(getPlayerZones(),Player),totalCombos);
             }
         }
         return points;

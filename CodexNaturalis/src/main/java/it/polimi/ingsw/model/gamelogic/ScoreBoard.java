@@ -14,6 +14,7 @@ public class ScoreBoard implements Serializable {
     @Serial
     private static final long serialVersionUID = -5530929421267416333L;
     private Map<Player, Integer> board;
+    private Map<Player, Integer> reachedGoals;
 
     /**
      * ScoreBoard constructor
@@ -21,8 +22,10 @@ public class ScoreBoard implements Serializable {
      */
     public ScoreBoard (ArrayList<Player> Players) {
         board = new HashMap<>();
+        reachedGoals= new HashMap<>();
         for (Player Player : Players) {
             board.put(Player, 0);
+            reachedGoals.put(Player,0);
         }
     }
 
@@ -43,6 +46,27 @@ public class ScoreBoard implements Serializable {
      */
     public Integer getPoints(Player player) {
         return board.get(player);
+    }
+
+    /**
+     * adds the occurrences of a goal card when they are calculated in the gametable function
+     * @param player Player referenced
+     * @param reachedGoalsCount number of goals to be added
+     */
+    public void addReachedPointsCount(Player player, Integer reachedGoalsCount)
+    {
+        if(reachedGoals.containsKey(player))
+            reachedGoals.put(player,reachedGoals.get(player)+reachedGoalsCount);
+    }
+
+    /**
+     * Get the occurrences of goals that the player made
+     * @param player referenced player
+     * @return Integer value of the occurrences
+     */
+    public Integer GetReachedPointsCount(Player player)
+    {
+        return reachedGoals.getOrDefault(player,-1);
     }
 
     /**
