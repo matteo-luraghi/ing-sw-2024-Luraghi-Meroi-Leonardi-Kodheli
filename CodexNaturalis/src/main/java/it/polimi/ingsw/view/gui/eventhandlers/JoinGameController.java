@@ -66,6 +66,11 @@ public class JoinGameController  extends EventHandler{
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Invalid input data");
         alert.setHeaderText("Invalid input data");
+        alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
+                "-fx-font-family: Cambria;" +
+                "-fx-font-style: italic;" +
+                "-fx-font-size: large;" +
+                "-fx-font-weight: bold;");
 
         String game = gameName.getText();
         String numOfPlayersText = numOfPlayers.getValue().toString();

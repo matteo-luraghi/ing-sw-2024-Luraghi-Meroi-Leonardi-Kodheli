@@ -72,6 +72,11 @@ public class SetupController extends EventHandler{
             alert.setTitle("Invalid input data");
             alert.setHeaderText("Invalid input data");
             alert.setContentText("Select one between every group of radio buttons");
+            alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
+                    "-fx-font-family: Cambria;" +
+                    "-fx-font-style: italic;" +
+                    "-fx-font-size: large;" +
+                    "-fx-font-weight: bold;");
             alert.showAndWait();
         } else {
             view.getClient().playStartingCardResponse(startingCard, startingFront.isSelected());

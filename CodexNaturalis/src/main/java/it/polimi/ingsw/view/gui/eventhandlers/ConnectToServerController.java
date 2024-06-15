@@ -7,7 +7,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.stage.StageStyle;
 
 import java.util.ArrayList;
 
@@ -45,8 +48,14 @@ public class ConnectToServerController extends EventHandler{
     protected void ConnectToServer() throws ConnectionClosedException {
         //Initialize alert
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        //DialogPane alert = new DialogPane();
         alert.setTitle("Invalid input data");
         alert.setHeaderText("Invalid input data");
+        alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
+                "-fx-font-family: Cambria;" +
+                "-fx-font-style: italic;" +
+                "-fx-font-size: large;" +
+                "-fx-font-weight: bold;");
 
         String ip = serverIP.getText();
         String portText = serverPort.getText();

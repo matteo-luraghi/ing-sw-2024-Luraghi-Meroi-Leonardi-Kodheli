@@ -36,6 +36,11 @@ public class LoginController extends EventHandler{
         alert.setTitle(title);
         alert.setHeaderText(title);
         alert.setContentText(text);
+        alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
+                "-fx-font-family: Cambria;" +
+                "-fx-font-style: italic;" +
+                "-fx-font-size: large;" +
+                "-fx-font-weight: bold;");
         alert.showAndWait();
         alert = null;
         Color.setDisable(false);
@@ -90,6 +95,11 @@ public class LoginController extends EventHandler{
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Invalid input data");
         alert.setHeaderText("Invalid input data");
+        alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
+                "-fx-font-family: Cambria;" +
+                "-fx-font-style: italic;" +
+                "-fx-font-size: large;" +
+                "-fx-font-weight: bold;");
 
         String user = Username.getText();
         if(user == null || user.isEmpty()){
@@ -101,7 +111,11 @@ public class LoginController extends EventHandler{
             view.getClient().gameChoice(isJoin, gameNameString, user);
             //tick beside the textField?
             Username.setEditable(false);
-            Username.setStyle("-fx-background-color: #77f545;");
+            Username.setStyle("-fx-background-color: #2e821b;" +
+                    "-fx-background-radius: 100;" +
+                    "-fx-border-color: #000000;" +
+                    "-fx-border-radius: 100;" +
+                    "-fx-border-width: 2;");
             LoginButton.setDisable(true);
         }catch (Exception e){
             alert.setContentText("Username is already present");
@@ -118,6 +132,11 @@ public class LoginController extends EventHandler{
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Invalid input data");
         alert.setHeaderText("Invalid input data");
+        alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
+                "-fx-font-family: Cambria;" +
+                "-fx-font-style: italic;" +
+                "-fx-font-size: large;" +
+                "-fx-font-weight: bold;");
 
         Color chosenColor;
         if(Color == null){
