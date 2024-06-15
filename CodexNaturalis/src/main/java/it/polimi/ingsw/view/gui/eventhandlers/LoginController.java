@@ -36,6 +36,11 @@ public class LoginController extends EventHandler{
         alert.setTitle(title);
         alert.setHeaderText(title);
         alert.setContentText(text);
+        alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
+                "-fx-font-family: Cambria;" +
+                "-fx-font-style: italic;" +
+                "-fx-font-size: large;" +
+                "-fx-font-weight: bold;");
         alert.showAndWait();
         alert = null;
         Color.setDisable(false);
@@ -88,12 +93,17 @@ public class LoginController extends EventHandler{
      */
     public void loginPlayer(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Invalid input data");
-        alert.setHeaderText("Invalid input data");
+        alert.setTitle("");
+        alert.setHeaderText("");
+        alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
+                "-fx-font-family: Cambria;" +
+                "-fx-font-style: italic;" +
+                "-fx-font-size: large;" +
+                "-fx-font-weight: bold;");
 
         String user = Username.getText();
         if(user == null || user.isEmpty()){
-            alert.setContentText("Username is empty");
+            alert.setContentText("Invalid input data: username is empty");
             alert.showAndWait();
             return;
         }
@@ -101,10 +111,14 @@ public class LoginController extends EventHandler{
             view.getClient().gameChoice(isJoin, gameNameString, user);
             //tick beside the textField?
             Username.setEditable(false);
-            Username.setStyle("-fx-background-color: #77f545;");
+            Username.setStyle("-fx-background-color: #2e821b;" +
+                    "-fx-background-radius: 100;" +
+                    "-fx-border-color: #000000;" +
+                    "-fx-border-radius: 100;" +
+                    "-fx-border-width: 2;");
             LoginButton.setDisable(true);
         }catch (Exception e){
-            alert.setContentText("Username is already present");
+            alert.setContentText("Invalid input data: username is already present");
             alert.showAndWait();
         }
 
@@ -116,19 +130,24 @@ public class LoginController extends EventHandler{
      */
     public void chooseColor(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Invalid input data");
-        alert.setHeaderText("Invalid input data");
+        alert.setTitle("");
+        alert.setHeaderText("");
+        alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
+                "-fx-font-family: Cambria;" +
+                "-fx-font-style: italic;" +
+                "-fx-font-size: large;" +
+                "-fx-font-weight: bold;");
 
         Color chosenColor;
         if(Color == null){
-            alert.setContentText("Color is null");
+            alert.setContentText("Invalid input data: color is null");
             alert.showAndWait();
             return;
         }
 
         chosenColor = Util.stringToColor(Color.getValue().toString());
         if(chosenColor == null){
-            alert.setContentText("Color is not valid");
+            alert.setContentText("Invalid input data: color is not valid");
             alert.showAndWait();
             return;
         }

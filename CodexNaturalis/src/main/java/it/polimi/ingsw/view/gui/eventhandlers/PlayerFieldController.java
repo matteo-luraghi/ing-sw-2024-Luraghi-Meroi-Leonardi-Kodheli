@@ -44,9 +44,12 @@ public class PlayerFieldController extends EventHandler{
     public Pane player2;
     public Pane player3;
     public Pane player4;
+    public Label YourName;
+    public Circle YourColor;
 
+    private Player playerFieldOwner;
+    private Player playerRequesting;
     private ArrayList<Pane> playerPanes;
-    private ResourceCard chosenCard;
     private ImageView chosenImage;
     private int chosenIndex;
     private Coordinates chosenCords;
@@ -113,31 +116,53 @@ public class PlayerFieldController extends EventHandler{
     public void setDecks(Deck resourceDeck1, Deck goldDeck1) {
         Image temp;
         //Set resource deck
-        if(!resourceDeck1.isDeckEmpty()){
+        try{
             temp = new Image(Util.getImageFromID(resourceDeck1.getTopCard().getId(), false));
             resourceDeck.setImage(temp);
+        } catch (NullPointerException e) {
+            resourceDeck.setDisable(true);
+            resourceDeck.setVisible(false);
         }
-        if(resourceDeck1.getUncoveredCards()[0] != null){
+
+        try{
             temp = new Image(Util.getImageFromID(resourceDeck1.getUncoveredCards()[0].getId(), true));
             resourceUncovered0.setImage(temp);
+        } catch (NullPointerException e) {
+            resourceUncovered0.setDisable(true);
+            resourceUncovered0.setVisible(false);
         }
-        if(resourceDeck1.getUncoveredCards()[1] != null){
+
+        try{
             temp = new Image(Util.getImageFromID(resourceDeck1.getUncoveredCards()[1].getId(), true));
             resourceUncovered1.setImage(temp);
+        } catch (NullPointerException e) {
+            resourceUncovered1.setDisable(true);
+            resourceUncovered1.setVisible(false);
         }
 
         //Set gold deck
-        if(!goldDeck1.isDeckEmpty()){
+        try{
             temp = new Image(Util.getImageFromID(goldDeck1.getTopCard().getId(), false));
             goldDeck.setImage(temp);
+        } catch (NullPointerException e) {
+            goldDeck.setDisable(true);
+            goldDeck.setVisible(false);
         }
-        if(goldDeck1.getUncoveredCards()[0] != null){
+
+        try{
             temp = new Image(Util.getImageFromID(goldDeck1.getUncoveredCards()[0].getId(), true));
             goldUncovered0.setImage(temp);
+        } catch (NullPointerException e) {
+            goldUncovered0.setDisable(true);
+            goldUncovered0.setVisible(false);
         }
-        if(goldDeck1.getUncoveredCards()[1] != null){
+
+        try{
             temp = new Image(Util.getImageFromID(goldDeck1.getUncoveredCards()[1].getId(), true));
             goldUncovered1.setImage(temp);
+        } catch (NullPointerException e) {
+            goldUncovered0.setDisable(true);
+            goldUncovered0.setVisible(false);
         }
     }
 
@@ -254,7 +279,10 @@ public class PlayerFieldController extends EventHandler{
                     case null, default -> color = Color.WHITE;
                 }
                 ((Circle) getChildrenFromID(currentPane, "color")).setFill(color);
-
+                if(players.get(i).equals(playerRequesting)){
+                    YourName.setText(playerFieldOwner.getNickname());
+                    YourColor.setFill(color);
+                }
             }
         }
     }
@@ -372,6 +400,11 @@ public class PlayerFieldController extends EventHandler{
         createCard(view.getYourPlayerField(), chosenCords);
     }
 
+    /**
+     * Method that is used to visually create the card that just got played
+     * @param playerZone The player zone where the card got played
+     * @param where the position where the card got played
+     */
     private void createCard(PlayerField playerZone, Coordinates where){
         /*
         [0,0] is at x:0 y:0
@@ -437,6 +470,14 @@ public class PlayerFieldController extends EventHandler{
         playerField.getChildren().add(pane);
     }
 
+    /**
+     * Method to create the invisible button necessary to be able to play cards
+     * @param x the x coordinate that the button points too
+     * @param y the x coordinate that the button points too
+     * @param isRight true if the button is on the right side of the card, false otherwise
+     * @param isDown true if the button is on the bottom side of the card, false otherwise
+     * @return the created button
+     */
     private Button createButton(int x, int y, boolean isRight, boolean isDown){
         Button button = new Button();
         String text = "[" + x + "," + y + "]";
@@ -458,5 +499,10 @@ public class PlayerFieldController extends EventHandler{
         button.setStyle("-fx-cursor: hand;");
 
         return button;
+    }
+
+    public void setPlayers(Player playerFieldOwner, Player playerRequesting){
+        this.playerFieldOwner = playerFieldOwner;
+        this.playerRequesting = playerRequesting;
     }
 }

@@ -7,7 +7,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.stage.StageStyle;
 
 import java.util.ArrayList;
 
@@ -45,8 +48,14 @@ public class ConnectToServerController extends EventHandler{
     protected void ConnectToServer() throws ConnectionClosedException {
         //Initialize alert
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Invalid input data");
-        alert.setHeaderText("Invalid input data");
+        //DialogPane alert = new DialogPane();
+        alert.setTitle("");
+        alert.setHeaderText("");
+        alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
+                "-fx-font-family: Cambria;" +
+                "-fx-font-style: italic;" +
+                "-fx-font-size: large;" +
+                "-fx-font-weight: bold;");
 
         String ip = serverIP.getText();
         String portText = serverPort.getText();
@@ -55,7 +64,7 @@ public class ConnectToServerController extends EventHandler{
 
         //Check ip validity
         if(ip == null || ip.isEmpty()){
-            alert.setContentText("IP is empty");
+            alert.setContentText("Invalid input data: IP is empty");
             alert.showAndWait();
             return;
         }
@@ -67,7 +76,7 @@ public class ConnectToServerController extends EventHandler{
             }
             port = Integer.parseInt(portText);
         }catch(NumberFormatException e){
-            alert.setContentText("Port is empty or not a number");
+            alert.setContentText("Invalid input data: Port is empty or not a number");
             alert.showAndWait();
             return;
         }
@@ -82,8 +91,8 @@ public class ConnectToServerController extends EventHandler{
             //Tries to connect to the server (if it returns true, messages will be sent automatically)
             view.connectToServer(ip, port, connection);
         }catch (ConnectionClosedException e){
-            alert.setTitle("Error");
-            alert.setHeaderText("Server error");
+            alert.setTitle("");
+            alert.setHeaderText("");
             alert.setContentText("Error connecting to the server, try again");
             alert.showAndWait();
         }

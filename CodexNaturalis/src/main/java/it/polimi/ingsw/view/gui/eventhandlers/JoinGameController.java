@@ -64,15 +64,20 @@ public class JoinGameController  extends EventHandler{
     public void createGame() {
         //Initialize alert
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Invalid input data");
-        alert.setHeaderText("Invalid input data");
+        alert.setTitle("");
+        alert.setHeaderText("");
+        alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
+                "-fx-font-family: Cambria;" +
+                "-fx-font-style: italic;" +
+                "-fx-font-size: large;" +
+                "-fx-font-weight: bold;");
 
         String game = gameName.getText();
         String numOfPlayersText = numOfPlayers.getValue().toString();
         int numberOfPlayers;
         //checks game name validity
         if(game == null || game.isEmpty()){
-            alert.setContentText("Game name is null");
+            alert.setContentText("Invalid input data: game name is null");
             alert.showAndWait();
             return;
         }
@@ -81,7 +86,7 @@ public class JoinGameController  extends EventHandler{
         try{
             numberOfPlayers = Integer.parseInt(numOfPlayersText);
         }catch(NumberFormatException e){
-            alert.setContentText("Number of players is null or not a number");
+            alert.setContentText("Invalid input data: number of players is null or not a number");
             alert.showAndWait();
             return;
         }
