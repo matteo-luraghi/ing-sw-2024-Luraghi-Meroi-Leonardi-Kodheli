@@ -334,7 +334,6 @@ public class RMIConnectionHandler extends ConnectionHandler {
     @Override
     public void sendMessage(Serializable msg) {
         if (msg instanceof Disconnection) {
-            ((Disconnection) msg).show(this.view);
             disconnect();
         }
     }

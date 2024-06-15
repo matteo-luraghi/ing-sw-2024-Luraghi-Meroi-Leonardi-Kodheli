@@ -109,15 +109,13 @@ public class GUI extends Application implements View{
                     isDisconnecting = true;
                 });
                 stage.show();
-            } catch (IOException e){
-                e.printStackTrace();
+            } catch (IOException ignored){
             }
         });
     }
 
     /**
      * Get the available games from the server
-     * @return the list of games' names
      */
     public void refreshGameNames() {
         client.refreshGamesNames();
@@ -190,6 +188,7 @@ public class GUI extends Application implements View{
             }
         }
     }
+    
     /**
      * method to show any type of String
      *
@@ -557,7 +556,6 @@ public class GUI extends Application implements View{
                 stage.close();
             });
         });
-        client.disconnect();
     }
 
     /**
