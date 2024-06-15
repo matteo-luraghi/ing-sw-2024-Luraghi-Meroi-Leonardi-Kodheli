@@ -35,6 +35,7 @@ public class ClientMain {
                 }
             } catch (ConnectionClosedException e) {
                 System.err.println(e.getMessage());
+                System.exit(0);
             }
         } while (!started);
 
