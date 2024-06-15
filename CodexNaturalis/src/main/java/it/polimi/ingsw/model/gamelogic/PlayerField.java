@@ -554,7 +554,7 @@ public class PlayerField implements Serializable {
      */
     public GameCard getUp(GameCard currentGameCard) {
         Coordinates currentCoordinates=getCoordinates(currentGameCard);
-        Coordinates Coordinates=new Coordinates(currentCoordinates.getX(),currentCoordinates.getY()+1);
+        Coordinates Coordinates=new Coordinates(currentCoordinates.getX(),currentCoordinates.getY()+2);
         return getGameCardByEqualCoordinate(Coordinates);
     }
 
@@ -565,7 +565,7 @@ public class PlayerField implements Serializable {
      */
     public GameCard getDown(GameCard currentGameCard) {
         Coordinates currentCoordinates=getCoordinates(currentGameCard);
-        Coordinates Coordinates=new Coordinates(currentCoordinates.getX(),currentCoordinates.getY()-1);
+        Coordinates Coordinates=new Coordinates(currentCoordinates.getX(),currentCoordinates.getY()-2);
         return getGameCardByEqualCoordinate(Coordinates);
     }
 
