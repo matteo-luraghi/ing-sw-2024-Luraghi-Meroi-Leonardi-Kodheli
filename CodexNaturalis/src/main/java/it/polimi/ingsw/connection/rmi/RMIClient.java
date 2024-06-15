@@ -300,6 +300,7 @@ public class RMIClient extends Client {
     @Override
     public void disconnect() {
         this.setConnected(false);
+        this.connectionHandler.disconnect();
     }
 
 }
