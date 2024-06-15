@@ -69,8 +69,8 @@ public class SetupController extends EventHandler{
         if(startingFront.isSelected() == startingBack.isSelected() || goal1.isSelected() == goal2.isSelected()){
             //If both radio buttons or neither are selected, throw an alert
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Invalid input data");
-            alert.setHeaderText("Invalid input data");
+            alert.setTitle("");
+            alert.setHeaderText("");
             alert.setContentText("Select one between every group of radio buttons");
             alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
                     "-fx-font-family: Cambria;" +

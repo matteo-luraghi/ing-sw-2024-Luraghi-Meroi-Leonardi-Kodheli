@@ -93,8 +93,8 @@ public class LoginController extends EventHandler{
      */
     public void loginPlayer(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Invalid input data");
-        alert.setHeaderText("Invalid input data");
+        alert.setTitle("");
+        alert.setHeaderText("");
         alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
                 "-fx-font-family: Cambria;" +
                 "-fx-font-style: italic;" +
@@ -103,7 +103,7 @@ public class LoginController extends EventHandler{
 
         String user = Username.getText();
         if(user == null || user.isEmpty()){
-            alert.setContentText("Username is empty");
+            alert.setContentText("Invalid input data: username is empty");
             alert.showAndWait();
             return;
         }
@@ -118,7 +118,7 @@ public class LoginController extends EventHandler{
                     "-fx-border-width: 2;");
             LoginButton.setDisable(true);
         }catch (Exception e){
-            alert.setContentText("Username is already present");
+            alert.setContentText("Invalid input data: username is already present");
             alert.showAndWait();
         }
 
@@ -130,8 +130,8 @@ public class LoginController extends EventHandler{
      */
     public void chooseColor(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Invalid input data");
-        alert.setHeaderText("Invalid input data");
+        alert.setTitle("");
+        alert.setHeaderText("");
         alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
                 "-fx-font-family: Cambria;" +
                 "-fx-font-style: italic;" +
@@ -140,14 +140,14 @@ public class LoginController extends EventHandler{
 
         Color chosenColor;
         if(Color == null){
-            alert.setContentText("Color is null");
+            alert.setContentText("Invalid input data: color is null");
             alert.showAndWait();
             return;
         }
 
         chosenColor = Util.stringToColor(Color.getValue().toString());
         if(chosenColor == null){
-            alert.setContentText("Color is not valid");
+            alert.setContentText("Invalid input data: color is not valid");
             alert.showAndWait();
             return;
         }

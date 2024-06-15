@@ -30,9 +30,9 @@ public abstract class EventHandler {
      */
     public void disconnection() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Disconnection");
-        alert.setHeaderText("There was a problem with yours or someone's connection");
-        alert.setContentText("You will be kicked out now, bye!");
+        alert.setTitle("");
+        alert.setHeaderText("");
+        alert.setContentText("There was a problem with yours or someone's connection: you will be kicked out now, bye!");
         alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
                 "-fx-font-family: Cambria;" +
                 "-fx-font-style: italic;" +
