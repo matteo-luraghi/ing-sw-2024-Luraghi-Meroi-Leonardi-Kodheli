@@ -89,6 +89,22 @@
                <AnchorPane prefHeight="704.0" prefWidth="202.0" style="-fx-background-color: #f0ead1;">
                   <VBox layoutY="2.0" prefHeight="842.0" prefWidth="241.0" style="-fx-background-color: #ede3ba;" AnchorPane.bottomAnchor="-138.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-39.0" AnchorPane.topAnchor="0.0">
                      <children>
+                        <AnchorPane prefHeight="96.0" prefWidth="242.0">
+                           <children>
+                              <Label text="You are: ">
+                                 <font>
+                                    <Font name="Cambria Bold Italic" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="YourName" layoutX="13.0" layoutY="29.0" prefHeight="30.0" prefWidth="223.0">
+                                 <font>
+                                    <Font name="Cambria Bold Italic" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Circle fx:id="YourColor" fill="#ff1f1f" layoutX="109.0" layoutY="75.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+                           </children>
+                        </AnchorPane>
+                        <Line endX="137.2928924560547" endY="-0.41486215591430664" startX="-100.0" startY="-0.41419318318367004" stroke="#9e8f55" />
                         <AnchorPane fx:id="player1" prefHeight="107.0" prefWidth="201.0">
                            <children>
                               <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE">
