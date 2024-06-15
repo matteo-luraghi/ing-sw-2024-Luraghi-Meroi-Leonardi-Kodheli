@@ -25,6 +25,11 @@ public class LoginController extends EventHandler{
     private boolean isJoin;
     private String gameNameString;
 
+    /**
+     * method to show a popup window
+     * @param title is the popup title
+     * @param text is the popup text
+     */
     @Override
     public void showPopup(String title, String text){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

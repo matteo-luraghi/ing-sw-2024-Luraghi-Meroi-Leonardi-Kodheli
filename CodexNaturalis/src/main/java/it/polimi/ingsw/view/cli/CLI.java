@@ -946,7 +946,7 @@ public class CLI implements View {
 
         printChat(messagePage, myChat);
 
-        while (!exitChat) {
+        while (this.client.getConnected() && this.connected && !exitChat) {
             System.out.println("What do you want to do in chat?\nexit | newer | older | write | refresh");
             command = this.scanner.nextLine();
 

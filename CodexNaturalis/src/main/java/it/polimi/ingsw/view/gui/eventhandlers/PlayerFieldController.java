@@ -51,6 +51,10 @@ public class PlayerFieldController extends EventHandler{
     private int chosenIndex;
     private Coordinates chosenCords;
     private ArrayList<Boolean> isFrontList;
+
+    /**
+     * method to initialize the controller's parameters
+     */
     public void initialize(){
         ObservableList<String> items = FXCollections.observableArrayList();
         chat.setItems(items);
@@ -68,6 +72,10 @@ public class PlayerFieldController extends EventHandler{
         isFrontList.add(2, true);
     }
 
+    /**
+     * method to show all the scene's elements
+     * @param view the view we want to set
+     */
     @Override
     public void setView(GUI view){
         this.view = view;
@@ -85,6 +93,10 @@ public class PlayerFieldController extends EventHandler{
         view.showStaticContent();
     }
 
+    /**
+     * Common goals setter
+     * @param commonGoals an array of GoalCards
+     */
     public void setCommonGoals(GoalCard[] commonGoals) {
         Image temp;
         temp = new Image(Util.getImageFromID(commonGoals[0].getId(), true));
@@ -93,6 +105,11 @@ public class PlayerFieldController extends EventHandler{
         commonGoal1.setImage(temp);
     }
 
+    /**
+     * decks setter
+     * @param resourceDeck1 resource deck to be set
+     * @param goldDeck1 gold deck to be set
+     */
     public void setDecks(Deck resourceDeck1, Deck goldDeck1) {
         Image temp;
         //Set resource deck
@@ -124,6 +141,10 @@ public class PlayerFieldController extends EventHandler{
         }
     }
 
+    /**
+     * scoreboard setter
+     * @param scoreBoard to be set
+     */
     public void setScoreBoard(ScoreBoard scoreBoard) {
         for(Pane pane : playerPanes) {
             String playerNick = ((Label) getChildrenFromID(pane, "playerName")).getText();
@@ -135,6 +156,10 @@ public class PlayerFieldController extends EventHandler{
         }
     }
 
+    /**
+     * resource map setter
+     * @param resourceMaps to be set
+     */
     public void setResourceMaps(Map<Player, Map<Resource, Integer>> resourceMaps) {
         for(Player player: resourceMaps.keySet()){
             Pane currentPlayerPane = null;
@@ -158,6 +183,11 @@ public class PlayerFieldController extends EventHandler{
         }
     }
 
+    /**
+     * player field setter
+     * @param playerField to be set
+     * @param isYourPlayerfield a boolean telling whether it's the client's field or not
+     */
     public void setPlayerField(PlayerField playerField, boolean isYourPlayerfield) {
         //TODO: PlayerField will probably need a List<ResourceCard> to understand in which order to play them in
         //TODO: THIS WILL STACK IMAGES ON TOP OF ONE ANOTHER; CALL THIS ONLY ON NEW PLAYER FIELD
@@ -175,6 +205,11 @@ public class PlayerFieldController extends EventHandler{
         privateGoal.setImage(temp);
     }
 
+    /**
+     * hand setter
+     * @param hand to be set
+     * @param isYourPlayerfield a boolean telling whether it's the client's field or not
+     */
     public void setHand(ArrayList<ResourceCard> hand, boolean isYourPlayerfield){
         Image temp;
         if(hand.getFirst() != null){
@@ -195,6 +230,11 @@ public class PlayerFieldController extends EventHandler{
             hand2.setDisable(true);
         }
     }
+
+    /**
+     * method to set the scene's static content
+     * @param players that are playing the game
+     */
     public void setStaticContent(ArrayList<Player> players) {
         for(int i = 0; i < 4; i++){
             Pane currentPane = playerPanes.get(i);
@@ -219,15 +259,26 @@ public class PlayerFieldController extends EventHandler{
         }
     }
 
+    /**
+     * to add a message to the chat
+     * @param s the message
+     */
     public void addChatMessage(String s) {
         chat.getItems().add(s);
     }
 
+    /**
+     * method to display the client's field
+     */
     public void showYourField() {
         Player currentPlayer = view.getUser();
         view.ShowPlayerField(currentPlayer, currentPlayer);
     }
 
+    /**
+     * method that handles the play of a card
+     * @param mouseEvent that triggered the event
+     */
     public void playCard(MouseEvent mouseEvent) {
         if(chosenIndex == -1){
             view.showMessage("Select a card to play first");
@@ -245,6 +296,10 @@ public class PlayerFieldController extends EventHandler{
         isFrontList.add(true);
     }
 
+    /**
+     * method that handles the selection of a card to play
+     * @param mouseEvent that triggers the event
+     */
     public void selectPlayCard(MouseEvent mouseEvent) {
         chosenImage = (ImageView) mouseEvent.getSource();
         if(chosenImage.equals(hand0)){
@@ -273,6 +328,10 @@ public class PlayerFieldController extends EventHandler{
         }
     }
 
+    /**
+     * method that handles the drawing of a card
+     * @param mouseEvent that triggers the event
+     */
     public void drawCard(MouseEvent mouseEvent) {
         chosenImage = (ImageView) mouseEvent.getSource();
         boolean isGold;
@@ -304,6 +363,9 @@ public class PlayerFieldController extends EventHandler{
         view.getClient().drawCardResponse(chosenIndex, isGold);
     }
 
+    /**
+     * method that is called when a card is successfully played
+     */
     public void cardPlayOK() {
         //The card got played successfully
         //This only creates the new card

@@ -174,6 +174,9 @@ public class GUI extends Application implements View{
         }
     }
 
+    /**
+     * method to display in case of disconnection from the server
+     */
     public void listenForDisconnection() {
         while(!isDisconnecting) {
             if(client != null && !client.getConnected() && !isDisconnecting) {
@@ -205,6 +208,10 @@ public class GUI extends Application implements View{
         });
     }
 
+    /**
+     * method to show the joinGame scene
+     * @param gameNames is the list of all the joinable games
+     */
     @Override
     public void showJoinOrCreate(ArrayList<String> gameNames) {
         sceneName = "JoinGame.fxml";
@@ -215,6 +222,9 @@ public class GUI extends Application implements View{
         });
     }
 
+    /**
+     * method to set the parameters to log into a game
+     */
     public void setLoginParameters(){
         Platform.runLater(() -> {
             LoginController loginHandler = (LoginController) currentEventHandler;
@@ -594,7 +604,9 @@ public class GUI extends Application implements View{
         client.playCardResponse(chosenCard, coordinates, isFront);
     }
 
-
+    /**
+     * method to display the playerField's static content
+     */
     public void showStaticContent() {
         Platform.runLater(() -> {
             PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
