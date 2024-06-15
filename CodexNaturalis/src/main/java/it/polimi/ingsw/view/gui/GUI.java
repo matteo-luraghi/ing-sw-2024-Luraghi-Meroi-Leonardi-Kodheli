@@ -341,6 +341,7 @@ public class GUI extends Application implements View{
     public void ShowPlayerField(Player playerToSee, Player playerAsking) {
         Platform.runLater(() -> {
             PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.setPlayers(playerToSee, playerAsking);
             playerFieldHandler.setPlayerField(game.getGameTable().getPlayerZones().get(playerToSee), playerAsking.getNickname().equals(playerToSee.getNickname()));
         });
     }

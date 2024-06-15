@@ -44,7 +44,11 @@ public class PlayerFieldController extends EventHandler{
     public Pane player2;
     public Pane player3;
     public Pane player4;
+    public Label YourName;
+    public Circle YourColor;
 
+    private Player playerFieldOwner;
+    private Player playerRequesting;
     private ArrayList<Pane> playerPanes;
     private ResourceCard chosenCard;
     private ImageView chosenImage;
@@ -254,7 +258,10 @@ public class PlayerFieldController extends EventHandler{
                     case null, default -> color = Color.WHITE;
                 }
                 ((Circle) getChildrenFromID(currentPane, "color")).setFill(color);
-
+                if(players.get(i).equals(playerRequesting)){
+                    YourName.setText(playerFieldOwner.getNickname());
+                    YourColor.setFill(color);
+                }
             }
         }
     }
@@ -372,6 +379,11 @@ public class PlayerFieldController extends EventHandler{
         createCard(view.getYourPlayerField(), chosenCords);
     }
 
+    /**
+     * Method that is used to visually create the card that just got played
+     * @param playerZone The player zone where the card got played
+     * @param where the position where the card got played
+     */
     private void createCard(PlayerField playerZone, Coordinates where){
         /*
         [0,0] is at x:0 y:0
@@ -437,6 +449,14 @@ public class PlayerFieldController extends EventHandler{
         playerField.getChildren().add(pane);
     }
 
+    /**
+     * Method to create the invisible button necessary to be able to play cards
+     * @param x the x coordinate that the button points too
+     * @param y the x coordinate that the button points too
+     * @param isRight true if the button is on the right side of the card, false otherwise
+     * @param isDown true if the button is on the bottom side of the card, false otherwise
+     * @return the created button
+     */
     private Button createButton(int x, int y, boolean isRight, boolean isDown){
         Button button = new Button();
         String text = "[" + x + "," + y + "]";
@@ -458,5 +478,10 @@ public class PlayerFieldController extends EventHandler{
         button.setStyle("-fx-cursor: hand;");
 
         return button;
+    }
+
+    public void setPlayers(Player playerFieldOwner, Player playerRequesting){
+        this.playerFieldOwner = playerFieldOwner;
+        this.playerRequesting = playerRequesting;
     }
 }
