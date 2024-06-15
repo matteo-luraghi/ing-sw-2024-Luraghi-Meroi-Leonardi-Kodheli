@@ -50,7 +50,6 @@ public class PlayerFieldController extends EventHandler{
     private Player playerFieldOwner;
     private Player playerRequesting;
     private ArrayList<Pane> playerPanes;
-    private ResourceCard chosenCard;
     private ImageView chosenImage;
     private int chosenIndex;
     private Coordinates chosenCords;
@@ -117,31 +116,53 @@ public class PlayerFieldController extends EventHandler{
     public void setDecks(Deck resourceDeck1, Deck goldDeck1) {
         Image temp;
         //Set resource deck
-        if(!resourceDeck1.isDeckEmpty()){
+        try{
             temp = new Image(Util.getImageFromID(resourceDeck1.getTopCard().getId(), false));
             resourceDeck.setImage(temp);
+        } catch (NullPointerException e) {
+            resourceDeck.setDisable(true);
+            resourceDeck.setVisible(false);
         }
-        if(resourceDeck1.getUncoveredCards()[0] != null){
+
+        try{
             temp = new Image(Util.getImageFromID(resourceDeck1.getUncoveredCards()[0].getId(), true));
             resourceUncovered0.setImage(temp);
+        } catch (NullPointerException e) {
+            resourceUncovered0.setDisable(true);
+            resourceUncovered0.setVisible(false);
         }
-        if(resourceDeck1.getUncoveredCards()[1] != null){
+
+        try{
             temp = new Image(Util.getImageFromID(resourceDeck1.getUncoveredCards()[1].getId(), true));
             resourceUncovered1.setImage(temp);
+        } catch (NullPointerException e) {
+            resourceUncovered1.setDisable(true);
+            resourceUncovered1.setVisible(false);
         }
 
         //Set gold deck
-        if(!goldDeck1.isDeckEmpty()){
+        try{
             temp = new Image(Util.getImageFromID(goldDeck1.getTopCard().getId(), false));
             goldDeck.setImage(temp);
+        } catch (NullPointerException e) {
+            goldDeck.setDisable(true);
+            goldDeck.setVisible(false);
         }
-        if(goldDeck1.getUncoveredCards()[0] != null){
+
+        try{
             temp = new Image(Util.getImageFromID(goldDeck1.getUncoveredCards()[0].getId(), true));
             goldUncovered0.setImage(temp);
+        } catch (NullPointerException e) {
+            goldUncovered0.setDisable(true);
+            goldUncovered0.setVisible(false);
         }
-        if(goldDeck1.getUncoveredCards()[1] != null){
+
+        try{
             temp = new Image(Util.getImageFromID(goldDeck1.getUncoveredCards()[1].getId(), true));
             goldUncovered1.setImage(temp);
+        } catch (NullPointerException e) {
+            goldUncovered0.setDisable(true);
+            goldUncovered0.setVisible(false);
         }
     }
 

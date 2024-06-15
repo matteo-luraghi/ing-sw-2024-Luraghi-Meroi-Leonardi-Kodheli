@@ -157,6 +157,7 @@ public class Deck implements Serializable {
         this.uncoveredCards[Which-1] = this.Draw(0);
     }
 
+
     public boolean isDeckEmpty () {
         return (this.cards.isEmpty() && this.uncoveredCards[0] == null && this.uncoveredCards[1] == null);
     }
