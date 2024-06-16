@@ -76,10 +76,10 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
                     //It is an upside down L
                     if (directions.get(1).equals(Direction.TOP_RIGHT)) {
                         //it is facing eastward
-                        System.out.println("|   " + resources.get(2).toString() + AnsiColors.ANSI_WHITE + "       |");
+                        System.out.println("|       " + resources.get(2).toString() + AnsiColors.ANSI_WHITE + "   |");
                     } else {
                         //It is facing westward
-                        System.out.println("|       " + resources.get(2).toString() + AnsiColors.ANSI_WHITE + "   |");
+                        System.out.println("|   " + resources.get(2).toString() + AnsiColors.ANSI_WHITE + "       |");
                     }
                     System.out.println("|     " + resources.get(1).toString() + AnsiColors.ANSI_WHITE + "     | Have this specific L-shape in your field to satisfy the goal");
                     System.out.println("|     " + resources.get(0).toString() + AnsiColors.ANSI_WHITE + "     |");
