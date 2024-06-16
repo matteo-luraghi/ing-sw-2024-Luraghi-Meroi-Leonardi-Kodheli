@@ -74,7 +74,7 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
                 //It is an L-type goal card
                 if (directions.get(0).equals(Direction.TOP)) {
                     //It is an upside down L
-                    if (directions.get(1).equals(Direction.TOP_RIGHT)) {
+                    if (directions.get(1) == Direction.TOP_RIGHT) {
                         //it is facing eastward
                         System.out.println("|       " + resources.get(2).toString() + AnsiColors.ANSI_WHITE + "   |");
                     } else {
