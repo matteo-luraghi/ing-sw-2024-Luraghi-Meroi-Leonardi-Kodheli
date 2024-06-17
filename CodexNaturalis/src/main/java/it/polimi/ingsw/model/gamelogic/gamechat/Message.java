@@ -103,4 +103,20 @@ public class Message implements Serializable {
 
         return result;
     }
+
+    public String toStringGUI () {
+        String result = "";
+
+        result += this.time + " ";
+
+        if (!this.recipient.equalsIgnoreCase("all")) {
+            result += "(PRIVATE) ";
+        }
+
+        result += "(" + this.author.getNickname() + "): ";
+
+        result += this.message;
+
+        return result;
+    }
 }
