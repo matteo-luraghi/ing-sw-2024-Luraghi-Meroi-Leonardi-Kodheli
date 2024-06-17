@@ -44,6 +44,7 @@ public class GUI extends Application implements View{
     private GameState game = null;
     private Player user = null;
     boolean isDisconnecting;
+    private GameChat gameChat;
     /**
      * GUI constructor
      */
@@ -442,7 +443,8 @@ public class GUI extends Application implements View{
      */
     @Override
     public void setGameChat(GameChat gameChat) throws RemoteException {
-
+        this.gameChat = gameChat;
+        showChat();
     }
 
     /**
@@ -569,6 +571,7 @@ public class GUI extends Application implements View{
         });
     }
 
+
     /**
      * Client getter
      * @return this client
@@ -612,6 +615,13 @@ public class GUI extends Application implements View{
         Platform.runLater(() -> {
             PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
             playerFieldHandler.setStaticContent(game.getPlayers());
+        });
+    }
+
+    public void showChat(){
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.setChat(gameChat);
         });
     }
 }

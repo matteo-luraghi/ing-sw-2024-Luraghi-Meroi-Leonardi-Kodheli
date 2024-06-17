@@ -2,6 +2,8 @@ package it.polimi.ingsw.view.gui.eventhandlers;
 
 import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.model.gamelogic.*;
+import it.polimi.ingsw.model.gamelogic.gamechat.GameChat;
+import it.polimi.ingsw.model.gamelogic.gamechat.Message;
 import it.polimi.ingsw.view.gui.GUI;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -46,6 +48,7 @@ public class PlayerFieldController extends EventHandler{
     public Pane player4;
     public Label YourName;
     public Circle YourColor;
+    public TextField currentMessage;
 
     private Player playerFieldOwner;
     private Player playerRequesting;
@@ -54,6 +57,7 @@ public class PlayerFieldController extends EventHandler{
     private int chosenIndex;
     private Coordinates chosenCords;
     private ArrayList<Boolean> isFrontList;
+    boolean emptyChat;
 
     /**
      * method to initialize the controller's parameters
@@ -73,6 +77,7 @@ public class PlayerFieldController extends EventHandler{
         isFrontList.add(0, true);
         isFrontList.add(1, true);
         isFrontList.add(2, true);
+        emptyChat = true;
     }
 
     /**
@@ -94,6 +99,8 @@ public class PlayerFieldController extends EventHandler{
         view.showCommonGoals();
         //Set the static fields of the players
         view.showStaticContent();
+        //Set the chat with the messages it already has
+        view.showChat();
     }
 
     /**
@@ -288,7 +295,21 @@ public class PlayerFieldController extends EventHandler{
     }
 
     /**
-     * to add a message to the chat
+     * method to display the entire chat if it's the first time this is called, the last message otherwise
+     * @param gameChat the updated game chat
+     */
+    public void setChat(GameChat gameChat){
+        if(emptyChat){
+            for(Message msg : gameChat.getMessages()){
+                addChatMessage(msg.toString());
+            }
+        } else {
+            addChatMessage(gameChat.getLastMessage().toString());
+        }
+        emptyChat = false;
+    }
+    /**
+     * method to add a message to the chat
      * @param s the message
      */
     public void addChatMessage(String s) {
@@ -504,5 +525,16 @@ public class PlayerFieldController extends EventHandler{
     public void setPlayers(Player playerFieldOwner, Player playerRequesting){
         this.playerFieldOwner = playerFieldOwner;
         this.playerRequesting = playerRequesting;
+    }
+
+    public void sendChatMessage(MouseEvent mouseEvent) {
+        //Get the message
+        String message = currentMessage.getText();
+        //Get the user
+        String user = null;
+        //Send the message
+
+        Message msg = new Message(message, playerFieldOwner, user);
+        view.getClient().sendMessageInChat(msg);
     }
 }

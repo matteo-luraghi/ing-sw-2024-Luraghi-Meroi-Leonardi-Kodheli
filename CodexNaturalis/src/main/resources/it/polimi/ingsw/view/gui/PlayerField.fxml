@@ -34,9 +34,9 @@
                   <Font name="Cambria Bold Italic" size="25.0" />
                </font>
             </Label>
-            <TextField layoutY="344.0" prefHeight="50.0" prefWidth="179.0" style="-fx-background-color: #ede3ba; -fx-border-color: #d1be71; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="55.0" />
+            <TextField fx:id="currentMessage" layoutY="344.0" prefHeight="50.0" prefWidth="179.0" style="-fx-background-color: #ede3ba; -fx-border-color: #d1be71; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="55.0" />
             <ListView fx:id="chat" layoutY="42.0" prefHeight="227.0" prefWidth="214.0" style="-fx-background-color: #f0ead1;" stylesheets="@assets/css/lisStyles.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
-            <Button layoutX="129.0" layoutY="348.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="56.0" style="-fx-background-color: #ede3ba; -fx-border-color: #d1be71; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;" text="Enter" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Button layoutX="129.0" layoutY="348.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="56.0" style="-fx-background-color: #ede3ba; -fx-border-color: #d1be71; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;" text="Enter" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" onMouseClicked="#sendChatMessage">
                <font>
                   <Font name="Cambria Bold" size="12.0" />
                </font></Button>
