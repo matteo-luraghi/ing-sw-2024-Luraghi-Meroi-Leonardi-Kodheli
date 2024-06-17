@@ -273,7 +273,7 @@ public class CLI implements View {
         while (!valid) {
             System.out.println("Choose a nickname");
             String nickname = scanner.nextLine();
-            if (nickname.equalsIgnoreCase("")) {
+            if (nickname.equalsIgnoreCase("") || nickname.equalsIgnoreCase("all")) {
                 System.out.println(AnsiColors.ANSI_RED + "Illegal nickname, choose another one" + AnsiColors.ANSI_RESET);
             } else {
                 try {
