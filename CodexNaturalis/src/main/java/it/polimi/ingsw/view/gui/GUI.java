@@ -457,7 +457,7 @@ public class GUI extends Application implements View{
      */
     @Override
     public void setGameChat(GameChat gameChat) throws RemoteException {
-        if (this.gameChat == null || !gameChat.getLastMessage().getMessage().equals(this.gameChat.getLastMessage().getMessage())){
+        if (this.gameChat == null || !gameChat.getLastMessage().equals(this.gameChat.getLastMessage())){
             showChat();
         }
         this.gameChat = gameChat;

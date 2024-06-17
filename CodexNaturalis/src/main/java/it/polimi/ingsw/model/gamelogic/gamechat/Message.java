@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.security.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * message class
@@ -118,5 +119,13 @@ public class Message implements Serializable {
         result += this.message;
 
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message1 = (Message) o;
+        return Objects.equals(message, message1.message) && Objects.equals(author, message1.author) && Objects.equals(time, message1.time) && Objects.equals(recipient, message1.recipient);
     }
 }
