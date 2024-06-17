@@ -111,33 +111,40 @@ public class Server implements RemoteServer {
      */
     @Override
     public void joinGame(ConnectionHandler connectionHandler, String gameName) {
-        Optional<Controller> optionalController;
-        synchronized (this.gameLock) {
-            System.out.println("Active Games:" + games.keySet().size());
-            // find the first free game and try to add the player
-            optionalController = games.keySet().stream().
-                    filter(g -> !g.isGameStarted()
-                            && g.getGameName().equals(gameName)
-                            && g.getHandlers().size() < games.get(g))
-                    .findFirst();
+        // prevent user to use the "all" nickname
+        boolean validNickname = !connectionHandler.getClientNickname().equalsIgnoreCase("all");
 
-            // add the player to the game
-            if (optionalController.isPresent()) {
-                Controller gameController = optionalController.get();
-                gameController.addHandler(connectionHandler);
-                connectionHandler.setController(gameController);
-                connectionHandler.getController().chooseColorState(connectionHandler);
+        if (validNickname) {
+            Optional<Controller> optionalController;
+            synchronized (this.gameLock) {
+                System.out.println("Active Games:" + games.keySet().size());
+                // find the first free game and try to add the player
+                optionalController = games.keySet().stream().
+                        filter(g -> !g.isGameStarted()
+                                && g.getGameName().equals(gameName)
+                                && g.getHandlers().size() < games.get(g))
+                        .findFirst();
+
+                // add the player to the game
+                if (optionalController.isPresent()) {
+                    Controller gameController = optionalController.get();
+                    gameController.addHandler(connectionHandler);
+                    connectionHandler.setController(gameController);
+                    connectionHandler.getController().chooseColorState(connectionHandler);
+                }
             }
+
+            if (optionalController.isPresent()) return;
+        } else {
+            connectionHandler.sendTextMessage("Invalid nickname!");
         }
 
-        if (optionalController.isPresent()) return;
-
-        // no game found -> game already started or game deleted
+        // invalid nickname or no game found -> game already started or game deleted
         ArrayList<String> gameNames = null;
         try {
             gameNames = getGamesNames();
         } catch (RemoteException e) {
-            System.err.println("Error getting game names");
+            System.err.println("Error getting games names");
         }
         connectionHandler.joinGameRequest(gameNames);
     }
@@ -150,39 +157,57 @@ public class Server implements RemoteServer {
      */
     @Override
     public void createGame(ConnectionHandler connectionHandler, int numberOfPlayers, String gameName) {
-        Optional<Controller> alreadyPresent;
-        synchronized (this.gameLock) {
-         alreadyPresent = games.keySet().stream().parallel()
-                    .filter(c -> c.getGameName().equals(gameName))
-                    .findFirst();
-        }
+        // prevent user to use the "all" nickname
+        boolean validNickname = !connectionHandler.getClientNickname().equalsIgnoreCase("all");
 
-        if (alreadyPresent.isPresent()) {
-            connectionHandler.sendTextMessage("Name already present, choose another one.");
-            try {
-                connectionHandler.joinGameRequest(getGamesNames());
-            } catch (RemoteException e) {
-                System.err.println("Error sending join / create request");
+        if (validNickname) {
+            Optional<Controller> alreadyPresent;
+            synchronized (this.gameLock) {
+                alreadyPresent = games.keySet().stream().parallel()
+                        .filter(c -> c.getGameName().equals(gameName))
+                        .findFirst();
             }
-            return;
+
+            if (alreadyPresent.isPresent()) {
+                connectionHandler.sendTextMessage("Name already present, choose another one.");
+
+                ArrayList<String> gamesNames = null;
+                try {
+                    gamesNames = getGamesNames();
+                } catch (RemoteException e) {
+                    System.err.println("Error getting games names");
+                }
+                connectionHandler.joinGameRequest(gamesNames);
+                return;
+            }
+
+            Controller controller;
+            synchronized (this.gameLock) {
+                controller = new Controller(gameName, numberOfPlayers);
+                this.games.put(controller, numberOfPlayers);
+                controller.addHandler(connectionHandler);
+                connectionHandler.setController(controller);
+            }
+
+            // expose the controller via RMI
+            try {
+                RemoteController stub = (RemoteController) UnicastRemoteObject.exportObject(controller, 0);
+                this.registry.rebind("controller"+controller.getGameName(), stub);
+            } catch (Exception e) {
+                System.err.println("Error exposing the controller");
+            }
+            connectionHandler.getController().chooseColorState(connectionHandler);
+        } else {
+            connectionHandler.sendTextMessage("Invalid nickname!");
+            ArrayList<String> gameNames = null;
+            try {
+                gameNames = getGamesNames();
+            } catch (RemoteException e) {
+                System.err.println("Error getting games names");
+            }
+            connectionHandler.joinGameRequest(gameNames);
         }
 
-        Controller controller;
-        synchronized (this.gameLock) {
-            controller = new Controller(gameName, numberOfPlayers);
-            this.games.put(controller, numberOfPlayers);
-            controller.addHandler(connectionHandler);
-            connectionHandler.setController(controller);
-        }
-
-        // expose the controller via RMI
-        try {
-            RemoteController stub = (RemoteController) UnicastRemoteObject.exportObject(controller, 0);
-            this.registry.rebind("controller"+controller.getGameName(), stub);
-        } catch (Exception e) {
-            System.err.println("Error exposing the controller");
-        }
-        connectionHandler.getController().chooseColorState(connectionHandler);
     }
 
     /**
