@@ -329,6 +329,8 @@ public class PlayerFieldController extends EventHandler{
      */
     public void addChatMessage(String s) {
         chat.getItems().add(s);
+        int index = chat.getItems().size()-1;
+        chat.scrollTo(index);
     }
 
     /**
