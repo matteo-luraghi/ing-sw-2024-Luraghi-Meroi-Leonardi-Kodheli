@@ -13,6 +13,8 @@ import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -355,6 +357,7 @@ public class PlayerFieldController extends EventHandler{
         isFrontList.add(true);
     }
 
+
     /**
      * method that handles the selection of a card to play
      * @param mouseEvent that triggers the event
@@ -537,7 +540,7 @@ public class PlayerFieldController extends EventHandler{
         this.playerRequesting = playerRequesting;
     }
 
-    public void sendChatMessage(MouseEvent mouseEvent) {
+    public void sendChatMessage() {
         if(playerRequesting.getNickname().equals(playerFieldOwner.getNickname()) && !currentMessage.getText().equals("")){
             //Get the message
             String message = currentMessage.getText();
@@ -550,5 +553,12 @@ public class PlayerFieldController extends EventHandler{
             view.getClient().sendMessageInChat(msg);
         }
         currentMessage.setText("");
+    }
+
+    public void sendChatMessageEnter(KeyEvent keyEvent){
+        if(keyEvent.getCode().equals(KeyCode.ENTER)){
+            sendChatMessage();
+        }
+
     }
 }
