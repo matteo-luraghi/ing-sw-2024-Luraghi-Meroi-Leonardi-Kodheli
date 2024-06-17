@@ -89,6 +89,11 @@ public class RMIClient extends Client {
     @Override
     public void gameChoice(boolean isJoin, String gameName, String nickname) throws Exception {
 
+        // prevent user to use the "all" nickname
+        if (nickname.equalsIgnoreCase("all")) {
+            throw new NicknameAlreadyPresentException("Invalid nickname!");
+        }
+
         this.gameName = gameName;
 
         this.connectionHandler = new RMIConnectionHandler(registry, viewRegistry);
@@ -100,7 +105,7 @@ public class RMIClient extends Client {
 
             // check if the nickname is unique
             if(!server.checkUniqueNickname(nickname)) {
-                throw new NicknameAlreadyPresentException("User already present");
+                throw new NicknameAlreadyPresentException("Nickname already existent, choose another one");
             }
 
             try {
