@@ -49,6 +49,7 @@ public class PlayerFieldController extends EventHandler{
     public Label YourName;
     public Circle YourColor;
     public TextField currentMessage;
+    public ChoiceBox chosenRecipient;
 
     private Player playerFieldOwner;
     private Player playerRequesting;
@@ -268,6 +269,8 @@ public class PlayerFieldController extends EventHandler{
      * @param players that are playing the game
      */
     public void setStaticContent(ArrayList<Player> players) {
+        ObservableList<String> items = FXCollections.observableArrayList();
+        items.add("all");
         for(int i = 0; i < 4; i++){
             Pane currentPane = playerPanes.get(i);
             if(i >= players.size()){
@@ -289,9 +292,13 @@ public class PlayerFieldController extends EventHandler{
                 if(players.get(i).equals(playerRequesting)){
                     YourName.setText(playerFieldOwner.getNickname());
                     YourColor.setFill(color);
+                } else {
+                    items.add(players.get(i).getNickname());
                 }
             }
         }
+        chosenRecipient.setItems(items);
+        chosenRecipient.setValue("all");
     }
 
     /**
@@ -299,12 +306,15 @@ public class PlayerFieldController extends EventHandler{
      * @param gameChat the updated game chat
      */
     public void setChat(GameChat gameChat){
+        if(gameChat == null){
+            return;
+        }
         if(emptyChat){
             for(Message msg : gameChat.getMessages()){
-                addChatMessage(msg.toString());
+                addChatMessage(msg.toStringGUI());
             }
         } else {
-            addChatMessage(gameChat.getLastMessage().toString());
+            addChatMessage(gameChat.getLastMessage().toStringGUI());
         }
         emptyChat = false;
     }
@@ -528,13 +538,17 @@ public class PlayerFieldController extends EventHandler{
     }
 
     public void sendChatMessage(MouseEvent mouseEvent) {
-        //Get the message
-        String message = currentMessage.getText();
-        //Get the user
-        String user = null;
-        //Send the message
+        if(playerRequesting.getNickname().equals(playerFieldOwner.getNickname()) && !currentMessage.getText().equals("")){
+            //Get the message
+            String message = currentMessage.getText();
 
-        Message msg = new Message(message, playerFieldOwner, user);
-        view.getClient().sendMessageInChat(msg);
+            //Get the desired
+            String user = chosenRecipient.getValue().toString();
+
+            //Send the message
+            Message msg = new Message(message, playerFieldOwner, user);
+            view.getClient().sendMessageInChat(msg);
+        }
+        currentMessage.setText("");
     }
 }
