@@ -54,7 +54,7 @@
                            <Image url="@assets/GUIGraphics/codexNaturalisTransparent.png" />
                         </image>
                      </ImageView>
-                     <Group fx:id="playerField">
+                     <Group fx:id="playerFieldContainer">
                         <Pane maxHeight="100.0" maxWidth="150.0" minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="150.0">
                            <ImageView fx:id="startingCard" fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            </ImageView>
@@ -107,7 +107,7 @@
                            </children>
                         </AnchorPane>
                         <Line endX="137.2928924560547" endY="-0.41486215591430664" startX="-100.0" startY="-0.41419318318367004" stroke="#9e8f55" />
-                        <AnchorPane fx:id="player1" prefHeight="107.0" prefWidth="201.0">
+                        <AnchorPane fx:id="player1" prefHeight="107.0" prefWidth="201.0" onMouseClicked="#requestPlayerField">
                            <children>
                               <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE">
                      </Circle>
@@ -180,7 +180,7 @@
                            </children>
                         </AnchorPane>
                         <Line endX="137.2928924560547" endY="-0.41486215591430664" startX="-100.0" startY="-0.41419318318367004" stroke="#9e8f55" />
-                        <AnchorPane fx:id="player2" prefHeight="107.0" prefWidth="201.0">
+                        <AnchorPane fx:id="player2" prefHeight="107.0" prefWidth="201.0" onMouseClicked="#requestPlayerField">
                            <children>
                               <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
                               <Label fx:id="playerName" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
@@ -266,7 +266,7 @@
                            </children>
                         </AnchorPane>
                         <Line endX="134.2928924560547" endY="-1.1217072010040283" startX="-100.0" startY="-0.41419318318367004" stroke="#9e8f55" />
-                        <AnchorPane fx:id="player3" prefHeight="107.0" prefWidth="201.0">
+                        <AnchorPane fx:id="player3" prefHeight="107.0" prefWidth="201.0" onMouseClicked="#requestPlayerField">
                            <children>
                               <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
                               <Label fx:id="playerName" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
@@ -352,7 +352,7 @@
                            </children>
                         </AnchorPane>
                         <Line endX="140.2928924560547" startX="-100.0" startY="-0.41419318318367004" stroke="#9e8f55" />
-                        <AnchorPane fx:id="player4" prefHeight="107.0" prefWidth="201.0">
+                        <AnchorPane fx:id="player4" prefHeight="107.0" prefWidth="201.0" onMouseClicked="#requestPlayerField">
                            <children>
                               <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
                               <Label fx:id="playerName" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">

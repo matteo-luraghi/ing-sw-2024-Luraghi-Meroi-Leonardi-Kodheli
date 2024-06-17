@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,6 +20,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -43,7 +45,7 @@ public class PlayerFieldController extends EventHandler{
     public ImageView goldUncovered0;
     public ImageView goldUncovered1;
     public ImageView startingCard;
-    public Group playerField;
+    public Group playerFieldContainer;
     public Pane player1;
     public Pane player2;
     public Pane player3;
@@ -84,14 +86,14 @@ public class PlayerFieldController extends EventHandler{
     }
 
     /**
-     * method to show all the scene's elements
+     * method to initialize all the graphic fields though the view
      * @param view the view we want to set
      */
     @Override
     public void setView(GUI view){
         this.view = view;
-        //Initialize all the graphic fields though the view
-        showYourField(); //Shows player zone, hand and private goal
+        //Shows player zone, hand and private goal
+        showYourField();
         //Shows the resource maps of all players
         view.showResourceMaps();
         //Shows the points that every player has
@@ -224,19 +226,20 @@ public class PlayerFieldController extends EventHandler{
      * @param isYourPlayerfield a boolean telling whether it's the client's field or not
      */
     public void setPlayerField(PlayerField playerField, boolean isYourPlayerfield) {
-        //TODO: PlayerField will probably need a List<ResourceCard> to understand in which order to play them in
-        //TODO: THIS WILL STACK IMAGES ON TOP OF ONE ANOTHER; CALL THIS ONLY ON NEW PLAYER FIELD
+        //Delete the previous cards
+        playerFieldContainer.getChildren().clear();
 
-        //Set player zone
-        Image temp;
-        for(Coordinates c: playerField.getGameZone().keySet()){
-            createCard(playerField, c);
+        //Set the player field
+        for(GameCard card: playerField.getInPlayOrderList()){
+            Coordinates coordinate = Util.getKeyByValue(playerField.getGameZone(), card);
+            createCard(playerField, coordinate);
         }
 
+        //Set hand
         setHand(playerField.getHand(), isYourPlayerfield);
 
         //Set private goal
-        temp = new Image(Util.getImageFromID(playerField.getPrivateGoal().getId(), isYourPlayerfield));
+        Image temp = new Image(Util.getImageFromID(playerField.getPrivateGoal().getId(), isYourPlayerfield));
         privateGoal.setImage(temp);
     }
 
@@ -445,17 +448,20 @@ public class PlayerFieldController extends EventHandler{
         x+1 = +116
         y+1 = -60
          */
-        //Find the resource card that just got played
         GameCard card = null;
-
-        // if this thread is faster than the update game one
-        // wait until the game is updated and then display the played card
-        while(card == null) {
-            try {
-                playerZone = view.getYourPlayerField();
-                card = playerZone.getGameCardByEqualCoordinate(where);
-            } catch (NullPointerException ignored) {}
+        if(playerRequesting.getNickname().equals(playerFieldOwner.getNickname())){
+            // if this thread is faster than the update game one
+            // wait until the game is updated and then display the played card
+            while(card == null) {
+                try {
+                    playerZone = view.getYourPlayerField();
+                    card = playerZone.getGameCardByEqualCoordinate(where);
+                } catch (NullPointerException ignored) {}
+            }
+        } else {
+            card = playerZone.getGameCardByEqualCoordinate(where);
         }
+
 
         //Create the pane
         int newX = where.getX() * 116;
@@ -501,7 +507,7 @@ public class PlayerFieldController extends EventHandler{
             pane.getChildren().add(button);
         }
         //Append the pane to the group
-        playerField.getChildren().add(pane);
+        playerFieldContainer.getChildren().add(pane);
     }
 
     /**
@@ -540,10 +546,14 @@ public class PlayerFieldController extends EventHandler{
         this.playerRequesting = playerRequesting;
     }
 
+    /**
+     * Method that is called when clicking the enter button
+     * Send the written message to the desired recipient if the text is not null
+     */
     public void sendChatMessage() {
-        if(playerRequesting.getNickname().equals(playerFieldOwner.getNickname()) && !currentMessage.getText().equals("")){
+        if(playerRequesting.getNickname().equals(playerFieldOwner.getNickname()) && !currentMessage.getText().trim().equals("")){
             //Get the message
-            String message = currentMessage.getText();
+            String message = currentMessage.getText().trim();
 
             //Get the desired
             String user = chosenRecipient.getValue().toString();
@@ -559,6 +569,12 @@ public class PlayerFieldController extends EventHandler{
         if(keyEvent.getCode().equals(KeyCode.ENTER)){
             sendChatMessage();
         }
+    }
 
+    public void requestPlayerField(MouseEvent mouseEvent) {
+        String targetUser = ((Label)getChildrenFromID((Pane) mouseEvent.getSource(), "playerName")).getText();
+        if(!targetUser.equals(playerFieldOwner.getNickname())){
+            view.ShowPlayerFieldFromName(targetUser, playerRequesting);
+        }
     }
 }

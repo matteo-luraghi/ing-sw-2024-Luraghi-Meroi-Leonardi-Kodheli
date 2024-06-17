@@ -96,19 +96,6 @@ public class PlayerField implements Serializable {
     }
 
     /**
-     * get in order of play the corresponding card id
-     * @return Id Arraylist of the cards
-     */
-    public ArrayList<Integer> getInPlayOrderCardId()
-    {
-        ArrayList<Integer> IdList=new ArrayList<>();
-        for(int i=0;i<InPlayOrder.size();i++)
-        {
-            IdList.add(InPlayOrder.get(i).getId());
-        }
-        return IdList;
-    }
-    /**
      * Adds the startingCard to the player field
      * @param startingCard the startingCard the player chose
      */
@@ -122,6 +109,7 @@ public class PlayerField implements Serializable {
                 }
             }
         }
+        InPlayOrder.add(startingCard); //add the starting card as the first card
         for (int i = 0; i <= 3; i++) { //add to the resource map the starting card's corner resources
             Resource resource = startingCard.getCorner(i);
             if (resource != null && !resource.equals(Resource.BLANK) && !resource.equals(Resource.HIDDEN)) {

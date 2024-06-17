@@ -348,6 +348,20 @@ public class GUI extends Application implements View{
     }
 
     /**
+     * displays the player field of a specific username without passing the game
+     *
+     * @param usernameToSee  specifies which playerfield has to be displayed
+     * @param playerAsking tells which player is asking to see it
+     */
+    public void ShowPlayerFieldFromName(String usernameToSee, Player playerAsking) {
+        for(Player p: game.getPlayers()){
+            if(p.getNickname().equals(usernameToSee)){
+                ShowPlayerField(p, playerAsking);
+            }
+        }
+    }
+
+    /**
      * displays the two decks and the uncovered cards
      *
      * @param game we are referring to
