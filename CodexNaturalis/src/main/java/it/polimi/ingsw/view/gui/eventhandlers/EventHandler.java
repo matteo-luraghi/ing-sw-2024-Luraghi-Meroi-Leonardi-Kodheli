@@ -39,7 +39,9 @@ public abstract class EventHandler {
                 "-fx-font-size: large;" +
                 "-fx-font-weight: bold;");
         alert.showAndWait();
-        view.getClient().disconnect();
+        try{
+            view.getClient().disconnect();
+        } catch (NullPointerException ignored){}
         Platform.exit();
     }
     /**
