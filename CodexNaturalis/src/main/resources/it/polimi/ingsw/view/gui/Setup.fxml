@@ -45,7 +45,7 @@
                         <RadioButton fx:id="goal2" layoutX="32.0" layoutY="368.0" mnemonicParsing="false" toggleGroup="$goalCardGroup" />
                         <Label layoutX="48.0" layoutY="14.0" prefHeight="56.0" prefWidth="298.0" text="Choose either of the goal cards" textAlignment="CENTER" wrapText="true">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="Cambria Bold Italic" size="18.0" />
                            </font>
                         </Label>
                      </children>
@@ -64,16 +64,16 @@
                         <RadioButton fx:id="startingBack" layoutX="32.0" layoutY="368.0" mnemonicParsing="false" toggleGroup="$startingCardGroup" />
                         <Label layoutX="32.0" layoutY="14.0" prefHeight="56.0" prefWidth="298.0" text="Choose either the front or the back of your starting card" textAlignment="CENTER" wrapText="true">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="Cambria Bold Italic" size="18.0" />
                            </font>
                         </Label>
                      </children>
                   </AnchorPane>
                </children>
             </HBox>
-            <Button fx:id="submitButton" mnemonicParsing="false" onMouseClicked="#SelectStartingAndGoal" prefHeight="50.0" prefWidth="118.0" text="Submit!">
+            <Button fx:id="submitButton" mnemonicParsing="false" onMouseClicked="#SelectStartingAndGoal" prefHeight="50.0" prefWidth="118.0" stylesheets="@assets/css/roundButton.css" text="Submit!">
                <font>
-                  <Font size="23.0" />
+                  <Font name="Cambria Bold" size="23.0" />
                </font>
             </Button>
          </children>

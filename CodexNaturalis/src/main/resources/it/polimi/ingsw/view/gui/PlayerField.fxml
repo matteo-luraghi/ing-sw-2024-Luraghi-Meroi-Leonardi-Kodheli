@@ -25,7 +25,14 @@
    <BorderPane prefHeight="463.0" prefWidth="656.0" style="-fx-background-color: #ede3ba;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <top>
          <MenuBar style="-fx-background-color: #d1be71;" BorderPane.alignment="CENTER">
-            <Menu mnemonicParsing="false" onAction="#showYourField" text="Show your field" />
+            <Menu mnemonicParsing="false" onAction="#showYourField" text="Show your field">
+               <graphic>
+                  <Button mnemonicParsing="false" stylesheets="@assets/css/slightlyRoundButton.css" text="TUTORIAL">
+                     <font>
+                        <Font name="Cambria Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </graphic></Menu>
          </MenuBar>
       </top>
       <left>
@@ -35,10 +42,10 @@
                   <Font name="Cambria Bold Italic" size="25.0" />
                </font>
             </Label>
-            <TextField fx:id="currentMessage" onKeyPressed="#sendChatMessageEnter" layoutY="344.0" prefHeight="50.0" prefWidth="155.0" style="-fx-background-color: #ede3ba; -fx-border-color: #d1be71; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="111.0" />
+            <TextField fx:id="currentMessage" layoutY="344.0" onKeyPressed="#sendChatMessageEnter" prefHeight="50.0" prefWidth="155.0" stylesheets="@assets/css/slightlyRoundButton.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="111.0" />
             <ListView fx:id="chat" layoutY="42.0" prefHeight="227.0" prefWidth="214.0" style="-fx-background-color: #f0ead1;" stylesheets="@assets/css/lisStyles.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
-            <ChoiceBox fx:id="chosenRecipient" prefHeight="50.0" prefWidth="55.0" style="-fx-background-color: #ede3ba; -fx-border-color: #d1be71; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="56.0" />
-            <Button layoutX="129.0" layoutY="348.0" mnemonicParsing="false" onMouseClicked="#sendChatMessage" prefHeight="50.0" prefWidth="56.0" style="-fx-background-color: #ede3ba; -fx-border-color: #d1be71; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;" text="Enter" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <ChoiceBox fx:id="chosenRecipient" prefHeight="50.0" prefWidth="55.0" stylesheets="@assets/css/slightlyRoundButton.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="56.0" />
+            <Button layoutX="129.0" layoutY="348.0" mnemonicParsing="false" onMouseClicked="#sendChatMessage" prefHeight="50.0" prefWidth="56.0" stylesheets="@assets/css/slightlyRoundButton.css" text="Enter" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font name="Cambria Bold" size="12.0" />
                </font></Button>
@@ -107,7 +114,7 @@
                            </children>
                         </AnchorPane>
                         <Line endX="137.2928924560547" endY="-0.41486215591430664" startX="-100.0" startY="-0.41419318318367004" stroke="#9e8f55" />
-                        <AnchorPane fx:id="player1" prefHeight="107.0" prefWidth="201.0" onMouseClicked="#requestPlayerField">
+                        <AnchorPane fx:id="player1" onMouseClicked="#requestPlayerField" prefHeight="107.0" prefWidth="201.0">
                            <children>
                               <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE">
                      </Circle>
@@ -180,7 +187,7 @@
                            </children>
                         </AnchorPane>
                         <Line endX="137.2928924560547" endY="-0.41486215591430664" startX="-100.0" startY="-0.41419318318367004" stroke="#9e8f55" />
-                        <AnchorPane fx:id="player2" prefHeight="107.0" prefWidth="201.0" onMouseClicked="#requestPlayerField">
+                        <AnchorPane fx:id="player2" onMouseClicked="#requestPlayerField" prefHeight="107.0" prefWidth="201.0">
                            <children>
                               <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
                               <Label fx:id="playerName" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
@@ -266,7 +273,7 @@
                            </children>
                         </AnchorPane>
                         <Line endX="134.2928924560547" endY="-1.1217072010040283" startX="-100.0" startY="-0.41419318318367004" stroke="#9e8f55" />
-                        <AnchorPane fx:id="player3" prefHeight="107.0" prefWidth="201.0" onMouseClicked="#requestPlayerField">
+                        <AnchorPane fx:id="player3" onMouseClicked="#requestPlayerField" prefHeight="107.0" prefWidth="201.0">
                            <children>
                               <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
                               <Label fx:id="playerName" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">
@@ -352,7 +359,7 @@
                            </children>
                         </AnchorPane>
                         <Line endX="140.2928924560547" startX="-100.0" startY="-0.41419318318367004" stroke="#9e8f55" />
-                        <AnchorPane fx:id="player4" prefHeight="107.0" prefWidth="201.0" onMouseClicked="#requestPlayerField">
+                        <AnchorPane fx:id="player4" onMouseClicked="#requestPlayerField" prefHeight="107.0" prefWidth="201.0">
                            <children>
                               <Circle fx:id="color" centerX="15.0" centerY="15.0" fill="RED" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
                               <Label fx:id="playerName" layoutX="31.0" layoutY="5.0" prefHeight="20.0" prefWidth="161.0" text="Player Name">

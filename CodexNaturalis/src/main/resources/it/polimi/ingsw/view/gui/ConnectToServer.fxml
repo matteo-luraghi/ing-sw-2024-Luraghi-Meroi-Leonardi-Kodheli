@@ -42,7 +42,7 @@
                         <Font name="Cambria Italic" size="24.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="serverIP" maxWidth="250.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-background-radius: 100; -fx-border-radius: 100; -fx-border-width: 2;" />
+                  <TextField fx:id="serverIP" maxWidth="250.0" prefHeight="25.0" prefWidth="150.0" stylesheets="@assets/css/roundButton.css" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="82.0" prefWidth="600.0">
@@ -52,7 +52,7 @@
                         <Font name="Cambria Italic" size="24.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="serverPort" maxWidth="250.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 100; -fx-background-radius: 100; -fx-border-width: 2;" />
+                  <TextField fx:id="serverPort" maxWidth="250.0" prefHeight="25.0" prefWidth="150.0" stylesheets="@assets/css/roundButton.css" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="82.0" prefWidth="600.0">
@@ -62,7 +62,7 @@
                         <Font name="Cambria Italic" size="24.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="connectionChoice" maxWidth="250.0" prefWidth="150.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 100; -fx-background-radius: 100; -fx-border-width: 2;" styleClass="button">
+                  <ChoiceBox fx:id="connectionChoice" maxWidth="250.0" prefWidth="150.0" styleClass="button" stylesheets="@assets/css/roundButton.css">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></ChoiceBox>
@@ -70,7 +70,7 @@
             </VBox>
             <VBox alignment="CENTER" maxHeight="100.0" maxWidth="642.0" prefHeight="100.0" prefWidth="600.0">
                <children>
-                  <Button fx:id="connectButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#ConnectToServer" prefHeight="46.0" prefWidth="116.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 100; -fx-background-radius: 100; -fx-border-width: 2;" text="Connect" textAlignment="CENTER">
+                  <Button fx:id="connectButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#ConnectToServer" prefHeight="46.0" prefWidth="116.0" stylesheets="@assets/css/roundButton.css" text="Connect" textAlignment="CENTER">
                      <font>
                         <Font name="Cambria Bold" size="22.0" />
                      </font>

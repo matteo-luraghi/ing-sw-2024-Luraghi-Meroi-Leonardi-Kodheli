@@ -51,7 +51,7 @@
                                     <Font name="Cambria Italic" size="21.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="gameName" alignment="CENTER" maxWidth="250.0" prefHeight="7.0" prefWidth="209.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 100; -fx-background-radius: 100; -fx-border-width: 2;">
+                              <TextField fx:id="gameName" alignment="CENTER" maxWidth="250.0" prefHeight="7.0" prefWidth="209.0" stylesheets="@assets/css/roundButton.css">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -68,7 +68,7 @@
                                     <Font name="Cambria Italic" size="20.0" />
                                  </font>
                               </Label>
-                              <ChoiceBox fx:id="numOfPlayers" prefWidth="150.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 100; -fx-background-radius: 100; -fx-border-width: 2;">
+                              <ChoiceBox fx:id="numOfPlayers" prefWidth="150.0" stylesheets="@assets/css/roundButton.css">
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>
@@ -77,7 +77,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="7.0" prefWidth="306.0">
                            <children>
-                              <Button fx:id="createButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#createGame" prefWidth="153.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-background-radius: 100; -fx-border-radius: 100; -fx-border-width: 2;" text="Create">
+                              <Button fx:id="createButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#createGame" prefWidth="153.0" stylesheets="@assets/css/roundButton.css" text="Create">
                                  <font>
                                     <Font name="Cambria Bold" size="27.0" />
                                  </font>
@@ -99,7 +99,7 @@
                      </font>
                   </Label>
                   <ListView fx:id="gamesList" layoutX="-10.666666666666666" onMouseClicked="#joinGame" prefHeight="299.0" prefWidth="278.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 2;" stylesheets="@assets/css/lisStyles.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0" />
-                  <Button mnemonicParsing="false" onMouseClicked="#refreshGame" prefHeight="40.0" prefWidth="289.0" style="-fx-background-color: #f0ead1; -fx-border-color: #d1be71; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;" text="Refresh" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <Button mnemonicParsing="false" onMouseClicked="#refreshGame" prefHeight="40.0" prefWidth="289.0" stylesheets="@assets/css/slightlyRoundButton.css" text="Refresh" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <font>
                         <Font name="Cambria Bold" size="19.0" />
                      </font>
