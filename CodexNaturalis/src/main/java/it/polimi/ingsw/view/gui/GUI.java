@@ -264,14 +264,6 @@ public class GUI extends Application implements View{
         client.playersNumberResponse(numOfPlayersChosen, gameName);
     }
 
-    public void cardPlayedOK(){
-        Platform.runLater(() -> {
-            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
-            playerFieldHandler.cardPlayOK();
-            playerFieldHandler.setHand(game.getGameTable().getPlayerZones().get(user).getHand(), true);
-        });
-    }
-
     /**
      * method to display the waiting for players message in loginPage
      */
@@ -343,7 +335,7 @@ public class GUI extends Application implements View{
         Platform.runLater(() -> {
             PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
             playerFieldHandler.setPlayers(playerToSee, playerAsking);
-            playerFieldHandler.setPlayerField(game.getGameTable().getPlayerZones().get(playerToSee), playerAsking.getNickname().equals(playerToSee.getNickname()));
+            playerFieldHandler.setPlayerField(game.getGameTable().getPlayerZoneForUser(playerToSee.getNickname()), playerAsking.getNickname().equals(playerToSee.getNickname()));
         });
     }
 
@@ -394,24 +386,10 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * displays the scoreboard without passing the scoreboard
+     * displays the scoreboard without having to pass the game
      */
-    public void ShowScoreBoard(){
+    public void showScoreBoard(){
         ShowScoreBoard(game.getGameTable().getScoreBoard());
-    }
-
-    /**
-     * Displays the resource maps of all players
-     */
-    public void showResourceMaps() {
-        Map<Player, Map<Resource, Integer>> resourceMaps = new HashMap<>();
-        for(Player p : game.getPlayers()){
-            resourceMaps.put(p, game.getGameTable().getPlayerZones().get(p).getResourceMap());
-        }
-        Platform.runLater(() -> {
-            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
-            playerFieldHandler.setResourceMaps(resourceMaps);
-        });
     }
 
     /**
@@ -490,12 +468,7 @@ public class GUI extends Application implements View{
      */
     @Override
     public void setPlayPhase(boolean playPhase) throws RemoteException {
-        if(!playPhase){
-            Platform.runLater(() -> {
-                PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
-                playerFieldHandler.cardPlayOK();
-            });
-        }
+
     }
 
     /**
@@ -538,15 +511,14 @@ public class GUI extends Application implements View{
         Platform.runLater(() -> {
             try {
                 PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
-                playerFieldHandler.setHand(game.getGameTable().getPlayerZones().get(user).getHand(), true);
                 playerFieldHandler.setDecks(game.getGameTable().getResourceDeck(), game.getGameTable().getGoldDeck());
                 playerFieldHandler.setScoreBoard(game.getGameTable().getScoreBoard());
-
                 Map<Player, Map<Resource, Integer>> resourceMaps = new HashMap<>();
                 for (Player p : game.getPlayers()) {
                     resourceMaps.put(p, game.getGameTable().getPlayerZones().get(p).getResourceMap());
                 }
                 playerFieldHandler.setResourceMaps(resourceMaps);
+                playerFieldHandler.setCurrentPlayerField(game);
             } catch (ClassCastException e){
 
             }

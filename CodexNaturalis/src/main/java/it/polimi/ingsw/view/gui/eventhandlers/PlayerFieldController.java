@@ -5,12 +5,9 @@ import it.polimi.ingsw.model.gamelogic.*;
 import it.polimi.ingsw.model.gamelogic.gamechat.GameChat;
 import it.polimi.ingsw.model.gamelogic.gamechat.Message;
 import it.polimi.ingsw.view.gui.GUI;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,15 +15,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Optional;
 
 public class PlayerFieldController extends EventHandler{
 
@@ -56,7 +50,7 @@ public class PlayerFieldController extends EventHandler{
     public ChoiceBox chosenRecipient;
 
     private Player playerFieldOwner;
-    private Player playerRequesting;
+    private Player playerViewing;
     private ArrayList<Pane> playerPanes;
     private ImageView chosenImage;
     private int chosenIndex;
@@ -92,20 +86,27 @@ public class PlayerFieldController extends EventHandler{
     @Override
     public void setView(GUI view){
         this.view = view;
+
+        //Initialize the current player and the player field owner
+        setPlayers(view.getUser(), view.getUser());
+
         //Shows player zone, hand and private goal
-        showYourField();
-        //Shows the resource maps of all players
-        view.showResourceMaps();
-        //Shows the points that every player has
-        view.ShowScoreBoard();
+        view.ShowPlayerField(view.getUser(), view.getUser());
+
         //Shows both resource and gold decks
         view.ShowDecks();
-        //Shows the 2 common goals;
-        view.showCommonGoals();
+
         //Set the static fields of the players
         view.showStaticContent();
+
+        //Shows the 2 common goals;
+        view.showCommonGoals();
+
         //Set the chat with the messages it already has
         view.showChat();
+
+        //Sets the scoreboard;
+        view.showScoreBoard();
     }
 
     /**
@@ -294,8 +295,8 @@ public class PlayerFieldController extends EventHandler{
                     case null, default -> color = Color.WHITE;
                 }
                 ((Circle) getChildrenFromID(currentPane, "color")).setFill(color);
-                if(players.get(i).equals(playerRequesting)){
-                    YourName.setText(playerFieldOwner.getNickname());
+                if(players.get(i).equals(view.getUser())){
+                    YourName.setText(view.getUser().getNickname());
                     YourColor.setFill(color);
                 } else {
                     items.add(players.get(i).getNickname());
@@ -328,6 +329,7 @@ public class PlayerFieldController extends EventHandler{
      * @param s the message
      */
     public void addChatMessage(String s) {
+
         chat.getItems().add(s);
         int index = chat.getItems().size()-1;
         chat.scrollTo(index);
@@ -337,8 +339,7 @@ public class PlayerFieldController extends EventHandler{
      * method to display the client's field
      */
     public void showYourField() {
-        Player currentPlayer = view.getUser();
-        view.ShowPlayerField(currentPlayer, currentPlayer);
+        view.ShowPlayerField(playerViewing, playerViewing);
     }
 
     /**
@@ -346,6 +347,11 @@ public class PlayerFieldController extends EventHandler{
      * @param mouseEvent that triggered the event
      */
     public void playCard(MouseEvent mouseEvent) {
+        if(!playerViewing.equals(playerFieldOwner)){
+            view.showMessage("You aren't the owner of this player field");
+            return;
+        }
+
         if(chosenIndex == -1){
             view.showMessage("Select a card to play first");
             return;
@@ -368,6 +374,11 @@ public class PlayerFieldController extends EventHandler{
      * @param mouseEvent that triggers the event
      */
     public void selectPlayCard(MouseEvent mouseEvent) {
+        if(!playerViewing.equals(playerFieldOwner)){
+            view.showMessage("You aren't the owner of this player field");
+            return;
+        }
+
         chosenImage = (ImageView) mouseEvent.getSource();
         if(chosenImage.equals(hand0)){
             chosenIndex = 0;
@@ -400,6 +411,11 @@ public class PlayerFieldController extends EventHandler{
      * @param mouseEvent that triggers the event
      */
     public void drawCard(MouseEvent mouseEvent) {
+        if(!playerViewing.equals(playerFieldOwner)){
+            addChatMessage("You aren't the owner of this player field");
+            return;
+        }
+
         chosenImage = (ImageView) mouseEvent.getSource();
         boolean isGold;
 
@@ -431,15 +447,6 @@ public class PlayerFieldController extends EventHandler{
     }
 
     /**
-     * method that is called when a card is successfully played
-     */
-    public void cardPlayOK() {
-        //The card got played successfully
-        //This only creates the new card
-        createCard(view.getYourPlayerField(), chosenCords);
-    }
-
-    /**
      * Method that is used to visually create the card that just got played
      * @param playerZone The player zone where the card got played
      * @param where the position where the card got played
@@ -451,9 +458,10 @@ public class PlayerFieldController extends EventHandler{
         y+1 = -60
          */
         GameCard card = null;
-        if(playerRequesting.getNickname().equals(playerFieldOwner.getNickname())){
+        if(playerViewing.getNickname().equals(playerFieldOwner.getNickname())){
             // if this thread is faster than the update game one
             // wait until the game is updated and then display the played card
+            //TODO: Logic changed, should be safe to delete and leave only card = playerzone.getGameCardByEqualCoordinate
             while(card == null) {
                 try {
                     playerZone = view.getYourPlayerField();
@@ -543,9 +551,14 @@ public class PlayerFieldController extends EventHandler{
         return button;
     }
 
+    /**
+     * Method to set the player that is viewing and the player that owns the currently viewed player field
+     * @param playerFieldOwner the player who owns the player field
+     * @param playerRequesting the player who wants to see the player field
+     */
     public void setPlayers(Player playerFieldOwner, Player playerRequesting){
         this.playerFieldOwner = playerFieldOwner;
-        this.playerRequesting = playerRequesting;
+        this.playerViewing = playerRequesting;
     }
 
     /**
@@ -553,7 +566,8 @@ public class PlayerFieldController extends EventHandler{
      * Send the written message to the desired recipient if the text is not null
      */
     public void sendChatMessage() {
-        if(playerRequesting.getNickname().equals(playerFieldOwner.getNickname()) && !currentMessage.getText().trim().equals("")){
+
+        if(playerViewing.getNickname().equals(playerFieldOwner.getNickname()) && !currentMessage.getText().trim().equals("")){
             //Get the message
             String message = currentMessage.getText().trim();
 
@@ -576,7 +590,13 @@ public class PlayerFieldController extends EventHandler{
     public void requestPlayerField(MouseEvent mouseEvent) {
         String targetUser = ((Label)getChildrenFromID((Pane) mouseEvent.getSource(), "playerName")).getText();
         if(!targetUser.equals(playerFieldOwner.getNickname())){
-            view.ShowPlayerFieldFromName(targetUser, playerRequesting);
+            view.ShowPlayerFieldFromName(targetUser, playerViewing);
         }
+    }
+
+    public void setCurrentPlayerField(GameState game) {
+        boolean isYourPlayerField = playerFieldOwner.equals(playerViewing);
+        PlayerField currentPlayerField = game.getGameTable().getPlayerZoneForUser(playerFieldOwner.getNickname());
+        setPlayerField(currentPlayerField, isYourPlayerField);
     }
 }

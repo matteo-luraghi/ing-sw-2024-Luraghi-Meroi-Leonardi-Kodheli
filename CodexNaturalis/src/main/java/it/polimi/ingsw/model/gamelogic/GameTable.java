@@ -64,6 +64,21 @@ public class GameTable implements Serializable {
     }
 
     /**
+     * Get a player zone for a given username
+     * @param username the given username
+     * @return the player zone of the user, or null if it wasnt found
+     */
+    public PlayerField getPlayerZoneForUser(String username){
+        for(Player p : PlayerZones.keySet()){
+            if(p.getNickname().equals(username)){
+                return PlayerZones.get(p);
+            }
+        }
+
+        //player field hasn't been found
+        return null;
+    }
+    /**
      * CommonGoal by index getter
      *
      * @param index d
