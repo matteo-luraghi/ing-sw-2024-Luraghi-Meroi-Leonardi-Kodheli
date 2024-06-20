@@ -379,6 +379,6 @@ public class Util {
      */
     public static String getTutorialImageByID(int id) {
         String imageName = id + ".png";
-        return GUI.class.getResource("assets/TutorialImages/"+imageName).toString();
+        return GUI.class.getResource("assets/tutorial/"+imageName).toString();
     }
 }

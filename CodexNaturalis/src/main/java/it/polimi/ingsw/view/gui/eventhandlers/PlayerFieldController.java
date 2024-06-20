@@ -15,6 +15,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -49,6 +50,8 @@ public class PlayerFieldController extends EventHandler{
     public TextField currentMessage;
     public ChoiceBox chosenRecipient;
     public ImageView TutorialImage;
+    public AnchorPane tutorialImageContainer;
+    public AnchorPane rootPane;
 
     private Player playerFieldOwner;
     private Player playerViewing;
@@ -604,8 +607,8 @@ public class PlayerFieldController extends EventHandler{
 
     public void startTutorialSequence(MouseEvent mouseEvent) {
         tutorialImageIndex = 0;
-        TutorialImage.setVisible(true);
-        TutorialImage.setDisable(false);
+        tutorialImageContainer.setVisible(true);
+        tutorialImageContainer.setDisable(false);
         nextTutorialSequence();
     }
 
@@ -616,9 +619,12 @@ public class PlayerFieldController extends EventHandler{
             String tutorialPath = Util.getTutorialImageByID(tutorialImageIndex);
             Image temp = new Image(tutorialPath);
             TutorialImage.setImage(temp);
+            TutorialImage.setFitWidth(rootPane.getScene().getWidth());
+            TutorialImage.setFitHeight(rootPane.getScene().getHeight());
+            TutorialImage.setPreserveRatio(false);
         } else {
-            TutorialImage.setVisible(false);
-            TutorialImage.setDisable(true);
+            tutorialImageContainer.setVisible(false);
+            tutorialImageContainer.setDisable(true);
         }
 
     }
