@@ -10,11 +10,7 @@ import it.polimi.ingsw.model.gamelogic.*;
 import it.polimi.ingsw.model.gamelogic.gamechat.GameChat;
 import it.polimi.ingsw.model.gamelogic.gamechat.Message;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Serializable;
-import java.rmi.RemoteException;
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -177,8 +173,17 @@ public class Controller implements RemoteController {
         List<StartingCard> cardsList = new ArrayList<>();
         JsonParser parser = new JsonParser();
         for(int i=1; i<=6; i++) {
-            String cardPath = "./src/main/resources/CardsJSON/startingCards/startingCard" + i + ".json";
-            try(Reader reader = new FileReader(cardPath)) {
+            String cardName = "./src/main/resources/CardsJSON/startingCards/startingCard" + i + ".json";
+            InputStream inputStream = null;
+            try {
+                inputStream = new FileInputStream(cardName);
+            } catch (FileNotFoundException e) {
+                System.err.println("File not found: " + cardName);
+            }
+            // TODO: uncomment before JAR extraction and delete previous lines
+            //String cardName = "CardsJSON/startingCards/startingCard" + i + ".json";
+            //InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cardName);
+            try(Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                 JsonObject parsedStartingCard = parser.parse(reader).getAsJsonObject();
                 cardsList.add(Util.fromJSONtoStartingCard(parsedStartingCard));
             } catch (IOException e) {
@@ -191,15 +196,23 @@ public class Controller implements RemoteController {
 
     /**
      * Get all the goal cards from the json files
-     *
      * @return the shuffled queue of goal cards
      */
     private Queue<GoalCard> getGoalCards() {
         List<GoalCard> cardsList = new ArrayList<>();
         JsonParser parser = new JsonParser();
         for(int i=1; i<=16; i++) {
-            String cardPath = "./src/main/resources/CardsJSON/goalCards/goalCard" + i + ".json";
-            try(Reader reader = new FileReader(cardPath)) {
+            String cardName = "./src/main/resources/CardsJSON/goalCards/goalCard" + i + ".json";
+            InputStream inputStream = null;
+            try {
+                inputStream = new FileInputStream(cardName);
+            } catch (FileNotFoundException e) {
+                System.err.println("File not found: " + cardName);
+            }
+            // TODO: uncomment before JAR extraction and delete previous lines
+            //String cardName = "CardsJSON/goalCards/goalCard" + i + ".json";
+            //InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cardName);
+            try(Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                 JsonObject parsedGoalCard = parser.parse(reader).getAsJsonObject();
                 boolean isResourceGoal=parsedGoalCard.get("isResourceGoal").getAsBoolean();
                 if(isResourceGoal) {
@@ -259,7 +272,6 @@ public class Controller implements RemoteController {
 
     /**
      * checks if the game is ready to start
-     * @throws RemoteException to handle exceptions that may occur using RMI
      */
     @Override
     public void checkGame() {
