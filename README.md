@@ -1,10 +1,10 @@
 Progetto di ingegneria del software A.A. 2023/2024
 
 Componenti del gruppo:
-  Matteo Leonardo Luraghi
-  Lorenzo Meroi
-  Gabriel Leonardi
-  Francesk Khodeli
+  - Matteo Leonardo Luraghi
+  - Lorenzo Meroi
+  - Gabriel Leonardi
+  - Francesk Khodeli
 
 
 Funzionalità implementate:
