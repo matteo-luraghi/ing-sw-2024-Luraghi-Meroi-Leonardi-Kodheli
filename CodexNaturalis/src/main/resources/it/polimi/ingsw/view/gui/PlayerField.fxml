@@ -20,7 +20,6 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #ede3ba;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.eventhandlers.PlayerFieldController">
-   <ImageView fx:id="TutorialImage" disable="true" fitHeight="800.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true" visible="false" />
    <BorderPane prefHeight="463.0" prefWidth="656.0" style="-fx-background-color: #ede3ba;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <left>
          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="635.0" prefWidth="279.0" BorderPane.alignment="CENTER">
@@ -543,7 +542,7 @@
                      <Font name="Cambria Bold" size="12.0" />
                   </font>
                </Button>
-               <Button layoutX="105.0" layoutY="5.0" mnemonicParsing="false" stylesheets="@assets/css/slightlyRoundButton.css" text="TUTORIAL" AnchorPane.leftAnchor="105.0">
+               <Button layoutX="105.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#startTutorialSequence" stylesheets="@assets/css/slightlyRoundButton.css" text="TUTORIAL" AnchorPane.leftAnchor="105.0">
                   <font>
                      <Font name="Cambria Bold" size="12.0" />
                   </font>
@@ -552,4 +551,9 @@
          </AnchorPane>
       </top>
    </BorderPane>
+   <ImageView fx:id="TutorialImage" disable="true" fitHeight="800.0" fitWidth="1200.0" onMouseClicked="#nextTutorialSequence" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <image>
+         <Image url="@../../../../../../../../target/classes/it/polimi/ingsw/view/gui/assets/TutorialImages/1.png" />
+      </image>
+   </ImageView>
 </AnchorPane>

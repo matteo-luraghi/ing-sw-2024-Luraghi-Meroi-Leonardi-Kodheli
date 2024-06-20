@@ -48,6 +48,7 @@ public class PlayerFieldController extends EventHandler{
     public Circle YourColor;
     public TextField currentMessage;
     public ChoiceBox chosenRecipient;
+    public ImageView TutorialImage;
 
     private Player playerFieldOwner;
     private Player playerViewing;
@@ -56,7 +57,8 @@ public class PlayerFieldController extends EventHandler{
     private int chosenIndex;
     private Coordinates chosenCords;
     private ArrayList<Boolean> isFrontList;
-    boolean emptyChat;
+    private boolean emptyChat;
+    private int tutorialImageIndex;
 
     /**
      * method to initialize the controller's parameters
@@ -598,5 +600,26 @@ public class PlayerFieldController extends EventHandler{
         boolean isYourPlayerField = playerFieldOwner.equals(playerViewing);
         PlayerField currentPlayerField = game.getGameTable().getPlayerZoneForUser(playerFieldOwner.getNickname());
         setPlayerField(currentPlayerField, isYourPlayerField);
+    }
+
+    public void startTutorialSequence(MouseEvent mouseEvent) {
+        tutorialImageIndex = 0;
+        TutorialImage.setVisible(true);
+        TutorialImage.setDisable(false);
+        nextTutorialSequence();
+    }
+
+
+    public void nextTutorialSequence() {
+        tutorialImageIndex++;
+        if(tutorialImageIndex <= 5){
+            String tutorialPath = Util.getTutorialImageByID(tutorialImageIndex);
+            Image temp = new Image(tutorialPath);
+            TutorialImage.setImage(temp);
+        } else {
+            TutorialImage.setVisible(false);
+            TutorialImage.setDisable(true);
+        }
+
     }
 }

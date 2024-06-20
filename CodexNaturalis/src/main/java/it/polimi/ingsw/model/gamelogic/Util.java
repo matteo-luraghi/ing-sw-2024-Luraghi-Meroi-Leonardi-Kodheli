@@ -349,6 +349,12 @@ public class Util {
         return -1;
     }
 
+    /**
+     * Given the id of a game card, return the path to open the image
+     * @param id the id of the game card
+     * @param isFront if it's facing the front
+     * @return The path of the image
+     */
     static public String getImageFromID(int id, boolean isFront){
         String cardName = id + ".png";
         //Add leading 0s to cardName
@@ -364,5 +370,15 @@ public class Util {
         }else{
             return GUI.class.getResource("assets/CODEX_cards_gold_back/" + cardName).toString();
         }
+    }
+
+    /**
+     * Given the id of a tutorial image, return the path to open the image
+     * @param id the id of the tutorial image
+     * @return The path of the image
+     */
+    public static String getTutorialImageByID(int id) {
+        String imageName = id + ".png";
+        return GUI.class.getResource("assets/TutorialImages/"+imageName).toString();
     }
 }
