@@ -101,7 +101,7 @@ public class GUI extends Application implements View{
                 root = (Parent) fxmlLoader.load();
                 currentEventHandler = fxmlLoader.getController();
                 currentEventHandler.setView(this);
-                this.stage.setScene(new Scene(root));
+                this.stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
                 stage.setTitle(sceneName.split("\\.")[0]);
                 stage.setOnCloseRequest(e -> {
                     currentEventHandler = fxmlLoader.getController();
