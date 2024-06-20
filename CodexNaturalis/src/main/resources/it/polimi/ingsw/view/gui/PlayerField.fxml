@@ -560,4 +560,9 @@
          </AnchorPane>
       </top>
    </BorderPane>
+   <ImageView fx:id="TutorialImage" disable="true" fitHeight="800.0" fitWidth="1200.0" onMouseClicked="#nextTutorialSequence" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <image>
+         <Image url="@../../../../../../../../target/classes/it/polimi/ingsw/view/gui/assets/TutorialImages/1.png" />
+      </image>
+   </ImageView>
 </AnchorPane>
