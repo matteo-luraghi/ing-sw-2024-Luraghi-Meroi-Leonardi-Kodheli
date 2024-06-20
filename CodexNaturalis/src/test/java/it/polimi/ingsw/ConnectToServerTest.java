@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.connection.Client;
 import it.polimi.ingsw.connection.Server;
+import it.polimi.ingsw.connection.rmi.IPNotFoundException;
 import it.polimi.ingsw.connection.socket.SocketClient;
 import it.polimi.ingsw.view.cli.CLI;
 import org.junit.After;
@@ -30,7 +31,7 @@ public class ConnectToServerTest {
             try {
                 server = new Server(5004);
                 server.start();
-            } catch (IOException e) {
+            } catch (IOException | IPNotFoundException e) {
                 throw new RuntimeException(e);
             }
         });

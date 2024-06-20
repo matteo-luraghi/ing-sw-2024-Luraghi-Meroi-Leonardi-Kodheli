@@ -950,6 +950,8 @@ public class CLI implements View {
             System.out.println("What do you want to do in chat?\nexit | newer | older | write | refresh");
             command = this.scanner.nextLine();
 
+            ClearScreen();
+
             switch (command.toLowerCase()) {
                 case "exit" -> {exitChat = true;}
                 case "newer" -> {
