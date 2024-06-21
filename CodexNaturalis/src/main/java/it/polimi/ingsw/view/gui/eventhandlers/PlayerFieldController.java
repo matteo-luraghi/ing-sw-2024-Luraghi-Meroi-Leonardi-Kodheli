@@ -179,8 +179,8 @@ public class PlayerFieldController extends EventHandler{
             temp = new Image(Util.getImageFromID(goldDeck1.getUncoveredCards()[1].getId(), true));
             goldUncovered1.setImage(temp);
         } catch (NullPointerException e) {
-            goldUncovered0.setDisable(true);
-            goldUncovered0.setVisible(false);
+            goldUncovered1.setDisable(true);
+            goldUncovered1.setVisible(false);
         }
     }
 
@@ -256,14 +256,22 @@ public class PlayerFieldController extends EventHandler{
      */
     public void setHand(ArrayList<ResourceCard> hand, boolean isYourPlayerfield){
         Image temp;
-        if(hand.getFirst() != null){
+        if(!hand.isEmpty() && hand.getFirst() != null){
             temp = new Image(Util.getImageFromID(hand.getFirst().getId(), isYourPlayerfield && isFrontList.get(0)));
             hand0.setImage(temp);
+        } else {
+            hand0.setVisible(false);
+            hand0.setDisable(true);
         }
-        if(hand.get(1) != null){
+
+        if(hand.size() >= 2 && hand.get(1) != null){
             temp = new Image(Util.getImageFromID(hand.get(1).getId(), isYourPlayerfield && isFrontList.get(1)));
             hand1.setImage(temp);
+        } else {
+            hand1.setVisible(false);
+            hand1.setDisable(true);
         }
+
         if(hand.size() == 3 && hand.get(2) != null){
             temp = new Image(Util.getImageFromID(hand.get(2).getId(), isYourPlayerfield && isFrontList.get(2)));
             hand2.setImage(temp);
@@ -586,12 +594,21 @@ public class PlayerFieldController extends EventHandler{
         currentMessage.setText("");
     }
 
+    /**
+     * When the enter key is pressed on the chat box, send the message
+     * @param keyEvent the event that triggered this function call
+     */
     public void sendChatMessageEnter(KeyEvent keyEvent){
         if(keyEvent.getCode().equals(KeyCode.ENTER)){
             sendChatMessage();
         }
     }
 
+    /**
+     * Method that is called when clicking on another player's scoreboard
+     * Shows the player field of the other player
+     * @param mouseEvent the event that called this function
+     */
     public void requestPlayerField(MouseEvent mouseEvent) {
         String targetUser = ((Label)getChildrenFromID((Pane) mouseEvent.getSource(), "playerName")).getText();
         if(!targetUser.equals(playerFieldOwner.getNickname())){
@@ -599,20 +616,31 @@ public class PlayerFieldController extends EventHandler{
         }
     }
 
+    /**
+     * Updates the currently viewed player field when it gets updated
+     * @param game the current game state
+     */
     public void setCurrentPlayerField(GameState game) {
         boolean isYourPlayerField = playerFieldOwner.equals(playerViewing);
         PlayerField currentPlayerField = game.getGameTable().getPlayerZoneForUser(playerFieldOwner.getNickname());
         setPlayerField(currentPlayerField, isYourPlayerField);
     }
 
-    public void startTutorialSequence(MouseEvent mouseEvent) {
+    /**
+     * Method that gets called when clicking on the tutorial button
+     * Initializes the tutorial sequence and shows the first image
+     */
+    public void startTutorialSequence() {
         tutorialImageIndex = 0;
         tutorialImageContainer.setVisible(true);
         tutorialImageContainer.setDisable(false);
         nextTutorialSequence();
     }
 
-
+    /**
+     * Method that gets called when clicking on a tutorial image or from startTutorialSequence
+     * Shows the current tutorial image or finishes the tutorial sequence
+     */
     public void nextTutorialSequence() {
         tutorialImageIndex++;
         if(tutorialImageIndex <= 5){

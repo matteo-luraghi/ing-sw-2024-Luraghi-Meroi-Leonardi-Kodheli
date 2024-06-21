@@ -458,6 +458,9 @@ public class GUI extends Application implements View{
     public void setMyTurn(boolean isMyTurn) throws RemoteException {
         if (isMyTurn) {
             client.yourTurnOk();
+            Platform.runLater(() -> {
+                currentEventHandler.showPopup("", "Your turn");
+            });
         }
     }
 
