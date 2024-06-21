@@ -31,24 +31,42 @@ public class Deck implements Serializable {
         JsonParser parser = new JsonParser();
         if(!isGold){
             for(int i=1; i<=40; i++) {
-                String cardPath = "./src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
+                String cardName = "src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
+                InputStream inputStream = null;
+                try {
+                    inputStream = new FileInputStream(cardName);
+                } catch (FileNotFoundException e) {
+                    System.err.println("File not found: " + cardName);
+                }
+                // TODO: uncomment before JAR extraction and delete previous lines
+                //String cardName = "CardsJSON/resourceCards/resourceCard" + i + ".json";
+                //InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cardName);
                 // initialize the json file reader and save the card
-                try(Reader reader = new FileReader(cardPath)) {
+                try(Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                     JsonObject parsedResourceCard = parser.parse(reader).getAsJsonObject();
                     cardsList.add(Util.fromJSONtoResourceCard(parsedResourceCard));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.err.println("Error parsing resource cards");
                 }
             }
         } else {
             for(int i=1; i<=40; i++) {
-                String cardPath = "./src/main/resources/CardsJSON/goldCards/goldCard" + i + ".json";
+                String cardName = "src/main/resources/CardsJSON/goldCards/goldCard" + i + ".json";
+                InputStream inputStream = null;
+                try {
+                    inputStream = new FileInputStream(cardName);
+                } catch (FileNotFoundException e) {
+                    System.err.println("File not found: " + cardName);
+                }
+                // TODO: uncomment before JAR extraction and delete previous lines
+                //String cardName = "CardsJSON/goldCards/goldCard" + i + ".json";
+                //InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cardName);
                 // initialize the json file reader and save the card
-                try(Reader reader = new FileReader(cardPath)) {
+                try(Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                     JsonObject parsedGoldCard = parser.parse(reader).getAsJsonObject();
                     cardsList.add(Util.fromJSONtoGoldCard(parsedGoldCard));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.err.println("Error parsing gold cards");
                 }
             }
         }

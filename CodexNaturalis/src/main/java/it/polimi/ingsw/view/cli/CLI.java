@@ -640,7 +640,13 @@ public class CLI implements View {
                 case "show field" -> {lastPlayerField = commandShowPlayerField(game, user);}
                 case "show decks" -> {ShowDecks(game);}
                 case "show scoreboard" -> {ShowScoreBoard(game.getGameTable().getScoreBoard());}
-                case "show card" -> {commandShowCard(game, user, lastPlayerField);}
+                case "show card" -> {
+                    if ((lastPlayerField == null)) {
+                        commandShowCard(game, user, user);
+                    } else {
+                        commandShowCard(game, user, lastPlayerField);
+                    }
+                }
                 case "show chat" -> {showChat();}
                 case "show legend" -> {showLegend();}
                 case "play card" -> {
