@@ -470,10 +470,9 @@ public class Controller implements RemoteController {
                 c.sendTextMessage("The decks are empty. Skipping draw phase.");
                 changeTurnState();
             } else {
+                // next phase
                 drawCardState();
             }
-            // next phase
-            drawCardState();
         }else{
             connectionHandler.sendTextMessage("Unable to play the card, try again");
             playCardState();
