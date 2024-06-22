@@ -11,10 +11,7 @@ import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -58,7 +55,6 @@ public class PlayerFieldController extends EventHandler{
     private ArrayList<Pane> playerPanes;
     private ImageView chosenImage;
     private int chosenIndex;
-    private Coordinates chosenCords;
     private ArrayList<Boolean> isFrontList;
     private boolean emptyChat;
     private int tutorialImageIndex;
@@ -71,7 +67,6 @@ public class PlayerFieldController extends EventHandler{
         chat.setItems(items);
         chosenIndex = -1;
         chosenImage = null;
-        chosenCords = null;
         playerPanes = new ArrayList<>();
         playerPanes.add(player1);
         playerPanes.add(player2);
@@ -257,7 +252,7 @@ public class PlayerFieldController extends EventHandler{
     public void setHand(ArrayList<ResourceCard> hand, boolean isYourPlayerfield){
         Image temp;
         if(!hand.isEmpty() && hand.getFirst() != null){
-            temp = new Image(Util.getImageFromID(hand.getFirst().getId(), isYourPlayerfield && isFrontList.get(0)));
+            temp = new Image(Util.getImageFromID(hand.getFirst().getId(), isYourPlayerfield && isFrontList.get(0)), 300, 200, true, true);
             hand0.setImage(temp);
         } else {
             hand0.setVisible(false);
@@ -265,7 +260,7 @@ public class PlayerFieldController extends EventHandler{
         }
 
         if(hand.size() >= 2 && hand.get(1) != null){
-            temp = new Image(Util.getImageFromID(hand.get(1).getId(), isYourPlayerfield && isFrontList.get(1)));
+            temp = new Image(Util.getImageFromID(hand.get(1).getId(), isYourPlayerfield && isFrontList.get(1)), 300, 200, true, true);
             hand1.setImage(temp);
         } else {
             hand1.setVisible(false);
@@ -273,7 +268,7 @@ public class PlayerFieldController extends EventHandler{
         }
 
         if(hand.size() == 3 && hand.get(2) != null){
-            temp = new Image(Util.getImageFromID(hand.get(2).getId(), isYourPlayerfield && isFrontList.get(2)));
+            temp = new Image(Util.getImageFromID(hand.get(2).getId(), isYourPlayerfield && isFrontList.get(2)), 300, 200, true, true);
             hand2.setImage(temp);
             hand2.setVisible(true);
             hand2.setDisable(false);
@@ -359,7 +354,7 @@ public class PlayerFieldController extends EventHandler{
      * method that handles the play of a card
      * @param mouseEvent that triggered the event
      */
-    public void playCard(MouseEvent mouseEvent) {
+    public void playCardClick(MouseEvent mouseEvent) {
         if(!playerViewing.equals(playerFieldOwner)){
             view.showMessage("You aren't the owner of this player field");
             return;
@@ -370,11 +365,8 @@ public class PlayerFieldController extends EventHandler{
             return;
         }
         String coordinateString = ((Button) mouseEvent.getSource()).getText();
-        int x = 0, y = 0;
-        coordinateString = coordinateString.substring(1, coordinateString.length() - 1);
-        x = Integer.parseInt(coordinateString.split(",")[0]);
-        y = Integer.parseInt(coordinateString.split(",")[1]);
-        chosenCords = new Coordinates(x,y);
+        Coordinates chosenCords = parseCoordinateFromString(coordinateString);
+
         view.playCard(chosenIndex, chosenCords, isFrontList.get(chosenIndex));
         isFrontList.remove(chosenIndex);
         chosenIndex = -1;
@@ -408,7 +400,7 @@ public class PlayerFieldController extends EventHandler{
             //The user clicked with the right click, flip the card
             isFrontList.set(chosenIndex, !isFrontList.get(chosenIndex));
             String cardPath = chosenImage.getImage().getUrl();
-            Image image = new Image(Util.getImageFromID(Integer.parseInt(cardPath.substring(cardPath.lastIndexOf("/")+1, cardPath.lastIndexOf("."))), isFrontList.get(chosenIndex)));
+            Image image = new Image(Util.getImageFromID(Integer.parseInt(cardPath.substring(cardPath.lastIndexOf("/")+1, cardPath.lastIndexOf("."))), isFrontList.get(chosenIndex)), 300, 200, true, true);
             if(chosenIndex==0){
                 hand0.setImage(image);
             }else if (chosenIndex==1){
@@ -545,7 +537,7 @@ public class PlayerFieldController extends EventHandler{
         Button button = new Button();
         String text = "[" + x + "," + y + "]";
         button.setText(text);
-        button.setOpacity(0);
+        button.setStyle("-fx-cursor: hand; -fx-background-color: transparent; -fx-text-fill: transparent;");
         if(isRight){
             button.setLayoutX(116);
         }
@@ -558,10 +550,59 @@ public class PlayerFieldController extends EventHandler{
         button.setMaxWidth(34);
         button.setMinHeight(38);
         button.setMinWidth(34);
-        button.setOnMouseClicked(this::playCard);
-        button.setStyle("-fx-cursor: hand;");
+        button.setOnMouseClicked(this::playCardClick);
+
+        //Gets called when the image is getting dragged over
+        button.setOnDragOver(new javafx.event.EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                if(event.getDragboard().hasImage()){
+                    event.acceptTransferModes(TransferMode.MOVE);
+                }
+                event.consume();
+            }
+        });
+
+        //gets called when the image is dropped onto a button
+        button.setOnDragDropped(new javafx.event.EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                Dragboard db = event.getDragboard();
+                if(db.hasImage()){
+                    playCardDrop(button.getText());
+                } else {
+                    view.showMessage("No image chosen");
+                }
+                event.consume();
+            }
+        });
 
         return button;
+    }
+
+    /**
+     * Plays the dragged card in the dropped coordinate
+     * @param coordinateString the coordinate where you want to play the card
+     */
+    private void playCardDrop(String coordinateString) {
+        Coordinates chosenCords = parseCoordinateFromString(coordinateString);
+        view.playCard(chosenIndex, chosenCords, isFrontList.get(chosenIndex));
+        isFrontList.remove(chosenIndex);
+        chosenIndex = -1;
+        isFrontList.add(true);
+    }
+
+    /**
+     * Function to convert a button text to a coordinate
+     * @param coordinateString the text of the button
+     * @return the coordinate that got referenced by the button
+     */
+    private Coordinates parseCoordinateFromString(String coordinateString){
+        int x, y;
+        coordinateString = coordinateString.substring(1, coordinateString.length() - 1);
+        x = Integer.parseInt(coordinateString.split(",")[0]);
+        y = Integer.parseInt(coordinateString.split(",")[1]);
+        return new Coordinates(x,y);
     }
 
     /**
@@ -654,6 +695,29 @@ public class PlayerFieldController extends EventHandler{
             tutorialImageContainer.setVisible(false);
             tutorialImageContainer.setDisable(true);
         }
-
     }
+
+    /**
+     * Method that gets called when the user starts dragging a card in his hand
+     * @param event the mouse event that triggered this function call
+     */
+    public void startDragCard(MouseEvent event){
+        chosenImage = (ImageView) event.getSource();
+        if(chosenImage.equals(hand0)){
+            chosenIndex = 0;
+        } else if(chosenImage.equals(hand1)){
+            chosenIndex = 1;
+        } else if(chosenImage.equals(hand2)){
+            chosenIndex = 2;
+        }
+
+        Dragboard db = chosenImage.startDragAndDrop(TransferMode.MOVE);
+
+        ClipboardContent content = new ClipboardContent();
+
+        content.putImage(chosenImage.getImage());
+        db.setContent(content);
+        event.consume();
+    }
+
 }

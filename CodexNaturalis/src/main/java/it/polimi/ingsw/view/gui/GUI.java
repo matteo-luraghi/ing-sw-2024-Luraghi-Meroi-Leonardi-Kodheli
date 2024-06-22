@@ -76,12 +76,6 @@ public class GUI extends Application implements View{
         stage.setTitle(sceneName.split("\\.")[0]);
         stage.setScene(scene);
         stage.show();
-        stage.setOnCloseRequest(e -> {
-            currentEventHandler = fxmlLoader.getController();
-            currentEventHandler.disconnection();
-            Platform.exit();
-            isDisconnecting = true;
-        });
 
         currentEventHandler = fxmlLoader.getController();
         currentEventHandler.setView(this);

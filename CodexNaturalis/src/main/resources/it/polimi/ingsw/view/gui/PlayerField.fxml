@@ -51,22 +51,22 @@
                         <Pane maxHeight="100.0" maxWidth="150.0" minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="150.0">
                            <ImageView fx:id="startingCard" fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            </ImageView>
-                           <Button alignment="TOP_RIGHT" maxHeight="38.0" maxWidth="34.0" minHeight="38.0" minWidth="34.0" mnemonicParsing="false" onMouseClicked="#playCard" opacity="0.0" prefHeight="38.0" prefWidth="34.0" text="[-1,1]">
+                           <Button alignment="TOP_RIGHT" maxHeight="38.0" maxWidth="34.0" minHeight="38.0" minWidth="34.0" mnemonicParsing="false" onMouseClicked="#playCardClick" opacity="0.0" prefHeight="38.0" prefWidth="34.0" text="[-1,1]">
                               <cursor>
                                  <Cursor fx:constant="HAND" />
                               </cursor>
                            </Button>
-                           <Button alignment="TOP_RIGHT" layoutX="116.0" maxHeight="38.0" maxWidth="34.0" minHeight="38.0" minWidth="34.0" mnemonicParsing="false" onMouseClicked="#playCard" opacity="0.0" prefHeight="38.0" prefWidth="34.0" text="[1,1]">
+                           <Button alignment="TOP_RIGHT" layoutX="116.0" maxHeight="38.0" maxWidth="34.0" minHeight="38.0" minWidth="34.0" mnemonicParsing="false" onMouseClicked="#playCardClick" opacity="0.0" prefHeight="38.0" prefWidth="34.0" text="[1,1]">
                               <cursor>
                                  <Cursor fx:constant="HAND" />
                               </cursor>
                            </Button>
-                           <Button alignment="TOP_RIGHT" layoutX="116.0" layoutY="62.0" maxHeight="38.0" maxWidth="34.0" minHeight="38.0" minWidth="34.0" mnemonicParsing="false" onMouseClicked="#playCard" opacity="0.0" prefHeight="38.0" prefWidth="34.0" text="[1,-1]">
+                           <Button alignment="TOP_RIGHT" layoutX="116.0" layoutY="62.0" maxHeight="38.0" maxWidth="34.0" minHeight="38.0" minWidth="34.0" mnemonicParsing="false" onMouseClicked="#playCardClick" opacity="0.0" prefHeight="38.0" prefWidth="34.0" text="[1,-1]">
                               <cursor>
                                  <Cursor fx:constant="HAND" />
                               </cursor>
                            </Button>
-                           <Button alignment="TOP_RIGHT" layoutY="62.0" maxHeight="38.0" maxWidth="34.0" minHeight="38.0" minWidth="34.0" mnemonicParsing="false" onMouseClicked="#playCard" opacity="0.0" prefHeight="38.0" prefWidth="34.0" text="[-1,-1]">
+                           <Button alignment="TOP_RIGHT" layoutY="62.0" maxHeight="38.0" maxWidth="34.0" minHeight="38.0" minWidth="34.0" mnemonicParsing="false" onMouseClicked="#playCardClick" opacity="0.0" prefHeight="38.0" prefWidth="34.0" text="[-1,-1]">
                               <cursor>
                                  <Cursor fx:constant="HAND" />
                               </cursor>
@@ -441,17 +441,17 @@
             <ScrollPane fx:id="scrollPane" layoutX="14.0" prefHeight="200.0" prefWidth="656.0" stylesheets="@assets/css/scollStyles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="2097.0" style="-fx-background-color: #d1be71;">
                   <Pane prefHeight="130.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <ImageView fx:id="hand0" fitHeight="120.0" fitWidth="150.0" layoutY="30.0" onMouseClicked="#selectPlayCard" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="hand0" fitHeight="120.0" fitWidth="150.0" layoutY="30.0" onMouseClicked="#selectPlayCard" pickOnBounds="true" preserveRatio="true" onDragDetected="#startDragCard">
                         <cursor>
                            <Cursor fx:constant="HAND" />
                         </cursor>
                      </ImageView>
-                     <ImageView fx:id="hand1" fitHeight="120.0" fitWidth="150.0" layoutX="174.0" layoutY="30.0" onMouseClicked="#selectPlayCard" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="hand1" fitHeight="120.0" fitWidth="150.0" layoutX="174.0" layoutY="30.0" onMouseClicked="#selectPlayCard" pickOnBounds="true" preserveRatio="true" onDragDetected="#startDragCard">
                         <cursor>
                            <Cursor fx:constant="HAND" />
                         </cursor>
                      </ImageView>
-                     <ImageView fx:id="hand2" fitHeight="120.0" fitWidth="150.0" layoutX="340.0" layoutY="28.0" onMouseClicked="#selectPlayCard" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="hand2" fitHeight="120.0" fitWidth="150.0" layoutX="340.0" layoutY="28.0" onMouseClicked="#selectPlayCard" pickOnBounds="true" preserveRatio="true" onDragDetected="#startDragCard">
                         <cursor>
                            <Cursor fx:constant="HAND" />
                         </cursor>
