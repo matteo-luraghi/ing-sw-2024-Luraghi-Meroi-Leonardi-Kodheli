@@ -4,7 +4,7 @@ Componenti del gruppo:
   - Matteo Leonardo Luraghi
   - Lorenzo Meroi
   - Gabriel Leonardi
-  - Francesk Khodeli
+  - Francesk Kodheli
 
 
 Funzionalità implementate:
