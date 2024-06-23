@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 /**
  * ConnectToServer.fxml event handler, used to make the player connect ot a server
+ * @author Gabriel Leonardi
  */
 public class ConnectToServerController extends EventHandler{
     @FXML
@@ -29,12 +30,9 @@ public class ConnectToServerController extends EventHandler{
      * Function that gets called when the page loads, sets the choices for the connections ChoiceBox
      */
     public void initialize() {
-
-        ArrayList<String> connections = new ArrayList<>();
-        connections.add("Socket");
-        connections.add("RMI");
-        ObservableList<String> list = FXCollections.observableArrayList(connections);
+        ObservableList<String> list = FXCollections.observableArrayList();
         connectionChoice.setItems(list);
+        connectionChoice.getItems().addAll("Socket", "RMI");
         connectionChoice.setValue("Socket");
 
     }
@@ -46,17 +44,6 @@ public class ConnectToServerController extends EventHandler{
      */
     @FXML
     protected void ConnectToServer() throws ConnectionClosedException {
-        //Initialize alert
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        //DialogPane alert = new DialogPane();
-        alert.setTitle("");
-        alert.setHeaderText("");
-        alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
-                "-fx-font-family: Cambria;" +
-                "-fx-font-style: italic;" +
-                "-fx-font-size: large;" +
-                "-fx-font-weight: bold;");
-
         String ip = serverIP.getText();
         String portText = serverPort.getText();
         String connection = connectionChoice.getValue().toString();
@@ -64,8 +51,7 @@ public class ConnectToServerController extends EventHandler{
 
         //Check ip validity
         if(ip == null || ip.isEmpty()){
-            alert.setContentText("Invalid input data: IP is empty");
-            alert.showAndWait();
+            showPopup("Invalid input data: IP is empty");
             return;
         }
 
@@ -76,25 +62,20 @@ public class ConnectToServerController extends EventHandler{
             }
             port = Integer.parseInt(portText);
         }catch(NumberFormatException e){
-            alert.setContentText("Invalid input data: Port is empty or not a number");
-            alert.showAndWait();
+            showPopup("Invalid input data: Port is empty or not a number");
             return;
         }
 
         //Check connection validity (Should always be true)
         if(connection == null || connection.isEmpty() || !(connection.equalsIgnoreCase("Socket") || connection.equalsIgnoreCase("RMI"))){
-            alert.setContentText("Connection is not set or is an invalid value");
-            alert.showAndWait();
+            showPopup("Connection is not set or is an invalid value");
             return;
         }
         try{
             //Tries to connect to the server (if it returns true, messages will be sent automatically)
             view.connectToServer(ip, port, connection);
         }catch (ConnectionClosedException e){
-            alert.setTitle("");
-            alert.setHeaderText("");
-            alert.setContentText("Error connecting to the server, try again");
-            alert.showAndWait();
+            showPopup("Error connecting to the server, try again");
         }
 
     }

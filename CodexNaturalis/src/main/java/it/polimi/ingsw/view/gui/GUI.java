@@ -61,11 +61,12 @@ public class GUI extends Application implements View{
      */
     public void start() throws ConnectionClosedException {
         launch();
+        //This exception will get thrown after a player has closed the application
         throw new ConnectionClosedException("Connection closed");
     }
 
     /**
-     * Method to open a specific stage for a player
+     * Method to open the starting stage (connect to server)
      * @param stage the stage that needs to be loaded
      */
     @Override
@@ -92,7 +93,7 @@ public class GUI extends Application implements View{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(sceneName));
             Parent root;
             try{
-                root = (Parent) fxmlLoader.load();
+                root = fxmlLoader.load();
                 currentEventHandler = fxmlLoader.getController();
                 currentEventHandler.setView(this);
                 this.stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
@@ -115,6 +116,8 @@ public class GUI extends Application implements View{
     public void refreshGameNames() {
         client.refreshGamesNames();
     }
+
+
 
     /**
      * Method to connect a client to a server
@@ -170,7 +173,7 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * method to display in case of disconnection from the server
+     * Method to display a message and disconnect the player in case of a disconnection from the server
      */
     public void listenForDisconnection() {
         while(!isDisconnecting) {
@@ -188,9 +191,9 @@ public class GUI extends Application implements View{
     }
     
     /**
-     * method to show any type of String
-     *
-     * @param s is the string you want to be displayed
+     * Method to show any type of string;
+     * this will get shown as a popup in any stage other than player field, where it would be displayed inside the game chat
+     * @param s the string you want to be displayed
      */
     @Override
     public void showMessage(String s) {
@@ -198,14 +201,14 @@ public class GUI extends Application implements View{
             if(currentEventHandler instanceof PlayerFieldController playerFieldController){
                 playerFieldController.addChatMessage(s);
             } else {
-                currentEventHandler.showPopup("", s);
+                currentEventHandler.showPopup(s);
             }
         });
     }
 
     /**
-     * method to show the joinGame scene
-     * @param gameNames is the list of all the joinable games
+     * Method to show the joinGame scene
+     * @param gameNames the list of all the joinable games
      */
     @Override
     public void showJoinOrCreate(ArrayList<String> gameNames) {
@@ -218,7 +221,40 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * method to set the parameters to log into a game
+     * Update the list of names of available games
+     *
+     * @param gameNames the names
+     */
+    @Override
+    public void setGameNames(ArrayList<String> gameNames) {
+        Platform.runLater(() -> {
+            JoinGameController joinGameHandler = (JoinGameController) currentEventHandler;
+            joinGameHandler.setGameNames(gameNames);
+        });
+    }
+
+    /**
+     * Set the number of players chosen for the game the player is creating
+     * @param num the number of players
+     */
+    public void setNumOfPlayersChosen(int num){
+        numOfPlayersChosen = num;
+    }
+
+    /**
+     * Set the isJoin flag when joining a game
+     * @param isJoining true if you are joining a game, false if you are creating it
+     */
+    public void setIsJoining(boolean isJoining){ this.isJoining = isJoining; }
+
+    /**
+     * Set the name of the game the player is creating or joining
+     * @param gameName the name of the game
+     */
+    public void setGameName(String gameName){ this.gameName = gameName; }
+
+    /**
+     * Method to set the parameters to log into a game
      */
     public void setLoginParameters(){
         Platform.runLater(() -> {
@@ -228,7 +264,7 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * method to show the "Login" fxml file
+     * Method to show the "Login" fxml file
      */
     @Override
     public void insertNickname(boolean isJoin, String gameName) {
@@ -238,7 +274,7 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * method to make the player choose its color
+     * Method to make the player choose its color
      * @param colors available
      */
     @Override
@@ -250,7 +286,7 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * Directly send the number of players to the server (the player will have already chosen the number in the form)
+     * Directly send the number of players to the server (the player will have already chosen the number of players in the form)
      */
     @Override
     public void askForPlayersNumber() {
@@ -259,7 +295,7 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * method to display the waiting for players message in loginPage
+     * Method to display the waiting for players message in loginPage
      */
     @Override
     public void ShowWaitingForPlayers() {
@@ -267,17 +303,6 @@ public class GUI extends Application implements View{
             LoginController loginController = (LoginController) currentEventHandler;
             loginController.showWaitingForPlayers();
         });
-    }
-
-    /**
-     * method to show the private goal of a specific player
-     *
-     * @param player of which to display the goal
-     * @param game   in which the player is partecipating
-     */
-    @Override
-    public void ShowPrivateGoal(Player player, GameState game) {
-        System.err.println("Not yet implemented, should only be called in player field and even then in GUI it shouldn't really be called");
     }
 
     /**
@@ -295,7 +320,15 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * displays the two private goals the client has to choose between
+     * This method doesn't need to show anything in GUI since the player can already see his private goal
+     */
+    @Override
+    public void ShowPrivateGoal(Player player, GameState game) {
+
+    }
+
+    /**
+     * Displays the two private goals the client has to choose between
      *
      * @param goalCards is an array of two goal cards
      */
@@ -308,7 +341,7 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * displays the player field of a specific player
+     * In GUI this method can't be called directly
      *
      * @param playerToSee  specifies which playerfield has to be displayed
      * @param playerAsking tells which player is asking to see it
@@ -316,27 +349,27 @@ public class GUI extends Application implements View{
      */
     @Override
     public void ShowPlayerField(Player playerToSee, Player playerAsking, GameState game) {
-        System.err.println("This shouldn't be called in the GUI");
+
     }
 
     /**
-     * displays the player field of a specific player without passing the game
+     * Display the player field of a specific player
      *
-     * @param playerToSee  specifies which playerfield has to be displayed
+     * @param playerToSee  specifies which player field has to be displayed
      * @param playerAsking tells which player is asking to see it
      */
     public void ShowPlayerField(Player playerToSee, Player playerAsking) {
         Platform.runLater(() -> {
             PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
-            playerFieldHandler.setPlayers(playerToSee, playerAsking);
+            playerFieldHandler.setPlayerFieldOwner(playerToSee);
             playerFieldHandler.setPlayerField(game.getGameTable().getPlayerZoneForUser(playerToSee.getNickname()), playerAsking.getNickname().equals(playerToSee.getNickname()));
         });
     }
 
     /**
-     * displays the player field of a specific username without passing the game
+     * Displays the player field of a specific username
      *
-     * @param usernameToSee  specifies which playerfield has to be displayed
+     * @param usernameToSee  specifies which player field has to be displayed
      * @param playerAsking tells which player is asking to see it
      */
     public void ShowPlayerFieldFromName(String usernameToSee, Player playerAsking) {
@@ -348,7 +381,7 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * displays the two decks and the uncovered cards
+     * Displays the two decks and the uncovered cards
      *
      * @param game we are referring to
      */
@@ -361,14 +394,14 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * displays the two decks and the uncovered cards without passing the game
+     * Displays the two decks and the uncovered cards without passing the game
      */
     public void ShowDecks(){
         ShowDecks(game);
     }
 
     /**
-     * displays the scoreboard
+     * Displays the scoreboard
      * @param scoreBoard the scoreboard we want to show
      */
     @Override
@@ -380,7 +413,7 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * displays the scoreboard without having to pass the game
+     * Displays the scoreboard without having to pass the game
      */
     public void showScoreBoard(){
         ShowScoreBoard(game.getGameTable().getScoreBoard());
@@ -402,27 +435,19 @@ public class GUI extends Application implements View{
 
 
     /**
-     * shows who has won the game
+     * Shows the player who has won the game
      *
      * @param game we are referring to
      */
     @Override
     public void ShowWinner(GameState game) {
         Platform.runLater(() -> {
-            currentEventHandler.showPopup("We have a winner!", game.getWinner().getNickname() + " has won!");
+            currentEventHandler.showPopup(game.getWinner().getNickname() + " has won!");
         });
     }
 
     /**
-     * shows the end of game text
-     */
-    @Override
-    public void ShowEndOfGame() {
-
-    }
-
-    /**
-     * sets the game chat
+     * Sets the game chat
      *
      * @param gameChat the chat
      * @throws RemoteException to handle exceptions that may occur when using RMI
@@ -436,54 +461,7 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * method to get the user's inputs
-     */
-    @Override
-    public void getCommands() throws RemoteException {
-
-    }
-
-    /**
-     * isMyTurn setter
-     *
-     * @param isMyTurn tells whether it's the client's turn or not
-     */
-    @Override
-    public void setMyTurn(boolean isMyTurn) throws RemoteException {
-        if (isMyTurn) {
-            client.yourTurnOk();
-            Platform.runLater(() -> {
-                currentEventHandler.showPopup("", "Your turn");
-            });
-        }
-    }
-
-    /**
-     * playPhase setter
-     *
-     * @param playPhase tells whether it's the client's turn or not
-     */
-    @Override
-    public void setPlayPhase(boolean playPhase) throws RemoteException {
-
-    }
-
-    /**
-     * user setter
-     *
-     * @param user is the user that is going to use this client
-     */
-    @Override
-    public void setUser(Player user) throws RemoteException { this.user = user; }
-
-    /**
-     * user getter
-     * @return the user that is using this client
-     */
-    public Player getUser(){ return user; }
-
-    /**
-     * game setter
+     * Game setter, update all the fields that update when the game updates
      *
      * @param game the game we need to set!
      */
@@ -516,30 +494,58 @@ public class GUI extends Application implements View{
                 }
                 playerFieldHandler.setResourceMaps(resourceMaps);
                 playerFieldHandler.setCurrentPlayerField(game);
-            } catch (ClassCastException e){
+            } catch (ClassCastException ignored){
 
             }
         });
     }
 
     /**
-     * Update the list of names of available games
-     *
-     * @param gameNames the names
+     * This method doesn't need to do anything in GUI since no command is available
      */
     @Override
-    public void setGameNames(ArrayList<String> gameNames) {
-        Platform.runLater(() -> {
-            JoinGameController joinGameHandler = (JoinGameController) currentEventHandler;
-            joinGameHandler.setGameNames(gameNames);
-        });
+    public void getCommands() throws RemoteException {
+
     }
 
     /**
-     * player field getter
-     * @return the player field of this user
+     * isMyTurn setter
+     *
+     * @param isMyTurn tells whether it's the client's turn or not
      */
-    public PlayerField getYourPlayerField(){ return this.game.getGameTable().getPlayerZones().get(user); }
+    @Override
+    public void setMyTurn(boolean isMyTurn) throws RemoteException {
+        if (isMyTurn) {
+            client.yourTurnOk();
+            Platform.runLater(() -> {
+                currentEventHandler.showPopup("Your turn");
+            });
+        }
+    }
+
+    /**
+     * PlayPhase setter
+     *
+     * @param playPhase tells whether it's the client's turn or not
+     */
+    @Override
+    public void setPlayPhase(boolean playPhase) throws RemoteException {
+
+    }
+
+    /**
+     * User setter
+     *
+     * @param user is the user that is going to use this client
+     */
+    @Override
+    public void setUser(Player user) throws RemoteException { this.user = user; }
+
+    /**
+     * User getter
+     * @return the user that is using this client
+     */
+    public Player getUser(){ return user; }
 
     /**
      * Disconnect the client
@@ -556,32 +562,11 @@ public class GUI extends Application implements View{
         });
     }
 
-
     /**
      * Client getter
      * @return this client
      */
     public Client getClient(){ return client; }
-
-    /**
-     * Set the number of players chosen for the game the player is creating
-     * @param num the number of players
-     */
-    public void setNumOfPlayersChosen(int num){
-        numOfPlayersChosen = num;
-    }
-
-    /**
-     * Set the isJoin flag when joining a game
-     * @param isJoining true if you are joining a game, false if you are creating it
-     */
-    public void setIsJoining(boolean isJoining){ this.isJoining = isJoining; }
-
-    /**
-     * Set the name of the game the player is creating or joining
-     * @param gameName the name of the game
-     */
-    public void setGameName(String gameName){ this.gameName = gameName; }
 
     /**
      * Method used to play a card from the GUI
@@ -594,7 +579,7 @@ public class GUI extends Application implements View{
     }
 
     /**
-     * method to display the playerField's static content
+     * Method to display the playerField's static content
      */
     public void showStaticContent() {
         Platform.runLater(() -> {
@@ -603,10 +588,13 @@ public class GUI extends Application implements View{
         });
     }
 
+    /**
+     * Method to visually update the chat to the player, only gets called when starting up the player field or when a new message arrives
+     */
     public void showChat(){
         Platform.runLater(() -> {
             PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
-            playerFieldHandler.setChat(gameChat);
+            playerFieldHandler.setListOfMessages(gameChat);
         });
     }
 }

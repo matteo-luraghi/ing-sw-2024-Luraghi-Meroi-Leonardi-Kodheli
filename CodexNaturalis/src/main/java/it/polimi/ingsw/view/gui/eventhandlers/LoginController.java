@@ -1,6 +1,5 @@
 package it.polimi.ingsw.view.gui.eventhandlers;
 
-import it.polimi.ingsw.connection.ConnectionClosedException;
 import it.polimi.ingsw.model.gamelogic.Color;
 import it.polimi.ingsw.model.gamelogic.Util;
 import javafx.collections.FXCollections;
@@ -15,56 +14,23 @@ import java.util.ArrayList;
  */
 public class LoginController extends EventHandler{
 
-    public TextField Username;
-    public ChoiceBox Color;
-    public Label ColorLabel;
-    public Button ColorButton;
-    public Button LoginButton;
+    public TextField username;
+    public ChoiceBox color;
+    public Label colorLabel;
+    public Button colorButton;
+    public Button loginButton;
     public Label gameName;
     public Label waitingLabel;
     private boolean isJoin;
     private String gameNameString;
 
     /**
-     * method to show a popup window
-     * @param title is the popup title
-     * @param text is the popup text
+     * Function that gets called when the page loads, hides the color part of the form
      */
-    @Override
-    public void showPopup(String title, String text){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(title);
-        alert.setContentText(text);
-        alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
-                "-fx-font-family: Cambria;" +
-                "-fx-font-style: italic;" +
-                "-fx-font-size: large;" +
-                "-fx-font-weight: bold;");
-        alert.showAndWait();
-        alert = null;
-        Color.setDisable(false);
-        ColorButton.setDisable(false);
-    }
-
-
-    /**
-     * Sets the currently available colors to the ChoiceBox and shows the color choosing part of the form
-     * @param availableColors the colors that are currently available
-     */
-    public void setAvailableColors(ArrayList<Color> availableColors){
-        //Convert the Colors to Strings
-        ArrayList<String> colors = new ArrayList<>();
-        for(Color color : availableColors){
-            colors.add(color.toStringGUI());
-        }
-        ObservableList<String> list = FXCollections.observableArrayList(colors);
-        Color.setItems(list);
-        Color.setValue(list.getFirst());
-        //Makes the color part of the form visible
-        Color.setVisible(true);
-        ColorLabel.setVisible(true);
-        ColorButton.setVisible(true);
+    public void initialize(){
+        colorLabel.setVisible(false);
+        colorButton.setVisible(false);
+        color.setVisible(false);
     }
 
     /**
@@ -79,12 +45,20 @@ public class LoginController extends EventHandler{
     }
 
     /**
-     * Function that gets called when the page loads, hides the color part of the form
+     * Sets the currently available colors to the ChoiceBox and shows the color choosing part of the form
+     * @param availableColors the colors that are currently available
      */
-    public void initialize(){
-        ColorLabel.setVisible(false);
-        ColorButton.setVisible(false);
-        Color.setVisible(false);
+    public void setAvailableColors(ArrayList<Color> availableColors){
+        ObservableList<String> list = FXCollections.observableArrayList();
+        color.setItems(list);
+        for(Color c : availableColors){
+            color.getItems().add(c.toStringGUI());
+        }
+        color.setValue(list.getFirst());
+        //Makes the color part of the form visible
+        color.setVisible(true);
+        colorLabel.setVisible(true);
+        colorButton.setVisible(true);
     }
 
     /**
@@ -92,34 +66,23 @@ public class LoginController extends EventHandler{
      * Checks input data and tries to insert the client into the chosen game with the chosen nickname
      */
     public void loginPlayer(MouseEvent mouseEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("");
-        alert.setHeaderText("");
-        alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
-                "-fx-font-family: Cambria;" +
-                "-fx-font-style: italic;" +
-                "-fx-font-size: large;" +
-                "-fx-font-weight: bold;");
 
-        String user = Username.getText();
+        String user = username.getText();
         if(user == null || user.isEmpty()){
-            alert.setContentText("Invalid input data: username is empty");
-            alert.showAndWait();
+            showPopup("Invalid input data: username is empty");
             return;
         }
         try{
             view.getClient().gameChoice(isJoin, gameNameString, user);
-            //tick beside the textField?
-            Username.setEditable(false);
-            Username.setStyle("-fx-background-color: #2e821b;" +
+            username.setEditable(false);
+            username.setStyle("-fx-background-color: #2e821b;" +
                     "-fx-background-radius: 100;" +
                     "-fx-border-color: #000000;" +
                     "-fx-border-radius: 100;" +
                     "-fx-border-width: 2;");
-            LoginButton.setDisable(true);
+            loginButton.setDisable(true);
         }catch (Exception e){
-            alert.setContentText("Invalid input data: username is already present");
-            alert.showAndWait();
+            showPopup("Invalid input data: username is already present");
         }
 
     }
@@ -128,33 +91,22 @@ public class LoginController extends EventHandler{
      * Function that gets called when you click the correlated button
      * Checks input data and tries to set the color chosen by the player
      */
-    public void chooseColor(MouseEvent mouseEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("");
-        alert.setHeaderText("");
-        alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
-                "-fx-font-family: Cambria;" +
-                "-fx-font-style: italic;" +
-                "-fx-font-size: large;" +
-                "-fx-font-weight: bold;");
-
+    public void chooseColor() {
         Color chosenColor;
-        if(Color == null){
-            alert.setContentText("Invalid input data: color is null");
-            alert.showAndWait();
+        if(color == null){
+            showPopup("Invalid input data: color is null");
             return;
         }
 
-        chosenColor = Util.stringToColor(Color.getValue().toString());
+        chosenColor = Util.stringToColor(color.getValue().toString());
         if(chosenColor == null){
-            alert.setContentText("Invalid input data: color is not valid");
-            alert.showAndWait();
+            showPopup("Invalid input data: color is not valid");
             return;
         }
 
         view.getClient().colorResponse(chosenColor);
-        Color.setDisable(true);
-        ColorButton.setDisable(true);
+        color.setDisable(true);
+        colorButton.setDisable(true);
     }
 
     /**

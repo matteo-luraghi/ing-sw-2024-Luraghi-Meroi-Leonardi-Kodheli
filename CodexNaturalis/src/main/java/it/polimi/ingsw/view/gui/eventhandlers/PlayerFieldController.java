@@ -20,75 +20,81 @@ import javafx.scene.shape.Circle;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * PlayerField.fxml event handler, used to process user input during the actual game
+ * * @author Gabriel Leonardi
+ */
 public class PlayerFieldController extends EventHandler{
 
-    public ListView chat;
-    public ScrollPane scrollPane;
-    public ImageView hand0;
-    public ImageView hand1;
-    public ImageView hand2;
-    public ImageView privateGoal;
-    public ImageView commonGoal0;
-    public ImageView commonGoal1;
-    public ImageView resourceDeck;
-    public ImageView resourceUncovered0;
-    public ImageView resourceUncovered1;
-    public ImageView goldDeck;
-    public ImageView goldUncovered0;
-    public ImageView goldUncovered1;
-    public ImageView startingCard;
+    public ListView listOfMessages;
+    public ImageView handImage0;
+    public ImageView handImage1;
+    public ImageView handImage2;
+    public ImageView privateGoalImage;
+    public ImageView commonGoalImage0;
+    public ImageView commonGoalImage1;
+    public ImageView resourceDeckImage;
+    public ImageView resourceUncoveredImage0;
+    public ImageView resourceUncoveredImage1;
+    public ImageView goldDeckImage;
+    public ImageView goldUncoveredImage0;
+    public ImageView goldUncoveredImage1;
     public Group playerFieldContainer;
-    public Pane player1;
-    public Pane player2;
-    public Pane player3;
-    public Pane player4;
-    public Label YourName;
-    public Circle YourColor;
+    public Pane playerPane1;
+    public Pane playerPane2;
+    public Pane playerPane3;
+    public Pane playerPane4;
+    public Label yourName;
+    public Circle yourColor;
     public TextField currentMessage;
     public ChoiceBox chosenRecipient;
-    public ImageView TutorialImage;
+    public ImageView tutorialImage;
     public AnchorPane tutorialImageContainer;
     public AnchorPane rootPane;
 
     private Player playerFieldOwner;
-    private Player playerViewing;
     private ArrayList<Pane> playerPanes;
     private ImageView chosenImage;
     private int chosenIndex;
     private ArrayList<Boolean> isFrontList;
-    private boolean emptyChat;
     private int tutorialImageIndex;
 
     /**
      * method to initialize the controller's parameters
      */
     public void initialize(){
+        //Initiate the chat
         ObservableList<String> items = FXCollections.observableArrayList();
-        chat.setItems(items);
+        listOfMessages.setItems(items);
+        listOfMessages.getItems().add("Game started!");
+        
+        //Initiate the local variables
         chosenIndex = -1;
         chosenImage = null;
-        playerPanes = new ArrayList<>();
-        playerPanes.add(player1);
-        playerPanes.add(player2);
-        playerPanes.add(player3);
-        playerPanes.add(player4);
         isFrontList = new ArrayList<>(3);
         isFrontList.add(0, true);
         isFrontList.add(1, true);
         isFrontList.add(2, true);
-        emptyChat = true;
+        tutorialImageIndex = 0;
+        
+        //initiate the player panes
+        playerPanes = new ArrayList<>();
+        playerPanes.add(playerPane1);
+        playerPanes.add(playerPane2);
+        playerPanes.add(playerPane3);
+        playerPanes.add(playerPane4);
     }
 
     /**
      * method to initialize all the graphic fields though the view
-     * @param view the view we want to set
+     * @param view the view of the player field owner
      */
     @Override
     public void setView(GUI view){
         this.view = view;
 
         //Initialize the current player and the player field owner
-        setPlayers(view.getUser(), view.getUser());
+        setPlayerFieldOwner(view.getUser());
 
         //Shows player zone, hand and private goal
         view.ShowPlayerField(view.getUser(), view.getUser());
@@ -110,72 +116,70 @@ public class PlayerFieldController extends EventHandler{
     }
 
     /**
-     * Common goals setter
-     * @param commonGoals an array of GoalCards
+     * Method to set the player field owner
+     * @param playerFieldOwner the player who owns the player field
+     */
+    public void setPlayerFieldOwner(Player playerFieldOwner){
+        this.playerFieldOwner = playerFieldOwner;
+    }
+
+    /**
+     * Sets the images of the common goal
+     * @param commonGoals the common goals for this game
      */
     public void setCommonGoals(GoalCard[] commonGoals) {
         Image temp;
         temp = new Image(Util.getImageFromID(commonGoals[0].getId(), true));
-        commonGoal0.setImage(temp);
+        commonGoalImage0.setImage(temp);
         temp = new Image(Util.getImageFromID(commonGoals[1].getId(), true));
-        commonGoal1.setImage(temp);
+        commonGoalImage1.setImage(temp);
     }
 
     /**
-     * decks setter
+     * Sets the images for the decks
      * @param resourceDeck1 resource deck to be set
      * @param goldDeck1 gold deck to be set
      */
     public void setDecks(Deck resourceDeck1, Deck goldDeck1) {
         Image temp;
         //Set resource deck
-        try{
-            temp = new Image(Util.getImageFromID(resourceDeck1.getTopCard().getId(), false));
-            resourceDeck.setImage(temp);
-        } catch (NullPointerException e) {
-            resourceDeck.setDisable(true);
-            resourceDeck.setVisible(false);
-        }
-
-        try{
-            temp = new Image(Util.getImageFromID(resourceDeck1.getUncoveredCards()[0].getId(), true));
-            resourceUncovered0.setImage(temp);
-        } catch (NullPointerException e) {
-            resourceUncovered0.setDisable(true);
-            resourceUncovered0.setVisible(false);
-        }
-
-        try{
-            temp = new Image(Util.getImageFromID(resourceDeck1.getUncoveredCards()[1].getId(), true));
-            resourceUncovered1.setImage(temp);
-        } catch (NullPointerException e) {
-            resourceUncovered1.setDisable(true);
-            resourceUncovered1.setVisible(false);
-        }
+        setSpecificDeck(resourceDeck1, resourceDeckImage, resourceUncoveredImage0, resourceUncoveredImage1);
 
         //Set gold deck
+        setSpecificDeck(goldDeck1, goldDeckImage, goldUncoveredImage0, goldUncoveredImage1);
+    }
+
+    /**
+     * Helper function for setDecks, sets the images to the correct image view if the card is present, hides it otherwise
+     * @param deck the current deck
+     * @param deckImage the image that corresponds to the top card of the deck
+     * @param uncoveredImage0 the image that corresponds to the first uncovered card of the deck
+     * @param uncoveredImage1 the image that corresponds to the second uncovered card of the deck
+     */
+    private void setSpecificDeck(Deck deck, ImageView deckImage, ImageView uncoveredImage0, ImageView uncoveredImage1) {
+        Image temp;
         try{
-            temp = new Image(Util.getImageFromID(goldDeck1.getTopCard().getId(), false));
-            goldDeck.setImage(temp);
+            temp = new Image(Util.getImageFromID(deck.getTopCard().getId(), false));
+            deckImage.setImage(temp);
         } catch (NullPointerException e) {
-            goldDeck.setDisable(true);
-            goldDeck.setVisible(false);
+            deckImage.setDisable(true);
+            deckImage.setVisible(false);
         }
 
         try{
-            temp = new Image(Util.getImageFromID(goldDeck1.getUncoveredCards()[0].getId(), true));
-            goldUncovered0.setImage(temp);
+            temp = new Image(Util.getImageFromID(deck.getUncoveredCards()[0].getId(), true));
+            uncoveredImage0.setImage(temp);
         } catch (NullPointerException e) {
-            goldUncovered0.setDisable(true);
-            goldUncovered0.setVisible(false);
+            uncoveredImage0.setDisable(true);
+            uncoveredImage0.setVisible(false);
         }
 
         try{
-            temp = new Image(Util.getImageFromID(goldDeck1.getUncoveredCards()[1].getId(), true));
-            goldUncovered1.setImage(temp);
+            temp = new Image(Util.getImageFromID(deck.getUncoveredCards()[1].getId(), true));
+            uncoveredImage1.setImage(temp);
         } catch (NullPointerException e) {
-            goldUncovered1.setDisable(true);
-            goldUncovered1.setVisible(false);
+            uncoveredImage1.setDisable(true);
+            uncoveredImage1.setVisible(false);
         }
     }
 
@@ -227,10 +231,10 @@ public class PlayerFieldController extends EventHandler{
      * @param isYourPlayerfield a boolean telling whether it's the client's field or not
      */
     public void setPlayerField(PlayerField playerField, boolean isYourPlayerfield) {
-        //Delete the previous cards
+        //Delete the previous player field
         playerFieldContainer.getChildren().clear();
 
-        //Set the player field
+        //Create the player field
         for(GameCard card: playerField.getInPlayOrderList()){
             Coordinates coordinate = Util.getKeyByValue(playerField.getGameZone(), card);
             createCard(playerField, coordinate);
@@ -241,40 +245,50 @@ public class PlayerFieldController extends EventHandler{
 
         //Set private goal
         Image temp = new Image(Util.getImageFromID(playerField.getPrivateGoal().getId(), isYourPlayerfield));
-        privateGoal.setImage(temp);
+        privateGoalImage.setImage(temp);
+    }
+
+    /**
+     * Updates the currently viewed player field when it gets updated
+     * @param game the current game state
+     */
+    public void setCurrentPlayerField(GameState game) {
+        boolean isYourPlayerField = playerFieldOwner.equals(view.getUser());
+        PlayerField currentPlayerField = game.getGameTable().getPlayerZoneForUser(playerFieldOwner.getNickname());
+        setPlayerField(currentPlayerField, isYourPlayerField);
     }
 
     /**
      * hand setter
      * @param hand to be set
-     * @param isYourPlayerfield a boolean telling whether it's the client's field or not
+     * @param isYourPlayerField a boolean telling whether it's the client's field or not
      */
-    public void setHand(ArrayList<ResourceCard> hand, boolean isYourPlayerfield){
+    public void setHand(ArrayList<ResourceCard> hand, boolean isYourPlayerField){
         Image temp;
         if(!hand.isEmpty() && hand.getFirst() != null){
-            temp = new Image(Util.getImageFromID(hand.getFirst().getId(), isYourPlayerfield && isFrontList.get(0)), 300, 200, true, true);
-            hand0.setImage(temp);
+            temp = new Image(Util.getImageFromID(hand.getFirst().getId(), isYourPlayerField && isFrontList.get(0)), 300, 200, true, true);
+            handImage0.setImage(temp);
         } else {
-            hand0.setVisible(false);
-            hand0.setDisable(true);
+            handImage0.setVisible(false);
+            handImage0.setDisable(true);
         }
 
         if(hand.size() >= 2 && hand.get(1) != null){
-            temp = new Image(Util.getImageFromID(hand.get(1).getId(), isYourPlayerfield && isFrontList.get(1)), 300, 200, true, true);
-            hand1.setImage(temp);
+            temp = new Image(Util.getImageFromID(hand.get(1).getId(), isYourPlayerField && isFrontList.get(1)), 300, 200, true, true);
+            handImage1.setImage(temp);
         } else {
-            hand1.setVisible(false);
-            hand1.setDisable(true);
+            handImage1.setVisible(false);
+            handImage1.setDisable(true);
         }
 
         if(hand.size() == 3 && hand.get(2) != null){
-            temp = new Image(Util.getImageFromID(hand.get(2).getId(), isYourPlayerfield && isFrontList.get(2)), 300, 200, true, true);
-            hand2.setImage(temp);
-            hand2.setVisible(true);
-            hand2.setDisable(false);
+            temp = new Image(Util.getImageFromID(hand.get(2).getId(), isYourPlayerField && isFrontList.get(2)), 300, 200, true, true);
+            handImage2.setImage(temp);
+            handImage2.setVisible(true);
+            handImage2.setDisable(false);
         } else {
-            hand2.setVisible(false);
-            hand2.setDisable(true);
+            handImage2.setVisible(false);
+            handImage2.setDisable(true);
         }
     }
 
@@ -304,8 +318,8 @@ public class PlayerFieldController extends EventHandler{
                 }
                 ((Circle) getChildrenFromID(currentPane, "color")).setFill(color);
                 if(players.get(i).equals(view.getUser())){
-                    YourName.setText(view.getUser().getNickname());
-                    YourColor.setFill(color);
+                    yourName.setText(view.getUser().getNickname());
+                    yourColor.setFill(color);
                 } else {
                     items.add(players.get(i).getNickname());
                 }
@@ -316,143 +330,63 @@ public class PlayerFieldController extends EventHandler{
     }
 
     /**
-     * method to display the entire chat if it's the first time this is called, the last message otherwise
+     * method to display the last message sent
      * @param gameChat the updated game chat
      */
-    public void setChat(GameChat gameChat){
+    public void setListOfMessages(GameChat gameChat){
         if(gameChat == null){
             return;
         }
-        if(emptyChat){
-            for(Message msg : gameChat.getMessages()){
-                addChatMessage(msg.toStringGUI());
-            }
-        } else {
-            addChatMessage(gameChat.getLastMessage().toStringGUI());
-        }
-        emptyChat = false;
+
+        addChatMessage(gameChat.getLastMessage().toStringGUI());
     }
+
+    public void addChatMessage(String text){
+        listOfMessages.getItems().add(text);
+        int index = listOfMessages.getItems().size()-1;
+        listOfMessages.scrollTo(index);
+    }
+
     /**
-     * method to add a message to the chat
-     * @param s the message
+     * Method that is called when clicking the enter button
+     * Send the written message to the desired recipient if the text is not null
      */
-    public void addChatMessage(String s) {
+    public void sendChatMessage() {
 
-        chat.getItems().add(s);
-        int index = chat.getItems().size()-1;
-        chat.scrollTo(index);
+        if(view.getUser().getNickname().equals(playerFieldOwner.getNickname()) && !currentMessage.getText().trim().equals("")){
+            //Get the message
+            String message = currentMessage.getText().trim();
+
+            //Get the desired
+            String user = chosenRecipient.getValue().toString();
+
+            //Send the message
+            Message msg = new Message(message, playerFieldOwner, user);
+            view.getClient().sendMessageInChat(msg);
+        }
+        currentMessage.setText("");
     }
 
     /**
-     * method to display the client's field
+     * When the enter key is pressed on the chat box, send the message
+     * @param keyEvent the event that triggered this function call
+     */
+    public void sendChatMessageEnter(KeyEvent keyEvent){
+        if(keyEvent.getCode().equals(KeyCode.ENTER)){
+            sendChatMessage();
+        }
+    }
+
+    /**
+     * method to display the player field of the user
      */
     public void showYourField() {
-        view.ShowPlayerField(playerViewing, playerViewing);
-    }
-
-    /**
-     * method that handles the play of a card
-     * @param mouseEvent that triggered the event
-     */
-    public void playCardClick(MouseEvent mouseEvent) {
-        if(!playerViewing.equals(playerFieldOwner)){
-            view.showMessage("You aren't the owner of this player field");
-            return;
-        }
-
-        if(chosenIndex == -1){
-            view.showMessage("Select a card to play first");
-            return;
-        }
-        String coordinateString = ((Button) mouseEvent.getSource()).getText();
-        Coordinates chosenCords = parseCoordinateFromString(coordinateString);
-
-        view.playCard(chosenIndex, chosenCords, isFrontList.get(chosenIndex));
-        isFrontList.remove(chosenIndex);
-        chosenIndex = -1;
-        isFrontList.add(true);
+        view.ShowPlayerField(view.getUser(), view.getUser());
     }
 
 
     /**
-     * method that handles the selection of a card to play
-     * @param mouseEvent that triggers the event
-     */
-    public void selectPlayCard(MouseEvent mouseEvent) {
-        if(!playerViewing.equals(playerFieldOwner)){
-            view.showMessage("You aren't the owner of this player field");
-            return;
-        }
-
-        chosenImage = (ImageView) mouseEvent.getSource();
-        if(chosenImage.equals(hand0)){
-            chosenIndex = 0;
-        } else if(chosenImage.equals(hand1)){
-            chosenIndex = 1;
-        } else if(chosenImage.equals(hand2)){
-            chosenIndex = 2;
-        } else {
-            view.showMessage("How are you trying to play a card that is not in your hand");
-            return;
-        }
-
-        if(mouseEvent.getButton().equals(MouseButton.SECONDARY)){
-            //The user clicked with the right click, flip the card
-            isFrontList.set(chosenIndex, !isFrontList.get(chosenIndex));
-            String cardPath = chosenImage.getImage().getUrl();
-            Image image = new Image(Util.getImageFromID(Integer.parseInt(cardPath.substring(cardPath.lastIndexOf("/")+1, cardPath.lastIndexOf("."))), isFrontList.get(chosenIndex)), 300, 200, true, true);
-            if(chosenIndex==0){
-                hand0.setImage(image);
-            }else if (chosenIndex==1){
-                hand1.setImage(image);
-            }else if (chosenIndex==2){
-                hand2.setImage(image);
-            }
-        }
-    }
-
-    /**
-     * method that handles the drawing of a card
-     * @param mouseEvent that triggers the event
-     */
-    public void drawCard(MouseEvent mouseEvent) {
-        if(!playerViewing.equals(playerFieldOwner)){
-            addChatMessage("You aren't the owner of this player field");
-            return;
-        }
-
-        chosenImage = (ImageView) mouseEvent.getSource();
-        boolean isGold;
-
-        //Select the chosen card
-        if(chosenImage.equals(resourceDeck)){
-            chosenIndex = 0;
-            isGold = false;
-        } else if(chosenImage.equals(resourceUncovered0)){
-            chosenIndex = 1;
-            isGold = false;
-        } else if(chosenImage.equals(resourceUncovered1)){
-            chosenIndex = 2;
-            isGold = false;
-        } else if(chosenImage.equals(goldDeck)){
-            chosenIndex = 0;
-            isGold = true;
-        } else if(chosenImage.equals(goldUncovered0)){
-            chosenIndex = 1;
-            isGold = true;
-        } else if(chosenImage.equals(goldUncovered1)){
-            chosenIndex = 2;
-            isGold = true;
-        } else {
-            view.showMessage("How are you trying to draw a card that is not in a deck");
-            return;
-        }
-
-        view.getClient().drawCardResponse(chosenIndex, isGold);
-    }
-
-    /**
-     * Method that is used to visually create the card that just got played
+     * Method that is used to visually create a card present in a player field
      * @param playerZone The player zone where the card got played
      * @param where the position where the card got played
      */
@@ -462,21 +396,8 @@ public class PlayerFieldController extends EventHandler{
         x+1 = +116
         y+1 = -60
          */
-        GameCard card = null;
-        if(playerViewing.getNickname().equals(playerFieldOwner.getNickname())){
-            // if this thread is faster than the update game one
-            // wait until the game is updated and then display the played card
-            //TODO: Logic changed, should be safe to delete and leave only card = playerzone.getGameCardByEqualCoordinate
-            while(card == null) {
-                try {
-                    playerZone = view.getYourPlayerField();
-                    card = playerZone.getGameCardByEqualCoordinate(where);
-                } catch (NullPointerException ignored) {}
-            }
-        } else {
-            card = playerZone.getGameCardByEqualCoordinate(where);
-        }
 
+        GameCard card = playerZone.getGameCardByEqualCoordinate(where);
 
         //Create the pane
         int newX = where.getX() * 116;
@@ -580,6 +501,88 @@ public class PlayerFieldController extends EventHandler{
         return button;
     }
 
+
+    /**
+     * method that handles the selection of a card to play
+     * @param mouseEvent that triggers the event
+     */
+    public void selectPlayCardClick(MouseEvent mouseEvent) {
+        if(!view.getUser().equals(playerFieldOwner)){
+            view.showMessage("You aren't the owner of this player field");
+            return;
+        }
+
+        chosenImage = (ImageView) mouseEvent.getSource();
+        if(chosenImage.equals(handImage0)){
+            chosenIndex = 0;
+        } else if(chosenImage.equals(handImage1)){
+            chosenIndex = 1;
+        } else if(chosenImage.equals(handImage2)){
+            chosenIndex = 2;
+        }
+
+        if(mouseEvent.getButton().equals(MouseButton.SECONDARY)){
+            //The user clicked with the right click, flip the card
+
+            isFrontList.set(chosenIndex, !isFrontList.get(chosenIndex));
+            String cardPath = chosenImage.getImage().getUrl();
+            Image image = new Image(Util.getImageFromID(Integer.parseInt(cardPath.substring(cardPath.lastIndexOf("/")+1, cardPath.lastIndexOf("."))), isFrontList.get(chosenIndex)), 300, 200, true, true);
+            if(chosenIndex==0){
+                handImage0.setImage(image);
+            }else if (chosenIndex==1){
+                handImage1.setImage(image);
+            }else if (chosenIndex==2){
+                handImage2.setImage(image);
+            }
+        }
+    }
+
+    /**
+     * Method that gets called when the user starts dragging a card in his hand
+     * @param event the mouse event that triggered this function call
+     */
+    public void startDragCard(MouseEvent event){
+        chosenImage = (ImageView) event.getSource();
+        if(chosenImage.equals(handImage0)){
+            chosenIndex = 0;
+        } else if(chosenImage.equals(handImage1)){
+            chosenIndex = 1;
+        } else if(chosenImage.equals(handImage2)){
+            chosenIndex = 2;
+        }
+
+        Dragboard db = chosenImage.startDragAndDrop(TransferMode.MOVE);
+
+        ClipboardContent content = new ClipboardContent();
+
+        content.putImage(chosenImage.getImage());
+        db.setContent(content);
+        event.consume();
+    }
+
+    /**
+     * method that handles the play of a card
+     * @param mouseEvent that triggered the event
+     */
+    public void playCardClick(MouseEvent mouseEvent) {
+        if(!view.getUser().equals(playerFieldOwner)){
+            view.showMessage("You aren't the owner of this player field");
+            return;
+        }
+        if(chosenIndex == -1){
+            view.showMessage("Select a card to play first");
+            return;
+        }
+        
+        String coordinateString = ((Button) mouseEvent.getSource()).getText();
+        Coordinates chosenCords = parseCoordinateFromString(coordinateString);
+
+        view.playCard(chosenIndex, chosenCords, isFrontList.get(chosenIndex));
+        isFrontList.remove(chosenIndex);
+        chosenIndex = -1;
+        isFrontList.add(true);
+    }
+
     /**
      * Plays the dragged card in the dropped coordinate
      * @param coordinateString the coordinate where you want to play the card
@@ -592,58 +595,46 @@ public class PlayerFieldController extends EventHandler{
         isFrontList.add(true);
     }
 
-    /**
-     * Function to convert a button text to a coordinate
-     * @param coordinateString the text of the button
-     * @return the coordinate that got referenced by the button
-     */
-    private Coordinates parseCoordinateFromString(String coordinateString){
-        int x, y;
-        coordinateString = coordinateString.substring(1, coordinateString.length() - 1);
-        x = Integer.parseInt(coordinateString.split(",")[0]);
-        y = Integer.parseInt(coordinateString.split(",")[1]);
-        return new Coordinates(x,y);
-    }
 
     /**
-     * Method to set the player that is viewing and the player that owns the currently viewed player field
-     * @param playerFieldOwner the player who owns the player field
-     * @param playerRequesting the player who wants to see the player field
+     * method that handles the drawing of a card
+     * @param mouseEvent that triggers the event
      */
-    public void setPlayers(Player playerFieldOwner, Player playerRequesting){
-        this.playerFieldOwner = playerFieldOwner;
-        this.playerViewing = playerRequesting;
-    }
-
-    /**
-     * Method that is called when clicking the enter button
-     * Send the written message to the desired recipient if the text is not null
-     */
-    public void sendChatMessage() {
-
-        if(playerViewing.getNickname().equals(playerFieldOwner.getNickname()) && !currentMessage.getText().trim().equals("")){
-            //Get the message
-            String message = currentMessage.getText().trim();
-
-            //Get the desired
-            String user = chosenRecipient.getValue().toString();
-
-            //Send the message
-            Message msg = new Message(message, playerFieldOwner, user);
-            view.getClient().sendMessageInChat(msg);
+    public void drawCard(MouseEvent mouseEvent) {
+        if(!view.getUser().equals(playerFieldOwner)){
+            view.showMessage("You aren't the owner of this player field");
+            return;
         }
-        currentMessage.setText("");
+
+        chosenImage = (ImageView) mouseEvent.getSource();
+        boolean isGold;
+
+        //Select the chosen card
+        if(chosenImage.equals(resourceDeckImage)){
+            chosenIndex = 0;
+            isGold = false;
+        } else if(chosenImage.equals(resourceUncoveredImage0)){
+            chosenIndex = 1;
+            isGold = false;
+        } else if(chosenImage.equals(resourceUncoveredImage1)){
+            chosenIndex = 2;
+            isGold = false;
+        } else if(chosenImage.equals(goldDeckImage)){
+            chosenIndex = 0;
+            isGold = true;
+        } else if(chosenImage.equals(goldUncoveredImage0)){
+            chosenIndex = 1;
+            isGold = true;
+        } else if(chosenImage.equals(goldUncoveredImage1)){
+            chosenIndex = 2;
+            isGold = true;
+        } else {
+            return;
+        }
+
+        view.getClient().drawCardResponse(chosenIndex, isGold);
     }
 
-    /**
-     * When the enter key is pressed on the chat box, send the message
-     * @param keyEvent the event that triggered this function call
-     */
-    public void sendChatMessageEnter(KeyEvent keyEvent){
-        if(keyEvent.getCode().equals(KeyCode.ENTER)){
-            sendChatMessage();
-        }
-    }
 
     /**
      * Method that is called when clicking on another player's scoreboard
@@ -653,18 +644,8 @@ public class PlayerFieldController extends EventHandler{
     public void requestPlayerField(MouseEvent mouseEvent) {
         String targetUser = ((Label)getChildrenFromID((Pane) mouseEvent.getSource(), "playerName")).getText();
         if(!targetUser.equals(playerFieldOwner.getNickname())){
-            view.ShowPlayerFieldFromName(targetUser, playerViewing);
+            view.ShowPlayerFieldFromName(targetUser, view.getUser());
         }
-    }
-
-    /**
-     * Updates the currently viewed player field when it gets updated
-     * @param game the current game state
-     */
-    public void setCurrentPlayerField(GameState game) {
-        boolean isYourPlayerField = playerFieldOwner.equals(playerViewing);
-        PlayerField currentPlayerField = game.getGameTable().getPlayerZoneForUser(playerFieldOwner.getNickname());
-        setPlayerField(currentPlayerField, isYourPlayerField);
     }
 
     /**
@@ -687,10 +668,10 @@ public class PlayerFieldController extends EventHandler{
         if(tutorialImageIndex <= 5){
             String tutorialPath = Util.getTutorialImageByID(tutorialImageIndex);
             Image temp = new Image(tutorialPath);
-            TutorialImage.setImage(temp);
-            TutorialImage.setFitWidth(rootPane.getScene().getWidth());
-            TutorialImage.setFitHeight(rootPane.getScene().getHeight());
-            TutorialImage.setPreserveRatio(false);
+            tutorialImage.setImage(temp);
+            tutorialImage.setFitWidth(rootPane.getScene().getWidth());
+            tutorialImage.setFitHeight(rootPane.getScene().getHeight());
+            tutorialImage.setPreserveRatio(false);
         } else {
             tutorialImageContainer.setVisible(false);
             tutorialImageContainer.setDisable(true);
@@ -698,26 +679,15 @@ public class PlayerFieldController extends EventHandler{
     }
 
     /**
-     * Method that gets called when the user starts dragging a card in his hand
-     * @param event the mouse event that triggered this function call
+     * Function to convert a button text to a coordinate
+     * @param coordinateString the text of the button
+     * @return the coordinate that got referenced by the button
      */
-    public void startDragCard(MouseEvent event){
-        chosenImage = (ImageView) event.getSource();
-        if(chosenImage.equals(hand0)){
-            chosenIndex = 0;
-        } else if(chosenImage.equals(hand1)){
-            chosenIndex = 1;
-        } else if(chosenImage.equals(hand2)){
-            chosenIndex = 2;
-        }
-
-        Dragboard db = chosenImage.startDragAndDrop(TransferMode.MOVE);
-
-        ClipboardContent content = new ClipboardContent();
-
-        content.putImage(chosenImage.getImage());
-        db.setContent(content);
-        event.consume();
+    private Coordinates parseCoordinateFromString(String coordinateString){
+        int x, y;
+        coordinateString = coordinateString.substring(1, coordinateString.length() - 1);
+        x = Integer.parseInt(coordinateString.split(",")[0]);
+        y = Integer.parseInt(coordinateString.split(",")[1]);
+        return new Coordinates(x,y);
     }
-
 }

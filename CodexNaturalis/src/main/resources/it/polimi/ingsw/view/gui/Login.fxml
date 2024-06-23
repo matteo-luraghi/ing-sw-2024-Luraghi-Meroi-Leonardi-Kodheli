@@ -54,12 +54,12 @@
                                     <Font name="Cambria Italic" size="18.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="Username" alignment="CENTER" layoutX="64.0" layoutY="61.0" prefHeight="25.0" prefWidth="171.0" stylesheets="@assets/css/roundButton.css" />
+                              <TextField fx:id="username" alignment="CENTER" layoutX="64.0" layoutY="61.0" prefHeight="25.0" prefWidth="171.0" stylesheets="@assets/css/roundButton.css" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="130.0" prefWidth="302.0">
                            <children>
-                              <Button fx:id="LoginButton" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="43.0" mnemonicParsing="false" onMouseClicked="#loginPlayer" prefHeight="38.0" prefWidth="181.0" stylesheets="@assets/css/roundButton.css" text="Check nickname">
+                              <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="43.0" mnemonicParsing="false" onMouseClicked="#loginPlayer" prefHeight="38.0" prefWidth="181.0" stylesheets="@assets/css/roundButton.css" text="Check nickname">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
@@ -76,17 +76,17 @@
                      <children>
                         <AnchorPane prefHeight="130.0" prefWidth="304.0">
                            <children>
-                              <Label fx:id="ColorLabel" layoutX="85.0" layoutY="38.0" text="Select your color">
+                              <Label fx:id="colorLabel" layoutX="85.0" layoutY="38.0" text="Select your color">
                                  <font>
                                     <Font name="Cambria Italic" size="18.0" />
                                  </font>
                               </Label>
-                              <ChoiceBox fx:id="Color" layoutX="66.0" layoutY="65.0" prefHeight="25.0" prefWidth="171.0" stylesheets="@assets/css/roundButton.css" />
+                              <ChoiceBox fx:id="color" layoutX="66.0" layoutY="65.0" prefHeight="25.0" prefWidth="171.0" stylesheets="@assets/css/roundButton.css" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="130.0" prefWidth="300.0">
                            <children>
-                              <Button fx:id="ColorButton" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="43.0" mnemonicParsing="false" onMouseClicked="#chooseColor" prefHeight="44.0" prefWidth="181.0" stylesheets="@assets/css/roundButton.css" text="Check color">
+                              <Button fx:id="colorButton" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="43.0" mnemonicParsing="false" onMouseClicked="#chooseColor" prefHeight="44.0" prefWidth="181.0" stylesheets="@assets/css/roundButton.css" text="Check color">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>

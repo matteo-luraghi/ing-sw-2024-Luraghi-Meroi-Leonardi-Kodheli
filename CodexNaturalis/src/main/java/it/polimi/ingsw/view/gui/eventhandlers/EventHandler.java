@@ -47,10 +47,8 @@ public abstract class EventHandler {
     /**
      * Shows an information popup
      */
-    public void showPopup(String title, String text){
+    public void showPopup(String text){
         alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(title);
         alert.setContentText(text);
         alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
                 "-fx-font-family: Cambria;" +

@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 
 /**
  * Setup.fxml event handler, used to make the player chose a starting card side and a private goal card
+ * @author Gabriel Leonardi
  */
 public class SetupController extends EventHandler{
     public ImageView startingImageFront;
@@ -68,16 +69,7 @@ public class SetupController extends EventHandler{
     public void SelectStartingAndGoal() {
         if(startingFront.isSelected() == startingBack.isSelected() || goal1.isSelected() == goal2.isSelected()){
             //If both radio buttons or neither are selected, throw an alert
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("");
-            alert.setHeaderText("");
-            alert.setContentText("Select one between every group of radio buttons");
-            alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
-                    "-fx-font-family: Cambria;" +
-                    "-fx-font-style: italic;" +
-                    "-fx-font-size: large;" +
-                    "-fx-font-weight: bold;");
-            alert.showAndWait();
+            showPopup("Select one between every group of radio buttons");
         } else {
             view.getClient().playStartingCardResponse(startingCard, startingFront.isSelected());
             int goalIndex = goal1.isSelected() ? 0 : 1;

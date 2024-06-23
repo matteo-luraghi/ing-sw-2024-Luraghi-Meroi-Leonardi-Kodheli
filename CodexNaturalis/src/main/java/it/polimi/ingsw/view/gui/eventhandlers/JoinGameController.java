@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 /**
  * JoinGame.fxml event handler, used to make the player join a game or create a new one
+ * @author Gabriel Leonardi
  */
 public class JoinGameController  extends EventHandler{
 
@@ -32,13 +33,10 @@ public class JoinGameController  extends EventHandler{
      * Function that gets called when the page loads, sets the choices for the numberOfPlayers ChoiceBox
      */
     public void initialize(){
-        ArrayList<Integer> nums = new ArrayList<>();
-        nums.add(2);
-        nums.add(3);
-        nums.add(4);
-        ObservableList<Integer> choices = FXCollections.observableArrayList(nums);
+        ObservableList<Integer> choices = FXCollections.observableArrayList();
         numOfPlayers.setItems(choices);
-        numOfPlayers.setValue(nums.getFirst());
+        numOfPlayers.getItems().addAll(2, 3, 4);
+        numOfPlayers.setValue(2);
     }
 
     /**
@@ -62,23 +60,13 @@ public class JoinGameController  extends EventHandler{
      * Tries to create a new game with the given name and capacity
      */
     public void createGame() {
-        //Initialize alert
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("");
-        alert.setHeaderText("");
-        alert.getDialogPane().setStyle(" -fx-background-color: #ede3ba;" +
-                "-fx-font-family: Cambria;" +
-                "-fx-font-style: italic;" +
-                "-fx-font-size: large;" +
-                "-fx-font-weight: bold;");
-
         String game = gameName.getText();
         String numOfPlayersText = numOfPlayers.getValue().toString();
         int numberOfPlayers;
+
         //checks game name validity
         if(game == null || game.isEmpty()){
-            alert.setContentText("Invalid input data: game name is null");
-            alert.showAndWait();
+            showPopup("Invalid input data: game name is null");
             return;
         }
 
@@ -86,8 +74,7 @@ public class JoinGameController  extends EventHandler{
         try{
             numberOfPlayers = Integer.parseInt(numOfPlayersText);
         }catch(NumberFormatException e){
-            alert.setContentText("Invalid input data: number of players is null or not a number");
-            alert.showAndWait();
+            showPopup("Invalid input data: number of players is null or not a number");
             return;
         }
 
