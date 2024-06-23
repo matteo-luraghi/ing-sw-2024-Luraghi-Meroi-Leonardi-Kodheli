@@ -71,6 +71,11 @@ public class Player implements Serializable {
         }
     }
 
+    /**
+     * equals Override for multiple instances
+     * @param obj given obj
+     * @return true if matches the given conditions, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if(this == obj) return true;
