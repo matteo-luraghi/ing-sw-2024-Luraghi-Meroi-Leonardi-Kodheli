@@ -25,7 +25,6 @@ public class Controller implements RemoteController {
     private final ArrayList<ConnectionHandler> connectionHandlers;
     private final Lock connectionLock;
     private boolean isGameStarted;
-    private boolean isGameEnded;
     private boolean isPenultimateTurn;
     private boolean isLastTurn;
     private int numOfGoalCardsChosen;
@@ -42,7 +41,6 @@ public class Controller implements RemoteController {
         this.connectionLock = new ReentrantLock();
         this.connectionHandlers = new ArrayList<>();
         isGameStarted = false;
-        isGameEnded = false;
         isPenultimateTurn = false;
         isLastTurn = false;
         numOfGoalCardsChosen = 0;
@@ -592,12 +590,10 @@ public class Controller implements RemoteController {
     @Override
     public void showLeaderBoard(){
         game.setState(State.FINAL);
-        isGameEnded = true;
         for(ConnectionHandler c : getHandlers()){
             c.showWinner(game);
             c.showScoreBoard(game.getGameTable().getScoreBoard());
         }
-        //Do i have to do something for when the game ends?
     }
 
     /**
