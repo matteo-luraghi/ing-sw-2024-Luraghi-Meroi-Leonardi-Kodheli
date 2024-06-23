@@ -40,7 +40,7 @@
       <center>
          <AnchorPane BorderPane.alignment="CENTER">
             <ScrollPane hvalue="0.5" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #d1be71;" stylesheets="@assets/css/scollStyles.css" vvalue="0.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="3000.0" prefWidth="6000.0" style="-fx-background-color: #f0ead1;">
+               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="3000.0" prefWidth="7000.0" style="-fx-background-color: #f0ead1;">
                   <StackPane layoutX="-914.0" layoutY="-500.0" prefHeight="10000.0" prefWidth="1300.0" style="-fx-background-color: #f0ead1;" AnchorPane.bottomAnchor="-500.0" AnchorPane.leftAnchor="-1000.0" AnchorPane.rightAnchor="-1000.0" AnchorPane.topAnchor="-500.0">
                      <ImageView fitHeight="150.0" fitWidth="200.0" opacity="0.1" pickOnBounds="true" preserveRatio="true" scaleX="4.0" scaleY="4.0">
                         <image>
@@ -91,7 +91,7 @@
                                     <Font name="Cambria Bold Italic" size="24.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="yourName" layoutX="13.0" layoutY="29.0" prefHeight="30.0" prefWidth="223.0">
+                              <Label fx:id="yourName" alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="29.0" prefHeight="30.0" prefWidth="214.0" textAlignment="CENTER">
                                  <font>
                                     <Font name="Cambria Bold Italic" size="24.0" />
                                  </font>
@@ -135,37 +135,37 @@
                               <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="112.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
                                  <Image url="@assets/Icons/scroll.png" />
                               </ImageView>
-                              <Label fx:id="plant" layoutX="25.0" layoutY="24.0" prefHeight="24.0" prefWidth="26.0" text="0">
+                              <Label fx:id="plant" layoutX="25.0" layoutY="24.0" prefHeight="24.0" prefWidth="54.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="animal" layoutX="173.0" layoutY="24.0" prefHeight="24.0" prefWidth="29.0" text="0">
+                              <Label fx:id="animal" layoutX="173.0" layoutY="24.0" prefHeight="24.0" prefWidth="45.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="fungi" layoutX="127.0" layoutY="24.0" prefHeight="24.0" prefWidth="23.0" text="0">
+                              <Label fx:id="fungi" layoutX="127.0" layoutY="24.0" prefHeight="24.0" prefWidth="47.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="insect" layoutX="78.0" layoutY="24.0" prefHeight="24.0" prefWidth="27.0" text="0">
+                              <Label fx:id="insect" layoutX="78.0" layoutY="24.0" prefHeight="24.0" prefWidth="50.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="feather" layoutX="42.0" layoutY="62.0" prefHeight="24.0" prefWidth="27.0" text="0">
+                              <Label fx:id="feather" layoutX="42.0" layoutY="62.0" prefHeight="24.0" prefWidth="45.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="potion" layoutX="90.0" layoutY="62.0" prefHeight="24.0" prefWidth="23.0" text="0">
+                              <Label fx:id="potion" layoutX="90.0" layoutY="62.0" prefHeight="24.0" prefWidth="45.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="scroll" layoutX="139.0" layoutY="62.0" prefHeight="24.0" prefWidth="30.0" text="0">
+                              <Label fx:id="scroll" layoutX="139.0" layoutY="62.0" prefHeight="24.0" prefWidth="58.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
@@ -221,37 +221,37 @@
                                     <Image url="@assets/Icons/scroll.png" />
                                  </image>
                               </ImageView>
-                              <Label fx:id="plant" layoutX="25.0" layoutY="24.0" prefHeight="24.0" prefWidth="27.0" text="0">
+                              <Label fx:id="plant" layoutX="25.0" layoutY="24.0" prefHeight="24.0" prefWidth="48.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="animal" layoutX="173.0" layoutY="24.0" prefHeight="24.0" prefWidth="27.0" text="0">
+                              <Label fx:id="animal" layoutX="173.0" layoutY="24.0" prefHeight="24.0" prefWidth="44.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="fungi" layoutX="127.0" layoutY="24.0" prefHeight="24.0" prefWidth="22.0" text="0">
+                              <Label fx:id="fungi" layoutX="127.0" layoutY="24.0" prefHeight="24.0" prefWidth="43.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="insect" layoutX="78.0" layoutY="24.0" prefHeight="24.0" prefWidth="25.0" text="0">
+                              <Label fx:id="insect" layoutX="78.0" layoutY="24.0" prefHeight="24.0" prefWidth="47.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="feather" layoutX="42.0" layoutY="62.0" prefHeight="24.0" prefWidth="27.0" text="0">
+                              <Label fx:id="feather" layoutX="42.0" layoutY="62.0" prefHeight="24.0" prefWidth="49.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="potion" layoutX="90.0" layoutY="62.0" prefHeight="24.0" prefWidth="25.0" text="0">
+                              <Label fx:id="potion" layoutX="90.0" layoutY="62.0" prefHeight="24.0" prefWidth="49.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="scroll" layoutX="139.0" layoutY="62.0" prefHeight="24.0" prefWidth="32.0" text="0">
+                              <Label fx:id="scroll" layoutX="139.0" layoutY="62.0" prefHeight="24.0" prefWidth="61.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
@@ -307,22 +307,22 @@
                                     <Image url="@assets/Icons/scroll.png" />
                                  </image>
                               </ImageView>
-                              <Label fx:id="plant" layoutX="25.0" layoutY="24.0" prefHeight="24.0" prefWidth="24.0" text="0">
+                              <Label fx:id="plant" layoutX="25.0" layoutY="24.0" prefHeight="24.0" prefWidth="48.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="animal" layoutX="173.0" layoutY="24.0" prefHeight="24.0" prefWidth="29.0" text="0">
+                              <Label fx:id="animal" layoutX="173.0" layoutY="24.0" prefHeight="24.0" prefWidth="57.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="fungi" layoutX="127.0" layoutY="24.0" prefHeight="24.0" prefWidth="24.0" text="0">
+                              <Label fx:id="fungi" layoutX="127.0" layoutY="24.0" prefHeight="24.0" prefWidth="45.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="insect" layoutX="78.0" layoutY="24.0" prefHeight="24.0" prefWidth="24.0" text="0">
+                              <Label fx:id="insect" layoutX="78.0" layoutY="24.0" prefHeight="24.0" prefWidth="48.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
@@ -393,37 +393,37 @@
                                     <Image url="@assets/Icons/scroll.png" />
                                  </image>
                               </ImageView>
-                              <Label fx:id="plant" layoutX="25.0" layoutY="24.0" prefHeight="24.0" prefWidth="23.0" text="0">
+                              <Label fx:id="plant" layoutX="25.0" layoutY="24.0" prefHeight="24.0" prefWidth="49.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="animal" layoutX="173.0" layoutY="24.0" prefHeight="24.0" prefWidth="27.0" text="0">
+                              <Label fx:id="animal" layoutX="173.0" layoutY="24.0" prefHeight="24.0" prefWidth="46.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="fungi" layoutX="127.0" layoutY="24.0" prefHeight="24.0" prefWidth="23.0" text="0">
+                              <Label fx:id="fungi" layoutX="127.0" layoutY="24.0" prefHeight="24.0" prefWidth="45.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="insect" layoutX="78.0" layoutY="24.0" prefHeight="24.0" prefWidth="26.0" text="0">
+                              <Label fx:id="insect" layoutX="78.0" layoutY="24.0" prefHeight="24.0" prefWidth="48.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="feather" layoutX="42.0" layoutY="62.0" prefHeight="24.0" prefWidth="25.0" text="0">
+                              <Label fx:id="feather" layoutX="42.0" layoutY="62.0" prefHeight="24.0" prefWidth="47.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="potion" layoutX="90.0" layoutY="62.0" prefHeight="24.0" prefWidth="24.0" text="0">
+                              <Label fx:id="potion" layoutX="90.0" layoutY="62.0" prefHeight="24.0" prefWidth="47.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="scroll" layoutX="139.0" layoutY="62.0" prefHeight="24.0" prefWidth="27.0" text="0">
+                              <Label fx:id="scroll" layoutX="139.0" layoutY="62.0" prefHeight="24.0" prefWidth="63.0" text="0">
                                  <font>
                                     <Font name="Cambria Bold" size="20.0" />
                                  </font>
@@ -437,21 +437,21 @@
          </AnchorPane>
       </right>
       <bottom>
-         <AnchorPane prefHeight="140.0" prefWidth="656.0" BorderPane.alignment="CENTER">
+         <AnchorPane prefHeight="144.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
             <ScrollPane layoutX="14.0" prefHeight="200.0" prefWidth="656.0" stylesheets="@assets/css/scollStyles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="2097.0" style="-fx-background-color: #d1be71;">
                   <Pane prefHeight="130.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <ImageView fx:id="handImage0" fitHeight="120.0" fitWidth="150.0" layoutY="30.0" onMouseClicked="#selectPlayCardClick" pickOnBounds="true" preserveRatio="true" onDragDetected="#startDragCard">
+                     <ImageView fx:id="handImage0" fitHeight="120.0" fitWidth="150.0" layoutY="30.0" onDragDetected="#startDragCard" onMouseClicked="#selectPlayCardClick" pickOnBounds="true" preserveRatio="true">
                         <cursor>
                            <Cursor fx:constant="HAND" />
                         </cursor>
                      </ImageView>
-                     <ImageView fx:id="handImage1" fitHeight="120.0" fitWidth="150.0" layoutX="174.0" layoutY="30.0" onMouseClicked="#selectPlayCardClick" pickOnBounds="true" preserveRatio="true" onDragDetected="#startDragCard">
+                     <ImageView fx:id="handImage1" fitHeight="120.0" fitWidth="150.0" layoutX="174.0" layoutY="30.0" onDragDetected="#startDragCard" onMouseClicked="#selectPlayCardClick" pickOnBounds="true" preserveRatio="true">
                         <cursor>
                            <Cursor fx:constant="HAND" />
                         </cursor>
                      </ImageView>
-                     <ImageView fx:id="handImage2" fitHeight="120.0" fitWidth="150.0" layoutX="340.0" layoutY="28.0" onMouseClicked="#selectPlayCardClick" pickOnBounds="true" preserveRatio="true" onDragDetected="#startDragCard">
+                     <ImageView fx:id="handImage2" fitHeight="120.0" fitWidth="150.0" layoutX="340.0" layoutY="28.0" onDragDetected="#startDragCard" onMouseClicked="#selectPlayCardClick" pickOnBounds="true" preserveRatio="true">
                         <cursor>
                            <Cursor fx:constant="HAND" />
                         </cursor>
