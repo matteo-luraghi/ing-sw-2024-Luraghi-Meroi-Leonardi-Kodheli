@@ -38,7 +38,6 @@ public class Util {
      * @throws NullPointerException when s is not equal to one of the colors
      */
     public static Color stringToColor(String s) throws NullPointerException{
-        //TODO: make custom InvalidColorException
         s = s.toUpperCase();
         if(s.equals("RED")) return Color.RED;
         if(s.equals("BLUE")) return Color.BLUE;
@@ -224,10 +223,6 @@ public class Util {
             n++;
         }
 
-
-
-
-
         int id=Json.get("id").getAsInt();
 
         return new StartingCard(kingdom,isFront,corners,backCorners,permanentResources, id);
@@ -317,36 +312,6 @@ public class Util {
             if (correct!=null) return correct;
         }
         return null;
-    }
-
-    /**
-     * Given an GameCard returns the first index that is not BLANK or COVERED
-     * @param card GameCard
-     * @return first index that is not blank, if not found -1
-     */
-    static public int getFirstNotHiddenIndex(GameCard card)
-    {
-        for(int i=0; i<4;  i++)
-        {
-            if(card.getCorner(i)!= Resource.HIDDEN && card.getCorner(i)!=Resource.COVERED)
-                return i;
-        }
-        return -1;
-    }
-
-    /**
-     * Given an GameCard returns the first index that contains BLANK or COVERED
-     * @param card GameCard
-     * @return first index that contains blank, if not found -1
-     */
-    static public int getFirstHiddenIndex(GameCard card)
-    {
-        for(int i=0; i<4;  i++)
-        {
-            if(card.getCorner(i)==Resource.HIDDEN && card.getCorner(i)!=Resource.COVERED )
-                return i;
-        }
-        return -1;
     }
 
     /**

@@ -55,6 +55,7 @@ public class SocketClient extends Client {
                     sendMessageServer(new Ping());
                 } catch (InterruptedException e) {
                     // if the server is not online, disconnect the client
+                    System.err.println("Error connecting to the server");
                     disconnect();
                 }
             }

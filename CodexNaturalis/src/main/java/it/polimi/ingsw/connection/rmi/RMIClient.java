@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * @author Matteo Leonardo Luraghi
  */
 public class RMIClient extends Client {
-    private final Registry registry;
+    private final Registry serverRegistry;
     private Registry viewRegistry;
     private RemoteController controller = null;
     private RMIConnectionHandler connectionHandler;
@@ -36,13 +36,15 @@ public class RMIClient extends Client {
      * @param port the server port
      * @param view the view interface
      * @throws RemoteException if errors in exposing/getting the RMI registry
-     * @throws NotBoundException if errors in RMI connection
+     * @throws NotBoundException if errors occur in RMI connection
      * @throws IPNotFoundException if unable to find the machine's ip address
      */
     public RMIClient(String ip, int port, View view) throws RemoteException, NotBoundException, IPNotFoundException {
         super(view);
         // get the server registry
-        this.registry = LocateRegistry.getRegistry(ip, port);
+        this.serverRegistry = LocateRegistry.getRegistry(ip, port);
+        // check that the server is online, throws exception if the server is not online to restart the connection choice in view
+        serverRegistry.lookup("server");
 
         // find the client's ip address
         String clientIP = null;
@@ -71,20 +73,40 @@ public class RMIClient extends Client {
                 viewPort++;
             }
         }
+
+        // ping thread to check if the server is still online
+        Thread pingThread = new Thread(() -> {
+            while (true) {
+                try {
+                    // try to get the server from the registry, if exception occurs then the server is not online
+                    serverRegistry.lookup("server");
+                    Thread.sleep(5000);
+                } catch (RemoteException | NotBoundException e) {
+                    System.err.println("Error connecting to the server");
+                    // if the server is not online, disconnect the client
+                    disconnect();
+                    break;
+                } catch (InterruptedException ignored) {
+                }
+            }
+        });
+        pingThread.start();
     }
 
     /**
-     * Registry getter
+     * Server's registry getter
      * @return the server registry
      */
-    public Registry getRegistry() {
-        return this.registry;
+    public Registry getServerRegistry() {
+        return this.serverRegistry;
     }
 
     /**
      * Make the user choose to join or create a game
      * @param isJoin true if the user wants to join a game
      * @param gameName game name
+     * @param nickname the player's nickname
+     * @throws Exception if nickname is already present or RMI errors occur
      */
     @Override
     public void gameChoice(boolean isJoin, String gameName, String nickname) throws Exception {
@@ -96,12 +118,12 @@ public class RMIClient extends Client {
 
         this.gameName = gameName;
 
-        this.connectionHandler = new RMIConnectionHandler(registry, viewRegistry);
+        this.connectionHandler = new RMIConnectionHandler(serverRegistry, viewRegistry);
         this.connectionHandler.setClientNickname(nickname);
 
         try {
             // connect to the server
-            RemoteServer server = (RemoteServer) registry.lookup("server");
+            RemoteServer server = (RemoteServer) serverRegistry.lookup("server");
 
             // check if the nickname is unique
             if(!server.checkUniqueNickname(nickname)) {
@@ -134,7 +156,7 @@ public class RMIClient extends Client {
 
             // get the game's controller
             try {
-                this.controller = (RemoteController) registry.lookup("controller"+gameName);
+                this.controller = (RemoteController) serverRegistry.lookup("controller"+gameName);
             } catch (NotBoundException ignored) {
             }
 
@@ -152,7 +174,7 @@ public class RMIClient extends Client {
     public void colorResponse(Color color) {
         if (this.controller == null) {
             try {
-                this.controller = (RemoteController) registry.lookup("controller"+this.gameName);
+                this.controller = (RemoteController) serverRegistry.lookup("controller"+this.gameName);
             } catch (Exception e) {
                 System.err.println("Controller not found");
                 disconnect();
@@ -169,14 +191,15 @@ public class RMIClient extends Client {
     }
 
     /**
-     * Send the number of players to the server
+     * Send the number of players to the server to create a new game
      * @param number the number of players
+     * @param gameName the new game's name
      */
     @Override
     public void playersNumberResponse(int number, String gameName) {
         try {
             // connect to the server
-            RemoteServer server = (RemoteServer) registry.lookup("server");
+            RemoteServer server = (RemoteServer) serverRegistry.lookup("server");
 
             new Thread(() -> {
                 try {
@@ -273,7 +296,7 @@ public class RMIClient extends Client {
     public void refreshGamesNames() {
         ArrayList<String> gamesNames;
         try {
-            RemoteServer server = (RemoteServer) this.registry.lookup("server");
+            RemoteServer server = (RemoteServer) this.serverRegistry.lookup("server");
             gamesNames = server.getGamesNames();
         } catch (Exception e) {
             gamesNames = null;
@@ -305,7 +328,9 @@ public class RMIClient extends Client {
     @Override
     public void disconnect() {
         this.setConnected(false);
-        this.connectionHandler.disconnect();
+        try {
+            this.connectionHandler.disconnect();
+        } catch (NullPointerException ignored) {}
     }
 
 }

@@ -117,7 +117,6 @@ public class Server implements RemoteServer {
         if (validNickname) {
             Optional<Controller> optionalController;
             synchronized (this.gameLock) {
-                System.out.println("Active Games:" + games.keySet().size());
                 // find the first free game and try to add the player
                 optionalController = games.keySet().stream().
                         filter(g -> !g.isGameStarted()
@@ -263,6 +262,7 @@ public class Server implements RemoteServer {
     /**
      * Get all the games' names
      * @return the names
+     * @throws RemoteException if errors occur during RMI connection
      */
     @Override
     public ArrayList<String> getGamesNames() throws RemoteException {

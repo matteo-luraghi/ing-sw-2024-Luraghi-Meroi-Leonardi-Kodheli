@@ -130,33 +130,6 @@ public class Controller implements RemoteController {
     }
 
     /**
-     * isGamEnded setter
-     * @param gameEnded value
-     */
-    @Override
-    public void setGameEnded(boolean gameEnded) {
-        this.isGameEnded = gameEnded;
-    }
-
-    /**
-     * isGameEnded getter
-     * @return value
-     */
-    @Override
-    public boolean isGameEnded() {
-        return this.isGameEnded;
-    }
-
-    /**
-     * isGameStarted setter
-     * @param gameStarted value
-     */
-    @Override
-    public void setGameStarted(boolean gameStarted) {
-        this.isGameStarted = gameStarted;
-    }
-
-    /**
      * isGameStarted getter
      * @return value
      */
@@ -227,7 +200,6 @@ public class Controller implements RemoteController {
         Collections.shuffle(cardsList);
         return new LinkedList<>(cardsList);
     }
-
 
     /**
      * sets the state as choose color

@@ -31,7 +31,9 @@ public class ClientMain {
                     started = true;
                     new CLI().start();
                 } else {
-                    System.out.println("Insert a valid argument");
+                    System.err.println("Invalid argument passed!");
+                    System.out.println("Insert a valid argument:\n-gui\n-cli");
+                    System.exit(0);
                 }
             } catch (ConnectionClosedException e) {
                 System.err.println(e.getMessage());

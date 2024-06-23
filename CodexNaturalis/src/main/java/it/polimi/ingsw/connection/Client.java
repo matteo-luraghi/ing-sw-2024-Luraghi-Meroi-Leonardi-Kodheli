@@ -58,6 +58,7 @@ public abstract class Client {
      * @param isJoin true if the user wants to join a game
      * @param gameName game name
      * @param nickname user nickname
+     * @throws Exception if nickname is already present or RMI errors occur
      */
     public void gameChoice(boolean isJoin, String gameName, String nickname) throws Exception {};
 
@@ -68,8 +69,9 @@ public abstract class Client {
     public void colorResponse(Color color) {}
 
     /**
-     * Send the number of players to the server
+     * Send the number of players to the server to create a new game
      * @param number the number of players
+     * @param gameName the new game's name
      */
     public void playersNumberResponse(int number, String gameName) {}
 

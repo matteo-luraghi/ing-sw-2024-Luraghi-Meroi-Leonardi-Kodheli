@@ -345,8 +345,7 @@ public class RMIConnectionHandler extends ConnectionHandler {
     public void disconnect() {
         try {
             this.view.disconnectClient();
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
 
         try {
             View stubView = (View) viewRegistry.lookup("view" + getClientNickname());

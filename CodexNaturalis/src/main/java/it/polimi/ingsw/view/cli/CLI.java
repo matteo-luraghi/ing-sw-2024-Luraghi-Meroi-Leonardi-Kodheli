@@ -15,7 +15,6 @@ import it.polimi.ingsw.view.mainview.View;
 import it.polimi.ingsw.view.mainview.*;
 
 import java.io.IOException;
-import java.rmi.ConnectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
@@ -122,7 +121,7 @@ public class CLI implements View {
 
         if (client.getClass() == RMIClient.class) {
             //insert the client into the RMI registry
-            Registry registry = ((RMIClient) client).getRegistry();
+            Registry registry = ((RMIClient) client).getServerRegistry();
             try {
                 RemoteServer server = (RemoteServer) registry.lookup("server");
                 ArrayList<String> gameNames = server.getGamesNames();

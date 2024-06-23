@@ -4,6 +4,7 @@ import java.io.Serial;
 
 /**
  * ConnectionClosedException class
+ * used to notify the client of connection errors
  * @author Matteo Leonardo Luraghi
  */
 public class ConnectionClosedException extends Exception{

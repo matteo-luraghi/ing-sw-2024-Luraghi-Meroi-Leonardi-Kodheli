@@ -148,7 +148,7 @@ public class GUI extends Application implements View{
         if (client.getClass() == RMIClient.class) {
             // get the games' names
             ArrayList<String> gameNames;
-            Registry registry = ((RMIClient) client).getRegistry();
+            Registry registry = ((RMIClient) client).getServerRegistry();
             try {
                 RemoteServer server = (RemoteServer) registry.lookup("server");
                 gameNames = server.getGamesNames();

@@ -21,7 +21,7 @@ import java.util.*;
 
     /**
      * gameState getter
-     * @return the current gameState throws RemoteException;
+     * @return the current gameState
      * @throws RemoteException to handle exceptions that may occur when using RMI
      */
      GameState getGame() throws RemoteException;
@@ -62,27 +62,6 @@ import java.util.*;
      * @throws RemoteException to handle exceptions that may occur when using RMI
      */
      void broadcastMessage(Serializable msg, ArrayList<ConnectionHandler> handlers) throws RemoteException;
-
-    /**
-     * isGamEnded setter
-     * @param gameEnded value
-     * @throws RemoteException to handle exceptions that may occur when using RMI
-     */
-     void setGameEnded(boolean gameEnded) throws RemoteException;
-
-    /**
-     * isGameEnded getter
-     * @return value
-     * @throws RemoteException to handle exceptions that may occur when using RMI
-     */
-     boolean isGameEnded() throws RemoteException;
-
-    /**
-     * isGameStarted setter
-     * @param gameStarted value
-     * @throws RemoteException to handle exceptions that may occur when using RMI
-     */
-     void setGameStarted(boolean gameStarted) throws RemoteException;
 
     /**
      * isGameStarted getter
