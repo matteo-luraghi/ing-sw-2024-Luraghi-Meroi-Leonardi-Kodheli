@@ -16,7 +16,9 @@ public class GameChat implements Serializable {
     private ArrayList<Message> messages;
 
 
-
+    /**
+     * public GameChat constructor
+     */
     public GameChat()
     {
         messages=new ArrayList<>();
