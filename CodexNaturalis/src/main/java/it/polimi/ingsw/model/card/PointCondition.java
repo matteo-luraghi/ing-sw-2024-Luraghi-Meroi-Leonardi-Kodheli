@@ -18,6 +18,10 @@ public enum PointCondition implements Serializable {
     @Serial
     private static final long serialVersionUID = 2155997802452745419L;
 
+    /**
+     * to string method for string format of the ENUM
+     * @return string format of the ENUM otherwise "UNKNOWN"
+     */
     public String toString () {
         switch (this) {
             case SCROLL -> {return "S";}
@@ -29,6 +33,10 @@ public enum PointCondition implements Serializable {
         }
     }
 
+    /**
+     * extened to string version
+     * @return extended text string
+     */
     public String toStringExt() {
         switch (this) {
             case SCROLL -> {return "For every scroll resource in your field (S)";}

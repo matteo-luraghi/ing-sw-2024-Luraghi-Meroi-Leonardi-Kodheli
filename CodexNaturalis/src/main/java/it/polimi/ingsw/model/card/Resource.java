@@ -24,6 +24,10 @@ public enum Resource implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 5524296934682817881L;
+    /**
+     * to string method for string format of the ENUM
+     * @return string format of the ENUM otherwise "UNKNOWN"
+     */
     public String toString() {
         switch (this) {
             case ANIMAL -> {return AnsiColors.ANSI_CYAN+"A";}
@@ -39,7 +43,10 @@ public enum Resource implements Serializable {
             default -> {return "UNKNOWN";}
         }
     }
-
+    /**
+     * extened to string version
+     * @return extended text string
+     */
     public String toStringExt() {
         switch (this) {
             case ANIMAL -> {return AnsiColors.ANSI_CYAN+"Animal (A)";}
