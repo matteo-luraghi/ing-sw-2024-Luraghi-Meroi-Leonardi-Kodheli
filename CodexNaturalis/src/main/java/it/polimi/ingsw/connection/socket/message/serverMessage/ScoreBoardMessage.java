@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
 
 /**
  * ScoreBoardMessage class
- * used to show the scoreboard during the final phase of the game
+ * used to show the scoreboard
  * @author Matteo Leonardo Luraghi
  */
 public class ScoreBoardMessage extends ServerMessage{

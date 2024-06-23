@@ -95,7 +95,7 @@ public class RMIClient extends Client {
 
     /**
      * Server's registry getter
-     * @return the server registry
+     * @return the server's registry
      */
     public Registry getServerRegistry() {
         return this.serverRegistry;

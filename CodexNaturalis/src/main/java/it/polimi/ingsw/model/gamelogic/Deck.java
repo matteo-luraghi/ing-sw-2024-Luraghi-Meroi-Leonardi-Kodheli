@@ -166,16 +166,19 @@ public class Deck implements Serializable {
 
     /**
      * UncoveredCards setter, it is taken from the deck
-     * @param Which can be 1(first uncovered card) or 2(second uncovered card)
-     * @throws IndexOutOfBoundsException if Which not equal to 1 and 2
+     * @param which can be 1(first uncovered card) or 2(second uncovered card)
+     * @throws IndexOutOfBoundsException if "which" not equal to 1 and 2
      */
-    public void setUncoveredCard (int Which) throws NullPointerException{
-        if(Which!= 1 && Which!=2)
+    public void setUncoveredCard (int which) throws NullPointerException{
+        if(which!= 1 && which!=2)
             throw new IndexOutOfBoundsException();
-        this.uncoveredCards[Which-1] = this.Draw(0);
+        this.uncoveredCards[which-1] = this.Draw(0);
     }
 
-
+    /**
+     * Check if the deck is empty
+     * @return true if the deck is empty and there is no uncovered card
+     */
     public boolean isDeckEmpty () {
         return (this.cards.isEmpty() && this.uncoveredCards[0] == null && this.uncoveredCards[1] == null);
     }

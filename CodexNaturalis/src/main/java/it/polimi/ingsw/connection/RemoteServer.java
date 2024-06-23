@@ -14,6 +14,7 @@ public interface RemoteServer extends Remote {
     /**
      * Add a client to a game via its connectionHandler
      * @param connectionHandler the connectionHandler to save in a game
+     * @param gameName the game to add the player to
      * @throws RemoteException if errors occur during RMI connection
      */
     void joinGame(ConnectionHandler connectionHandler, String gameName) throws RemoteException;
@@ -44,7 +45,7 @@ public interface RemoteServer extends Remote {
 
     /**
      * Get all the games' names
-     * @return the names
+     * @return the names of the not yet started games
      * @throws RemoteException if errors occur during RMI connection
      */
      ArrayList<String> getGamesNames() throws RemoteException;

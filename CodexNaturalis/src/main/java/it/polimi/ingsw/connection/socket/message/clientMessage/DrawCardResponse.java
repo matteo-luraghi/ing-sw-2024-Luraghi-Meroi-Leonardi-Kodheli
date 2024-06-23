@@ -7,7 +7,7 @@ import java.io.Serial;
 
 /**
  * DrawCardResponse class
- * used to send the controller the chosen card to draw
+ * used to tell the controller which card to draw
  * @author Matteo Leonardo Luraghi
  */
 public class DrawCardResponse extends ClientMessage {
@@ -19,6 +19,7 @@ public class DrawCardResponse extends ClientMessage {
     /**
      * Constructor
      * @param which card to be drawn
+     * @param isGold true if the player is drawing from the gold deck
      */
     public DrawCardResponse(int which, boolean isGold) {
         this.which = which;

@@ -7,7 +7,7 @@ import java.rmi.RemoteException;
 
 /**
  * TextMessage class
- * used to send text messages to clients
+ * used to send text messages to client
  * @author Matteo Leonardo Luraghi
  */
 public class TextMessage extends ServerMessage {

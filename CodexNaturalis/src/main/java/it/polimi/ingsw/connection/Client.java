@@ -8,7 +8,6 @@ import it.polimi.ingsw.model.gamelogic.Coordinates;
 import it.polimi.ingsw.model.gamelogic.gamechat.Message;
 import it.polimi.ingsw.view.mainview.View;
 
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**

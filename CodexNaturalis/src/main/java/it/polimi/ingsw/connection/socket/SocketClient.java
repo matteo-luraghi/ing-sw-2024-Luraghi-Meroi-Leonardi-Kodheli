@@ -138,8 +138,9 @@ public class SocketClient extends Client {
     }
 
     /**
-     * Send the number of players to the server
+     * Send the number of players to the server to create a new game
      * @param number the number of players
+     * @param gameName the new game's name
      */
     @Override
     public void playersNumberResponse(int number, String gameName) {

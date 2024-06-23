@@ -108,6 +108,7 @@ public class Server implements RemoteServer {
     /**
      * Add a client to a game via its connectionHandler
      * @param connectionHandler the connectionHandler to save in a game
+     * @param gameName the game to add the player to
      */
     @Override
     public void joinGame(ConnectionHandler connectionHandler, String gameName) {
