@@ -18,6 +18,11 @@ public enum Kingdom implements Serializable {
     STARTING;
     @Serial
     private static final long serialVersionUID = -4163434024888030176L;
+
+    /**
+     * toString method to get the string format of the given enum
+     * @return string format of the given enum otherwise UNKNOWN
+     */
     public String toString () {
         switch (this) {
             case INSECT -> {return AnsiColors.ANSI_PURPLE+"I";}
