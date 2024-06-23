@@ -30,7 +30,7 @@ public class PlayerField implements Serializable {
     public PlayerField(){
         hand = new ArrayList<ResourceCard>();
         gameZone = new HashMap<Coordinates, GameCard>();
-        resourceMap = getInitializeResourceMap(); //resource map has to be initialized otherwise in resourceMap.get you get a null pointer
+        resourceMap = getInitializedResourceMap(); //resource map has to be initialized otherwise in resourceMap.get you get a null pointer
         InPlayOrder=new ArrayList<GameCard>();
     }
 
@@ -42,7 +42,7 @@ public class PlayerField implements Serializable {
         hand = new ArrayList<ResourceCard>();
         gameZone = new HashMap<Coordinates, GameCard>();
         gameZone.put(new Coordinates(0, 0), startingCard);
-        resourceMap = getInitializeResourceMap(); //resource map has to be initialized otherwise in resourceMap.get you get a null pointer
+        resourceMap = getInitializedResourceMap(); //resource map has to be initialized otherwise in resourceMap.get you get a null pointer
         InPlayOrder = new ArrayList<GameCard>();
         if (startingCard.getIsFront()) { //add to the resource map the starting card's permanent resources
             for (Resource resource : startingCard.getPermanentResources()) {
@@ -69,19 +69,30 @@ public class PlayerField implements Serializable {
      * @return true if the player can make a move otherwise false (should skip the turn)
      */
     public boolean canPlayHand() {
-        ResourceCard card = getHand().get(0);
-        card.flip();
-        for(GameCard placedCard: getGameZone().values()) {
-            Coordinates coordinates=getCoordinates(placedCard);
-            if(IsPlayable(new Coordinates(coordinates.getX()-1, coordinates.getY()+1),card)
-                    || IsPlayable(new Coordinates(coordinates.getX()+1, coordinates.getY()+1),card)
-                    || IsPlayable(new Coordinates(coordinates.getX()-1, coordinates.getY()-1),card)
-                    || IsPlayable(new Coordinates(coordinates.getX()+1, coordinates.getY()-1),card)) {
-                card.flip();
-                return true;
-            }
+        if(getHand().size()==0) /**if there are no cards in hand then there are no playable cards*/
+            return false;
+        ResourceCard card=getHand().getFirst();
+        boolean flipped=false;
+        if(card.getIsGold()&&card.getIsFront()) /**the card could be gold and playable only on one side so check only that*/
+        {
+            flipped=true;
+            card.flip();
         }
-        card.flip();
+
+        for (GameCard placedCard : getGameZone().values()) {
+                Coordinates coordinates = getCoordinates(placedCard);
+                if (IsPlayable(new Coordinates(coordinates.getX() - 1, coordinates.getY() + 1), card)
+                        || IsPlayable(new Coordinates(coordinates.getX() + 1, coordinates.getY() + 1), card)
+                        || IsPlayable(new Coordinates(coordinates.getX() - 1, coordinates.getY() - 1), card)
+                        || IsPlayable(new Coordinates(coordinates.getX() + 1, coordinates.getY() - 1), card)) {
+                    if(flipped)
+                        card.flip();
+                    return true;
+                }
+            }
+
+        if(flipped)
+            card.flip();
         return false;
     }
 
@@ -123,7 +134,7 @@ public class PlayerField implements Serializable {
      * Initialize the hashmap to have all the resources counter at 0
      * @return the initialized hashmap
      */
-    private HashMap<Resource, Integer> getInitializeResourceMap()
+    private HashMap<Resource, Integer> getInitializedResourceMap()
     {
         HashMap<Resource, Integer> map=new HashMap<Resource, Integer>();
         for(int i=0;i<Resource.values().length;i++)
@@ -181,15 +192,15 @@ public class PlayerField implements Serializable {
      * @param card the card you want to play
      * @return the number of points that the card has gotten (-1 for unplaced card)
      */
-    //Mostly, have still to check properly limit cases
     public int Play (Coordinates where, ResourceCard card) {
 
-        //better if we check
+        /**check if the card is playable first*/
         if(!IsPlayable(where,card))
         {
             return -1;
         }
 
+        /**if it's playable put it in the gamezone and remove it from the hand*/
         gameZone.put(where, card);
 
         hand.remove(Util.checkIfResourceCardIsPresent(hand, card));
@@ -245,7 +256,7 @@ public class PlayerField implements Serializable {
 }
             }
         }
-        int points=0;
+        int points;
         if (!card.getIsGold()) {
             points=card.getPoints();
         } else {
@@ -302,25 +313,21 @@ public class PlayerField implements Serializable {
     public boolean IsPlayable (Coordinates where, ResourceCard card) {
         if(Util.checkIfResourceCardIsPresent(hand, card)==null)
         {
-        //    System.err.println("CARD not in Hand");
             return  false;
         }
         for(Coordinates coordinate: gameZone.keySet())
         {
             if(coordinate.getX()== where.getX() && coordinate.getY()== where.getY()) {
-         //       System.err.println("Place already occupied");
                 return false;
             }}
         if (card.getIsGold() && card.getIsFront()) {
             if (!checkConditions((GoldCard) card))
             {
-              //  System.err.println("condition check failed");
                 return false;
             }
         }
         if (Math.abs(where.getY() + where.getX()) % 2 == 1) {
 
-               // System.err.println("math check failed");
                 return false;
 
         }
@@ -342,22 +349,20 @@ public class PlayerField implements Serializable {
             int x = coordinate.getX();
             int y = coordinate.getY();
 
-            if (x == cardX+1 && y == cardY+1) { //cardx=-1 cardy=-1
+            if (x == cardX+1 && y == cardY+1) {
                 existsTR = true;
                 canTR = !gameZone.get(coordinate).getCorner(2).equals(Resource.HIDDEN) || !gameZone.get(coordinate).getIsFront() ;
-               // System.out.println("1 "+canTR+" "+existsTR);
-            } else if (x == cardX+1 && y == cardY-1) { //cardx=-1 cardy=+1
+
+            } else if (x == cardX+1 && y == cardY-1) {
                 existsBR = true;
                 canBR  =!gameZone.get(coordinate).getCorner(0).equals(Resource.HIDDEN)|| !gameZone.get(coordinate).getIsFront();
-             //   System.out.println("2 "+canBR+" "+existsBR);
-            } else if (x == cardX-1 && y == cardY+1) { //cardx=1 cardy=-1
+
+            } else if (x == cardX-1 && y == cardY+1) {
                 existsTL = true;
                 canTL  =!gameZone.get(coordinate).getCorner(3).equals(Resource.HIDDEN)|| !gameZone.get(coordinate).getIsFront();
-               // System.out.println("3 "+canTL+" "+existsTL);
-            } else if (x == cardX-1 && y == cardY-1) { //cardx=1 cardy=1
+            } else if (x == cardX-1 && y == cardY-1) {
                 existsBL = true;
                 canBL  =!gameZone.get(coordinate).getCorner(1).equals(Resource.HIDDEN)|| !gameZone.get(coordinate).getIsFront();
-                //System.out.println("4 "+canBL+" "+existsBL);
             }
         }
 
@@ -474,14 +479,6 @@ public class PlayerField implements Serializable {
         return resourceMap.get(which);
     }
 
-    /**
-     * resource from resource map setter
-     * @param which resource to set
-     * @param how to set it
-     */
-    public void setResource(Resource which, int how) {
-        resourceMap.put(which, how);
-    }
 
     /**
      * given a card returns its coordinates if present in the map (1to1 mapping)
@@ -543,17 +540,6 @@ public class PlayerField implements Serializable {
     public GameCard getUp(GameCard currentGameCard) {
         Coordinates currentCoordinates=getCoordinates(currentGameCard);
         Coordinates Coordinates=new Coordinates(currentCoordinates.getX(),currentCoordinates.getY()+2);
-        return getGameCardByEqualCoordinate(Coordinates);
-    }
-
-    /**
-     * Given a gamecard returns the closest card down
-     * @param currentGameCard
-     * @return null if not present or the gamecard if present
-     */
-    public GameCard getDown(GameCard currentGameCard) {
-        Coordinates currentCoordinates=getCoordinates(currentGameCard);
-        Coordinates Coordinates=new Coordinates(currentCoordinates.getX(),currentCoordinates.getY()-2);
         return getGameCardByEqualCoordinate(Coordinates);
     }
 
