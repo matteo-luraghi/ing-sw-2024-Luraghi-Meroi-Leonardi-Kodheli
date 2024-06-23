@@ -16,7 +16,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
- * View interface, will be implemented for GUI and CLI
+ * View interface, will be implemented by GUI and CLI
  * @author Lorenzo Meroi
  */
 public interface View extends Remote {
@@ -111,17 +111,11 @@ public interface View extends Remote {
     void ShowScoreBoard(ScoreBoard scoreBoard) throws RemoteException;
 
     /**
-     * shows who has won the game
+     * shows who won the game
      * @param game we are referring to
      * @throws RemoteException to handle exceptions that may occur when using RMI
      */
     void ShowWinner(GameState game) throws RemoteException;
-
-    /**
-     * shows the end of game text
-     * @throws RemoteException to handle exceptions that may occur when using RMI
-     */
-    void ShowEndOfGame() throws RemoteException;
 
     /**
      * sets the game chat

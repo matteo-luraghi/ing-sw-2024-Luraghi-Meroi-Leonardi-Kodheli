@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view.mainview;
 
 /**
- * Ansi Colors class
+ * Ansi Colors class to make the text colored in CLI
  * @author Lorenzo Meroi
  */
 public class AnsiColors {

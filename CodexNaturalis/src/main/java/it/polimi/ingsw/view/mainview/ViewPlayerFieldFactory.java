@@ -43,16 +43,4 @@ public abstract class ViewPlayerFieldFactory implements Serializable {
         this.playerField = playerField;
         this.player = player;
     }
-
-    /**
-     * gameCardViewer setter
-     * @param gameCardViewer to show cards
-     */
-    public void setGameCardViewer (ViewGameCardFactory gameCardViewer) {this.gameCardViewer = gameCardViewer;}
-
-    /**
-     * goalCardViewer setter
-     * @param goalCardViewer to show cards
-     */
-    public void setGoalCardViewer (ViewGoalCardFactory goalCardViewer) {this.goalCardViewer = goalCardViewer;}
 }

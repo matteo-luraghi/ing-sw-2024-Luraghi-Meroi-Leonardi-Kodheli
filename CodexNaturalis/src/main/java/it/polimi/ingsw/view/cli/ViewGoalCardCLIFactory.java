@@ -224,7 +224,7 @@ public class ViewGoalCardCLIFactory extends ViewGoalCardFactory {
     }
 
     /**
-     * method to print a signle goal card
+     * method to print a single goal card
      * @param one is the first card
      *
      */

@@ -82,7 +82,7 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
     /**
      * displays a player's game zone
      */
-    public void ShowGameZone() { //for only testing setted to public
+    public void ShowGameZone() { //for only testing set to public
         System.out.println(this.player.toString()+"'s field:");
         System.out.println();
 
@@ -122,20 +122,8 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
             }
         }
 
-        /*for (int i=westernMost-2; i<=easternMost+2; i++) {
-            System.out.print("_");
-        }
-        System.out.println();
-        System.out.print("|");
-        for (int i=westernMost-1; i<=easternMost+1; i++) {
-            System.out.print("         ");
-        }
-        System.out.print("|");
-        System.out.println();*/
-
         int k = 0;
         for (int i=northernMost; i>=southernMost; i--) {
-            //System.out.print("| ");
             for (int j=westernMost; j<=easternMost; j++) {
                 if (k>=sortedCoordinates.size()) {
                     break;
@@ -151,21 +139,9 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
                     System.out.print("         ");
                 }
             }
-            //System.out.print(" |");
             System.out.println();
 
         }
-        /*System.out.print("|");
-        for (int i=westernMost-1; i<=easternMost+1; i++) {
-            System.out.print("         ");
-        }
-        System.out.print("|");
-        System.out.println();
-        System.out.print("|");
-        for (int i=westernMost-1; i<=easternMost+1; i++) {
-            System.out.print("_");
-        }
-        System.out.print("|");*/
 
         System.out.println();
 
@@ -190,7 +166,7 @@ public class ViewPlayerFieldCLIFactory extends ViewPlayerFieldFactory {
         else
             cardString += AnsiColors.ANSI_WHITE;
 
-        cardString = "[";
+        cardString += "[";
 
         if (coor.getX()>=0)
             cardString += "+";

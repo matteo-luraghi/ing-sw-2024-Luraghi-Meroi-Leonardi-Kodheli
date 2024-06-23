@@ -28,11 +28,11 @@ import java.util.Scanner;
 public class CLI implements View {
     private Client client;
     private final Scanner scanner = new Scanner(System.in);
-    private ViewGameCardFactory gameCardViewer = null;
-    private ViewScoreBoardFactory scoreBoardViewer  = null;
-    private ViewPlayerFieldFactory playerFieldViewer  = null;
-    private ViewDeckFactory deckViewer  = null;
-    private ViewGoalCardFactory goalCardViewer = null;
+    private final ViewGameCardFactory gameCardViewer;
+    private final ViewScoreBoardFactory scoreBoardViewer;
+    private final ViewPlayerFieldFactory playerFieldViewer;
+    private final ViewDeckFactory deckViewer;
+    private final ViewGoalCardFactory goalCardViewer;
     private boolean isMyTurn = false;
     private GameState game = null;
     private Player user = null;
@@ -40,7 +40,6 @@ public class CLI implements View {
     private boolean connected = true;
     private String gameName;
     private ArrayList<String> gameList;
-
     private GameChat gameChat;
 
     /**
@@ -66,10 +65,9 @@ public class CLI implements View {
         this.gameChat = new GameChat();
 
         boolean connected = false;
-        String ip = null;
-        int port = 0;
+        String ip;
+        int port;
         Client client = null;
-        String nickname = null;
 
         do {
             //make the client connect to the server through an IP and port given by the user
@@ -164,6 +162,10 @@ public class CLI implements View {
         System.out.println(s);
     }
 
+    /**
+     * method to let the client join or create a new game
+     * @param gameNames is the list of all the available games
+     */
     @Override
     public void showJoinOrCreate(ArrayList<String> gameNames) {
         gameList = gameNames;
@@ -258,13 +260,14 @@ public class CLI implements View {
             } while (!correctInput);
         }
 
-        this.gameName = gameName;
         insertNickname(isJoin, gameName);
     }
 
 
     /**
-     * method to make the player insert its nickname
+     * method to make the client insert a unique nickname
+     * @param isJoin states whether he is joining or creating a game
+     * @param gameName is the name of the game he wants to create or join
      */
     @Override
     public void insertNickname(boolean isJoin, String gameName) {
@@ -307,9 +310,9 @@ public class CLI implements View {
                 case ("BLUE") -> {if (colors.contains(Color.BLUE)) {color = Color.BLUE; correct = true;}}
                 case ("YELLOW") -> {if (colors.contains(Color.YELLOW)) {color = Color.YELLOW; correct = true;}}
                 case ("GREEN") -> {if (colors.contains(Color.GREEN)) {color = Color.GREEN; correct = true;}}
-                default -> {System.out.println(AnsiColors.ANSI_RED+"Incorrect input."+AnsiColors.ANSI_RESET);}
+                default -> System.out.println(AnsiColors.ANSI_RED+"Incorrect input."+AnsiColors.ANSI_RESET);
             }
-        };
+        }
 
         client.colorResponse(color);
     }
@@ -319,7 +322,7 @@ public class CLI implements View {
      */
     @Override
     public void askForPlayersNumber() {
-        int number = -1;
+        int number;
         do {
             System.out.println("How many player will play the game? (2-4)");
             String numberStr = scanner.nextLine();
@@ -347,7 +350,7 @@ public class CLI implements View {
     /**
      * method to show the private goal of a specific player
      * @param player of which to display the goal
-     * @param game in which the player is partecipating
+     * @param game in which the player is participating
      */
     @Override
     public void ShowPrivateGoal(Player player, GameState game) {
@@ -392,7 +395,7 @@ public class CLI implements View {
     }
 
     /**
-     * method to show a gamecard
+     * method to show a game card
      * @param card to be displayed
      */
     public void ShowCard(GameCard card) {
@@ -414,7 +417,7 @@ public class CLI implements View {
         this.goalCardViewer.SetCard(goalCards[1]);
         this.goalCardViewer.Show();
 
-        boolean correctInput = false;
+        boolean correctInput;
         int result = 1;
         do {
             System.out.println("Select a card:\n1|2");
@@ -434,7 +437,7 @@ public class CLI implements View {
 
         if (result == 1) {
             client.goalCardResponse(goalCards[0]);
-        } else if (result == 2) {
+        } else {
             client.goalCardResponse(goalCards[1]);
         }
 
@@ -442,7 +445,7 @@ public class CLI implements View {
 
     /**
      * displays the player field of a specific player
-     * @param playerToSee specifies which playerfield has to be displayed
+     * @param playerToSee specifies which player-field has to be displayed
      * @param playerAsking tells which player is asking to see it
      * @param game we are referring to
      */
@@ -486,21 +489,13 @@ public class CLI implements View {
     }
 
     /**
-     * shows who has won the game
+     * shows who won the game
      * @param game we are referring to
      */
     @Override
     public void ShowWinner(GameState game) {
         ClearScreen();
         System.out.println(game.getWinner().toString() + "has won!");
-    }
-
-    /**
-     * shows the end of game text
-     */
-    @Override
-    public void ShowEndOfGame() {
-        System.out.println("The game has ended...");
     }
 
     public void WelcomeMessage() {
@@ -537,28 +532,12 @@ public class CLI implements View {
     }
 
     /**
-     * isMyTurn getter
-     * @return whether it is my turn or not
-     */
-    public boolean getIsMyTurn() {
-        return isMyTurn;
-    }
-
-    /**
      * playPhase setter
      * @param playPhase tells whether it's the client's turn or not
      */
     @Override
     public void setPlayPhase (boolean playPhase) {
         this.playPhase = playPhase;
-    }
-
-    /**
-     * playPhase getter
-     * @return whether it is the playing phase or not
-     */
-    public boolean getPlayPhase() {
-        return this.playPhase;
     }
 
     /**
@@ -580,7 +559,7 @@ public class CLI implements View {
 
     /**
      * game setter
-     * @param game the game we need to set!
+     * @param game the game we need to set
      */
     @Override
     public void setGame (GameState game) {
@@ -595,7 +574,6 @@ public class CLI implements View {
 
     /**
      * Update the list of names of available games
-     *
      * @param gameNames the names
      */
     @Override
@@ -625,7 +603,7 @@ public class CLI implements View {
      */
     @Override
     public void getCommands() {
-        String command = "";
+        String command;
         Player lastPlayerField = null;
 
         //while statement to continuously check for the user's commands
@@ -635,10 +613,10 @@ public class CLI implements View {
             command = this.scanner.nextLine();
 
             switch (command.toLowerCase()) {
-                case "show my goal card" -> {ShowPrivateGoal(user, game);}
-                case "show field" -> {lastPlayerField = commandShowPlayerField(game, user);}
-                case "show decks" -> {ShowDecks(game);}
-                case "show scoreboard" -> {ShowScoreBoard(game.getGameTable().getScoreBoard());}
+                case "show my goal card" -> ShowPrivateGoal(user, game);
+                case "show field" -> lastPlayerField = commandShowPlayerField(game, user);
+                case "show decks" -> ShowDecks(game);
+                case "show scoreboard" -> ShowScoreBoard(game.getGameTable().getScoreBoard());
                 case "show card" -> {
                     if ((lastPlayerField == null)) {
                         commandShowCard(game, user, user);
@@ -646,10 +624,10 @@ public class CLI implements View {
                         commandShowCard(game, user, lastPlayerField);
                     }
                 }
-                case "show chat" -> {showChat();}
-                case "show legend" -> {showLegend();}
+                case "show chat" -> showChat();
+                case "show legend" -> showLegend();
                 case "play card" -> {
-                    //command available only if it's the client's turn and it's the playphase
+                    //command available only if it's the client's turn, and it's the play phase
                     if (isMyTurn && playPhase) {
                         ShowPlayerField(user, user, game);
 
@@ -693,7 +671,7 @@ public class CLI implements View {
                     }
                 }
                 case "draw card" -> {
-                    //command available only if it's the user's turn and it's the drawphase
+                    //command available only if it's the user's turn and it's the draw-phase
                     if (isMyTurn && !playPhase) {
                         boolean correctInput = false;
                         ShowDecks(game);
@@ -712,15 +690,9 @@ public class CLI implements View {
                                     if (where.equalsIgnoreCase("deck") || where.equalsIgnoreCase("u1") || where.equalsIgnoreCase("u2")) {
                                         int which = 0;
                                         switch (where) {
-                                            case "deck" -> {
-                                                which = 0;
-                                            }
-                                            case "u1" -> {
-                                                which = 1;
-                                            }
-                                            case "u2" -> {
-                                                which = 2;
-                                            }
+                                            case "deck" -> which = 0;
+                                            case "u1" -> which = 1;
+                                            case "u2" -> which = 2;
                                         }
                                         correctInput = true;
                                         //everything's fine, sending the message to the server
@@ -742,8 +714,8 @@ public class CLI implements View {
                             System.out.println(AnsiColors.ANSI_RED + "You need to play a card before drawing. Try the command 'play card'"  + AnsiColors.ANSI_RESET);
                     }
                 }
-                case "help" -> {ShowCommands();}
-                default -> {System.out.println(AnsiColors.ANSI_RED + "Not a valid command, type 'help' to show all the commands available."  + AnsiColors.ANSI_RESET);}
+                case "help" -> ShowCommands();
+                default -> System.out.println(AnsiColors.ANSI_RED + "Not a valid command, type 'help' to show all the commands available."  + AnsiColors.ANSI_RESET);
             }
         }
     }
@@ -760,6 +732,7 @@ public class CLI implements View {
         System.out.println(AnsiColors.ANSI_GREEN + "show scoreboard   ->" + AnsiColors.ANSI_RESET + " displays the game's scoreboard");
         System.out.println(AnsiColors.ANSI_GREEN + "show card         ->" + AnsiColors.ANSI_RESET + " displays a specific card");
         System.out.println(AnsiColors.ANSI_GREEN + "show legend       ->" + AnsiColors.ANSI_RESET + " displays the game's legend");
+        System.out.println(AnsiColors.ANSI_GREEN + "show chat       ->" + AnsiColors.ANSI_RESET + " enters chat mode");
         if (isMyTurn) {
             if (playPhase) {
                 System.out.println(AnsiColors.ANSI_GREEN + "play card         ->" + AnsiColors.ANSI_RESET + " allows you to play a card from your hand onto your field");
@@ -810,13 +783,13 @@ public class CLI implements View {
      * method to handle the show field command
      * @param game we are referring to
      * @param asking is the player entering the command
-     * @return the reference to the playerfield printed
+     * @return the reference to the player-field printed
      */
     private Player commandShowPlayerField(GameState game, Player asking) {
         Player lastPlayerField;
         boolean correctInput = false;
         Player player = null;
-        //do-while statement to check the user's input and to make him choose the playerfield to see
+        //do-while statement to check the user's input and to make him choose the player-field to see
         do {
             System.out.println("Which player do you want to see the field of?");
             for (Player p : game.getPlayers()) {
@@ -847,7 +820,7 @@ public class CLI implements View {
      */
     private void commandShowCard(GameState game, Player asking, Player lastPlayerField) {
         if (lastPlayerField == null) {
-            //the user has not yet seen a playerfield, making him choose one before chooseing the card
+            //the user has not yet seen a player-field, making him choose one before choosing the card
             boolean correctInput = false;
             do {
                 System.out.println("Enter the player you want to see the card of:");
@@ -876,7 +849,7 @@ public class CLI implements View {
         Coordinates where = getCardCoordinatesFromInput();
 
         GameCard card = null;
-        //for statement to find the card inside the gamezone
+        //for statement to find the card inside the game zone
         for (Coordinates c : game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().keySet()) {
             if (c.getX()== where.getX() && c.getY()== where.getY()) {
                 card = game.getGameTable().getPlayerZones().get(lastPlayerField).getGameZone().get(c);
@@ -909,7 +882,7 @@ public class CLI implements View {
      * @return a new coordinates object
      */
     private Coordinates getCardCoordinatesFromInput () {
-        boolean correctInput = false;
+        boolean correctInput;
         int x = 0;
         int y = 0;
         //do-while statement to check the user's input and to make him choose the X coordinate
@@ -924,7 +897,6 @@ public class CLI implements View {
                 System.out.println(AnsiColors.ANSI_RED+"Invalid input. Enter a number."+AnsiColors.ANSI_RESET);
             }
         } while (!correctInput);
-        correctInput = false;
         //do-while statement to check the user's input and to make him choose the Y coordinate
         do {
             System.out.println("Insert y coordinate:");
@@ -946,7 +918,7 @@ public class CLI implements View {
     private void showChat () {
         int messagePage = 0;
         ArrayList<Message> myChat = this.gameChat.messagesToShow(messagePage);
-        String command = null;
+        String command;
         boolean exitChat = false;
 
         printChat(messagePage, myChat);
@@ -958,7 +930,7 @@ public class CLI implements View {
             ClearScreen();
 
             switch (command.toLowerCase()) {
-                case "exit" -> {exitChat = true;}
+                case "exit" -> exitChat = true;
                 case "newer" -> {
                     if (messagePage == 0) {
                         System.out.println(AnsiColors.ANSI_RED+"You are already seeing the newest messages."+AnsiColors.ANSI_RESET);
@@ -983,7 +955,7 @@ public class CLI implements View {
                 }
                 case "write" -> {
                     boolean correctInput = false;
-                    String recipient = null;
+                    String recipient;
 
                     do {
                         System.out.println("Who is the recipient?");
@@ -1042,7 +1014,7 @@ public class CLI implements View {
                     myChat = this.gameChat.messagesToShow(messagePage);
                     printChat(messagePage, myChat);
                 }
-                default -> {System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." + AnsiColors.ANSI_RESET);}
+                default -> System.out.println(AnsiColors.ANSI_RED + "Invalid input. Try again." + AnsiColors.ANSI_RESET);
             }
         }
     }
@@ -1053,7 +1025,7 @@ public class CLI implements View {
      * @param myChat the game's chat
      */
     private void printChat(int messagePage, ArrayList<Message> myChat) {
-        System.out.println(user.toString()+"'s gamechat. Page:" + messagePage);
+        System.out.println(user.toString()+"'s game chat. Page:" + messagePage);
         System.out.println();
         for (Message m : myChat) {
             System.out.println("- " + m.toString());
