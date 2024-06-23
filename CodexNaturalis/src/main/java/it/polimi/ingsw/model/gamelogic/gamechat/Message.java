@@ -105,6 +105,10 @@ public class Message implements Serializable {
         return result;
     }
 
+    /**
+     * toString method for GUI purpose
+     * @return STRING format of the message
+     */
     public String toStringGUI () {
         String result = "";
 
