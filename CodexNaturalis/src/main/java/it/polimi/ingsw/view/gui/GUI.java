@@ -19,6 +19,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -76,6 +77,7 @@ public class GUI extends Application implements View{
         Scene scene = new Scene(fxmlLoader.load(), 600, 500);
         stage.setTitle(sceneName.split("\\.")[0]);
         stage.setScene(scene);
+        stage.getIcons().add(new Image(GUI.class.getResourceAsStream("assets/GUIGraphics/codexNaturalisTransparent.png")));
         stage.show();
 
         currentEventHandler = fxmlLoader.getController();
@@ -104,6 +106,7 @@ public class GUI extends Application implements View{
                     Platform.exit();
                     isDisconnecting = true;
                 });
+                stage.getIcons().add(new Image(GUI.class.getResourceAsStream("assets/GUIGraphics/codexNaturalisTransparent.png")));
                 stage.show();
             } catch (IOException ignored){
             }
