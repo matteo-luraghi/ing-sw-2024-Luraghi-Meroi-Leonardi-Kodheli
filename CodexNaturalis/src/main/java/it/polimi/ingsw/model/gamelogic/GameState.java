@@ -50,36 +50,6 @@ public class GameState implements Serializable {
     }
 
     /**
-     * get a message by Index
-     * @param index index of the wanted message
-     * @return Message if the index is in bounds
-     * @throws IndexOutOfBoundsException when index out of bounds
-     */
-    public Message getMessageByIndex(int index) throws IndexOutOfBoundsException
-    {
-        if(index<0 || index>=gameChat.getMessages().size())
-            throw new IndexOutOfBoundsException();
-        return gameChat.getMessages().get(index);
-    }
-
-    /**
-     * gets the messages of gamechat
-     * @return Arraylist of message
-     */
-    public ArrayList<Message> getMessages()
-    {
-        return  gameChat.getMessages();
-    }
-    /**
-     * lastMessage getter
-     * @return Message
-     */
-    public Message getLastMessage()
-    {
-        return gameChat.getLastMessage();
-    }
-
-    /**
      * save message method for gamechat
      * @param message the new message
      */
@@ -157,10 +127,7 @@ public class GameState implements Serializable {
     {
         int i= this.players.indexOf(this.turn);
         i++;
-        if(i==this.players.size())
-        {
-            i=0;
-        }
+        i=i%this.players.size();
         this.turn=this.players.get(i);
     }
 
@@ -175,26 +142,27 @@ public class GameState implements Serializable {
 
     /**
      * Compute the winner by getting the scoreboard
-     * @return
+     *
      */
-    private Player ComputeWinner()
+    private void ComputeWinner()
     {
-        int points=0;
-        int goalCount=0;
-        Player CurrWinner = null;
+        int points=-1;
+        int goalCount=-1;
+        Player currWinner = null;
         for(Player player: this.players)
         {
+            //for each player find the corresponding max points and in case of equality choose the one with more achieved points
             if(gameTable.getScoreBoard().getPoints(player)>points || (gameTable.getScoreBoard().getPoints(player)==points && gameTable.getScoreBoard().GetReachedPointsCount(player)>goalCount))
             {
                 points=gameTable.getScoreBoard().getPoints(player);
                 goalCount=gameTable.getScoreBoard().GetReachedPointsCount(player);
-                CurrWinner=player;
+                currWinner=player;
             }
 
 
         }
 
-        return CurrWinner;
+        winner=currWinner;
     }
 
 /**
@@ -203,5 +171,9 @@ public class GameState implements Serializable {
  */
     public Player getWinner()   {
 
-        return ComputeWinner(); }
+        if(winner==null)
+            ComputeWinner();//no need to recall this method more than one time for the same game
+        return winner;
+
+    }
 }
