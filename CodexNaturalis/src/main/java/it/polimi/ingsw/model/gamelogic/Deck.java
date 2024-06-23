@@ -136,6 +136,7 @@ public class Deck implements Serializable {
     /**
      * Draw from the deck function accessible from the outside
      * @return ResourceCard chosen
+     * @throws NullPointerException when the cards queue is empty
      */
     public ResourceCard DrawFromDeck() throws NullPointerException{
         if(cards.isEmpty()){
@@ -148,6 +149,7 @@ public class Deck implements Serializable {
      * Draw from the deck function accessible from the outside
      * @param which (should only be 0 or 1) indicating the index of the UncoveredResourceCard to draw
      * @return ResourceCard chosen
+     * @throws NullPointerException when which is not 0 nor 1
      */
     public ResourceCard DrawFromUncovered(int which) throws NullPointerException{
         if(which != 0 && which != 1){
@@ -167,7 +169,7 @@ public class Deck implements Serializable {
     /**
      * UncoveredCards setter, it is taken from the deck
      * @param which can be 1(first uncovered card) or 2(second uncovered card)
-     * @throws IndexOutOfBoundsException if "which" not equal to 1 and 2
+     * @throws IndexOutOfBoundsException if "which" is not 1 nor 2
      */
     public void setUncoveredCard (int which) throws NullPointerException{
         if(which!= 1 && which!=2)
