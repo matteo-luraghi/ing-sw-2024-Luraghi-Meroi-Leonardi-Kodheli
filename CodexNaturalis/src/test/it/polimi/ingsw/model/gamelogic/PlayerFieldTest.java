@@ -61,7 +61,20 @@ public class PlayerFieldTest {
     }
 
 
-
+    /**
+     * Given an GameCard returns the first index that is not BLANK or COVERED
+     * @param card GameCard
+     * @return first index that is not blank, if not found -1
+     */
+    static private int getFirstNotHiddenIndex(GameCard card)
+    {
+        for(int i=0; i<4;  i++)
+        {
+            if(card.getCorner(i)!= Resource.HIDDEN && card.getCorner(i)!=Resource.COVERED)
+                return i;
+        }
+        return -1;
+    }
     /**
      * testing that Playability is correct for any card
      * @result if a base corner is hidden the card cannot be played
@@ -76,46 +89,37 @@ public class PlayerFieldTest {
 
 
         Coordinates coordinates;
-int n=0;
+        int n=0;
         //4 cases
         while(true) {
-            System.out.println(card.getCorner(0)+" "+card.getCorner(1)+" "+card.getCorner(2)+" "+card.getCorner(3));
             coordinates = new Coordinates(1, -1); //i=0 j=3
             if (startingCard.getCorner(3)==Resource.HIDDEN ) {
                 assertFalse(playerField.IsPlayable(coordinates, card));
-                System.out.println("Not Playable!");
             }
             else {
                 assertTrue(playerField.IsPlayable(coordinates, card));
-                System.out.println("Playable!");
             }
             coordinates = new Coordinates(1, 1);// i=1 j=2
             if (startingCard.getCorner(1)==Resource.HIDDEN ) {
                 assertFalse(playerField.IsPlayable(coordinates,  card));
-                System.out.println("Not Playable!");
             }
             else {
                 assertTrue(playerField.IsPlayable(coordinates, card));
-                System.out.println("Playable!");
             }
             coordinates = new Coordinates(-1, -1);// i=2 j=1
             if (startingCard.getCorner(2)==Resource.HIDDEN) {
 
                 assertFalse(playerField.IsPlayable(coordinates,card));
-                System.out.println("Not Playable!");
             }
             else {
                 assertTrue(playerField.IsPlayable(coordinates, card));
-                System.out.println("Playable!");
             }
             coordinates = new Coordinates(-1, 1);// i=3 j=0
             if (startingCard.getCorner(0)==Resource.HIDDEN) {
                 assertFalse(playerField.IsPlayable(coordinates, card));
-                System.out.println("Not Playable!");
             }
             else {
                 assertTrue(playerField.IsPlayable(coordinates,card));
-                System.out.println("Playable!");
             }
             playerField.draw(resDeck,1);
             n++;
@@ -132,20 +136,23 @@ int n=0;
     /**
      * Casually trying to place all cards in the deck, asserting that checks are correct and congruent with Play output.
      * @result If playability condition are met cards are played otherwise not
+     * note: Better implementation of this method in the GameTableTest class with the simulate Play
      */
     @Test
-    public void Playtest()
+    public void playTest()
     {
 
 
 
-    //indexing ->   0: y=y+1 x=x-1    --     1:y=y+1 x=x+1   --    2:y=y-1 x=x-1  --    3:y=y-1 x=x+1  -1: can't place anything on that card
-        Coordinates coordinates=new Coordinates(0,0);
 
-        GameCard card=startingCard;
-int tries=0;
+        Coordinates coordinates;
+
+        GameCard card;
 
         while(true) {
+            /**
+             * try to draw from the resDeck, further testing with also the gold test is made in the GameTable test
+             */
             boolean found=false;
             try {
 
@@ -161,8 +168,8 @@ int tries=0;
             for (Coordinates coordinate : playerField.getGameZone().keySet()) {
 
                 card=playerField.getGameZone().get(coordinate);
-
-                switch (Util.getFirstNotHiddenIndex(card)) {
+//indexing ->   0: y=y+1 x=x-1    --     1:y=y+1 x=x+1   --    2:y=y-1 x=x-1  --    3:y=y-1 x=x+1  -1: can't place anything on that card
+                switch (getFirstNotHiddenIndex(card)) {
                     case 0: {
 
                         coordinates = new Coordinates(Util.getKeyByValue(playerField.getGameZone(), card).getX() - 1, Util.getKeyByValue(playerField.getGameZone(), card).getY() + 1);
@@ -193,19 +200,17 @@ int tries=0;
 
                     }
                 }
-                ResourceCard playcard=playerField.getHand().getFirst();
-                if (playerField.IsPlayable(coordinates, (ResourceCard) playcard)) {
+                ResourceCard playCard=playerField.getHand().getFirst();
+                if (playerField.IsPlayable(coordinates, (ResourceCard) playCard)) {
 
-                    assertEquals( ((ResourceCard) playcard).getPoints(), playerField.Play(coordinates, (ResourceCard)playcard));
-                   // System.out.println("placed!");
+                    assertEquals( ((ResourceCard) playCard).getPoints(), playerField.Play(coordinates, (ResourceCard)playCard));
 
                     found=true;
                     break;
 
                 } else {
 
-                    assertEquals(-1, playerField.Play(coordinates, (ResourceCard)playcard));
-                   // System.out.println("Can't be placed!"); //this should not be executed
+                    assertEquals(-1, playerField.Play(coordinates, (ResourceCard)playCard));
 
 
                 }
