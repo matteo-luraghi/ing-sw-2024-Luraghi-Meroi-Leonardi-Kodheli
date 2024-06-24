@@ -88,4 +88,7 @@ fabric.properties
 
 target/*
 
+mvnw
+mvnw.cmd
+
 assets
