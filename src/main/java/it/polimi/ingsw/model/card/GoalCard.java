@@ -18,6 +18,7 @@ abstract public class GoalCard implements Serializable {
      * Constructor
      * @param Points points given when the requirements are satisfied
      * @param IsResourceGoal type of GoalCard
+     * @param id the card's id
      */
     public GoalCard(int Points, boolean IsResourceGoal, int id) {
         this.points = Points;

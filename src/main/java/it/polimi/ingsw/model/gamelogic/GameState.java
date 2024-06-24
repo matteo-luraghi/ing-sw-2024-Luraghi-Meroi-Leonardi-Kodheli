@@ -92,7 +92,7 @@ public class GameState implements Serializable {
 
     /**
      * Players getter
-     * @return ArrayList<Player>
+     * @return the list of players
      */
     public ArrayList<Player> getPlayers() {
         return (ArrayList<Player>) this.players.clone();

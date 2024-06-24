@@ -16,6 +16,7 @@ public class ResourceGoalCard extends GoalCard{
      * ResourceGoalCard constructor
      * @param Points given when the card is satisfied
      * @param requirements ArrayList of the Resources required to satisfy the goal
+     * @param id the card's id
      * IsResourceGoal is always true for this class
      */
     public ResourceGoalCard (int Points, ArrayList<Resource> requirements, int id) {

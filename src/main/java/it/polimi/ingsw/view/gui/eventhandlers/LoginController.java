@@ -65,7 +65,7 @@ public class LoginController extends EventHandler{
      * Function that gets called when you click the correlated button
      * Checks input data and tries to insert the client into the chosen game with the chosen nickname
      */
-    public void loginPlayer(MouseEvent mouseEvent) {
+    public void loginPlayer() {
 
         String user = username.getText();
         if(user == null || user.isEmpty()){

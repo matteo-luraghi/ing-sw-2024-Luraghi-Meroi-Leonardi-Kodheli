@@ -243,11 +243,10 @@ public class SocketConnectionHandler extends ConnectionHandler implements Runnab
 
     /**
      * Ask the player to draw a card using a DrawCardRequest server message
-     * @param player the player
      */
     @Override
-    public void drawCardRequest(Player player) {
-        sendMessageClient(new DrawCardRequest(player));
+    public void drawCardRequest() {
+        sendMessageClient(new DrawCardRequest());
     }
 
     /**

@@ -25,6 +25,7 @@ public class Message implements Serializable {
      * Default constructor for message, date is initialized with the class
      * @param message String message
      * @param author Author of the message
+     * @param recipient Recipient of the message
      */
     public Message(String message, Player author, String recipient)
     {
@@ -87,7 +88,7 @@ public class Message implements Serializable {
 
     /**
      * method to print the message
-     * @return
+     * @return the message
      */
     public String toString () {
         String result = "";

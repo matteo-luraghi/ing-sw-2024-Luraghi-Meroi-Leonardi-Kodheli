@@ -341,6 +341,10 @@ public class PlayerFieldController extends EventHandler{
         addChatMessage(gameChat.getLastMessage().toStringGUI());
     }
 
+    /**
+     * Save the message in the chat
+     * @param text the message
+     */
     public void addChatMessage(String text){
         listOfMessages.getItems().add(text);
         int index = listOfMessages.getItems().size()-1;

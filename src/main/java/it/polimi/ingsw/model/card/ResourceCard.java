@@ -18,6 +18,7 @@ public class ResourceCard extends GameCard{
      * @param corners content of the front corners of the card
      * @param points points assigned when the card is played
      * @param isGold true if the card is gold
+     * @param id the card's id
      */
     public ResourceCard(Kingdom kingdom, boolean isFront, Resource[] corners, int points, boolean isGold, int id) {
         super(kingdom, isFront, corners, id);

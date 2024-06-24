@@ -21,6 +21,7 @@ abstract public class GameCard implements Serializable {
      * @param kingdom type of the card
      * @param isFront which side of the card is currently visible
      * @param corners content of the front corners of the card
+     * @param id card's id
      */
     public GameCard(Kingdom kingdom, boolean isFront, Resource[] corners, int id) {
         this.kingdom = kingdom;

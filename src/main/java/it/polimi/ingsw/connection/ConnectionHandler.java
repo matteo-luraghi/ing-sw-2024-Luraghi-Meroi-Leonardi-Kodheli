@@ -150,9 +150,8 @@ public abstract class ConnectionHandler implements Serializable {
 
     /**
      * Ask the player to draw a card
-     * @param player the player
      */
-    public void drawCardRequest(Player player) {}
+    public void drawCardRequest() {}
 
     /**
      * Show the winner

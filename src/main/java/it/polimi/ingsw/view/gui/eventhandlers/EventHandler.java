@@ -46,6 +46,7 @@ public abstract class EventHandler {
     }
     /**
      * Shows an information popup
+     * @param text the message to show
      */
     public void showPopup(String text){
         alert = new Alert(Alert.AlertType.INFORMATION);

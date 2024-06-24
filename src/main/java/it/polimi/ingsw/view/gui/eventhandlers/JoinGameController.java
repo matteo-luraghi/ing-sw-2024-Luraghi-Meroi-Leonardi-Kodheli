@@ -1,13 +1,10 @@
 package it.polimi.ingsw.view.gui.eventhandlers;
 
-import it.polimi.ingsw.view.gui.GUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 

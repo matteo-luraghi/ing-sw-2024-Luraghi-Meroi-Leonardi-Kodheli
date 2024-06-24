@@ -457,7 +457,7 @@ public class Controller implements RemoteController {
         Player currentPlayer = game.getTurn();
         ConnectionHandler c = getHandlerByNickname(currentPlayer.getNickname());
         game.setTurnState(TurnState.DRAW);
-        c.drawCardRequest(currentPlayer);
+        c.drawCardRequest();
     }
 
     /**

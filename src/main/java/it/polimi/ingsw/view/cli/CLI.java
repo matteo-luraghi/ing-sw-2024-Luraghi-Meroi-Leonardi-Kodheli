@@ -480,6 +480,7 @@ public class CLI implements View {
 
     /**
      * displays the scoreboard
+     * @param scoreBoard the scoreboard to be displayed
      */
     @Override
     public void ShowScoreBoard(ScoreBoard scoreBoard) {
@@ -498,6 +499,9 @@ public class CLI implements View {
         System.out.println(game.getWinner().toString() + "has won!");
     }
 
+    /**
+     * shows the welcome message
+     */
     public void WelcomeMessage() {
         System.out.println("WELCOME TO:");
         System.out.println("\n" +

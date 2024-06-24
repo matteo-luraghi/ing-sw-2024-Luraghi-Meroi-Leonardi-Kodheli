@@ -21,6 +21,7 @@ public class GoldCard extends ResourceCard{
      * @param points points assigned when the card is played
      * @param pointCondition condition to get the points when the card is played
      * @param playableCondition necessary condition to play the card
+     * @param id the card's id
      */
     public GoldCard(Kingdom kingdom, boolean isFront, Resource[] corners, int points,
                     PointCondition pointCondition, ArrayList<Resource> playableCondition, int id) {

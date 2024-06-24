@@ -370,7 +370,7 @@ public class GameTable implements Serializable {
     /**
      * CountGoalPoints counts the goal points of a player given the PlayerField
      * note: this method is actually analog to the countCommonGoalPoints one, but for has been separated for clarity purpose
-     * @param Player
+     * @param Player the player involved in the counting
      * @return  the counted Goal Points
      */
     public int countGoalPoints(PlayerField Player) {

@@ -18,7 +18,7 @@ public class ScoreBoard implements Serializable {
 
     /**
      * ScoreBoard constructor
-     * @param Players is ArrayList of all the Player in playing a game, Players.length>=2 && Players.length<=4
+     * @param Players is ArrayList of all the Player in playing a game, Players.length gte 2 and Players.length lte 4
      */
     public ScoreBoard (ArrayList<Player> Players) {
         board = new HashMap<>();

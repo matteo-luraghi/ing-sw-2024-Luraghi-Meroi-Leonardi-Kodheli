@@ -1,8 +1,5 @@
 package it.polimi.ingsw.connection.socket.message.serverMessage;
 
-import it.polimi.ingsw.model.gamelogic.Player;
-import it.polimi.ingsw.view.cli.CLI;
-import it.polimi.ingsw.view.gui.GUI;
 import it.polimi.ingsw.view.mainview.View;
 
 import java.rmi.RemoteException;
@@ -14,13 +11,11 @@ import java.rmi.RemoteException;
  */
 public class DrawCardRequest extends ServerMessage {
     private static final long serialVersionUID = 4055891453804268070L;
-    private final Player player;
 
     /**
-     * Constructor, sets the message type as PICK_A_CARD
+     * Constructor
      */
-    public DrawCardRequest(Player player) {
-        this.player = player;
+    public DrawCardRequest() {
     }
 
     /**

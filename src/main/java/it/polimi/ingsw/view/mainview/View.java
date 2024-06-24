@@ -43,6 +43,8 @@ public interface View extends Remote {
 
     /**
      * method to make the player insert its nickname
+     * @param isJoin states whether he is joining or creating a game
+     * @param gameName is the name of the game he wants to create or join
      * @throws RemoteException to handle exceptions that may occur when using RMI
      */
     void insertNickname(boolean isJoin, String gameName) throws RemoteException;
@@ -106,6 +108,7 @@ public interface View extends Remote {
 
     /**
      * displays the scoreboard
+     * @param scoreBoard the scoreboard to be displayed
      * @throws RemoteException to handle exceptions that may occur when using RMI
      */
     void ShowScoreBoard(ScoreBoard scoreBoard) throws RemoteException;

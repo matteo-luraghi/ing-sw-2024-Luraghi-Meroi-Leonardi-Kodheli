@@ -1,6 +1,5 @@
 package it.polimi.ingsw.connection.socket.message.serverMessage;
 
-import it.polimi.ingsw.model.gamelogic.Player;
 import it.polimi.ingsw.view.cli.CLI;
 import it.polimi.ingsw.view.mainview.View;
 
@@ -19,6 +18,7 @@ public class NotYourTurn extends ServerMessage {
 
     /**
      * Constructor
+     * @param message the message to be displayed
      */
     public NotYourTurn(String message) {
         this.message = message;

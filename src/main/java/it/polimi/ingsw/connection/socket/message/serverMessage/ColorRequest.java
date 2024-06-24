@@ -17,6 +17,7 @@ public class ColorRequest extends ServerMessage {
 
     /**
      * Constructor
+     * @param colors the available colors to choose from
      */
     public ColorRequest(ArrayList<Color> colors) {
         this.colors = colors;

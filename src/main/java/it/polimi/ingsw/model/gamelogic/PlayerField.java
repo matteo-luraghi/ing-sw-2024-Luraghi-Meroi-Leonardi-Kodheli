@@ -145,7 +145,7 @@ public class PlayerField implements Serializable {
     }
     /**
      * Hand getter
-     * @return ArrayList<ResourceCard>
+     * @return the hand
      */
     public ArrayList<ResourceCard> getHand() {
         return hand;
@@ -482,7 +482,7 @@ public class PlayerField implements Serializable {
 
     /**
      * given a card returns its coordinates if present in the map (1to1 mapping)
-     * @param currentGameCard
+     * @param currentGameCard the card to get coordinates from
      * @return coordinates of the card or null
      */
     public Coordinates getCoordinates(GameCard currentGameCard) {
@@ -491,7 +491,7 @@ public class PlayerField implements Serializable {
 
     /**
      * Given a gamecard returns the closest card down in the right
-     * @param currentGameCard
+     * @param currentGameCard the card in question
      * @return null if not present or the gamecard if present
      */
     public GameCard getDownRight(GameCard currentGameCard) {
@@ -502,7 +502,7 @@ public class PlayerField implements Serializable {
 
     /**
      * Given a gamecard returns the closest card down in the left
-     * @param currentGameCard
+     * @param currentGameCard the card in question
      * @return null if not present or the gamecard if present
      */
     public GameCard getDownLeft(GameCard currentGameCard) {
@@ -513,7 +513,7 @@ public class PlayerField implements Serializable {
 
     /**
      * Given a gamecard returns the closest card up in the right
-     * @param currentGameCard
+     * @param currentGameCard the card in question
      * @return null if not present or the gamecard if present
      */
     public GameCard getUpRight(GameCard currentGameCard) {
@@ -524,7 +524,7 @@ public class PlayerField implements Serializable {
 
     /**
      * Given a gamecard returns the closest card up in the left
-     * @param currentGameCard
+     * @param currentGameCard the card in question
      * @return null if not present or the gamecard if present
      */
     public GameCard getUpLeft(GameCard currentGameCard) {
@@ -534,7 +534,7 @@ public class PlayerField implements Serializable {
     }
     /**
      * Given a gamecard returns the closest card up
-     * @param currentGameCard
+     * @param currentGameCard the card in question
      * @return null if not present or the gamecard if present
      */
     public GameCard getUp(GameCard currentGameCard) {

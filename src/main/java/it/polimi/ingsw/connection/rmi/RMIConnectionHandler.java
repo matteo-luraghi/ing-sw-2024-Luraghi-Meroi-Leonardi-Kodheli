@@ -265,10 +265,9 @@ public class RMIConnectionHandler extends ConnectionHandler {
 
     /**
      * Ask the player to draw a card
-     * @param player the player
      */
     @Override
-    public void drawCardRequest(Player player) {
+    public void drawCardRequest() {
         try {
             this.view.showMessage("You now have to draw a card!");
         } catch (RemoteException e) {

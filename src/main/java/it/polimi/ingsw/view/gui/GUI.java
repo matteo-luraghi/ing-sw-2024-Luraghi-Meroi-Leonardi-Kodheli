@@ -268,6 +268,8 @@ public class GUI extends Application implements View{
 
     /**
      * Method to show the "Login" fxml file
+     * @param isJoin states whether he is joining or creating a game
+     * @param gameName is the name of the game he wants to create or join
      */
     @Override
     public void insertNickname(boolean isJoin, String gameName) {
@@ -405,7 +407,7 @@ public class GUI extends Application implements View{
 
     /**
      * Displays the scoreboard
-     * @param scoreBoard the scoreboard we want to show
+     * @param scoreBoard the scoreboard to be displayed
      */
     @Override
     public void ShowScoreBoard(ScoreBoard scoreBoard) {
@@ -575,6 +577,7 @@ public class GUI extends Application implements View{
      * Method used to play a card from the GUI
      * @param chosenIndex the index of the card in his hand
      * @param coordinates where he wants to play it
+     * @param isFront true if the side is front
      */
     public void playCard(int chosenIndex, Coordinates coordinates, boolean isFront) {
         ResourceCard chosenCard = game.getGameTable().getPlayerZones().get(user).getHand().get(chosenIndex);
