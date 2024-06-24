@@ -1,21 +1,24 @@
-Progetto di ingegneria del software A.A. 2023/2024
+# Progetto di Ingegneria del Software A.A. 2023/2024
 
-Componenti del gruppo:
-  - Matteo Leonardo Luraghi
-  - Lorenzo Meroi
-  - Gabriel Leonardi
-  - Francesk Kodheli
+## Componenti del Gruppo
 
+- 🎓 **Matteo Leonardo Luraghi**
+- 🎓 **Lorenzo Meroi**
+- 🎓 **Gabriel Leonardi**
+- 🎓 **Francesk Kodheli**
 
-Funzionalità implementate:
-  - Regole complete
-  - TUI
-  - GUI
-  - Connessione con RMI
-  - Connessione con Socket
-  - 2 Funzionalità Avanzate
-    - Partite Multiple
-    - Chat
-   
+## Funzionalità Implementate
 
-ISTRUZIONI SU COME ESEGUIRE IL PROGETTO DAI JAR:
+| Funzionalità                      | Implementata |
+|-----------------------------------|--------------|
+| Regole complete                   | ✅           |
+| TUI                               | ✅           |
+| GUI                               | ✅           |
+| Connessione con RMI               | ✅           |
+| Connessione con Socket            | ✅           |
+| Partite Multiple                  | ✅           |
+| Chat                              | ✅           |
+| Persistenza                       | ❌           |
+| Resilienza alle disconnessioni    | ❌           |
+
+# Istruzioni per eseguire i jar
