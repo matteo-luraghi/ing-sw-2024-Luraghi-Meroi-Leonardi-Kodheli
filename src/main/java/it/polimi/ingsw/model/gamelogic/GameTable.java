@@ -112,11 +112,11 @@ public class GameTable implements Serializable {
         boolean nonOverlaping;
         for (ArrayList<GameCard> currentCombo : combos) {
 
-            nonOverlaping=true; /**start with the presumption that's not overlapping*/
+            nonOverlaping=true; /*start with the presumption that's not overlapping*/
             for (GameCard card : combo) {
                 if (currentCombo.contains(card))
                 {
-                    nonOverlaping=false; /**if a "currentCombo" contains the same card as the given "combo" then it won't be added to the nonOverlapping ArrayList*/
+                    nonOverlaping=false; /*if a "currentCombo" contains the same card as the given "combo" then it won't be added to the nonOverlapping ArrayList*/
                     break;
                 }
 
@@ -148,7 +148,7 @@ public class GameTable implements Serializable {
             }
 
         }
-        /**
+        /*
          * reached the final point where nonOverlapping is empty will have in max count the
          * count of all the considered combos, this will be compared with Math.max together
          * with all the other possible non overlapping combinations
@@ -169,13 +169,13 @@ public class GameTable implements Serializable {
 
         int maxCombos = overlappingCombos.isEmpty() ? 0 : 1;
 
-        /**
+        /*
          * this starts the recursive function for each of the combos in
          * the ArrayList
          */
         for (ArrayList<GameCard> combo : overlappingCombos) {
             ArrayList<ArrayList<GameCard>> nonOverlapping = new ArrayList<ArrayList<GameCard>>();
-            /**
+            /*
              * adds in nonOverlapping all the not overlapping (respectively to the given "combo") combos
              * and then start the recursion with the given nonOverlapping ArrayList
              */
@@ -199,21 +199,21 @@ public class GameTable implements Serializable {
 
         for (int i = 0; i < 2; i++) {
             GoalCard commonGoal = getCommonGoal(i);
-            if (commonGoal.isResourceGoal()) { /**case the goal is Resource type */
-                /**
+            if (commonGoal.isResourceGoal()) { /*case the goal is Resource type */
+                /*
                  * briefly checks with the support of the ResourceMap how many times the given goal can be satisfied
                  * with the current PlayerField
                  */
                 ResourceGoalCard ResourceGoal = (ResourceGoalCard) commonGoal;
                 min = Integer.MAX_VALUE;
                 HashMap<Resource, Float> resourcesNeeded = new HashMap<>();
-                /**
+                /*
                  * puts in a Map the needed Resources with their corresponding count
                  */
                 for (Resource resource : ResourceGoal.getRequirements()) {
                     resourcesNeeded.put(resource, resourcesNeeded.getOrDefault(resource, 0f) + 1);
                 }
-                /**
+                /*
                  * calculates the minimum occurrences of all the needed resources
                  */
                 for (Resource resource : resourcesNeeded.keySet()) {
@@ -222,16 +222,16 @@ public class GameTable implements Serializable {
                 }
                 points += commonGoal.getPoints() * min; //points times minimum occurrences of that goal
                 getScoreBoard().addReachedPointsCount(Util.getKeyByValue(getPlayerZones(), playerField), min);
-            } else { /** case the goal is Positional type */
+            } else { /* case the goal is Positional type */
 
 
                 PositionGoalCard positionalGoal = (PositionGoalCard) commonGoal;
                 ArrayList<Direction> Directions = positionalGoal.getPositionsFromBase();
-                /**Will contain all the possibles card
+                /*Will contain all the possibles card
                  combination that respects the goal*/
                 ArrayList<ArrayList<GameCard>> PossibleCombos = new ArrayList<ArrayList<GameCard>>();
 
-               /**For each card in the Game Zone will check if (with the near cards) it satisfies the goal
+               /*For each card in the Game Zone will check if (with the near cards) it satisfies the goal
                 * note: will also consider all the overlapping ones, since the rules indicates that for a single goal
                 *       can consider a card only one time will use a method to get the maximum number of combinations
                 *       that considers all the found cards maximum once
@@ -239,14 +239,14 @@ public class GameTable implements Serializable {
                 for (GameCard currentCard : playerField.getGameZone().values()) {
                     GameCard currentPointer = currentCard;
 
-                    /**
+                    /*
                      * if it's not the same kingdom then we can pass to the next card and discard the current one as base
                      */
                     if (positionalGoal.getResourceFromBase().get(0) != currentCard.getKingdom())
                         continue;
                     ArrayList<GameCard> possibleCards = new ArrayList<>();
                     possibleCards.add(currentCard);
-                    /**
+                    /*
                      * for all the directions in the goal will check if the current combination (with currentCard as base)
                      * can be matched in the Game Zone
                      */
@@ -257,7 +257,7 @@ public class GameTable implements Serializable {
 
                         Kingdom currentResource = positionalGoal.getResourceFromBase().get(j + 1);
 
-                        /**
+                        /*
                          * get respectively to the current pointer (the current card that is satisfying the goal)
                          * the next card in the game zone that matches the goal request
                          */
@@ -275,14 +275,14 @@ public class GameTable implements Serializable {
                             currentPointer = playerField.getUpRight(currentPointer);
                         }
 
-                        /**
+                        /*
                          * if the card is found, and it has the requested kingdom, then it can be added to the
                          * possible Cards for the combination
                          */
                         if (currentPointer == null || currentPointer.getKingdom() != currentResource)
                             break;
                         possibleCards.add(currentPointer);
-                        /**
+                        /*
                          * on the last goal request if it didn't break on any check the possibleCards will be considered
                          * then as a possible Combo, then it can be checked if it overlaps with any other combination
                          */
@@ -296,22 +296,22 @@ public class GameTable implements Serializable {
                 int ChosenCombos = 0;
                 ArrayList<ArrayList<GameCard>> OverLappingCombos = new ArrayList<ArrayList<GameCard>>();
 
-                /**
+                /*
                  * for every found combo checks if any other combo is overlapping with it
                  */
                 for (ArrayList<GameCard> combo : PossibleCombos) {
-                    /**
+                    /*
                      * for each card checks all the combos, could also do the other way, but preferred as this
                      */
                     for (GameCard card : combo) {
 
                         for (ArrayList<GameCard> combo1 : PossibleCombos) {
-                            /**
+                            /*
                              * cannot be checking the same combo, as clearly it would be tagged as overlapping with itself
                              */
                             if (combo1.equals(combo))
                                 continue;
-                            /**if a "combo1" contains any card of the given combo then will add, if not present, combo1 and
+                            /*if a "combo1" contains any card of the given combo then will add, if not present, combo1 and
                              * combo to the overlapping ArrayList
                              */
                             if (combo1.contains(card)) {
@@ -330,7 +330,7 @@ public class GameTable implements Serializable {
                         }
 
                     }
-                    /**
+                    /*
                      * finally make the check that if the combo is not in the overlapping ones it can be counted as a
                      * valid combo
                      */
@@ -339,21 +339,21 @@ public class GameTable implements Serializable {
                         ChosenCombos++;
                     }
                 }
-                /**
+                /*
                  * adds to the totalCombos the ChosenCombos size
                  */
                     int totalCombos = ChosenCombos;
 
                     if (!OverLappingCombos.isEmpty())
                     {
-                        /**
+                        /*
                          * calls the recursive method eventually to find the maximum count of non overlapping combinations
                          * and then adds to the total combos
                          */
                         totalCombos += findMaxCombosInOverlappingCombos(OverLappingCombos);
                     }
 
-                /**
+                /*
                  * for winner tracking purpose saves also how many combos have been achieved for the current goal
                  */
                 getScoreBoard().addReachedPointsCount(Util.getKeyByValue(getPlayerZones(), playerField), totalCombos);
@@ -377,21 +377,21 @@ public class GameTable implements Serializable {
         int points = countCommonGoalPoints(Player);
 
         GoalCard privateGoal = Player.getPrivateGoal();
-        if (privateGoal.isResourceGoal()) {/**case the goal is Resource type */
-            /**
+        if (privateGoal.isResourceGoal()) {/*case the goal is Resource type */
+            /*
              * briefly checks with the support of the ResourceMap how many times the given goal can be satisfied
              * with the current PlayerField
              */
             ResourceGoalCard ResourceGoal = (ResourceGoalCard) privateGoal;
             int min = Integer.MAX_VALUE;
             HashMap<Resource, Float> resourcesNeeded = new HashMap<>();
-            /**
+            /*
              * puts in a Map the needed Resources with their corresponding count
              */
             for (Resource resource : ResourceGoal.getRequirements()) {
                 resourcesNeeded.put(resource, resourcesNeeded.getOrDefault(resource, 0f) + 1);
             }
-            /**
+            /*
              * calculates the minimum occurrences of all the needed resources
              */
             for (Resource resource : resourcesNeeded.keySet()) {
@@ -401,32 +401,32 @@ public class GameTable implements Serializable {
             points += privateGoal.getPoints() * min; //points times minimum occurrences of that goal
             getScoreBoard().addReachedPointsCount(Util.getKeyByValue(getPlayerZones(),Player),min);
 
-        } else { /** case the goal is Positional type */
+        } else { /* case the goal is Positional type */
 
 
             PositionGoalCard positionalGoal = (PositionGoalCard) privateGoal;
             ArrayList<Direction> Directions = positionalGoal.getPositionsFromBase();
-            /**Will contain all the possibles card
+            /*Will contain all the possibles card
              combination that respects the goal*/
             ArrayList<ArrayList<GameCard>> PossibleCombos = new ArrayList<ArrayList<GameCard>>();
             int ChosenCombos = 0;
             ArrayList<ArrayList<GameCard>> OverLappingCombos = new ArrayList<ArrayList<GameCard>>();
 
-            /**For each card in the Game Zone will check if (with the near cards) it satisfies the goal
+            /*For each card in the Game Zone will check if (with the near cards) it satisfies the goal
              * note: will also consider all the overlapping ones, since the rules indicates that for a single goal
              *       can consider a card only one time will use a method to get the maximum number of combinations
              *       that considers all the found cards maximum once
              * */
             for (GameCard currentCard : Player.getGameZone().values()) {
                 GameCard currentPointer = currentCard;
-                /**
+                /*
                  * if it's not the same kingdom then we can pass to the next card and discard the current one as base
                  */
                 if (positionalGoal.getResourceFromBase().getFirst() != currentCard.getKingdom())
                     continue;
                 ArrayList<GameCard> possibleCards = new ArrayList<>();
                 possibleCards.add(currentCard);
-                /**
+                /*
                  * for all the directions in the goal will check if the current combination (with currentCard as base)
                  * can be matched in the Game Zone
                  */
@@ -436,7 +436,7 @@ public class GameTable implements Serializable {
 
                     Direction currentDir = Directions.get(j);
                     Kingdom currentResource = positionalGoal.getResourceFromBase().get(j + 1);
-                    /**
+                    /*
                      * get respectively to the current pointer (the current card that is satisfying the goal)
                      * the next card in the game zone that matches the goal request
                      */
@@ -453,14 +453,14 @@ public class GameTable implements Serializable {
 
 
                     }
-                    /**
+                    /*
                      * if the card is found, and it has the requested kingdom, then it can be added to the
                      * possible Cards for the combination
                      */
                     if (currentPointer == null || currentPointer.getKingdom() != currentResource)
                         break;
                     possibleCards.add(currentPointer);
-                    /**
+                    /*
                      * on the last goal request, if it didn't break on any check, the possibleCards will be considered
                      * then as a possible Combo, then it can be checked if it overlaps with any other combination
                      */
@@ -471,22 +471,22 @@ public class GameTable implements Serializable {
 
                 }
             }
-                /**
+                /*
                  * for every found combo checks if any other combo is overlapping with it
                  */
                 for (ArrayList<GameCard> Combo : PossibleCombos) {
-                    /**
+                    /*
                      * for each card checks all the combos, could also do the other way, but preferred as this
                      */
                     for (GameCard card : Combo) {
 
                         for (ArrayList<GameCard> Combo1 : PossibleCombos) {
-                            /**
+                            /*
                              * cannot be checking the same combo, as clearly it would be tagged as overlapping with itself
                              */
                             if (Combo1.containsAll(Combo) && Combo1.size()==Combo.size())
                                 continue;
-                            /**if a "combo1" contains any card of the given combo then will add, if not present, combo1 and
+                            /*if a "combo1" contains any card of the given combo then will add, if not present, combo1 and
                              * combo to the overlapping ArrayList
                              */
                             if (Combo1.contains(card)) {
@@ -504,7 +504,7 @@ public class GameTable implements Serializable {
 
 
                     }
-                    /**
+                    /*
                      * finally make the check that if the combo is not in the overlapping ones it can be counted as a
                      * valid combo
                      */
@@ -517,12 +517,12 @@ public class GameTable implements Serializable {
 
                 }
 
-            /**
+            /*
              * adds to the totalCombos the ChosenCombos size
              */
             int totalCombos=ChosenCombos;
             if(!OverLappingCombos.isEmpty()) {
-                /**
+                /*
                  * calls the recursive method eventually to find the maximum count of non overlapping combinations
                  * and then adds to the total combos
                  */
@@ -530,7 +530,7 @@ public class GameTable implements Serializable {
 
             }
             points += totalCombos * privateGoal.getPoints();
-            /**
+            /*
              * for winner tracking purpose saves also how many combos have been achieved for the current goal
              */
             getScoreBoard().addReachedPointsCount(Util.getKeyByValue(getPlayerZones(),Player),totalCombos);

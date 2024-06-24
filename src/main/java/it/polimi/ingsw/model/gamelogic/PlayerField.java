@@ -69,11 +69,11 @@ public class PlayerField implements Serializable {
      * @return true if the player can make a move otherwise false (should skip the turn)
      */
     public boolean canPlayHand() {
-        if(getHand().size()==0) /**if there are no cards in hand then there are no playable cards*/
+        if(getHand().size()==0) /*if there are no cards in hand then there are no playable cards*/
             return false;
         ResourceCard card=getHand().getFirst();
         boolean flipped=false;
-        if(card.getIsGold()&&card.getIsFront()) /**the card could be gold and playable only on one side so check only that*/
+        if(card.getIsGold()&&card.getIsFront()) /*the card could be gold and playable only on one side so check only that*/
         {
             flipped=true;
             card.flip();
@@ -194,13 +194,13 @@ public class PlayerField implements Serializable {
      */
     public int Play (Coordinates where, ResourceCard card) {
 
-        /**check if the card is playable first*/
+        /*check if the card is playable first*/
         if(!IsPlayable(where,card))
         {
             return -1;
         }
 
-        /**if it's playable put it in the gamezone and remove it from the hand*/
+        /*if it's playable put it in the gamezone and remove it from the hand*/
         gameZone.put(where, card);
 
         hand.remove(Util.checkIfResourceCardIsPresent(hand, card));
