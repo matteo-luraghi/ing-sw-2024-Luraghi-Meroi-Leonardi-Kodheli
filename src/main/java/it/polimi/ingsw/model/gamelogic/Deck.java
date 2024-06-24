@@ -31,14 +31,6 @@ public class Deck implements Serializable {
         JsonParser parser = new JsonParser();
         if(!isGold){
             for(int i=1; i<=40; i++) {
-                // dev path for intelliJ
-                /*String cardName = "src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
-                InputStream inputStream = null;
-                try {
-                    inputStream = new FileInputStream(cardName);
-                } catch (FileNotFoundException e) {
-                    System.err.println("File not found: " + cardName);
-                }*/
                 String cardName = "CardsJSON/resourceCards/resourceCard" + i + ".json";
                 InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cardName);
                 // initialize the json file reader and save the card
@@ -51,17 +43,73 @@ public class Deck implements Serializable {
             }
         } else {
             for(int i=1; i<=40; i++) {
+                String cardName = "CardsJSON/goldCards/goldCard" + i + ".json";
+                InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cardName);
+                // initialize the json file reader and save the card
+                try(Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+                    JsonObject parsedGoldCard = parser.parse(reader).getAsJsonObject();
+                    cardsList.add(Util.fromJSONtoGoldCard(parsedGoldCard));
+                } catch (IOException e) {
+                    System.err.println("Error parsing gold cards");
+                }
+            }
+        }
+
+        // shuffle the cards
+        Collections.shuffle(cardsList);
+
+        // save shuffled cards in the queue
+        this.cards = new LinkedList<>();
+        cards.addAll(cardsList);
+
+        // set the first uncovered cards
+        this.uncoveredCards = new ResourceCard[2];
+        this.uncoveredCards[0] = cards.remove();
+        this.uncoveredCards[0].flip();
+        this.uncoveredCards[1] = cards.remove();
+        this.uncoveredCards[1].flip();
+        this.isGold = isGold;
+    }
+
+    /**
+     * Deck constructor overloading for testing
+     * @param isGold if true returns a Deck of GoldCards, otherwise one of ResourceCards
+     * @param testing true if testing the deck
+     */
+    public Deck (boolean isGold, boolean testing) {
+        // list needed to shuffle the cards after they're added
+        List<ResourceCard> cardsList = new ArrayList<>();
+
+        // initialize the json parser
+        JsonParser parser = new JsonParser();
+        if(!isGold){
+            for(int i=1; i<=40; i++) {
                 // dev path for intelliJ
-                /*String cardName = "src/main/resources/CardsJSON/goldCards/goldCard" + i + ".json";
+                String cardName = "src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
                 InputStream inputStream = null;
                 try {
                     inputStream = new FileInputStream(cardName);
                 } catch (FileNotFoundException e) {
                     System.err.println("File not found: " + cardName);
-                }*/
-
-                String cardName = "CardsJSON/goldCards/goldCard" + i + ".json";
-                InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cardName);
+                }
+                // initialize the json file reader and save the card
+                try(Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+                    JsonObject parsedResourceCard = parser.parse(reader).getAsJsonObject();
+                    cardsList.add(Util.fromJSONtoResourceCard(parsedResourceCard));
+                } catch (IOException e) {
+                    System.err.println("Error parsing resource cards");
+                }
+            }
+        } else {
+            for(int i=1; i<=40; i++) {
+                // dev path for intelliJ
+                String cardName = "src/main/resources/CardsJSON/goldCards/goldCard" + i + ".json";
+                InputStream inputStream = null;
+                try {
+                    inputStream = new FileInputStream(cardName);
+                } catch (FileNotFoundException e) {
+                    System.err.println("File not found: " + cardName);
+                }
                 // initialize the json file reader and save the card
                 try(Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                     JsonObject parsedGoldCard = parser.parse(reader).getAsJsonObject();

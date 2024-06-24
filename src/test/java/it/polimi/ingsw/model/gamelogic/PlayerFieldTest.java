@@ -3,9 +3,8 @@ package it.polimi.ingsw.model.gamelogic;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import it.polimi.ingsw.model.card.*;
-import it.polimi.ingsw.view.cli.ViewPlayerFieldCLIFactory;
+import it.polimi.ingsw.view.cli.ViewPlayerFieldFactory;
 import org.junit.Before;
-import com.google.gson.Gson;
 import org.junit.Test;
 
 import java.io.FileReader;
@@ -33,8 +32,8 @@ public class PlayerFieldTest {
     @Before
     public void setup()
     {
-        resDeck=new Deck(false);
-        goldDeck=new Deck(true);
+        resDeck=new Deck(false, true);
+        goldDeck=new Deck(true, true);
         Random random = new Random();
         int index=random.nextInt(6)+1;
         JsonParser parser = new JsonParser();
@@ -159,7 +158,7 @@ public class PlayerFieldTest {
             }
             catch (NullPointerException e)
             {
-                ViewPlayerFieldCLIFactory VIEW= new ViewPlayerFieldCLIFactory();
+                ViewPlayerFieldFactory VIEW= new ViewPlayerFieldFactory();
                 VIEW.setPlayerField(playerField, new Player("Mario", Color.RED));
                 VIEW.ShowGameZone();
                 return;
@@ -219,7 +218,7 @@ public class PlayerFieldTest {
             }
             if(!found)
             {
-                ViewPlayerFieldCLIFactory VIEW= new ViewPlayerFieldCLIFactory();
+                ViewPlayerFieldFactory VIEW= new ViewPlayerFieldFactory();
                 VIEW.setPlayerField(playerField, new Player("Mario", Color.RED));
                 VIEW.ShowGameZone();
 

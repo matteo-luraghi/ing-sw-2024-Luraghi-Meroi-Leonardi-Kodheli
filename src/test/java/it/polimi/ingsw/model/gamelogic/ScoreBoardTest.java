@@ -1,10 +1,9 @@
 package it.polimi.ingsw.model.gamelogic;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -17,8 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ScoreBoardTest {
 
     ScoreBoard scoreBoard;
-    ArrayList<Player> players;
-    @Before
+    ArrayList<Player> players = new ArrayList<>();
+    @BeforeEach
     public void setup()
     {
         Random random = new Random();

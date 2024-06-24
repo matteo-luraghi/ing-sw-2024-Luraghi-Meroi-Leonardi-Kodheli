@@ -3,8 +3,8 @@ package it.polimi.ingsw.model.gamelogic;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import it.polimi.ingsw.model.card.*;
-import it.polimi.ingsw.view.cli.ViewGoalCardCLIFactory;
-import it.polimi.ingsw.view.cli.ViewPlayerFieldCLIFactory;
+import it.polimi.ingsw.view.cli.ViewGoalCardFactory;
+import it.polimi.ingsw.view.cli.ViewPlayerFieldFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -150,8 +150,8 @@ public class GameTableTest {
             }
         }
         scoreBoard=new ScoreBoard(players);
-        resDeck=new Deck(false);
-        goldDeck=new Deck(true);
+        resDeck=new Deck(false, true);
+        goldDeck=new Deck(true, true);
         gameTable=new GameTable(resDeck,goldDeck,playerZones, commonGoals.toArray(new GoalCard[2]),scoreBoard );
     }
 
@@ -207,10 +207,10 @@ public class GameTableTest {
                          * so print the playerfield if parameter is true for visual debugging
                          */
                         if (printPlayerField) {
-                            ViewGoalCardCLIFactory viewGoalCard=new ViewGoalCardCLIFactory();
+                            ViewGoalCardFactory viewGoalCard=new ViewGoalCardFactory();
                             viewGoalCard.printTwoCards(commonGoals.get(0),commonGoals.get(1) );
                             viewGoalCard.printGoalCard(playerField.getPrivateGoal());
-                            ViewPlayerFieldCLIFactory VIEW = new ViewPlayerFieldCLIFactory();
+                            ViewPlayerFieldFactory VIEW = new ViewPlayerFieldFactory();
                             VIEW.setPlayerField(playerField, Util.getKeyByValue(playerZones, playerField));
                             VIEW.ShowGameZone();
                         }
@@ -239,10 +239,10 @@ public class GameTableTest {
                          * it will print the game zone for visual debugging if needed
                          */
                         if (printPlayerField) {
-                            ViewGoalCardCLIFactory viewGoalCard=new ViewGoalCardCLIFactory();
+                            ViewGoalCardFactory viewGoalCard=new ViewGoalCardFactory();
                             viewGoalCard.printTwoCards(commonGoals.get(0),commonGoals.get(1) );
                             viewGoalCard.printGoalCard(playerField.getPrivateGoal());
-                            ViewPlayerFieldCLIFactory VIEW = new ViewPlayerFieldCLIFactory();
+                            ViewPlayerFieldFactory VIEW = new ViewPlayerFieldFactory();
                             VIEW.setPlayerField(playerField, Util.getKeyByValue(playerZones, playerField));
                             VIEW.ShowGameZone();
                         }
@@ -338,10 +338,10 @@ public class GameTableTest {
             {
 
                 if (printPlayerField) {
-                    ViewGoalCardCLIFactory viewGoalCard=new ViewGoalCardCLIFactory();
+                    ViewGoalCardFactory viewGoalCard=new ViewGoalCardFactory();
                     viewGoalCard.printTwoCards(commonGoals.get(0),commonGoals.get(1) );
                     viewGoalCard.printGoalCard(playerField.getPrivateGoal());
-                    ViewPlayerFieldCLIFactory VIEW = new ViewPlayerFieldCLIFactory();
+                    ViewPlayerFieldFactory VIEW = new ViewPlayerFieldFactory();
                     VIEW.setPlayerField(playerField, Util.getKeyByValue(playerZones, playerField));
                     VIEW.ShowGameZone();
                 }
@@ -352,10 +352,10 @@ public class GameTableTest {
                  * prints for visual debugging
                  */
                 if (printPlayerField) {
-                    ViewGoalCardCLIFactory viewGoalCard=new ViewGoalCardCLIFactory();
+                    ViewGoalCardFactory viewGoalCard=new ViewGoalCardFactory();
                     viewGoalCard.printTwoCards(commonGoals.get(0),commonGoals.get(1) );
                     viewGoalCard.printGoalCard(playerField.getPrivateGoal());
-                    ViewPlayerFieldCLIFactory VIEW = new ViewPlayerFieldCLIFactory();
+                    ViewPlayerFieldFactory VIEW = new ViewPlayerFieldFactory();
                     VIEW.setPlayerField(playerField, Util.getKeyByValue(playerZones, playerField));
                     VIEW.ShowGameZone();
                 }

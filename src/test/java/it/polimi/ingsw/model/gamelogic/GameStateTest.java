@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import it.polimi.ingsw.model.card.GoalCard;
 import it.polimi.ingsw.model.card.StartingCard;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -151,8 +150,8 @@ public class GameStateTest {
             }
         }
         scoreBoard=new ScoreBoard(players);
-        resDeck=new Deck(false);
-        goldDeck=new Deck(true);
+        resDeck=new Deck(false, true);
+        goldDeck=new Deck(true, true);
         gameTable=new GameTable(resDeck,goldDeck,playerZones, commonGoals.toArray(new GoalCard[2]),scoreBoard );
         gameState=new GameState(players,players.get(0),gameTable);
     }

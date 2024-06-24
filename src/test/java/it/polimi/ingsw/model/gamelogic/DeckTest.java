@@ -5,8 +5,6 @@ import it.polimi.ingsw.model.card.ResourceCard;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,8 +22,8 @@ public class DeckTest {
      */
     @Before
     public void setUp(){
-        deck=new Deck(false);
-        goldDeck= new Deck(true);
+        deck=new Deck(false, true);
+        goldDeck= new Deck(true, true);
     }
 
 
