@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.view.cli.ViewPlayerFieldCLIFactory;
-import it.polimi.ingsw.view.mainview.ViewPlayerFieldFactory;
 import org.junit.Before;
 import com.google.gson.Gson;
 import org.junit.Test;

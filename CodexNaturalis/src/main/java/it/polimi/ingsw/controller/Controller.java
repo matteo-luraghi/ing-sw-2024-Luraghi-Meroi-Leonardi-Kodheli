@@ -144,16 +144,16 @@ public class Controller implements RemoteController {
         List<StartingCard> cardsList = new ArrayList<>();
         JsonParser parser = new JsonParser();
         for(int i=1; i<=6; i++) {
-            String cardName = "./src/main/resources/CardsJSON/startingCards/startingCard" + i + ".json";
+            // dev path for intelliJ
+            /*String cardName = "./src/main/resources/CardsJSON/startingCards/startingCard" + i + ".json";
             InputStream inputStream = null;
             try {
                 inputStream = new FileInputStream(cardName);
             } catch (FileNotFoundException e) {
                 System.err.println("File not found: " + cardName);
-            }
-            // TODO: uncomment before JAR extraction and delete previous lines
-            //String cardName = "CardsJSON/startingCards/startingCard" + i + ".json";
-            //InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cardName);
+            }*/
+            String cardName = "CardsJSON/startingCards/startingCard" + i + ".json";
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cardName);
             try(Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                 JsonObject parsedStartingCard = parser.parse(reader).getAsJsonObject();
                 cardsList.add(Util.fromJSONtoStartingCard(parsedStartingCard));
@@ -173,16 +173,16 @@ public class Controller implements RemoteController {
         List<GoalCard> cardsList = new ArrayList<>();
         JsonParser parser = new JsonParser();
         for(int i=1; i<=16; i++) {
-            String cardName = "./src/main/resources/CardsJSON/goalCards/goalCard" + i + ".json";
+            // dev path for intelliJ
+            /*String cardName = "./src/main/resources/CardsJSON/goalCards/goalCard" + i + ".json";
             InputStream inputStream = null;
             try {
                 inputStream = new FileInputStream(cardName);
             } catch (FileNotFoundException e) {
                 System.err.println("File not found: " + cardName);
-            }
-            // TODO: uncomment before JAR extraction and delete previous lines
-            //String cardName = "CardsJSON/goalCards/goalCard" + i + ".json";
-            //InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cardName);
+            }*/
+            String cardName = "CardsJSON/goalCards/goalCard" + i + ".json";
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cardName);
             try(Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                 JsonObject parsedGoalCard = parser.parse(reader).getAsJsonObject();
                 boolean isResourceGoal=parsedGoalCard.get("isResourceGoal").getAsBoolean();
@@ -510,8 +510,6 @@ public class Controller implements RemoteController {
      */
     @Override
     public void changeTurnState(){
-        //TODO: Sometimes it takes one more turn, look up old git from Lorenzo Mevoi
-        //Should be fixed, test for this later
         game.nextTurn();
 
         //code to skip to the end of a game if every hand is empty

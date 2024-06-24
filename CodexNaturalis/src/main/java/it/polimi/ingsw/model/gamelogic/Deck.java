@@ -31,16 +31,16 @@ public class Deck implements Serializable {
         JsonParser parser = new JsonParser();
         if(!isGold){
             for(int i=1; i<=40; i++) {
-                String cardName = "src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
+                // dev path for intelliJ
+                /*String cardName = "src/main/resources/CardsJSON/resourceCards/resourceCard" + i + ".json";
                 InputStream inputStream = null;
                 try {
                     inputStream = new FileInputStream(cardName);
                 } catch (FileNotFoundException e) {
                     System.err.println("File not found: " + cardName);
-                }
-                // TODO: uncomment before JAR extraction and delete previous lines
-                //String cardName = "CardsJSON/resourceCards/resourceCard" + i + ".json";
-                //InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cardName);
+                }*/
+                String cardName = "CardsJSON/resourceCards/resourceCard" + i + ".json";
+                InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cardName);
                 // initialize the json file reader and save the card
                 try(Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                     JsonObject parsedResourceCard = parser.parse(reader).getAsJsonObject();
@@ -51,16 +51,17 @@ public class Deck implements Serializable {
             }
         } else {
             for(int i=1; i<=40; i++) {
-                String cardName = "src/main/resources/CardsJSON/goldCards/goldCard" + i + ".json";
+                // dev path for intelliJ
+                /*String cardName = "src/main/resources/CardsJSON/goldCards/goldCard" + i + ".json";
                 InputStream inputStream = null;
                 try {
                     inputStream = new FileInputStream(cardName);
                 } catch (FileNotFoundException e) {
                     System.err.println("File not found: " + cardName);
-                }
-                // TODO: uncomment before JAR extraction and delete previous lines
-                //String cardName = "CardsJSON/goldCards/goldCard" + i + ".json";
-                //InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cardName);
+                }*/
+
+                String cardName = "CardsJSON/goldCards/goldCard" + i + ".json";
+                InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cardName);
                 // initialize the json file reader and save the card
                 try(Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                     JsonObject parsedGoldCard = parser.parse(reader).getAsJsonObject();

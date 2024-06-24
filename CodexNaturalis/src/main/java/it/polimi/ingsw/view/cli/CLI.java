@@ -46,11 +46,11 @@ public class CLI implements View {
      * CLI constructor
      */
     public CLI () {
-        this.deckViewer = new ViewDeckCLIFactory();
-        this.gameCardViewer = new ViewGameCardCLIFactory();
-        this.playerFieldViewer = new ViewPlayerFieldCLIFactory();
-        this.scoreBoardViewer = new ViewScoreBoardCLIFactory();
-        this.goalCardViewer = new ViewGoalCardCLIFactory();
+        this.deckViewer = new ViewDeckFactory();
+        this.gameCardViewer = new ViewGameCardFactory();
+        this.playerFieldViewer = new ViewPlayerFieldFactory();
+        this.scoreBoardViewer = new ViewScoreBoardFactory();
+        this.goalCardViewer = new ViewGoalCardFactory();
     }
 
     /**
@@ -732,7 +732,7 @@ public class CLI implements View {
         System.out.println(AnsiColors.ANSI_GREEN + "show scoreboard   ->" + AnsiColors.ANSI_RESET + " displays the game's scoreboard");
         System.out.println(AnsiColors.ANSI_GREEN + "show card         ->" + AnsiColors.ANSI_RESET + " displays a specific card");
         System.out.println(AnsiColors.ANSI_GREEN + "show legend       ->" + AnsiColors.ANSI_RESET + " displays the game's legend");
-        System.out.println(AnsiColors.ANSI_GREEN + "show chat       ->" + AnsiColors.ANSI_RESET + " enters chat mode");
+        System.out.println(AnsiColors.ANSI_GREEN + "show chat         ->" + AnsiColors.ANSI_RESET + " enters chat mode");
         if (isMyTurn) {
             if (playPhase) {
                 System.out.println(AnsiColors.ANSI_GREEN + "play card         ->" + AnsiColors.ANSI_RESET + " allows you to play a card from your hand onto your field");
