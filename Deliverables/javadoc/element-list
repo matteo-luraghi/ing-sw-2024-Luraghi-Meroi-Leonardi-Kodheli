@@ -1,0 +1,15 @@
+module:it.polimi.ingsw.psp17
+it.polimi.ingsw.connection
+it.polimi.ingsw.connection.rmi
+it.polimi.ingsw.connection.socket
+it.polimi.ingsw.connection.socket.message.clientMessage
+it.polimi.ingsw.connection.socket.message.connectionMessage
+it.polimi.ingsw.connection.socket.message.serverMessage
+it.polimi.ingsw.controller
+it.polimi.ingsw.model.card
+it.polimi.ingsw.model.gamelogic
+it.polimi.ingsw.model.gamelogic.gamechat
+it.polimi.ingsw.view.cli
+it.polimi.ingsw.view.gui
+it.polimi.ingsw.view.gui.eventhandlers
+it.polimi.ingsw.view.mainview
