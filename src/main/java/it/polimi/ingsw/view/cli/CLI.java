@@ -510,7 +510,7 @@ public class CLI implements View {
                 AnsiColors.ANSI_RED + "  / ____|"+AnsiColors.ANSI_GREEN+"          | |"+AnsiColors.ANSI_RESET+"                                 \n" +
                 AnsiColors.ANSI_RED + " | |"+AnsiColors.ANSI_PURPLE+"      ___"+AnsiColors.ANSI_GREEN+"    __| |"+AnsiColors.ANSI_CYAN+"  ___"+AnsiColors.ANSI_RED+" __  __" + AnsiColors.ANSI_RESET + "                     \n" +
                 AnsiColors.ANSI_RED + " | |"+AnsiColors.ANSI_PURPLE+"     / _ \\"+AnsiColors.ANSI_GREEN+"  / _` |"+AnsiColors.ANSI_CYAN+" / _ \\"+AnsiColors.ANSI_RED+"\\ \\/ /"+AnsiColors.ANSI_RESET+"                     \n" +
-                AnsiColors.ANSI_RED + " | |____"+AnsiColors.ANSI_PURPLE+"| (_) ||"+AnsiColors.ANSI_GREEN+" (_| ||"+AnsiColors.ANSI_CYAN+"  __/"+AnsiColors.ANSI_RED+" >  <"+AnsiColors.ANSI_RESET+"                      \n" +
+                AnsiColors.ANSI_RED + " | |____"+AnsiColors.ANSI_PURPLE+"| (_) |"+AnsiColors.ANSI_GREEN+"| (_| |"+AnsiColors.ANSI_CYAN+"|  __/"+AnsiColors.ANSI_RED+" >  <"+AnsiColors.ANSI_RESET+"                      \n" +
                 AnsiColors.ANSI_RED + "  \\_____|"+AnsiColors.ANSI_PURPLE+"\\___/"+AnsiColors.ANSI_GREEN+"  \\__,_|"+AnsiColors.ANSI_CYAN+" \\___|"+AnsiColors.ANSI_RED+"/_/\\_\\"+AnsiColors.ANSI_RESET+"                     \n" +
                 "                                                       \n" +
                 "                                                       \n" +
@@ -760,12 +760,12 @@ public class CLI implements View {
         System.out.println("- " + Resource.SCROLL.toStringExt()+AnsiColors.ANSI_RESET);
         System.out.println("- " + Resource.FEATHER.toStringExt()+AnsiColors.ANSI_RESET);
         System.out.println("- " + Resource.BLANK.toStringExt()+AnsiColors.ANSI_RESET);
-        System.out.println("- " + Resource.HIDDEN.toStringExt()+AnsiColors.ANSI_RESET);
+        System.out.println("- " + Resource.HIDDEN.toStringExt()+AnsiColors.ANSI_RESET+"(Hidden resource, you cannot play a card on top of this resource)");
         System.out.println("- " + Resource.COVERED.toStringExt()+AnsiColors.ANSI_RESET);
         System.out.println();
         System.out.println(AnsiColors.ANSI_CYAN + "Card's Legend: " + AnsiColors.ANSI_RESET);
         System.out.println("Every card has a resource on every corner and some have some in the center.");
-        System.out.println("The goal cards display the resources needed for gaining points.");
+        System.out.println("The goal cards display the condition needed for gaining points. Type 'show my goal card' to see it.");
         System.out.println("Some cards give points when played. The points are written on top of the card, adjacent to their point condition:");
         System.out.print(AnsiColors.ANSI_GREEN);
         System.out.println("- " + PointCondition.NORMAL.toStringExt());
@@ -774,13 +774,17 @@ public class CLI implements View {
         System.out.println("- " + PointCondition.FEATHER.toStringExt());
         System.out.println("- " + PointCondition.CORNER.toStringExt());
         System.out.println(AnsiColors.ANSI_RESET);
-        System.out.println("In order to play gold cards, you need to satisfy the playing requirements. You can find thw resources needed to play the card in the bottom of it.");
+        System.out.println("In order to play gold cards, you need to satisfy the playing requirements. You can find the resources needed to play the card in the bottom of it.");
         System.out.println("You can play cards either on their front or on their back. The back of the cards has all blank corners and provides one permanent resource corresponding to it's kingdom.");
         System.out.println();
         System.out.println(AnsiColors.ANSI_CYAN + "Deck's Legend:" + AnsiColors.ANSI_RESET);
-        System.out.println("There are two decks, one resource cards and one of gold cards.");
+        System.out.println("There are two decks, a resource deck and a gold deck. They contain the corresponding type of cards.");
         System.out.println("Every deck has also two uncovered cards you can draw from.");
         System.out.println("Lastly, next to the decks there are the two common goals.");
+        System.out.println();
+        System.out.println(AnsiColors.ANSI_GREEN+"To list out the game's commands, type 'help'."+AnsiColors.ANSI_RESET);
+        System.out.println();
+
     }
 
     /**
