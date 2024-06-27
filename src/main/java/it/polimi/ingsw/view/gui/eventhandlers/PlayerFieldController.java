@@ -114,6 +114,8 @@ public class PlayerFieldController extends EventHandler{
 
         //Sets the scoreboard;
         view.showScoreBoard();
+
+        view.showResourceMaps();
     }
 
     /**

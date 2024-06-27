@@ -438,6 +438,20 @@ public class GUI extends Application implements View{
         });
     }
 
+    /**
+     * Shows the current resources owned by all players
+     */
+    public void showResourceMaps() {
+        Map<Player, Map<Resource, Integer>> resourceMaps = new HashMap<>();
+        for (Player p : game.getPlayers()) {
+            resourceMaps.put(p, game.getGameTable().getPlayerZones().get(p).getResourceMap());
+        }
+
+        Platform.runLater(() -> {
+            PlayerFieldController playerFieldHandler = (PlayerFieldController) currentEventHandler;
+            playerFieldHandler.setResourceMaps(resourceMaps);
+        });
+    }
 
     /**
      * Shows the player who has won the game
