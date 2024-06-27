@@ -19,6 +19,7 @@ import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  * PlayerField.fxml event handler, used to process user input during the actual game
@@ -337,8 +338,10 @@ public class PlayerFieldController extends EventHandler{
         if(gameChat == null){
             return;
         }
+        try{
+            addChatMessage(gameChat.getLastMessage().toStringGUI());
+        } catch (NoSuchElementException ignored){};
 
-        addChatMessage(gameChat.getLastMessage().toStringGUI());
     }
 
     /**
