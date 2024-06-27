@@ -40,6 +40,10 @@ public class SocketClient extends Client {
      */
     public SocketClient(String ip, int port, View view) throws IOException {
         super(view);
+        // can't run a socket connection handler on the RMI port
+        if(port == 1099) {
+            throw new IOException("Invalid argument");
+        }
         this.messageReceiver = new Thread(this::readMessages);
         this.clientSocket = new Socket();
         this.clientSocket.connect(new InetSocketAddress(ip, port));
