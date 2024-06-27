@@ -1,6 +1,6 @@
 # Progetto di Ingegneria del Software A.A. 2023/2024
 
-🕹️ Realizzazione in formato sowftware del gioco da tavolo ***Codex Naturalis***, regolamento reperibile al 
+🕹️ Realizzazione in formato software del gioco da tavolo ***Codex Naturalis***, regolamento reperibile al 
 [sito ufficiale](https://www.craniocreations.it/storage/media/product_downloads/126/1516/CODEX_ITA_Rules_compressed.pdf)
 
 ## Componenti del Gruppo
