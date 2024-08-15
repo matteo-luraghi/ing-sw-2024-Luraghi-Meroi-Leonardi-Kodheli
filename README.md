@@ -24,7 +24,7 @@
 | Persistenza                       | ❌           |
 | Resilienza alle disconnessioni    | ❌           |
 
-Voto finale: 29/30L
+🎯 Voto finale: 29/30L
 
 ## Istruzioni per eseguire i jar
 
