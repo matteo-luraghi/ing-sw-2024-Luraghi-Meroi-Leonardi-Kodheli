@@ -24,6 +24,8 @@
 | Persistenza                       | ❌           |
 | Resilienza alle disconnessioni    | ❌           |
 
+Voto finale: 29/30L
+
 ## Istruzioni per eseguire i jar
 
 📂 I file necessitano della versione di Java 21, scaricabile al [link](https://www.oracle.com/it/java/technologies/downloads/)
